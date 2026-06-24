@@ -1,0 +1,9 @@
+[project]
+name = "2026sanbo"
+version = "0.1"
+dependencies = [
+  "pdfplumber",
+  "matplotlib",
+  "numpy",
+  "sentence-transformers",
+]

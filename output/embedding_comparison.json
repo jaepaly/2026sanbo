@@ -1,0 +1,42 @@
+{
+  "minilm": {
+    "model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+    "R@10": 0.7867,
+    "R@20": 0.8533,
+    "MRR": 0.6182,
+    "nDCG@10": 0.6594,
+    "exposure": 6361.57,
+    "load_time_s": 9.3,
+    "embed_time_s": 163.3
+  },
+  "mpnet": {
+    "model": "sentence-transformers/paraphrase-multilingual-mpnet-base-v2",
+    "R@10": 0.8,
+    "R@20": 0.88,
+    "MRR": 0.6194,
+    "nDCG@10": 0.6631,
+    "exposure": 6671.27,
+    "load_time_s": 10.3,
+    "embed_time_s": 335.2
+  },
+  "all-Mini": {
+    "model": "sentence-transformers/all-MiniLM-L12-v2",
+    "R@10": 0.7867,
+    "R@20": 0.88,
+    "MRR": 0.6276,
+    "nDCG@10": 0.6664,
+    "exposure": 6477.77,
+    "load_time_s": 4.6,
+    "embed_time_s": 176.9
+  },
+  "bge": {
+    "model": "BAAI/bge-m3",
+    "R@10": 0.8267,
+    "R@20": 0.88,
+    "MRR": 0.6234,
+    "nDCG@10": 0.672,
+    "exposure": 7845.2,
+    "load_time_s": 12.7,
+    "embed_time_s": 713.6
+  }
+}

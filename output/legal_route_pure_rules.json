@@ -1,0 +1,254 @@
+{
+  "accuracy": 0.6718,
+  "total": 1810,
+  "confusion": {
+    "TP": 996,
+    "TN": 220,
+    "FP": 131,
+    "FN": 463
+  },
+  "fp_examples": [
+    {
+      "code": "1.A.1",
+      "source": "wassenaar_2025",
+      "pred": "대외무역법",
+      "true": "산업기술보호법"
+    },
+    {
+      "code": "1.C.10.c",
+      "source": "wassenaar_2025",
+      "pred": "대외무역법",
+      "true": "산업기술보호법"
+    },
+    {
+      "code": "1.B.3",
+      "source": "wassenaar_2025",
+      "pred": "대외무역법",
+      "true": "산업기술보호법"
+    },
+    {
+      "code": "1.C.10.b",
+      "source": "wassenaar_2025",
+      "pred": "대외무역법",
+      "true": "산업기술보호법"
+    },
+    {
+      "code": "1.C.10.e.2",
+      "source": "wassenaar_2025",
+      "pred": "대외무역법",
+      "true": "산업기술보호법"
+    },
+    {
+      "code": "1.E.2.f",
+      "source": "wassenaar_2025",
+      "pred": "대외무역법",
+      "true": "산업기술보호법"
+    },
+    {
+      "code": "7.A.3",
+      "source": "wassenaar_2025",
+      "pred": "대외무역법",
+      "true": "산업기술보호법"
+    },
+    {
+      "code": "7.A.3.a",
+      "source": "wassenaar_2025",
+      "pred": "대외무역법",
+      "true": "산업기술보호법"
+    },
+    {
+      "code": "7.A.3.b",
+      "source": "wassenaar_2025",
+      "pred": "대외무역법",
+      "true": "산업기술보호법"
+    },
+    {
+      "code": "7.A.3.c",
+      "source": "wassenaar_2025",
+      "pred": "대외무역법",
+      "true": "산업기술보호법"
+    },
+    {
+      "code": "7.A.5.a",
+      "source": "wassenaar_2025",
+      "pred": "대외무역법",
+      "true": "산업기술보호법"
+    },
+    {
+      "code": "7.A.6",
+      "source": "wassenaar_2025",
+      "pred": "대외무역법",
+      "true": "산업기술보호법"
+    },
+    {
+      "code": "7.A.8",
+      "source": "wassenaar_2025",
+      "pred": "대외무역법",
+      "true": "산업기술보호법"
+    },
+    {
+      "code": "7.E.3",
+      "source": "wassenaar_2025",
+      "pred": "대외무역법",
+      "true": "산업기술보호법"
+    },
+    {
+      "code": "7.E.4",
+      "source": "wassenaar_2025",
+      "pred": "대외무역법",
+      "true": "산업기술보호법"
+    },
+    {
+      "code": "7.E.4.a.7",
+      "source": "wassenaar_2025",
+      "pred": "대외무역법",
+      "true": "산업기술보호법"
+    },
+    {
+      "code": "7.E.4.b",
+      "source": "wassenaar_2025",
+      "pred": "대외무역법",
+      "true": "산업기술보호법"
+    },
+    {
+      "code": "7.E.4.b.5",
+      "source": "wassenaar_2025",
+      "pred": "대외무역법",
+      "true": "산업기술보호법"
+    },
+    {
+      "code": "7.E.4.b.7",
+      "source": "wassenaar_2025",
+      "pred": "대외무역법",
+      "true": "산업기술보호법"
+    },
+    {
+      "code": "7.E.4.b.8",
+      "source": "wassenaar_2025",
+      "pred": "대외무역법",
+      "true": "산업기술보호법"
+    }
+  ],
+  "fn_examples": [
+    {
+      "code": "1.C.1.b",
+      "source": "wassenaar_2025",
+      "pred": "산업기술보호법",
+      "true": "대외무역법"
+    },
+    {
+      "code": "2.A.1.c",
+      "source": "wassenaar_2025",
+      "pred": "산업기술보호법",
+      "true": "대외무역법"
+    },
+    {
+      "code": "2.B",
+      "source": "wassenaar_2025",
+      "pred": "산업기술보호법",
+      "true": "대외무역법"
+    },
+    {
+      "code": "2.B.1",
+      "source": "wassenaar_2025",
+      "pred": "산업기술보호법",
+      "true": "대외무역법"
+    },
+    {
+      "code": "2.B.1.a",
+      "source": "wassenaar_2025",
+      "pred": "산업기술보호법",
+      "true": "대외무역법"
+    },
+    {
+      "code": "2.B.1.b",
+      "source": "wassenaar_2025",
+      "pred": "산업기술보호법",
+      "true": "대외무역법"
+    },
+    {
+      "code": "2.B.1.b.4",
+      "source": "wassenaar_2025",
+      "pred": "산업기술보호법",
+      "true": "대외무역법"
+    },
+    {
+      "code": "2.B.1.c",
+      "source": "wassenaar_2025",
+      "pred": "산업기술보호법",
+      "true": "대외무역법"
+    },
+    {
+      "code": "2.B.1.d",
+      "source": "wassenaar_2025",
+      "pred": "산업기술보호법",
+      "true": "대외무역법"
+    },
+    {
+      "code": "2.B.1.e",
+      "source": "wassenaar_2025",
+      "pred": "산업기술보호법",
+      "true": "대외무역법"
+    },
+    {
+      "code": "2.B.1.f",
+      "source": "wassenaar_2025",
+      "pred": "산업기술보호법",
+      "true": "대외무역법"
+    },
+    {
+      "code": "2.B.2",
+      "source": "wassenaar_2025",
+      "pred": "산업기술보호법",
+      "true": "대외무역법"
+    },
+    {
+      "code": "2.B.3",
+      "source": "wassenaar_2025",
+      "pred": "산업기술보호법",
+      "true": "대외무역법"
+    },
+    {
+      "code": "2.B.4",
+      "source": "wassenaar_2025",
+      "pred": "산업기술보호법",
+      "true": "대외무역법"
+    },
+    {
+      "code": "2.B.5",
+      "source": "wassenaar_2025",
+      "pred": "산업기술보호법",
+      "true": "대외무역법"
+    },
+    {
+      "code": "2.B.5.b",
+      "source": "wassenaar_2025",
+      "pred": "산업기술보호법",
+      "true": "대외무역법"
+    },
+    {
+      "code": "2.B.5.d",
+      "source": "wassenaar_2025",
+      "pred": "산업기술보호법",
+      "true": "대외무역법"
+    },
+    {
+      "code": "2.B.6",
+      "source": "wassenaar_2025",
+      "pred": "산업기술보호법",
+      "true": "대외무역법"
+    },
+    {
+      "code": "2.B.6.b",
+      "source": "wassenaar_2025",
+      "pred": "산업기술보호법",
+      "true": "대외무역법"
+    },
+    {
+      "code": "2.B.6.b.2",
+      "source": "wassenaar_2025",
+      "pred": "산업기술보호법",
+      "true": "대외무역법"
+    }
+  ]
+}

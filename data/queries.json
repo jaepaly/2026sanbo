@@ -1,0 +1,4009 @@
+{
+  "train": [
+    {
+      "id": "q0337",
+      "query": "Determine applicable controls: ECCN-2B117.",
+      "answer_code": "ECCN-2B117",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0329",
+      "query": "Confirm export control status for ECCN-9B104.",
+      "answer_code": "ECCN-9B104",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0214",
+      "query": "ECCN-8A609의 ECCN 설명을 확인하세요.",
+      "answer_code": "ECCN-8A609",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0492",
+      "query": "9.A.5에서 허가를 트리거하는 조건을 설명하세요.",
+      "answer_code": "9.A.5",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0371",
+      "query": "Are there applicable license exceptions for 5C008?",
+      "answer_code": "5C008",
+      "source": "india_scomet_2024",
+      "base_term": "5C",
+      "lang": "en"
+    },
+    {
+      "id": "q0179",
+      "query": "ECCN-3A225에 적용 가능한 허가 예외가 있나요?",
+      "answer_code": "ECCN-3A225",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0494",
+      "query": "4A031의 분류 결정을 검토하세요.",
+      "answer_code": "4A031",
+      "source": "india_scomet_2024",
+      "base_term": "4A",
+      "lang": "ko"
+    },
+    {
+      "id": "q0015",
+      "query": "2C002의 단위/수량 임계값을 확인하세요.",
+      "answer_code": "2C002",
+      "source": "india_scomet_2024",
+      "base_term": "2C",
+      "lang": "ko"
+    },
+    {
+      "id": "q0490",
+      "query": "Find the controlled features in ECCN-2D202.",
+      "answer_code": "ECCN-2D202",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0208",
+      "query": "Confirm the scope of ECCN-8B609.",
+      "answer_code": "ECCN-8B609",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0219",
+      "query": "How does 7.A.3.c compare to similar categories?",
+      "answer_code": "7.A.3.c",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0075",
+      "query": "What license exceptions may apply to 1.C.2?",
+      "answer_code": "1.C.2",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0294",
+      "query": "What is the scope of 'technology' under 6.C.1?",
+      "answer_code": "6.C.1",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0456",
+      "query": "Verify the correct classification for 6.A.4.a.4.",
+      "answer_code": "6.A.4.a.4",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0403",
+      "query": "ECCN-6D201의 수출통제 상태를 확인하세요.",
+      "answer_code": "ECCN-6D201",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0143",
+      "query": "Determine if ECCN-4A611 requires a license.",
+      "answer_code": "ECCN-4A611",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0454",
+      "query": "Verify the correct ECCN: ECCN-1A985.",
+      "answer_code": "ECCN-1A985",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0429",
+      "query": "What license exceptions may apply to 3.A.1.a.1?",
+      "answer_code": "3.A.1.a.1",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0027",
+      "query": "이 품목이 ECCN-2D001에 해당하는지 확인하세요.",
+      "answer_code": "ECCN-2D001",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0192",
+      "query": "Review the controlled activities under 2C001.",
+      "answer_code": "2C001",
+      "source": "india_scomet_2024",
+      "base_term": "2C",
+      "lang": "en"
+    },
+    {
+      "id": "q0425",
+      "query": "Review the controlled activities under 8A105.",
+      "answer_code": "8A105",
+      "source": "india_scomet_2024",
+      "base_term": "8A",
+      "lang": "en"
+    },
+    {
+      "id": "q0334",
+      "query": "Are there applicable license exceptions for 1.D.2?",
+      "answer_code": "1.D.2",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0238",
+      "query": "ECCN 분류 확인: 1.C.",
+      "answer_code": "1.C",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0409",
+      "query": "ECCN-3E101의 기술적 사양을 확인하세요.",
+      "answer_code": "ECCN-3E101",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0437",
+      "query": "Determine applicable controls: 3D010.",
+      "answer_code": "3D010",
+      "source": "india_scomet_2024",
+      "base_term": "3D",
+      "lang": "en"
+    },
+    {
+      "id": "q0225",
+      "query": "What items are explicitly excluded from 3D005?",
+      "answer_code": "3D005",
+      "source": "india_scomet_2024",
+      "base_term": "3D",
+      "lang": "en"
+    },
+    {
+      "id": "q0157",
+      "query": "2D003의 ECCN 설명을 확인하세요.",
+      "answer_code": "2D003",
+      "source": "india_scomet_2024",
+      "base_term": "2D",
+      "lang": "ko"
+    },
+    {
+      "id": "q0104",
+      "query": "3.A.2.b의 수출통제 상태를 확인하세요.",
+      "answer_code": "3.A.2.b",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0362",
+      "query": "Check the classification decision for 8E303.",
+      "answer_code": "8E303",
+      "source": "india_scomet_2024",
+      "base_term": "8E",
+      "lang": "en"
+    },
+    {
+      "id": "q0227",
+      "query": "5C009의 ECCN 설명을 확인하세요.",
+      "answer_code": "5C009",
+      "source": "india_scomet_2024",
+      "base_term": "5C",
+      "lang": "ko"
+    },
+    {
+      "id": "q0170",
+      "query": "Confirm the scope of ECCN-3D006.",
+      "answer_code": "ECCN-3D006",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0084",
+      "query": "What end-use restrictions apply to 0B008?",
+      "answer_code": "0B008",
+      "source": "india_scomet_2024",
+      "base_term": "0B",
+      "lang": "en"
+    },
+    {
+      "id": "q0069",
+      "query": "How does ECCN-9A101 compare to similar categories?",
+      "answer_code": "ECCN-9A101",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0336",
+      "query": "Find the controlled features in ECCN-7E104.",
+      "answer_code": "ECCN-7E104",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0133",
+      "query": "What is the ECCN description for ECCN-3C992?",
+      "answer_code": "ECCN-3C992",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0323",
+      "query": "Explain the conditions that trigger licensing for 0B002.",
+      "answer_code": "0B002",
+      "source": "india_scomet_2024",
+      "base_term": "0B",
+      "lang": "en"
+    },
+    {
+      "id": "q0088",
+      "query": "3.A.1.b.2에서 명시적으로 제외된 품목은?",
+      "answer_code": "3.A.1.b.2",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0279",
+      "query": "How does 3.A.1.a.6 compare to similar categories?",
+      "answer_code": "3.A.1.a.6",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0488",
+      "query": "ECCN-9B009의 범위를 확인하세요.",
+      "answer_code": "ECCN-9B009",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0161",
+      "query": "What end-use restrictions apply to ECCN-6A996?",
+      "answer_code": "ECCN-6A996",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0236",
+      "query": "ECCN-1C395의 수출 요건을 검토하세요.",
+      "answer_code": "ECCN-1C395",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0442",
+      "query": "Explain the conditions that trigger licensing for 4A020.",
+      "answer_code": "4A020",
+      "source": "india_scomet_2024",
+      "base_term": "4A",
+      "lang": "en"
+    },
+    {
+      "id": "q0247",
+      "query": "Confirm export control status for 8A908.",
+      "answer_code": "8A908",
+      "source": "india_scomet_2024",
+      "base_term": "8A",
+      "lang": "en"
+    },
+    {
+      "id": "q0276",
+      "query": "3.A.1.b.7.b의 ECCN 설명을 확인하세요.",
+      "answer_code": "3.A.1.b.7.b",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0042",
+      "query": "이 품목이 6.A.4.d.3에 해당하는지 확인하세요.",
+      "answer_code": "6.A.4.d.3",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0263",
+      "query": "ECCN-1C236의 분류 결정을 검토하세요.",
+      "answer_code": "ECCN-1C236",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0333",
+      "query": "5.A.1.b.2.b에 적용될 수 있는 허가 예외는?",
+      "answer_code": "5.A.1.b.2.b",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0107",
+      "query": "Check licensing requirements for ECCN-2E984.",
+      "answer_code": "ECCN-2E984",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0390",
+      "query": "What items are explicitly excluded from 6A006?",
+      "answer_code": "6A006",
+      "source": "india_scomet_2024",
+      "base_term": "6A",
+      "lang": "en"
+    },
+    {
+      "id": "q0191",
+      "query": "ECCN 분류 확인: 3A102.",
+      "answer_code": "3A102",
+      "source": "india_scomet_2024",
+      "base_term": "3A",
+      "lang": "ko"
+    },
+    {
+      "id": "q0175",
+      "query": "8C109에 적용 가능한 허가 예외가 있나요?",
+      "answer_code": "8C109",
+      "source": "india_scomet_2024",
+      "base_term": "8C",
+      "lang": "ko"
+    },
+    {
+      "id": "q0386",
+      "query": "Check licensing requirements for ECCN-1D201.",
+      "answer_code": "ECCN-1D201",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0427",
+      "query": "What are the unit/quantity thresholds in ECCN-7A003?",
+      "answer_code": "ECCN-7A003",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0460",
+      "query": "Verify the correct ECCN: ECCN-2B352.",
+      "answer_code": "ECCN-2B352",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0137",
+      "query": "ECCN-9B515가 허가 예외 대상인지 확인하세요.",
+      "answer_code": "ECCN-9B515",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0163",
+      "query": "2A037에 적용될 수 있는 허가 예외는?",
+      "answer_code": "2A037",
+      "source": "india_scomet_2024",
+      "base_term": "2A",
+      "lang": "ko"
+    },
+    {
+      "id": "q0391",
+      "query": "8E101의 통제 대상 기능을 확인하세요.",
+      "answer_code": "8E101",
+      "source": "india_scomet_2024",
+      "base_term": "8E",
+      "lang": "ko"
+    },
+    {
+      "id": "q0379",
+      "query": "3A115의 통제 대상 기능을 확인하세요.",
+      "answer_code": "3A115",
+      "source": "india_scomet_2024",
+      "base_term": "3A",
+      "lang": "ko"
+    },
+    {
+      "id": "q0432",
+      "query": "8E203에 적용되는 최종사용자 제한은?",
+      "answer_code": "8E203",
+      "source": "india_scomet_2024",
+      "base_term": "8E",
+      "lang": "ko"
+    },
+    {
+      "id": "q0090",
+      "query": "ECCN-1E202의 기술적 사양을 확인하세요.",
+      "answer_code": "ECCN-1E202",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0453",
+      "query": "ECCN-2A992의 기술적 사양을 확인하세요.",
+      "answer_code": "ECCN-2A992",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0466",
+      "query": "0A103의 정확한 분류를 확인하세요.",
+      "answer_code": "0A103",
+      "source": "india_scomet_2024",
+      "base_term": "0A",
+      "lang": "ko"
+    },
+    {
+      "id": "q0462",
+      "query": "Review the export requirements for 3B015.",
+      "answer_code": "3B015",
+      "source": "india_scomet_2024",
+      "base_term": "3B",
+      "lang": "en"
+    },
+    {
+      "id": "q0060",
+      "query": "ECCN-1B233의 허가 요건을 확인하세요.",
+      "answer_code": "ECCN-1B233",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0434",
+      "query": "1.E.2.d에 적용되는 최종사용자 제한은?",
+      "answer_code": "1.E.2.d",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0153",
+      "query": "What is the ECCN description for 2D057?",
+      "answer_code": "2D057",
+      "source": "india_scomet_2024",
+      "base_term": "2D",
+      "lang": "en"
+    },
+    {
+      "id": "q0228",
+      "query": "Review the export requirements for ECCN-1D003.",
+      "answer_code": "ECCN-1D003",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0043",
+      "query": "Check licensing requirements for ECCN-1E102.",
+      "answer_code": "ECCN-1E102",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0264",
+      "query": "3A113가 허가 예외 대상인지 확인하세요.",
+      "answer_code": "3A113",
+      "source": "india_scomet_2024",
+      "base_term": "3A",
+      "lang": "ko"
+    },
+    {
+      "id": "q0367",
+      "query": "ECCN-9A107와 유사 카테고리를 비교하세요.",
+      "answer_code": "ECCN-9A107",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0241",
+      "query": "How does ECCN-3A229 compare to similar categories?",
+      "answer_code": "ECCN-3A229",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0108",
+      "query": "2F020와 유사 카테고리를 비교하세요.",
+      "answer_code": "2F020",
+      "source": "india_scomet_2024",
+      "base_term": "2F",
+      "lang": "ko"
+    },
+    {
+      "id": "q0478",
+      "query": "What license exceptions may apply to 3A112?",
+      "answer_code": "3A112",
+      "source": "india_scomet_2024",
+      "base_term": "3A",
+      "lang": "en"
+    },
+    {
+      "id": "q0311",
+      "query": "ECCN-1E355의 기술적 사양을 확인하세요.",
+      "answer_code": "ECCN-1E355",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0156",
+      "query": "ECCN-7B994가 허가 예외 대상인지 확인하세요.",
+      "answer_code": "ECCN-7B994",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0291",
+      "query": "3.B.2에 적용될 수 있는 허가 예외는?",
+      "answer_code": "3.B.2",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0047",
+      "query": "6.C.4.f의 통제 대상 기능을 확인하세요.",
+      "answer_code": "6.C.4.f",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0338",
+      "query": "Does this item fall under 0B006?",
+      "answer_code": "0B006",
+      "source": "india_scomet_2024",
+      "base_term": "0B",
+      "lang": "en"
+    },
+    {
+      "id": "q0287",
+      "query": "Check if 8.A is eligible for license exception.",
+      "answer_code": "8.A",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0213",
+      "query": "Determine if ECCN-2B991 requires a license.",
+      "answer_code": "ECCN-2B991",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0125",
+      "query": "Verify the correct classification for ECCN-7A008.",
+      "answer_code": "ECCN-7A008",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0018",
+      "query": "6.A.2.a.3.f에서 명시적으로 제외된 품목은?",
+      "answer_code": "6.A.2.a.3.f",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0380",
+      "query": "Does this item fall under 8C111?",
+      "answer_code": "8C111",
+      "source": "india_scomet_2024",
+      "base_term": "8C",
+      "lang": "en"
+    },
+    {
+      "id": "q0206",
+      "query": "ECCN 분류 확인: 9.A.12.",
+      "answer_code": "9.A.12",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0112",
+      "query": "Check licensing requirements for 2G008.",
+      "answer_code": "2G008",
+      "source": "india_scomet_2024",
+      "base_term": "2G",
+      "lang": "en"
+    },
+    {
+      "id": "q0455",
+      "query": "Check licensing requirements for 2D030.",
+      "answer_code": "2D030",
+      "source": "india_scomet_2024",
+      "base_term": "2D",
+      "lang": "en"
+    },
+    {
+      "id": "q0207",
+      "query": "ECCN-9A005의 통제 대상 기능을 확인하세요.",
+      "answer_code": "ECCN-9A005",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0148",
+      "query": "Review the export requirements for 6.A.4.d.4.",
+      "answer_code": "6.A.4.d.4",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0003",
+      "query": "Check if ECCN-0A999 is eligible for license exception.",
+      "answer_code": "ECCN-0A999",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0116",
+      "query": "Review the export requirements for ECCN-6A005.",
+      "answer_code": "ECCN-6A005",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0174",
+      "query": "Confirm export control status for ECCN-1E104.",
+      "answer_code": "ECCN-1E104",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0364",
+      "query": "ECCN-9A117의 수출통제 상태를 확인하세요.",
+      "answer_code": "ECCN-9A117",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0344",
+      "query": "ECCN-1C116의 허가 요건을 확인하세요.",
+      "answer_code": "ECCN-1C116",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0385",
+      "query": "Find the controlled features in 2F023.",
+      "answer_code": "2F023",
+      "source": "india_scomet_2024",
+      "base_term": "2F",
+      "lang": "en"
+    },
+    {
+      "id": "q0181",
+      "query": "Check if ECCN-6B007 is eligible for license exception.",
+      "answer_code": "ECCN-6B007",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0498",
+      "query": "What license exceptions may apply to 3.A.1.a.5?",
+      "answer_code": "3.A.1.a.5",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0215",
+      "query": "7.A.2.a.2와 유사 카테고리를 비교하세요.",
+      "answer_code": "7.A.2.a.2",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0052",
+      "query": "Determine applicable controls: 2A024.",
+      "answer_code": "2A024",
+      "source": "india_scomet_2024",
+      "base_term": "2A",
+      "lang": "en"
+    },
+    {
+      "id": "q0168",
+      "query": "5.A.1.c의 수출 요건을 검토하세요.",
+      "answer_code": "5.A.1.c",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0496",
+      "query": "1.C.3의 정확한 분류를 확인하세요.",
+      "answer_code": "1.C.3",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0011",
+      "query": "Does this item fall under 2D063?",
+      "answer_code": "2D063",
+      "source": "india_scomet_2024",
+      "base_term": "2D",
+      "lang": "en"
+    },
+    {
+      "id": "q0422",
+      "query": "Check licensing requirements for ECCN-5A001.",
+      "answer_code": "ECCN-5A001",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0087",
+      "query": "How does ECCN-1C228 compare to similar categories?",
+      "answer_code": "ECCN-1C228",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0495",
+      "query": "List the technical parameters for ECCN-2B910.",
+      "answer_code": "ECCN-2B910",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0256",
+      "query": "7.D.3.c의 수출통제 상태를 확인하세요.",
+      "answer_code": "7.D.3.c",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0467",
+      "query": "Verify the correct ECCN: 4.D.4.",
+      "answer_code": "4.D.4",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0220",
+      "query": "ECCN-2A993의 허가 요건을 확인하세요.",
+      "answer_code": "ECCN-2A993",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0402",
+      "query": "2.B.1.b.4의 분류 결정을 검토하세요.",
+      "answer_code": "2.B.1.b.4",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0109",
+      "query": "Verify the correct classification for ECCN-2B206.",
+      "answer_code": "ECCN-2B206",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0307",
+      "query": "이 품목이 5A212에 해당하는지 확인하세요.",
+      "answer_code": "5A212",
+      "source": "india_scomet_2024",
+      "base_term": "5A",
+      "lang": "ko"
+    },
+    {
+      "id": "q0303",
+      "query": "ECCN-3A904의 기술적 사양을 확인하세요.",
+      "answer_code": "ECCN-3A904",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0436",
+      "query": "이 품목이 8B302에 해당하는지 확인하세요.",
+      "answer_code": "8B302",
+      "source": "india_scomet_2024",
+      "base_term": "8B",
+      "lang": "ko"
+    },
+    {
+      "id": "q0158",
+      "query": "What is the ECCN description for 1.C.2.c?",
+      "answer_code": "1.C.2.c",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0433",
+      "query": "이 품목이 ECCN-7A103에 해당하는지 확인하세요.",
+      "answer_code": "ECCN-7A103",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0389",
+      "query": "Find the controlled features in 8A912.",
+      "answer_code": "8A912",
+      "source": "india_scomet_2024",
+      "base_term": "8A",
+      "lang": "en"
+    },
+    {
+      "id": "q0073",
+      "query": "6.B.7에 적용 가능한 허가 예외가 있나요?",
+      "answer_code": "6.B.7",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0350",
+      "query": "What license exceptions may apply to ECCN-1C350?",
+      "answer_code": "ECCN-1C350",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0309",
+      "query": "2G021에서 허가를 트리거하는 조건을 설명하세요.",
+      "answer_code": "2G021",
+      "source": "india_scomet_2024",
+      "base_term": "2G",
+      "lang": "ko"
+    },
+    {
+      "id": "q0444",
+      "query": "What are the unit/quantity thresholds in 8A602?",
+      "answer_code": "8A602",
+      "source": "india_scomet_2024",
+      "base_term": "8A",
+      "lang": "en"
+    },
+    {
+      "id": "q0301",
+      "query": "8E901의 기술적 사양을 확인하세요.",
+      "answer_code": "8E901",
+      "source": "india_scomet_2024",
+      "base_term": "8E",
+      "lang": "ko"
+    },
+    {
+      "id": "q0071",
+      "query": "Check if 6.A.8.a is eligible for license exception.",
+      "answer_code": "6.A.8.a",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0484",
+      "query": "ECCN-9B619의 수출통제 상태를 확인하세요.",
+      "answer_code": "ECCN-9B619",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0465",
+      "query": "Check the classification decision for 6.A.6.c.1.",
+      "answer_code": "6.A.6.c.1",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0160",
+      "query": "Determine if 6.A.7 requires a license.",
+      "answer_code": "6.A.7",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0308",
+      "query": "5A216의 ECCN 설명을 확인하세요.",
+      "answer_code": "5A216",
+      "source": "india_scomet_2024",
+      "base_term": "5A",
+      "lang": "ko"
+    },
+    {
+      "id": "q0167",
+      "query": "2A023의 ECCN 설명을 확인하세요.",
+      "answer_code": "2A023",
+      "source": "india_scomet_2024",
+      "base_term": "2A",
+      "lang": "ko"
+    },
+    {
+      "id": "q0099",
+      "query": "ECCN-1C010가 허가 예외 대상인지 확인하세요.",
+      "answer_code": "ECCN-1C010",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0480",
+      "query": "Are there applicable license exceptions for ECCN-2E993?",
+      "answer_code": "ECCN-2E993",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0369",
+      "query": "2G022에서 명시적으로 제외된 품목은?",
+      "answer_code": "2G022",
+      "source": "india_scomet_2024",
+      "base_term": "2G",
+      "lang": "ko"
+    },
+    {
+      "id": "q0221",
+      "query": "ECCN 분류 확인: 8C103.",
+      "answer_code": "8C103",
+      "source": "india_scomet_2024",
+      "base_term": "8C",
+      "lang": "ko"
+    },
+    {
+      "id": "q0135",
+      "query": "What license exceptions may apply to ECCN-1B003?",
+      "answer_code": "ECCN-1B003",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0463",
+      "query": "ECCN-1C225가 허가 예외 대상인지 확인하세요.",
+      "answer_code": "ECCN-1C225",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0300",
+      "query": "List the technical parameters for 2G009.",
+      "answer_code": "2G009",
+      "source": "india_scomet_2024",
+      "base_term": "2G",
+      "lang": "en"
+    },
+    {
+      "id": "q0343",
+      "query": "ECCN 분류 확인: 4B005.",
+      "answer_code": "4B005",
+      "source": "india_scomet_2024",
+      "base_term": "4B",
+      "lang": "ko"
+    },
+    {
+      "id": "q0121",
+      "query": "Verify the correct ECCN: ECCN-2E983.",
+      "answer_code": "ECCN-2E983",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0419",
+      "query": "2D040의 허가 요건을 확인하세요.",
+      "answer_code": "2D040",
+      "source": "india_scomet_2024",
+      "base_term": "2D",
+      "lang": "ko"
+    },
+    {
+      "id": "q0086",
+      "query": "4.D.3에서 허가를 트리거하는 조건을 설명하세요.",
+      "answer_code": "4.D.3",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0033",
+      "query": "8C101의 통제 대상 기능을 확인하세요.",
+      "answer_code": "8C101",
+      "source": "india_scomet_2024",
+      "base_term": "8C",
+      "lang": "ko"
+    },
+    {
+      "id": "q0037",
+      "query": "What license exceptions may apply to ECCN-9E990?",
+      "answer_code": "ECCN-9E990",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0288",
+      "query": "Are there applicable license exceptions for ECCN-9A004?",
+      "answer_code": "ECCN-9A004",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0491",
+      "query": "What license exceptions may apply to 6.A.5.e.3.c?",
+      "answer_code": "6.A.5.e.3.c",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0245",
+      "query": "Review the export requirements for ECCN-3D993.",
+      "answer_code": "ECCN-3D993",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0342",
+      "query": "Verify the correct ECCN: 8B606.",
+      "answer_code": "8B606",
+      "source": "india_scomet_2024",
+      "base_term": "8B",
+      "lang": "en"
+    },
+    {
+      "id": "q0189",
+      "query": "4A025와 유사 카테고리를 비교하세요.",
+      "answer_code": "4A025",
+      "source": "india_scomet_2024",
+      "base_term": "4A",
+      "lang": "ko"
+    },
+    {
+      "id": "q0443",
+      "query": "6.A.5.d.4.b에 적용되는 최종사용자 제한은?",
+      "answer_code": "6.A.5.d.4.b",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0229",
+      "query": "ECCN 분류 확인: 2D037.",
+      "answer_code": "2D037",
+      "source": "india_scomet_2024",
+      "base_term": "2D",
+      "lang": "ko"
+    },
+    {
+      "id": "q0100",
+      "query": "6.A.5.d.3에 적용되는 최종사용자 제한은?",
+      "answer_code": "6.A.5.d.3",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0012",
+      "query": "이 품목이 ECCN-6B008에 해당하는지 확인하세요.",
+      "answer_code": "ECCN-6B008",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0357",
+      "query": "7.D.2의 정확한 분류를 확인하세요.",
+      "answer_code": "7.D.2",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0413",
+      "query": "Check the classification decision for ECCN-5A003.",
+      "answer_code": "ECCN-5A003",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0383",
+      "query": "Confirm export control status for 6.B.4.",
+      "answer_code": "6.B.4",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0445",
+      "query": "2F004의 통제 대상 기능을 확인하세요.",
+      "answer_code": "2F004",
+      "source": "india_scomet_2024",
+      "base_term": "2F",
+      "lang": "ko"
+    },
+    {
+      "id": "q0038",
+      "query": "ECCN-1B613의 ECCN 설명을 확인하세요.",
+      "answer_code": "ECCN-1B613",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0293",
+      "query": "Verify the correct classification for 2D035.",
+      "answer_code": "2D035",
+      "source": "india_scomet_2024",
+      "base_term": "2D",
+      "lang": "en"
+    },
+    {
+      "id": "q0138",
+      "query": "5D001에 적용될 수 있는 허가 예외는?",
+      "answer_code": "5D001",
+      "source": "india_scomet_2024",
+      "base_term": "5D",
+      "lang": "ko"
+    },
+    {
+      "id": "q0451",
+      "query": "How does 6.A.6.h compare to similar categories?",
+      "answer_code": "6.A.6.h",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0447",
+      "query": "Determine applicable controls: 8.A.2.h.",
+      "answer_code": "8.A.2.h",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0349",
+      "query": "0B004에 허가가 필요한지 확인하세요.",
+      "answer_code": "0B004",
+      "source": "india_scomet_2024",
+      "base_term": "0B",
+      "lang": "ko"
+    },
+    {
+      "id": "q0327",
+      "query": "Explain the conditions that trigger licensing for 3A114.",
+      "answer_code": "3A114",
+      "source": "india_scomet_2024",
+      "base_term": "3A",
+      "lang": "en"
+    },
+    {
+      "id": "q0013",
+      "query": "Check the classification decision for ECCN-5D101.",
+      "answer_code": "ECCN-5D101",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0171",
+      "query": "List the technical parameters for ECCN-9A103.",
+      "answer_code": "ECCN-9A103",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0002",
+      "query": "Verify the correct ECCN: 6.A.8.l.",
+      "answer_code": "6.A.8.l",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0154",
+      "query": "ECCN-2B209에 적용 가능한 허가 예외가 있나요?",
+      "answer_code": "ECCN-2B209",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0058",
+      "query": "4A026의 기술적 사양을 확인하세요.",
+      "answer_code": "4A026",
+      "source": "india_scomet_2024",
+      "base_term": "4A",
+      "lang": "ko"
+    },
+    {
+      "id": "q0398",
+      "query": "What is the scope of 'technology' under 2.B.6.c?",
+      "answer_code": "2.B.6.c",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0296",
+      "query": "What end-use restrictions apply to 3.C?",
+      "answer_code": "3.C",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0435",
+      "query": "2.D.3와 유사 카테고리를 비교하세요.",
+      "answer_code": "2.D.3",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0089",
+      "query": "ECCN-9D104에서 명시적으로 제외된 품목은?",
+      "answer_code": "ECCN-9D104",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0262",
+      "query": "Does this item fall under ECCN-9A009?",
+      "answer_code": "ECCN-9A009",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0014",
+      "query": "What end-use restrictions apply to 3.A.1.b.4.f?",
+      "answer_code": "3.A.1.b.4.f",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0284",
+      "query": "ECCN-7E611의 ECCN 설명을 확인하세요.",
+      "answer_code": "ECCN-7E611",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0273",
+      "query": "2C005에 적용되는 최종사용자 제한은?",
+      "answer_code": "2C005",
+      "source": "india_scomet_2024",
+      "base_term": "2C",
+      "lang": "ko"
+    },
+    {
+      "id": "q0449",
+      "query": "5.A.1.e에 적용 가능한 허가 예외가 있나요?",
+      "answer_code": "5.A.1.e",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0201",
+      "query": "ECCN-7E102의 단위/수량 임계값을 확인하세요.",
+      "answer_code": "ECCN-7E102",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0233",
+      "query": "ECCN-2B116의 ECCN 설명을 확인하세요.",
+      "answer_code": "ECCN-2B116",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0450",
+      "query": "이 품목이 3.A.1.a.3에 해당하는지 확인하세요.",
+      "answer_code": "3.A.1.a.3",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0223",
+      "query": "ECCN-0E521의 수출 요건을 검토하세요.",
+      "answer_code": "ECCN-0E521",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0423",
+      "query": "Confirm the scope of 6.D.3.b.",
+      "answer_code": "6.D.3.b",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0147",
+      "query": "이 품목이 ECCN-1C982에 해당하는지 확인하세요.",
+      "answer_code": "ECCN-1C982",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0244",
+      "query": "8A605에 적용될 수 있는 허가 예외는?",
+      "answer_code": "8A605",
+      "source": "india_scomet_2024",
+      "base_term": "8A",
+      "lang": "ko"
+    },
+    {
+      "id": "q0421",
+      "query": "8B101에서 명시적으로 제외된 품목은?",
+      "answer_code": "8B101",
+      "source": "india_scomet_2024",
+      "base_term": "8B",
+      "lang": "ko"
+    },
+    {
+      "id": "q0044",
+      "query": "Explain the conditions that trigger licensing for 2D055.",
+      "answer_code": "2D055",
+      "source": "india_scomet_2024",
+      "base_term": "2D",
+      "lang": "en"
+    },
+    {
+      "id": "q0123",
+      "query": "8D701에 적용 가능한 허가 예외가 있나요?",
+      "answer_code": "8D701",
+      "source": "india_scomet_2024",
+      "base_term": "8D",
+      "lang": "ko"
+    },
+    {
+      "id": "q0295",
+      "query": "적용 통제 결정: 3B001.",
+      "answer_code": "3B001",
+      "source": "india_scomet_2024",
+      "base_term": "3B",
+      "lang": "ko"
+    },
+    {
+      "id": "q0019",
+      "query": "ECCN-6A993의 기술적 사양을 확인하세요.",
+      "answer_code": "ECCN-6A993",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0055",
+      "query": "What end-use restrictions apply to ECCN-0E606?",
+      "answer_code": "ECCN-0E606",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0145",
+      "query": "Determine applicable controls: 3A310.",
+      "answer_code": "3A310",
+      "source": "india_scomet_2024",
+      "base_term": "3A",
+      "lang": "en"
+    },
+    {
+      "id": "q0102",
+      "query": "2D016의 기술적 사양을 확인하세요.",
+      "answer_code": "2D016",
+      "source": "india_scomet_2024",
+      "base_term": "2D",
+      "lang": "ko"
+    },
+    {
+      "id": "q0204",
+      "query": "적용 통제 결정: 8E801.",
+      "answer_code": "8E801",
+      "source": "india_scomet_2024",
+      "base_term": "8E",
+      "lang": "ko"
+    },
+    {
+      "id": "q0023",
+      "query": "5.A.2와 유사 카테고리를 비교하세요.",
+      "answer_code": "5.A.2",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0217",
+      "query": "What items are explicitly excluded from 5.A.1.j?",
+      "answer_code": "5.A.1.j",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0346",
+      "query": "Confirm the scope of 9.E.3.",
+      "answer_code": "9.E.3",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0059",
+      "query": "Verify the correct ECCN: 8C304.",
+      "answer_code": "8C304",
+      "source": "india_scomet_2024",
+      "base_term": "8C",
+      "lang": "en"
+    },
+    {
+      "id": "q0063",
+      "query": "ECCN-5E002와 유사 카테고리를 비교하세요.",
+      "answer_code": "ECCN-5E002",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0149",
+      "query": "Check licensing requirements for 2.B.6.b.",
+      "answer_code": "2.B.6.b",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0093",
+      "query": "6.E.3.f의 허가 요건을 확인하세요.",
+      "answer_code": "6.E.3.f",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0067",
+      "query": "Confirm the scope of ECCN-1A001.",
+      "answer_code": "ECCN-1A001",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0354",
+      "query": "이 품목이 2D025에 해당하는지 확인하세요.",
+      "answer_code": "2D025",
+      "source": "india_scomet_2024",
+      "base_term": "2D",
+      "lang": "ko"
+    },
+    {
+      "id": "q0203",
+      "query": "적용 통제 결정: 5.D.2.c.",
+      "answer_code": "5.D.2.c",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0416",
+      "query": "Explain the conditions that trigger licensing for 1.C.5.b.",
+      "answer_code": "1.C.5.b",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0117",
+      "query": "Check if 8C106 is eligible for license exception.",
+      "answer_code": "8C106",
+      "source": "india_scomet_2024",
+      "base_term": "8C",
+      "lang": "en"
+    },
+    {
+      "id": "q0481",
+      "query": "Check licensing requirements for 5.E.1.e.",
+      "answer_code": "5.E.1.e",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0024",
+      "query": "What license exceptions may apply to 3D007?",
+      "answer_code": "3D007",
+      "source": "india_scomet_2024",
+      "base_term": "3D",
+      "lang": "en"
+    },
+    {
+      "id": "q0446",
+      "query": "ECCN-0E501의 범위를 확인하세요.",
+      "answer_code": "ECCN-0E501",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0260",
+      "query": "ECCN 분류 확인: 2D038.",
+      "answer_code": "2D038",
+      "source": "india_scomet_2024",
+      "base_term": "2D",
+      "lang": "ko"
+    },
+    {
+      "id": "q0146",
+      "query": "How does 6.A.5.e.3.b compare to similar categories?",
+      "answer_code": "6.A.5.e.3.b",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0142",
+      "query": "How does ECCN-8A018 compare to similar categories?",
+      "answer_code": "ECCN-8A018",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0130",
+      "query": "ECCN-1E201의 단위/수량 임계값을 확인하세요.",
+      "answer_code": "ECCN-1E201",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0426",
+      "query": "8A301의 정확한 분류를 확인하세요.",
+      "answer_code": "8A301",
+      "source": "india_scomet_2024",
+      "base_term": "8A",
+      "lang": "ko"
+    },
+    {
+      "id": "q0070",
+      "query": "2.B.7에 적용 가능한 허가 예외가 있나요?",
+      "answer_code": "2.B.7",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0176",
+      "query": "Confirm the scope of ECCN-1D018.",
+      "answer_code": "ECCN-1D018",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0210",
+      "query": "What end-use restrictions apply to 3.A.1.i?",
+      "answer_code": "3.A.1.i",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0473",
+      "query": "Review the export requirements for 2F025.",
+      "answer_code": "2F025",
+      "source": "india_scomet_2024",
+      "base_term": "2F",
+      "lang": "en"
+    },
+    {
+      "id": "q0005",
+      "query": "Review the export requirements for ECCN-3E993.",
+      "answer_code": "ECCN-3E993",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0253",
+      "query": "7.D.4.a의 기술 범위는 어디까지인가요?",
+      "answer_code": "7.D.4.a",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0237",
+      "query": "8.A.2.e의 범위를 확인하세요.",
+      "answer_code": "8.A.2.e",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0321",
+      "query": "Determine applicable controls: 3A304.",
+      "answer_code": "3A304",
+      "source": "india_scomet_2024",
+      "base_term": "3A",
+      "lang": "en"
+    },
+    {
+      "id": "q0076",
+      "query": "ECCN-3D901의 수출통제 상태를 확인하세요.",
+      "answer_code": "ECCN-3D901",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0001",
+      "query": "What end-use restrictions apply to ECCN-7B103?",
+      "answer_code": "ECCN-7B103",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0077",
+      "query": "2G020의 단위/수량 임계값을 확인하세요.",
+      "answer_code": "2G020",
+      "source": "india_scomet_2024",
+      "base_term": "2G",
+      "lang": "ko"
+    },
+    {
+      "id": "q0318",
+      "query": "8.A.2.p의 허가 요건을 확인하세요.",
+      "answer_code": "8.A.2.p",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0132",
+      "query": "ECCN-3B001의 단위/수량 임계값을 확인하세요.",
+      "answer_code": "ECCN-3B001",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0420",
+      "query": "Confirm export control status for ECCN-3E992.",
+      "answer_code": "ECCN-3E992",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0440",
+      "query": "2F026의 수출통제 상태를 확인하세요.",
+      "answer_code": "2F026",
+      "source": "india_scomet_2024",
+      "base_term": "2F",
+      "lang": "ko"
+    },
+    {
+      "id": "q0072",
+      "query": "0A313에 적용될 수 있는 허가 예외는?",
+      "answer_code": "0A313",
+      "source": "india_scomet_2024",
+      "base_term": "0A",
+      "lang": "ko"
+    },
+    {
+      "id": "q0008",
+      "query": "Does this item fall under 2.A.1.b?",
+      "answer_code": "2.A.1.b",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0415",
+      "query": "What items are explicitly excluded from 2B001?",
+      "answer_code": "2B001",
+      "source": "india_scomet_2024",
+      "base_term": "2B",
+      "lang": "en"
+    },
+    {
+      "id": "q0345",
+      "query": "Confirm export control status for 6.A.4.d.",
+      "answer_code": "6.A.4.d",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0439",
+      "query": "5A102의 통제 활동을 검토하세요.",
+      "answer_code": "5A102",
+      "source": "india_scomet_2024",
+      "base_term": "5A",
+      "lang": "ko"
+    },
+    {
+      "id": "q0114",
+      "query": "ECCN-0D501와 유사 카테고리를 비교하세요.",
+      "answer_code": "ECCN-0D501",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0115",
+      "query": "ECCN-1C607의 범위를 확인하세요.",
+      "answer_code": "ECCN-1C607",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0261",
+      "query": "8C105의 통제 활동을 검토하세요.",
+      "answer_code": "8C105",
+      "source": "india_scomet_2024",
+      "base_term": "8C",
+      "lang": "ko"
+    },
+    {
+      "id": "q0065",
+      "query": "2D017의 허가 요건을 확인하세요.",
+      "answer_code": "2D017",
+      "source": "india_scomet_2024",
+      "base_term": "2D",
+      "lang": "ko"
+    },
+    {
+      "id": "q0411",
+      "query": "What end-use restrictions apply to ECCN-3D004?",
+      "answer_code": "ECCN-3D004",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0252",
+      "query": "Does this item fall under ECCN-9D001?",
+      "answer_code": "ECCN-9D001",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0196",
+      "query": "Determine if ECCN-1A995 requires a license.",
+      "answer_code": "ECCN-1A995",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0096",
+      "query": "Check the classification decision for ECCN-3A069.",
+      "answer_code": "ECCN-3A069",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0319",
+      "query": "3A307가 허가 예외 대상인지 확인하세요.",
+      "answer_code": "3A307",
+      "source": "india_scomet_2024",
+      "base_term": "3A",
+      "lang": "ko"
+    },
+    {
+      "id": "q0139",
+      "query": "Check the classification decision for 6.C.2.b.2.",
+      "answer_code": "6.C.2.b.2",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0325",
+      "query": "4.D.1에서 허가를 트리거하는 조건을 설명하세요.",
+      "answer_code": "4.D.1",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0476",
+      "query": "How does ECCN-9B117 compare to similar categories?",
+      "answer_code": "ECCN-9B117",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0328",
+      "query": "ECCN-9A007에 적용될 수 있는 허가 예외는?",
+      "answer_code": "ECCN-9A007",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0355",
+      "query": "Check the classification decision for 5.E.1.d.2.",
+      "answer_code": "5.E.1.d.2",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0185",
+      "query": "ECCN-2E290의 기술 범위는 어디까지인가요?",
+      "answer_code": "ECCN-2E290",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0211",
+      "query": "ECCN-3A003의 수출 요건을 검토하세요.",
+      "answer_code": "ECCN-3A003",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0280",
+      "query": "ECCN-1C009에 적용 가능한 허가 예외가 있나요?",
+      "answer_code": "ECCN-1C009",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0417",
+      "query": "Review the controlled activities under 4A029.",
+      "answer_code": "4A029",
+      "source": "india_scomet_2024",
+      "base_term": "4A",
+      "lang": "en"
+    },
+    {
+      "id": "q0477",
+      "query": "이 품목이 8B903에 해당하는지 확인하세요.",
+      "answer_code": "8B903",
+      "source": "india_scomet_2024",
+      "base_term": "8B",
+      "lang": "ko"
+    },
+    {
+      "id": "q0105",
+      "query": "6.A.6.b의 수출 요건을 검토하세요.",
+      "answer_code": "6.A.6.b",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0363",
+      "query": "Check licensing requirements for 2A028.",
+      "answer_code": "2A028",
+      "source": "india_scomet_2024",
+      "base_term": "2A",
+      "lang": "en"
+    },
+    {
+      "id": "q0216",
+      "query": "ECCN-9A120와 유사 카테고리를 비교하세요.",
+      "answer_code": "ECCN-9A120",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0083",
+      "query": "Are there applicable license exceptions for 5C006?",
+      "answer_code": "5C006",
+      "source": "india_scomet_2024",
+      "base_term": "5C",
+      "lang": "en"
+    },
+    {
+      "id": "q0358",
+      "query": "ECCN-0A981에서 허가를 트리거하는 조건을 설명하세요.",
+      "answer_code": "ECCN-0A981",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0257",
+      "query": "Verify the correct ECCN: 7.D.3.d.4.",
+      "answer_code": "7.D.3.d.4",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0231",
+      "query": "What is the ECCN description for 5C007?",
+      "answer_code": "5C007",
+      "source": "india_scomet_2024",
+      "base_term": "5C",
+      "lang": "en"
+    },
+    {
+      "id": "q0180",
+      "query": "적용 통제 결정: ECCN-2A999.",
+      "answer_code": "ECCN-2A999",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0468",
+      "query": "6.A.1.a.2의 분류 결정을 검토하세요.",
+      "answer_code": "6.A.1.a.2",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0407",
+      "query": "9.D.4.a의 기술 범위는 어디까지인가요?",
+      "answer_code": "9.D.4.a",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0172",
+      "query": "ECCN-3A991의 범위를 확인하세요.",
+      "answer_code": "ECCN-3A991",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0258",
+      "query": "Check the classification decision for 5C003.",
+      "answer_code": "5C003",
+      "source": "india_scomet_2024",
+      "base_term": "5C",
+      "lang": "en"
+    },
+    {
+      "id": "q0205",
+      "query": "Check licensing requirements for ECCN-2B003.",
+      "answer_code": "ECCN-2B003",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0483",
+      "query": "ECCN-1D001의 분류 결정을 검토하세요.",
+      "answer_code": "ECCN-1D001",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0428",
+      "query": "Determine applicable controls: 2D065.",
+      "answer_code": "2D065",
+      "source": "india_scomet_2024",
+      "base_term": "2D",
+      "lang": "en"
+    },
+    {
+      "id": "q0053",
+      "query": "Are there applicable license exceptions for 6.A.6.d?",
+      "answer_code": "6.A.6.d",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0218",
+      "query": "Confirm the scope of 3.A.1.g.",
+      "answer_code": "3.A.1.g",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0234",
+      "query": "Review the controlled activities under 6.A.2.a.2.a.",
+      "answer_code": "6.A.2.a.2.a",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0378",
+      "query": "5.E.1의 분류 결정을 검토하세요.",
+      "answer_code": "5.E.1",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0312",
+      "query": "9.D.4.c에 적용 가능한 허가 예외가 있나요?",
+      "answer_code": "9.D.4.c",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0289",
+      "query": "Confirm export control status for 5.A.3.",
+      "answer_code": "5.A.3",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0315",
+      "query": "ECCN-0D602에 적용되는 최종사용자 제한은?",
+      "answer_code": "ECCN-0D602",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0408",
+      "query": "What end-use restrictions apply to 6.C.6?",
+      "answer_code": "6.C.6",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0304",
+      "query": "2F005의 수출통제 상태를 확인하세요.",
+      "answer_code": "2F005",
+      "source": "india_scomet_2024",
+      "base_term": "2F",
+      "lang": "ko"
+    },
+    {
+      "id": "q0310",
+      "query": "Determine if ECCN-4A994 requires a license.",
+      "answer_code": "ECCN-4A994",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0331",
+      "query": "8.A.2.q의 기술적 사양을 확인하세요.",
+      "answer_code": "8.A.2.q",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0470",
+      "query": "ECCN-3D001의 기술적 사양을 확인하세요.",
+      "answer_code": "ECCN-3D001",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0272",
+      "query": "ECCN-0A979와 유사 카테고리를 비교하세요.",
+      "answer_code": "ECCN-0A979",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0118",
+      "query": "3.A.1.a.4와 유사 카테고리를 비교하세요.",
+      "answer_code": "3.A.1.a.4",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0051",
+      "query": "ECCN-1A290의 허가 요건을 확인하세요.",
+      "answer_code": "ECCN-1A290",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0400",
+      "query": "Check the classification decision for 6A019.",
+      "answer_code": "6A019",
+      "source": "india_scomet_2024",
+      "base_term": "6A",
+      "lang": "en"
+    },
+    {
+      "id": "q0265",
+      "query": "6A020의 수출 요건을 검토하세요.",
+      "answer_code": "6A020",
+      "source": "india_scomet_2024",
+      "base_term": "6A",
+      "lang": "ko"
+    },
+    {
+      "id": "q0110",
+      "query": "Review the export requirements for 6.B.2.",
+      "answer_code": "6.B.2",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0039",
+      "query": "Confirm export control status for ECCN-6B619.",
+      "answer_code": "ECCN-6B619",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0155",
+      "query": "Does this item fall under 2A032?",
+      "answer_code": "2A032",
+      "source": "india_scomet_2024",
+      "base_term": "2A",
+      "lang": "en"
+    },
+    {
+      "id": "q0298",
+      "query": "Check licensing requirements for 3.B.1.a.2.",
+      "answer_code": "3.B.1.a.2",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0374",
+      "query": "ECCN 분류 확인: ECCN-9A980.",
+      "answer_code": "ECCN-9A980",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0270",
+      "query": "What license exceptions may apply to 6A004?",
+      "answer_code": "6A004",
+      "source": "india_scomet_2024",
+      "base_term": "6A",
+      "lang": "en"
+    },
+    {
+      "id": "q0489",
+      "query": "Verify the correct ECCN: ECCN-0B604.",
+      "answer_code": "ECCN-0B604",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0029",
+      "query": "Find the controlled features in 3B013.",
+      "answer_code": "3B013",
+      "source": "india_scomet_2024",
+      "base_term": "3B",
+      "lang": "en"
+    },
+    {
+      "id": "q0188",
+      "query": "Review the controlled activities under 9.E.3.c.",
+      "answer_code": "9.E.3.c",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0212",
+      "query": "6.C.7에 적용되는 최종사용자 제한은?",
+      "answer_code": "6.C.7",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0387",
+      "query": "Review the export requirements for ECCN-0B521.",
+      "answer_code": "ECCN-0B521",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0438",
+      "query": "1.C.2.d의 단위/수량 임계값을 확인하세요.",
+      "answer_code": "1.C.2.d",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0031",
+      "query": "What is the scope of 'technology' under 3B007?",
+      "answer_code": "3B007",
+      "source": "india_scomet_2024",
+      "base_term": "3B",
+      "lang": "en"
+    },
+    {
+      "id": "q0410",
+      "query": "2G032의 통제 대상 기능을 확인하세요.",
+      "answer_code": "2G032",
+      "source": "india_scomet_2024",
+      "base_term": "2G",
+      "lang": "ko"
+    },
+    {
+      "id": "q0040",
+      "query": "적용 통제 결정: 1.C.7.f.",
+      "answer_code": "1.C.7.f",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0251",
+      "query": "What are the unit/quantity thresholds in 8.A.2.d?",
+      "answer_code": "8.A.2.d",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0457",
+      "query": "2B002의 ECCN 설명을 확인하세요.",
+      "answer_code": "2B002",
+      "source": "india_scomet_2024",
+      "base_term": "2B",
+      "lang": "ko"
+    },
+    {
+      "id": "q0475",
+      "query": "2.A.1.c에서 명시적으로 제외된 품목은?",
+      "answer_code": "2.A.1.c",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0486",
+      "query": "Check licensing requirements for 2C004.",
+      "answer_code": "2C004",
+      "source": "india_scomet_2024",
+      "base_term": "2C",
+      "lang": "en"
+    },
+    {
+      "id": "q0113",
+      "query": "Are there applicable license exceptions for ECCN-1A101?",
+      "answer_code": "ECCN-1A101",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0347",
+      "query": "List the technical parameters for 6.C.",
+      "answer_code": "6.C",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0025",
+      "query": "What end-use restrictions apply to ECCN-7E004?",
+      "answer_code": "ECCN-7E004",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0131",
+      "query": "6.A.5.e에 적용될 수 있는 허가 예외는?",
+      "answer_code": "6.A.5.e",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0302",
+      "query": "What items are explicitly excluded from 2G011?",
+      "answer_code": "2G011",
+      "source": "india_scomet_2024",
+      "base_term": "2G",
+      "lang": "en"
+    },
+    {
+      "id": "q0269",
+      "query": "ECCN-1B018에 적용되는 최종사용자 제한은?",
+      "answer_code": "ECCN-1B018",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0366",
+      "query": "What is the ECCN description for 5.D.2.d?",
+      "answer_code": "5.D.2.d",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0332",
+      "query": "ECCN-9B002가 허가 예외 대상인지 확인하세요.",
+      "answer_code": "ECCN-9B002",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0292",
+      "query": "3.A.2.d에 허가가 필요한지 확인하세요.",
+      "answer_code": "3.A.2.d",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0314",
+      "query": "Verify the correct classification for ECCN-1B234.",
+      "answer_code": "ECCN-1B234",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0050",
+      "query": "6.A.5.d에 적용 가능한 허가 예외가 있나요?",
+      "answer_code": "6.A.5.d",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0382",
+      "query": "4.E의 단위/수량 임계값을 확인하세요.",
+      "answer_code": "4.E",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0373",
+      "query": "Check the classification decision for 2D004.",
+      "answer_code": "2D004",
+      "source": "india_scomet_2024",
+      "base_term": "2D",
+      "lang": "en"
+    },
+    {
+      "id": "q0392",
+      "query": "Confirm export control status for ECCN-0A502.",
+      "answer_code": "ECCN-0A502",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0103",
+      "query": "1.C.7와 유사 카테고리를 비교하세요.",
+      "answer_code": "1.C.7",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0497",
+      "query": "Confirm the scope of 2D048.",
+      "answer_code": "2D048",
+      "source": "india_scomet_2024",
+      "base_term": "2D",
+      "lang": "en"
+    },
+    {
+      "id": "q0091",
+      "query": "ECCN-3E905에 적용될 수 있는 허가 예외는?",
+      "answer_code": "ECCN-3E905",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0066",
+      "query": "6.A.2.a.3.e의 통제 대상 기능을 확인하세요.",
+      "answer_code": "6.A.2.a.3.e",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0022",
+      "query": "Are there applicable license exceptions for 8.A.2.m?",
+      "answer_code": "8.A.2.m",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0034",
+      "query": "ECCN-2D984의 허가 요건을 확인하세요.",
+      "answer_code": "ECCN-2D984",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0267",
+      "query": "Explain the conditions that trigger licensing for 2G026.",
+      "answer_code": "2G026",
+      "source": "india_scomet_2024",
+      "base_term": "2G",
+      "lang": "en"
+    },
+    {
+      "id": "q0049",
+      "query": "Find the controlled features in ECCN-9D604.",
+      "answer_code": "ECCN-9D604",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0056",
+      "query": "6A015의 정확한 분류를 확인하세요.",
+      "answer_code": "6A015",
+      "source": "india_scomet_2024",
+      "base_term": "6A",
+      "lang": "ko"
+    },
+    {
+      "id": "q0335",
+      "query": "ECCN-1A999와 유사 카테고리를 비교하세요.",
+      "answer_code": "ECCN-1A999",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0209",
+      "query": "ECCN-2B005의 수출통제 상태를 확인하세요.",
+      "answer_code": "ECCN-2B005",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0360",
+      "query": "Confirm export control status for 4B004.",
+      "answer_code": "4B004",
+      "source": "india_scomet_2024",
+      "base_term": "4B",
+      "lang": "en"
+    },
+    {
+      "id": "q0144",
+      "query": "What is the ECCN description for 9.E?",
+      "answer_code": "9.E",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0313",
+      "query": "8D903에 적용될 수 있는 허가 예외는?",
+      "answer_code": "8D903",
+      "source": "india_scomet_2024",
+      "base_term": "8D",
+      "lang": "ko"
+    },
+    {
+      "id": "q0395",
+      "query": "ECCN-9B620의 범위를 확인하세요.",
+      "answer_code": "ECCN-9B620",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0282",
+      "query": "What are the unit/quantity thresholds in 2G002?",
+      "answer_code": "2G002",
+      "source": "india_scomet_2024",
+      "base_term": "2G",
+      "lang": "en"
+    },
+    {
+      "id": "q0254",
+      "query": "What is the scope of 'technology' under 8A104?",
+      "answer_code": "8A104",
+      "source": "india_scomet_2024",
+      "base_term": "8A",
+      "lang": "en"
+    },
+    {
+      "id": "q0268",
+      "query": "6.A.1.a.1.d의 통제 대상 기능을 확인하세요.",
+      "answer_code": "6.A.1.a.1.d",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0472",
+      "query": "Find the controlled features in 5A218.",
+      "answer_code": "5A218",
+      "source": "india_scomet_2024",
+      "base_term": "5A",
+      "lang": "en"
+    },
+    {
+      "id": "q0198",
+      "query": "8A303의 수출 요건을 검토하세요.",
+      "answer_code": "8A303",
+      "source": "india_scomet_2024",
+      "base_term": "8A",
+      "lang": "ko"
+    },
+    {
+      "id": "q0275",
+      "query": "9.A.8에서 명시적으로 제외된 품목은?",
+      "answer_code": "9.A.8",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0032",
+      "query": "What items are explicitly excluded from 8B502?",
+      "answer_code": "8B502",
+      "source": "india_scomet_2024",
+      "base_term": "8B",
+      "lang": "en"
+    },
+    {
+      "id": "q0164",
+      "query": "How does 6.A.3.b.5 compare to similar categories?",
+      "answer_code": "6.A.3.b.5",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0122",
+      "query": "8A606에서 명시적으로 제외된 품목은?",
+      "answer_code": "8A606",
+      "source": "india_scomet_2024",
+      "base_term": "8A",
+      "lang": "ko"
+    },
+    {
+      "id": "q0339",
+      "query": "9.E.3.d의 기술 범위는 어디까지인가요?",
+      "answer_code": "9.E.3.d",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0186",
+      "query": "이 품목이 8.A.2.g에 해당하는지 확인하세요.",
+      "answer_code": "8.A.2.g",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0317",
+      "query": "6.A.8.l.3의 기술 범위는 어디까지인가요?",
+      "answer_code": "6.A.8.l.3",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0009",
+      "query": "What is the scope of 'technology' under ECCN-0E977?",
+      "answer_code": "ECCN-0E977",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0094",
+      "query": "ECCN-8E620의 허가 요건을 확인하세요.",
+      "answer_code": "ECCN-8E620",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0194",
+      "query": "Explain the conditions that trigger licensing for ECCN-5D992.",
+      "answer_code": "ECCN-5D992",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0259",
+      "query": "2.D.1가 허가 예외 대상인지 확인하세요.",
+      "answer_code": "2.D.1",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0441",
+      "query": "What is the ECCN description for 2G010?",
+      "answer_code": "2G010",
+      "source": "india_scomet_2024",
+      "base_term": "2G",
+      "lang": "en"
+    },
+    {
+      "id": "q0000",
+      "query": "What is the ECCN description for 6.A.5.e.2?",
+      "answer_code": "6.A.5.e.2",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0232",
+      "query": "적용 통제 결정: 2D071.",
+      "answer_code": "2D071",
+      "source": "india_scomet_2024",
+      "base_term": "2D",
+      "lang": "ko"
+    },
+    {
+      "id": "q0187",
+      "query": "Review the controlled activities under 6.D.",
+      "answer_code": "6.D",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0368",
+      "query": "이 품목이 ECCN-2B225에 해당하는지 확인하세요.",
+      "answer_code": "ECCN-2B225",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0134",
+      "query": "Does this item fall under 3.A.1.b.8?",
+      "answer_code": "3.A.1.b.8",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    }
+  ],
+  "val": [
+    {
+      "id": "q0151",
+      "query": "ECCN 분류 확인: 3.C.1.",
+      "answer_code": "3.C.1",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0230",
+      "query": "Confirm export control status for 2D046.",
+      "answer_code": "2D046",
+      "source": "india_scomet_2024",
+      "base_term": "2D",
+      "lang": "en"
+    },
+    {
+      "id": "q0412",
+      "query": "Does this item fall under 4A006?",
+      "answer_code": "4A006",
+      "source": "india_scomet_2024",
+      "base_term": "4A",
+      "lang": "en"
+    },
+    {
+      "id": "q0271",
+      "query": "6.A.5.d.1.b의 통제 활동을 검토하세요.",
+      "answer_code": "6.A.5.d.1.b",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0035",
+      "query": "7.E.4.c의 통제 대상 기능을 확인하세요.",
+      "answer_code": "7.E.4.c",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0082",
+      "query": "9.B에서 허가를 트리거하는 조건을 설명하세요.",
+      "answer_code": "9.B",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0283",
+      "query": "2D033의 분류 결정을 검토하세요.",
+      "answer_code": "2D033",
+      "source": "india_scomet_2024",
+      "base_term": "2D",
+      "lang": "ko"
+    },
+    {
+      "id": "q0306",
+      "query": "Review the controlled activities under 3.D.1.",
+      "answer_code": "3.D.1",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0140",
+      "query": "6.A.3.b.2에 적용되는 최종사용자 제한은?",
+      "answer_code": "6.A.3.b.2",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0239",
+      "query": "3.B.1.f에 적용될 수 있는 허가 예외는?",
+      "answer_code": "3.B.1.f",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0452",
+      "query": "What is the ECCN description for ECCN-3D003?",
+      "answer_code": "ECCN-3D003",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0178",
+      "query": "Determine applicable controls: 9.A.12.b.",
+      "answer_code": "9.A.12.b",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0485",
+      "query": "What license exceptions may apply to ECCN-6D993?",
+      "answer_code": "ECCN-6D993",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0095",
+      "query": "9.A.10.c의 수출 요건을 검토하세요.",
+      "answer_code": "9.A.10.c",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0290",
+      "query": "What is the scope of 'technology' under 1.C.12?",
+      "answer_code": "1.C.12",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0097",
+      "query": "ECCN-6E201의 통제 활동을 검토하세요.",
+      "answer_code": "ECCN-6E201",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0250",
+      "query": "Confirm export control status for ECCN-0A505.",
+      "answer_code": "ECCN-0A505",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0499",
+      "query": "3B011의 허가 요건을 확인하세요.",
+      "answer_code": "3B011",
+      "source": "india_scomet_2024",
+      "base_term": "3B",
+      "lang": "ko"
+    },
+    {
+      "id": "q0277",
+      "query": "2A017의 수출통제 상태를 확인하세요.",
+      "answer_code": "2A017",
+      "source": "india_scomet_2024",
+      "base_term": "2A",
+      "lang": "ko"
+    },
+    {
+      "id": "q0150",
+      "query": "ECCN-6C004에서 명시적으로 제외된 품목은?",
+      "answer_code": "ECCN-6C004",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0286",
+      "query": "Find the controlled features in ECCN-9A104.",
+      "answer_code": "ECCN-9A104",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0493",
+      "query": "Check licensing requirements for ECCN-0B505.",
+      "answer_code": "ECCN-0B505",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0361",
+      "query": "ECCN-7B003와 유사 카테고리를 비교하세요.",
+      "answer_code": "ECCN-7B003",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0248",
+      "query": "ECCN-1C011의 기술적 사양을 확인하세요.",
+      "answer_code": "ECCN-1C011",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0020",
+      "query": "Review the export requirements for 9.B.5.",
+      "answer_code": "9.B.5",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0479",
+      "query": "What end-use restrictions apply to 1.C.10.e?",
+      "answer_code": "1.C.10.e",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0068",
+      "query": "ECCN-7A994의 ECCN 설명을 확인하세요.",
+      "answer_code": "ECCN-7A994",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0370",
+      "query": "Check if 8.D is eligible for license exception.",
+      "answer_code": "8.D",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0183",
+      "query": "1.B.2의 허가 요건을 확인하세요.",
+      "answer_code": "1.B.2",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0193",
+      "query": "Does this item fall under 2A021?",
+      "answer_code": "2A021",
+      "source": "india_scomet_2024",
+      "base_term": "2A",
+      "lang": "en"
+    },
+    {
+      "id": "q0414",
+      "query": "5A213의 기술 범위는 어디까지인가요?",
+      "answer_code": "5A213",
+      "source": "india_scomet_2024",
+      "base_term": "5A",
+      "lang": "ko"
+    },
+    {
+      "id": "q0010",
+      "query": "2G012가 허가 예외 대상인지 확인하세요.",
+      "answer_code": "2G012",
+      "source": "india_scomet_2024",
+      "base_term": "2G",
+      "lang": "ko"
+    },
+    {
+      "id": "q0482",
+      "query": "8E302에서 명시적으로 제외된 품목은?",
+      "answer_code": "8E302",
+      "source": "india_scomet_2024",
+      "base_term": "8E",
+      "lang": "ko"
+    },
+    {
+      "id": "q0375",
+      "query": "Find the controlled features in ECCN-5E991.",
+      "answer_code": "ECCN-5E991",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0224",
+      "query": "What is the ECCN description for ECCN-9A991?",
+      "answer_code": "ECCN-9A991",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0177",
+      "query": "ECCN-3C006의 수출 요건을 검토하세요.",
+      "answer_code": "ECCN-3C006",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0396",
+      "query": "8E902의 통제 대상 기능을 확인하세요.",
+      "answer_code": "8E902",
+      "source": "india_scomet_2024",
+      "base_term": "8E",
+      "lang": "ko"
+    },
+    {
+      "id": "q0285",
+      "query": "Review the export requirements for ECCN-7E994.",
+      "answer_code": "ECCN-7E994",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0162",
+      "query": "List the technical parameters for ECCN-9E001.",
+      "answer_code": "ECCN-9E001",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0119",
+      "query": "이 품목이 ECCN-6A006에 해당하는지 확인하세요.",
+      "answer_code": "ECCN-6A006",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0249",
+      "query": "2G027의 ECCN 설명을 확인하세요.",
+      "answer_code": "2G027",
+      "source": "india_scomet_2024",
+      "base_term": "2G",
+      "lang": "ko"
+    },
+    {
+      "id": "q0064",
+      "query": "2G007의 정확한 분류를 확인하세요.",
+      "answer_code": "2G007",
+      "source": "india_scomet_2024",
+      "base_term": "2G",
+      "lang": "ko"
+    },
+    {
+      "id": "q0054",
+      "query": "What license exceptions may apply to 8.A.2.l?",
+      "answer_code": "8.A.2.l",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0274",
+      "query": "Confirm the scope of 5C001.",
+      "answer_code": "5C001",
+      "source": "india_scomet_2024",
+      "base_term": "5C",
+      "lang": "en"
+    },
+    {
+      "id": "q0359",
+      "query": "What are the unit/quantity thresholds in ECCN-8C609?",
+      "answer_code": "ECCN-8C609",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0078",
+      "query": "What are the unit/quantity thresholds in 2D066?",
+      "answer_code": "2D066",
+      "source": "india_scomet_2024",
+      "base_term": "2D",
+      "lang": "en"
+    },
+    {
+      "id": "q0330",
+      "query": "Does this item fall under ECCN-1D608?",
+      "answer_code": "ECCN-1D608",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0182",
+      "query": "ECCN-6D103에 적용되는 최종사용자 제한은?",
+      "answer_code": "ECCN-6D103",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0399",
+      "query": "3.A.1.b.3.c에서 허가를 트리거하는 조건을 설명하세요.",
+      "answer_code": "3.A.1.b.3.c",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0030",
+      "query": "ECCN-7A102와 유사 카테고리를 비교하세요.",
+      "answer_code": "ECCN-7A102",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0320",
+      "query": "List the technical parameters for ECCN-1C102.",
+      "answer_code": "ECCN-1C102",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0388",
+      "query": "Does this item fall under ECCN-9D003?",
+      "answer_code": "ECCN-9D003",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0173",
+      "query": "Verify the correct classification for ECCN-9D002.",
+      "answer_code": "ECCN-9D002",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0316",
+      "query": "List the technical parameters for ECCN-6E991.",
+      "answer_code": "ECCN-6E991",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0351",
+      "query": "8C301의 허가 요건을 확인하세요.",
+      "answer_code": "8C301",
+      "source": "india_scomet_2024",
+      "base_term": "8C",
+      "lang": "ko"
+    },
+    {
+      "id": "q0046",
+      "query": "2D043에 허가가 필요한지 확인하세요.",
+      "answer_code": "2D043",
+      "source": "india_scomet_2024",
+      "base_term": "2D",
+      "lang": "ko"
+    },
+    {
+      "id": "q0255",
+      "query": "What is the scope of 'technology' under 0B001?",
+      "answer_code": "0B001",
+      "source": "india_scomet_2024",
+      "base_term": "0B",
+      "lang": "en"
+    },
+    {
+      "id": "q0080",
+      "query": "ECCN 분류 확인: 5C002.",
+      "answer_code": "5C002",
+      "source": "india_scomet_2024",
+      "base_term": "5C",
+      "lang": "ko"
+    },
+    {
+      "id": "q0471",
+      "query": "Determine if 8D401 requires a license.",
+      "answer_code": "8D401",
+      "source": "india_scomet_2024",
+      "base_term": "8D",
+      "lang": "en"
+    },
+    {
+      "id": "q0045",
+      "query": "What is the ECCN description for 6.B.6?",
+      "answer_code": "6.B.6",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0461",
+      "query": "ECCN-3C907와 유사 카테고리를 비교하세요.",
+      "answer_code": "ECCN-3C907",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0190",
+      "query": "6.D.3.a의 ECCN 설명을 확인하세요.",
+      "answer_code": "6.D.3.a",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0079",
+      "query": "Review the controlled activities under 0A308.",
+      "answer_code": "0A308",
+      "source": "india_scomet_2024",
+      "base_term": "0A",
+      "lang": "en"
+    },
+    {
+      "id": "q0305",
+      "query": "What end-use restrictions apply to 6.D.3.a.4?",
+      "answer_code": "6.D.3.a.4",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0352",
+      "query": "8E704의 수출통제 상태를 확인하세요.",
+      "answer_code": "8E704",
+      "source": "india_scomet_2024",
+      "base_term": "8E",
+      "lang": "ko"
+    },
+    {
+      "id": "q0243",
+      "query": "What is the scope of 'technology' under ECCN-6E101?",
+      "answer_code": "ECCN-6E101",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0353",
+      "query": "2A014의 ECCN 설명을 확인하세요.",
+      "answer_code": "2A014",
+      "source": "india_scomet_2024",
+      "base_term": "2A",
+      "lang": "ko"
+    },
+    {
+      "id": "q0401",
+      "query": "Are there applicable license exceptions for ECCN-0E504?",
+      "answer_code": "ECCN-0E504",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0297",
+      "query": "ECCN-1C353에 적용되는 최종사용자 제한은?",
+      "answer_code": "ECCN-1C353",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0448",
+      "query": "ECCN-9E620에서 허가를 트리거하는 조건을 설명하세요.",
+      "answer_code": "ECCN-9E620",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0004",
+      "query": "2D005의 수출 요건을 검토하세요.",
+      "answer_code": "2D005",
+      "source": "india_scomet_2024",
+      "base_term": "2D",
+      "lang": "ko"
+    },
+    {
+      "id": "q0124",
+      "query": "ECCN-2B120의 통제 대상 기능을 확인하세요.",
+      "answer_code": "ECCN-2B120",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0404",
+      "query": "ECCN-9A116에 적용 가능한 허가 예외가 있나요?",
+      "answer_code": "ECCN-9A116",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0202",
+      "query": "Determine applicable controls: ECCN-3B903.",
+      "answer_code": "ECCN-3B903",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0061",
+      "query": "What items are explicitly excluded from 2.E?",
+      "answer_code": "2.E",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    }
+  ],
+  "test": [
+    {
+      "id": "q0299",
+      "query": "Check the classification decision for 6.E.",
+      "answer_code": "6.E",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0141",
+      "query": "What license exceptions may apply to 8D403?",
+      "answer_code": "8D403",
+      "source": "india_scomet_2024",
+      "base_term": "8D",
+      "lang": "en"
+    },
+    {
+      "id": "q0406",
+      "query": "ECCN-1B001에 적용될 수 있는 허가 예외는?",
+      "answer_code": "ECCN-1B001",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0085",
+      "query": "5C017의 수출통제 상태를 확인하세요.",
+      "answer_code": "5C017",
+      "source": "india_scomet_2024",
+      "base_term": "5C",
+      "lang": "ko"
+    },
+    {
+      "id": "q0007",
+      "query": "List the technical parameters for ECCN-3B991.",
+      "answer_code": "ECCN-3B991",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0166",
+      "query": "1.A.3의 단위/수량 임계값을 확인하세요.",
+      "answer_code": "1.A.3",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0222",
+      "query": "1.C.2.c.1.a의 분류 결정을 검토하세요.",
+      "answer_code": "1.C.2.c.1.a",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0324",
+      "query": "ECCN-0D617의 통제 대상 기능을 확인하세요.",
+      "answer_code": "ECCN-0D617",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0120",
+      "query": "Confirm the scope of 8B209.",
+      "answer_code": "8B209",
+      "source": "india_scomet_2024",
+      "base_term": "8B",
+      "lang": "en"
+    },
+    {
+      "id": "q0057",
+      "query": "ECCN-9B105의 통제 대상 기능을 확인하세요.",
+      "answer_code": "ECCN-9B105",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0111",
+      "query": "3.B.1.g의 수출통제 상태를 확인하세요.",
+      "answer_code": "3.B.1.g",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0341",
+      "query": "Find the controlled features in 3.A.2.h.",
+      "answer_code": "3.A.2.h",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0026",
+      "query": "List the technical parameters for 3.A.1.b.5.",
+      "answer_code": "3.A.1.b.5",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0184",
+      "query": "List the technical parameters for ECCN-9A008.",
+      "answer_code": "ECCN-9A008",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0464",
+      "query": "8C108의 정확한 분류를 확인하세요.",
+      "answer_code": "8C108",
+      "source": "india_scomet_2024",
+      "base_term": "8C",
+      "lang": "ko"
+    },
+    {
+      "id": "q0152",
+      "query": "5.D의 기술 범위는 어디까지인가요?",
+      "answer_code": "5.D",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0326",
+      "query": "2G014에 적용되는 최종사용자 제한은?",
+      "answer_code": "2G014",
+      "source": "india_scomet_2024",
+      "base_term": "2G",
+      "lang": "ko"
+    },
+    {
+      "id": "q0246",
+      "query": "6A005에서 허가를 트리거하는 조건을 설명하세요.",
+      "answer_code": "6A005",
+      "source": "india_scomet_2024",
+      "base_term": "6A",
+      "lang": "ko"
+    },
+    {
+      "id": "q0129",
+      "query": "2C013에 적용될 수 있는 허가 예외는?",
+      "answer_code": "2C013",
+      "source": "india_scomet_2024",
+      "base_term": "2C",
+      "lang": "ko"
+    },
+    {
+      "id": "q0474",
+      "query": "8D202와 유사 카테고리를 비교하세요.",
+      "answer_code": "8D202",
+      "source": "india_scomet_2024",
+      "base_term": "8D",
+      "lang": "ko"
+    },
+    {
+      "id": "q0459",
+      "query": "Verify the correct classification for 8A708.",
+      "answer_code": "8A708",
+      "source": "india_scomet_2024",
+      "base_term": "8A",
+      "lang": "en"
+    },
+    {
+      "id": "q0281",
+      "query": "적용 통제 결정: 8D302.",
+      "answer_code": "8D302",
+      "source": "india_scomet_2024",
+      "base_term": "8D",
+      "lang": "ko"
+    },
+    {
+      "id": "q0381",
+      "query": "6.A.1의 ECCN 설명을 확인하세요.",
+      "answer_code": "6.A.1",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0021",
+      "query": "Explain the conditions that trigger licensing for ECCN-0E604.",
+      "answer_code": "ECCN-0E604",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0372",
+      "query": "9.A.10.d에 허가가 필요한지 확인하세요.",
+      "answer_code": "9.A.10.d",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0322",
+      "query": "ECCN-8E992의 통제 대상 기능을 확인하세요.",
+      "answer_code": "ECCN-8E992",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0081",
+      "query": "ECCN-0C521의 분류 결정을 검토하세요.",
+      "answer_code": "ECCN-0C521",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0165",
+      "query": "3.E.3의 허가 요건을 확인하세요.",
+      "answer_code": "3.E.3",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0159",
+      "query": "ECCN 분류 확인: ECCN-1A607.",
+      "answer_code": "ECCN-1A607",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0348",
+      "query": "ECCN 분류 확인: 3A120.",
+      "answer_code": "3A120",
+      "source": "india_scomet_2024",
+      "base_term": "3A",
+      "lang": "ko"
+    },
+    {
+      "id": "q0199",
+      "query": "ECCN-6A293의 통제 대상 기능을 확인하세요.",
+      "answer_code": "ECCN-6A293",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0242",
+      "query": "ECCN-9A105가 허가 예외 대상인지 확인하세요.",
+      "answer_code": "ECCN-9A105",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0106",
+      "query": "ECCN-9C610에서 허가를 트리거하는 조건을 설명하세요.",
+      "answer_code": "ECCN-9C610",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0340",
+      "query": "ECCN-0E001의 분류 결정을 검토하세요.",
+      "answer_code": "ECCN-0E001",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0266",
+      "query": "6.A.5.f의 단위/수량 임계값을 확인하세요.",
+      "answer_code": "6.A.5.f",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0048",
+      "query": "6A022에 허가가 필요한지 확인하세요.",
+      "answer_code": "6A022",
+      "source": "india_scomet_2024",
+      "base_term": "6A",
+      "lang": "ko"
+    },
+    {
+      "id": "q0469",
+      "query": "ECCN-5A004의 정확한 분류를 확인하세요.",
+      "answer_code": "ECCN-5A004",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0376",
+      "query": "Verify the correct classification for ECCN-2E910.",
+      "answer_code": "ECCN-2E910",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0235",
+      "query": "ECCN-6B002의 기술적 사양을 확인하세요.",
+      "answer_code": "ECCN-6B002",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0101",
+      "query": "2F002의 수출 요건을 검토하세요.",
+      "answer_code": "2F002",
+      "source": "india_scomet_2024",
+      "base_term": "2F",
+      "lang": "ko"
+    },
+    {
+      "id": "q0017",
+      "query": "이 품목이 ECCN-6C992에 해당하는지 확인하세요.",
+      "answer_code": "ECCN-6C992",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0377",
+      "query": "이 품목이 ECCN-1C999에 해당하는지 확인하세요.",
+      "answer_code": "ECCN-1C999",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0126",
+      "query": "Determine applicable controls: 4A017.",
+      "answer_code": "4A017",
+      "source": "india_scomet_2024",
+      "base_term": "4A",
+      "lang": "en"
+    },
+    {
+      "id": "q0226",
+      "query": "ECCN-7D005의 통제 활동을 검토하세요.",
+      "answer_code": "ECCN-7D005",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0394",
+      "query": "2.A.1의 통제 대상 기능을 확인하세요.",
+      "answer_code": "2.A.1",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0197",
+      "query": "What end-use restrictions apply to ECCN-9A010?",
+      "answer_code": "ECCN-9A010",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0127",
+      "query": "8A608의 분류 결정을 검토하세요.",
+      "answer_code": "8A608",
+      "source": "india_scomet_2024",
+      "base_term": "8A",
+      "lang": "ko"
+    },
+    {
+      "id": "q0365",
+      "query": "4A023의 기술 범위는 어디까지인가요?",
+      "answer_code": "4A023",
+      "source": "india_scomet_2024",
+      "base_term": "4A",
+      "lang": "ko"
+    },
+    {
+      "id": "q0393",
+      "query": "Verify the correct ECCN: ECCN-5E980.",
+      "answer_code": "ECCN-5E980",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0062",
+      "query": "ECCN-9A610의 수출통제 상태를 확인하세요.",
+      "answer_code": "ECCN-9A610",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0006",
+      "query": "5C004의 ECCN 설명을 확인하세요.",
+      "answer_code": "5C004",
+      "source": "india_scomet_2024",
+      "base_term": "5C",
+      "lang": "ko"
+    },
+    {
+      "id": "q0424",
+      "query": "Determine applicable controls: 8A302.",
+      "answer_code": "8A302",
+      "source": "india_scomet_2024",
+      "base_term": "8A",
+      "lang": "en"
+    },
+    {
+      "id": "q0195",
+      "query": "ECCN-1C107의 통제 대상 기능을 확인하세요.",
+      "answer_code": "ECCN-1C107",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0418",
+      "query": "Does this item fall under 4A002?",
+      "answer_code": "4A002",
+      "source": "india_scomet_2024",
+      "base_term": "4A",
+      "lang": "en"
+    },
+    {
+      "id": "q0128",
+      "query": "Explain the conditions that trigger licensing for 1.C.10.",
+      "answer_code": "1.C.10",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0430",
+      "query": "What items are explicitly excluded from 4A008?",
+      "answer_code": "4A008",
+      "source": "india_scomet_2024",
+      "base_term": "4A",
+      "lang": "en"
+    },
+    {
+      "id": "q0458",
+      "query": "Check licensing requirements for 3D008.",
+      "answer_code": "3D008",
+      "source": "india_scomet_2024",
+      "base_term": "3D",
+      "lang": "en"
+    },
+    {
+      "id": "q0098",
+      "query": "Check licensing requirements for 3.C.5.",
+      "answer_code": "3.C.5",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0092",
+      "query": "9.A.7와 유사 카테고리를 비교하세요.",
+      "answer_code": "9.A.7",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0240",
+      "query": "적용 통제 결정: 8A504.",
+      "answer_code": "8A504",
+      "source": "india_scomet_2024",
+      "base_term": "8A",
+      "lang": "ko"
+    },
+    {
+      "id": "q0278",
+      "query": "ECCN-2B232에 적용될 수 있는 허가 예외는?",
+      "answer_code": "ECCN-2B232",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0036",
+      "query": "Review the controlled activities under 4.A.5.",
+      "answer_code": "4.A.5",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0200",
+      "query": "Review the controlled activities under 2A002.",
+      "answer_code": "2A002",
+      "source": "india_scomet_2024",
+      "base_term": "2A",
+      "lang": "en"
+    },
+    {
+      "id": "q0397",
+      "query": "ECCN-1C002의 ECCN 설명을 확인하세요.",
+      "answer_code": "ECCN-1C002",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0136",
+      "query": "1.E.2.c.1의 허가 요건을 확인하세요.",
+      "answer_code": "1.E.2.c.1",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0028",
+      "query": "What is the scope of 'technology' under 6.A.6?",
+      "answer_code": "6.A.6",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0074",
+      "query": "What is the ECCN description for 7.A.3.b?",
+      "answer_code": "7.A.3.b",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0487",
+      "query": "8A705의 기술 범위는 어디까지인가요?",
+      "answer_code": "8A705",
+      "source": "india_scomet_2024",
+      "base_term": "8A",
+      "lang": "ko"
+    },
+    {
+      "id": "q0384",
+      "query": "2A022의 수출 요건을 검토하세요.",
+      "answer_code": "2A022",
+      "source": "india_scomet_2024",
+      "base_term": "2A",
+      "lang": "ko"
+    },
+    {
+      "id": "q0431",
+      "query": "Check the classification decision for 4B008.",
+      "answer_code": "4B008",
+      "source": "india_scomet_2024",
+      "base_term": "4B",
+      "lang": "en"
+    },
+    {
+      "id": "q0041",
+      "query": "What license exceptions may apply to 5.D.1.a?",
+      "answer_code": "5.D.1.a",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0169",
+      "query": "Verify the correct ECCN: ECCN-3A992.",
+      "answer_code": "ECCN-3A992",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "en"
+    },
+    {
+      "id": "q0016",
+      "query": "6.A.2.a.2.c가 허가 예외 대상인지 확인하세요.",
+      "answer_code": "6.A.2.a.2.c",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0405",
+      "query": "ECCN 분류 확인: ECCN-2D003.",
+      "answer_code": "ECCN-2D003",
+      "source": "ecfr_part774",
+      "base_term": "controlled",
+      "lang": "ko"
+    },
+    {
+      "id": "q0356",
+      "query": "9.D.4가 허가 예외 대상인지 확인하세요.",
+      "answer_code": "9.D.4",
+      "source": "wassenaar_2025",
+      "base_term": "controlled",
+      "lang": "ko"
+    }
+  ],
+  "total": 500
+}

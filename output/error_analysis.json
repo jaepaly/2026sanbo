@@ -1,0 +1,852 @@
+[
+  {
+    "query": "Semiconductor and advanced logic controls in ECCN-1D018?",
+    "answer": "ECCN-1D018",
+    "mode": "category",
+    "top10": [
+      "ECCN-3B993",
+      "ECCN-3B994",
+      "ECCN-1C995",
+      "ECCN-2B232",
+      "8B203",
+      "ECCN-9D003",
+      "ECCN-1B234",
+      "ECCN-3D201",
+      "4B003",
+      "ECCN-1B201"
+    ]
+  },
+  {
+    "query": "1.C.3의 주요 기술 사양을 요약하세요.",
+    "answer": "1.C.3",
+    "mode": "raw",
+    "top10": [
+      "1.C.2.c.3",
+      "9.E.3.a.3.c",
+      "3.E.1",
+      "3.C.6",
+      "9.E.3.a.3",
+      "5.E.1.c.3",
+      "ECCN-6E201",
+      "3.A.1.a.2.a",
+      "9.A.10.b",
+      "1.C.7.e"
+    ]
+  },
+  {
+    "query": "1.C.3의 주요 기술 사양을 요약하세요.",
+    "answer": "1.C.3",
+    "mode": "local_rule",
+    "top10": [
+      "1.C.2.c.3",
+      "9.E.3.a.3.c",
+      "3.E.1",
+      "3.C.6",
+      "9.E.3.a.3",
+      "5.E.1.c.3",
+      "ECCN-6E201",
+      "3.A.1.a.2.a",
+      "9.A.10.b",
+      "1.C.7.e"
+    ]
+  },
+  {
+    "query": "1.C.3의 주요 기술 사양을 요약하세요.",
+    "answer": "1.C.3",
+    "mode": "category",
+    "top10": [
+      "3.C.6",
+      "1.C.7.f",
+      "1.C.2.c.3",
+      "1.C.7.d",
+      "1.C.7.e",
+      "1.E.2.f",
+      "1.C.2.d",
+      "6.A.2.a.1.b",
+      "3.A.1.a.11",
+      "1.E.2.e"
+    ]
+  },
+  {
+    "query": "List products subject to licensing under 6.A.4.a.4.",
+    "answer": "6.A.4.a.4",
+    "mode": "category",
+    "top10": [
+      "7.D.4",
+      "6.D",
+      "ECCN-3A225",
+      "5.A.4.b",
+      "6.D.1",
+      "7.A.6",
+      "8A706",
+      "ECCN-3E992",
+      "7.D.4.a",
+      "ECCN-3D992"
+    ]
+  },
+  {
+    "query": "Aerospace components under ECCN-9E001?",
+    "answer": "ECCN-9E001",
+    "mode": "category",
+    "top10": [
+      "ECCN-0A509",
+      "4A031",
+      "ECCN-1C995",
+      "ECCN-9B116",
+      "8B910",
+      "ECCN-9B115",
+      "3B014",
+      "ECCN-1A995",
+      "8D905",
+      "ECCN-1D003"
+    ]
+  },
+  {
+    "query": "2D017를 일반 수출통제 체계와 비교하고 라이선스 필요 조건을 설명하세요.",
+    "answer": "2D017",
+    "mode": "category",
+    "top10": [
+      "6.A",
+      "ECCN-7D611",
+      "7.A",
+      "ECCN-9A102",
+      "ECCN-2E002",
+      "ECCN-7E002",
+      "ECCN-7B103",
+      "5A202",
+      "8.A",
+      "ECCN-2E018"
+    ]
+  },
+  {
+    "query": "8E704의 국가안보 통제 대상은?",
+    "answer": "8E704",
+    "mode": "category",
+    "top10": [
+      "8D704",
+      "ECCN-5E992",
+      "8A504",
+      "8A502",
+      "5.A.1.h.1",
+      "5.A.4",
+      "5.A.2",
+      "8A104",
+      "6.C.1",
+      "ECCN-5A004"
+    ]
+  },
+  {
+    "query": "National security controls under ECCN-7B994?",
+    "answer": "ECCN-7B994",
+    "mode": "category",
+    "top10": [
+      "ECCN-1C995",
+      "ECCN-0A509",
+      "ECCN-1A995",
+      "3B014",
+      "4A031",
+      "8B203",
+      "ECCN-3B993",
+      "ECCN-1D003",
+      "ECCN-5A002",
+      "ECCN-5D992"
+    ]
+  },
+  {
+    "query": "8C101의 반도체 및 첨단논리회로 통제는?",
+    "answer": "8C101",
+    "mode": "category",
+    "top10": [
+      "8C306",
+      "8A301",
+      "8B301",
+      "8.A",
+      "8A903",
+      "8B302",
+      "8A404",
+      "6.A.5.d",
+      "ECCN-3B993",
+      "8E902"
+    ]
+  },
+  {
+    "query": "7.A.2.a.2를 일반 수출통제 체계와 비교하고 라이선스 필요 조건을 설명하세요.",
+    "answer": "7.A.2.a.2",
+    "mode": "raw",
+    "top10": [
+      "7.A.2.a.2.b",
+      "7.E.2",
+      "7.E.1",
+      "7.A.2.b",
+      "7.A.3.a",
+      "7.A.3.d",
+      "7.D.2",
+      "5.E.1.d.1",
+      "3.A.2.a.7",
+      "3.A.1.b.4"
+    ]
+  },
+  {
+    "query": "7.A.2.a.2를 일반 수출통제 체계와 비교하고 라이선스 필요 조건을 설명하세요.",
+    "answer": "7.A.2.a.2",
+    "mode": "local_rule",
+    "top10": [
+      "7.A.2.a.2.b",
+      "7.E.2",
+      "7.E.1",
+      "7.A.2.b",
+      "7.A.3.a",
+      "7.A.3.d",
+      "7.D.2",
+      "5.E.1.d.1",
+      "3.A.2.a.7",
+      "3.A.1.b.4"
+    ]
+  },
+  {
+    "query": "7.A.2.a.2를 일반 수출통제 체계와 비교하고 라이선스 필요 조건을 설명하세요.",
+    "answer": "7.A.2.a.2",
+    "mode": "category",
+    "top10": [
+      "7.D.4",
+      "6.A.3.b.3",
+      "7.A.2.a.2.b",
+      "6.A.2.a.1.b",
+      "3.A.2.d.6.A",
+      "1.C.2.c.3",
+      "1.C.7.d",
+      "6.A.2.f",
+      "3.A.1.b.3",
+      "2.E.2"
+    ]
+  },
+  {
+    "query": "3A310의 항공우주 부품 분류는?",
+    "answer": "3A310",
+    "mode": "category",
+    "top10": [
+      "ECCN-9A120",
+      "ECCN-3A101",
+      "ECCN-7A103",
+      "8A910",
+      "7.A.3.c",
+      "ECCN-3E201",
+      "9.A.4.f",
+      "9.A.4.g",
+      "ECCN-7E101",
+      "8B910"
+    ]
+  },
+  {
+    "query": "ECCN-5D992의 적용 범위와 조항을 설명하세요.",
+    "answer": "ECCN-5D992",
+    "mode": "category",
+    "top10": [
+      "ECCN-1C995",
+      "ECCN-1A995",
+      "ECCN-3D201",
+      "ECCN-3A901",
+      "ECCN-9B116",
+      "ECCN-6A996",
+      "ECCN-9D003",
+      "ECCN-1B234",
+      "ECCN-9C610",
+      "ECCN-9B115"
+    ]
+  },
+  {
+    "query": "List all items, specifications, and threshold limits under 8.A.2.q and explain licensing requirements.",
+    "answer": "8.A.2.q",
+    "mode": "category",
+    "top10": [
+      "ECCN-3A225",
+      "ECCN-0A509",
+      "ECCN-1B117",
+      "7.E.4.b.7",
+      "ECCN-1B118",
+      "5.E.1.d.1",
+      "7.E.4.b.8",
+      "ECCN-2B009",
+      "4A031",
+      "6.A.1.c"
+    ]
+  },
+  {
+    "query": "ECCN-0A502의 통제 범위는?",
+    "answer": "ECCN-0A502",
+    "mode": "category",
+    "top10": [
+      "ECCN-1C995",
+      "ECCN-1A995",
+      "ECCN-0E502",
+      "ECCN-0A501",
+      "ECCN-0A504",
+      "ECCN-3D201",
+      "ECCN-3A901",
+      "ECCN-6A996",
+      "ECCN-9B116",
+      "ECCN-1B234"
+    ]
+  },
+  {
+    "query": "Describe the controls and restrictions for ECCN-6B002.",
+    "answer": "ECCN-6B002",
+    "mode": "category",
+    "top10": [
+      "ECCN-1A995",
+      "ECCN-1C995",
+      "ECCN-2B117",
+      "8B203",
+      "ECCN-3D201",
+      "ECCN-3B993",
+      "ECCN-9B116",
+      "7.E.4.b.4",
+      "ECCN-9D104",
+      "ECCN-9E002"
+    ]
+  },
+  {
+    "query": "Describe the controls and restrictions for ECCN-9A120.",
+    "answer": "ECCN-9A120",
+    "mode": "category",
+    "top10": [
+      "ECCN-1A995",
+      "ECCN-1C995",
+      "ECCN-2B117",
+      "8B203",
+      "ECCN-3D201",
+      "ECCN-3B993",
+      "ECCN-9B116",
+      "ECCN-9D104",
+      "7.E.4.b.4",
+      "ECCN-9E002"
+    ]
+  },
+  {
+    "query": "2G012의 국가안보 통제 대상은?",
+    "answer": "2G012",
+    "mode": "category",
+    "top10": [
+      "ECCN-5E992",
+      "8A502",
+      "5.A.4",
+      "8A504",
+      "ECCN-5A004",
+      "5.A.1.h.1",
+      "8A104",
+      "2G021",
+      "5.A.2",
+      "2G016"
+    ]
+  },
+  {
+    "query": "Technical parameters for ECCN-6A993?",
+    "answer": "ECCN-6A993",
+    "mode": "category",
+    "top10": [
+      "ECCN-4E091",
+      "ECCN-1C995",
+      "ECCN-1A995",
+      "ECCN-3D201",
+      "ECCN-9D104",
+      "ECCN-9B116",
+      "ECCN-9B115",
+      "ECCN-9C610",
+      "ECCN-9D003",
+      "ECCN-9E002"
+    ]
+  },
+  {
+    "query": "List all items, specifications, and threshold limits under 7.A.3.c and explain licensing requirements.",
+    "answer": "7.A.3.c",
+    "mode": "raw",
+    "top10": [
+      "ECCN-2B009",
+      "ECCN-3A225",
+      "6.A.5.e.3.c",
+      "ECCN-6A005",
+      "ECCN-0A509",
+      "6.A.3.a.6",
+      "ECCN-6A205",
+      "1.C.7.c",
+      "7.E.4.b.8",
+      "ECCN-3A227"
+    ]
+  },
+  {
+    "query": "List all items, specifications, and threshold limits under 7.A.3.c and explain licensing requirements.",
+    "answer": "7.A.3.c",
+    "mode": "local_rule",
+    "top10": [
+      "ECCN-2B009",
+      "ECCN-3A225",
+      "6.A.5.e.3.c",
+      "ECCN-6A005",
+      "ECCN-0A509",
+      "6.A.3.a.6",
+      "ECCN-6A205",
+      "1.C.7.c",
+      "7.E.4.b.8",
+      "ECCN-3A227"
+    ]
+  },
+  {
+    "query": "List all items, specifications, and threshold limits under 7.A.3.c and explain licensing requirements.",
+    "answer": "7.A.3.c",
+    "mode": "category",
+    "top10": [
+      "1.C.7.f",
+      "1.C.7.d",
+      "7.D.3.d.4",
+      "7.D.4",
+      "7.B.3",
+      "ECCN-3A225",
+      "ECCN-0A509",
+      "3.C.6",
+      "ECCN-1B117",
+      "7.E.4.b.7"
+    ]
+  },
+  {
+    "query": "ECCN-6D103에 해당하는 이중용도 품목은 무엇입니까?",
+    "answer": "ECCN-6D103",
+    "mode": "category",
+    "top10": [
+      "ECCN-1C995",
+      "ECCN-1A995",
+      "ECCN-3D201",
+      "ECCN-3A901",
+      "ECCN-9B116",
+      "ECCN-6A996",
+      "ECCN-9C610",
+      "ECCN-1B234",
+      "ECCN-9C619",
+      "ECCN-0C606"
+    ]
+  },
+  {
+    "query": "Which items fall under classification 8E901?",
+    "answer": "8E901",
+    "mode": "category",
+    "top10": [
+      "ECCN-0A509",
+      "3B014",
+      "4A031",
+      "ECCN-1D003",
+      "2.B.1.d",
+      "8B201",
+      "6.A.3.a.6",
+      "6A022",
+      "7.D.3.b",
+      "ECCN-2B001"
+    ]
+  },
+  {
+    "query": "9.A.8의 국가안보 통제 대상은?",
+    "answer": "9.A.8",
+    "mode": "raw",
+    "top10": [
+      "9.E.3.a.6",
+      "9.A.4",
+      "9.B.8",
+      "9.A.10.b",
+      "9.E.3.a.3.c",
+      "9.E.1",
+      "3.A.1.b.3",
+      "9.E.3.f.3",
+      "9.D.1",
+      "9.A.3"
+    ]
+  },
+  {
+    "query": "9.A.8의 국가안보 통제 대상은?",
+    "answer": "9.A.8",
+    "mode": "local_rule",
+    "top10": [
+      "9.E.3.a.6",
+      "9.A.4",
+      "9.B.8",
+      "9.A.10.b",
+      "9.E.3.a.3.c",
+      "9.E.1",
+      "3.A.1.b.3",
+      "9.E.3.f.3",
+      "9.D.1",
+      "9.A.3"
+    ]
+  },
+  {
+    "query": "9.A.8의 국가안보 통제 대상은?",
+    "answer": "9.A.8",
+    "mode": "category",
+    "top10": [
+      "9.A.10.b",
+      "1.C.10.e.2",
+      "9.A.3",
+      "9.E.2",
+      "9.E.3.k",
+      "6.D.1",
+      "9.B.10",
+      "3.A.1.b.4.b",
+      "9.A.5",
+      "8A901"
+    ]
+  },
+  {
+    "query": "Aerospace components under 2G011?",
+    "answer": "2G011",
+    "mode": "category",
+    "top10": [
+      "4A031",
+      "ECCN-0A509",
+      "8B910",
+      "3B014",
+      "8D905",
+      "ECCN-1D003",
+      "8.A",
+      "1.A",
+      "6.A",
+      "9.A.12.b"
+    ]
+  },
+  {
+    "query": "Technical parameters for ECCN-2A999?",
+    "answer": "ECCN-2A999",
+    "mode": "category",
+    "top10": [
+      "ECCN-4E091",
+      "ECCN-1C995",
+      "ECCN-1A995",
+      "ECCN-3D201",
+      "ECCN-9B116",
+      "ECCN-9D104",
+      "ECCN-9B115",
+      "ECCN-9C610",
+      "ECCN-9E002",
+      "ECCN-9D003"
+    ]
+  },
+  {
+    "query": "Telecommunications items controlled by 5.A.1.e?",
+    "answer": "5.A.1.e",
+    "mode": "minimal",
+    "top10": [
+      "5.A.1",
+      "5.A.1.f",
+      "5.E.1",
+      "6.A.5.e",
+      "ECCN-5A001",
+      "5.E",
+      "5.E.1.c.6",
+      "5.E.1.c.5",
+      "5.E.1.d",
+      "5.E.1.c.4"
+    ]
+  },
+  {
+    "query": "Telecommunications items controlled by 5.A.1.e?",
+    "answer": "5.A.1.e",
+    "mode": "raw",
+    "top10": [
+      "5.A.1.f",
+      "5.A.1",
+      "5.E.1.c",
+      "5.E.1",
+      "ECCN-5A001",
+      "ECCN-5B991",
+      "5.A.1.g",
+      "5.E.1.d",
+      "ECCN-5A611",
+      "6.A.5.d.1.e"
+    ]
+  },
+  {
+    "query": "Telecommunications items controlled by 5.A.1.e?",
+    "answer": "5.A.1.e",
+    "mode": "local_rule",
+    "top10": [
+      "5.A.1.f",
+      "5.A.1",
+      "5.E.1.c",
+      "5.E.1",
+      "ECCN-5A001",
+      "ECCN-5B991",
+      "5.A.1.g",
+      "5.E.1.d",
+      "ECCN-5A611",
+      "6.A.5.d.1.e"
+    ]
+  },
+  {
+    "query": "Telecommunications items controlled by 5.A.1.e?",
+    "answer": "5.A.1.e",
+    "mode": "category",
+    "top10": [
+      "ECCN-5B991",
+      "5.A.1.i",
+      "5.A.1",
+      "ECCN-5A001",
+      "8A501",
+      "7.D.4",
+      "5.D.2.b",
+      "5.A.4.b",
+      "6.A.5.d",
+      "5.D.1.e"
+    ]
+  },
+  {
+    "query": "8E101의 수출 요건을 설명하세요.",
+    "answer": "8E101",
+    "mode": "category",
+    "top10": [
+      "8E902",
+      "8D704",
+      "8.E",
+      "8E202",
+      "8E702",
+      "8D902",
+      "8E302",
+      "8E602",
+      "8D905",
+      "8A707"
+    ]
+  },
+  {
+    "query": "ECCN-7A008의 수출 요건을 설명하세요.",
+    "answer": "ECCN-7A008",
+    "mode": "category",
+    "top10": [
+      "ECCN-1C995",
+      "ECCN-1A995",
+      "ECCN-3D201",
+      "ECCN-9B116",
+      "ECCN-3A901",
+      "ECCN-9C610",
+      "ECCN-9B115",
+      "ECCN-6A996",
+      "ECCN-9C619",
+      "ECCN-0C606"
+    ]
+  },
+  {
+    "query": "ECCN-7E104의 반도체 및 첨단논리회로 통제는?",
+    "answer": "ECCN-7E104",
+    "mode": "category",
+    "top10": [
+      "ECCN-1C995",
+      "ECCN-1A995",
+      "ECCN-3D201",
+      "ECCN-6A996",
+      "ECCN-3A901",
+      "ECCN-9B116",
+      "ECCN-9B115",
+      "ECCN-9E002",
+      "ECCN-9D104",
+      "ECCN-1B234"
+    ]
+  },
+  {
+    "query": "ECCN-5A003의 통신 정보보안 품목은?",
+    "answer": "ECCN-5A003",
+    "mode": "category",
+    "top10": [
+      "ECCN-1C995",
+      "ECCN-1A995",
+      "ECCN-3D201",
+      "ECCN-3A901",
+      "ECCN-6A996",
+      "ECCN-9B116",
+      "ECCN-1B234",
+      "ECCN-9D003",
+      "ECCN-9D104",
+      "ECCN-9E002"
+    ]
+  },
+  {
+    "query": "1.A.3의 통신 정보보안 품목은?",
+    "answer": "1.A.3",
+    "mode": "minimal",
+    "top10": [
+      "3.A.1.a.10",
+      "3.A.1.a.12",
+      "3.A.1",
+      "3.A.1.e",
+      "3.A.1.a.11",
+      "3.A.1.a.4",
+      "3.A.1.a.5.b",
+      "3.A.1.b.3",
+      "3.A.1.a.8",
+      "6.D.3.a"
+    ]
+  },
+  {
+    "query": "1.A.3의 통신 정보보안 품목은?",
+    "answer": "1.A.3",
+    "mode": "raw",
+    "top10": [
+      "3.A",
+      "3.A.1.a.12",
+      "3.A.1.a.11",
+      "3.D.1",
+      "3.E.1",
+      "3.A.1.a.10",
+      "3.B.1.g",
+      "3.A.1.b.4.f",
+      "3.B.1.i",
+      "3.A.1.b.3.c"
+    ]
+  },
+  {
+    "query": "1.A.3의 통신 정보보안 품목은?",
+    "answer": "1.A.3",
+    "mode": "local_rule",
+    "top10": [
+      "3.A",
+      "3.A.1.a.12",
+      "3.A.1.a.11",
+      "3.D.1",
+      "3.E.1",
+      "3.A.1.a.10",
+      "3.B.1.g",
+      "3.A.1.b.4.f",
+      "3.B.1.i",
+      "3.A.1.b.3.c"
+    ]
+  },
+  {
+    "query": "1.A.3의 통신 정보보안 품목은?",
+    "answer": "1.A.3",
+    "mode": "category",
+    "top10": [
+      "3.A.1.a.11",
+      "3.D.1",
+      "3.B.1.g",
+      "3.B.1.i",
+      "3.A.2.d.6.A",
+      "6.B.2",
+      "3.C.6",
+      "3.A.1.a.12",
+      "3.D.2",
+      "3.A.1.b.8"
+    ]
+  },
+  {
+    "query": "4A017에 따른 수출허가 대상 소재는?",
+    "answer": "4A017",
+    "mode": "category",
+    "top10": [
+      "4A031",
+      "5A215",
+      "ECCN-0E504",
+      "ECCN-7D611",
+      "5A216",
+      "ECCN-0C606",
+      "4.A.2",
+      "ECCN-4D906",
+      "ECCN-9C610",
+      "ECCN-3B991"
+    ]
+  },
+  {
+    "query": "2A021에 해당하는 이중용도 품목은 무엇입니까?",
+    "answer": "2A021",
+    "mode": "category",
+    "top10": [
+      "2A026",
+      "6A008",
+      "ECCN-2E991",
+      "ECCN-2E301",
+      "ECCN-2E002",
+      "ECCN-2D201",
+      "2A019",
+      "ECCN-2E290",
+      "ECCN-2D101",
+      "2.E"
+    ]
+  },
+  {
+    "query": "ECCN-3A904 대상의 라이선스 필요 품목은?",
+    "answer": "ECCN-3A904",
+    "mode": "category",
+    "top10": [
+      "ECCN-1C995",
+      "ECCN-1A995",
+      "ECCN-3D201",
+      "ECCN-3A901",
+      "ECCN-9B116",
+      "ECCN-6A996",
+      "ECCN-1B234",
+      "ECCN-9C610",
+      "ECCN-9D104",
+      "ECCN-9C619"
+    ]
+  },
+  {
+    "query": "Semiconductor and advanced logic controls in 1.E.2.c.1?",
+    "answer": "1.E.2.c.1",
+    "mode": "raw",
+    "top10": [
+      "ECCN-3B994",
+      "6.A.5.d",
+      "3.B.1.c",
+      "6.A.5.d.1.e",
+      "1.E.2.c.2",
+      "7.E.4.c",
+      "ECCN-3B993",
+      "3.B.2",
+      "1.E.2.e",
+      "6.A.2.a.2.c"
+    ]
+  },
+  {
+    "query": "Semiconductor and advanced logic controls in 1.E.2.c.1?",
+    "answer": "1.E.2.c.1",
+    "mode": "local_rule",
+    "top10": [
+      "ECCN-3B994",
+      "6.A.5.d",
+      "3.B.1.c",
+      "6.A.5.d.1.e",
+      "1.E.2.c.2",
+      "7.E.4.c",
+      "ECCN-3B993",
+      "3.B.2",
+      "1.E.2.e",
+      "6.A.2.a.2.c"
+    ]
+  },
+  {
+    "query": "Semiconductor and advanced logic controls in 1.E.2.c.1?",
+    "answer": "1.E.2.c.1",
+    "mode": "category",
+    "top10": [
+      "1.E.2.c.2",
+      "1.C.2.c.3",
+      "1.E.2.f",
+      "1.C.10.c",
+      "1.C.2.d",
+      "1.C.7.d",
+      "6.A.2.a.1.b",
+      "1.C.2.b",
+      "6.A.5.d",
+      "1.C.7.f"
+    ]
+  },
+  {
+    "query": "Dual-use items listed in 9.E.3?",
+    "answer": "9.E.3",
+    "mode": "raw",
+    "top10": [
+      "9.A.3",
+      "9.D.1",
+      "9.B.4",
+      "9.D.3",
+      "9.E.3.a.3.c",
+      "9.E.3.a.6",
+      "9.A.4.e",
+      "9.B.2",
+      "9.D.4",
+      "ECCN-1A984"
+    ]
+  }
+]

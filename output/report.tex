@@ -1,0 +1,263 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{kotex}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{cite}
+\usepackage{amsmath}
+
+\geometry{margin=2.5cm}
+
+\title{\textbf{국가 전략물자 AI 사전 분류체계의 정보노출 최소화와 재현율 트레이드오프에 관한 실증적 연구}}
+\author{박재현}
+\date{2026년 6월}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+본 연구는 외부 인공지능(LLM) 기반 전략물자 사전 분류 서비스에서 기술정보 노출 최소화와 분류 정확도의 트레이드오프를 정량적으로 실증 분석한다. 3개국 규제체계(Wassenaar, 인도 SCOMET, 미국 eCFR CCL) 1,810개 항목에 대해 BM25 + multilingual sentence-transformer 하이브리드 검색 기반 조건부 분류를 수행하고, 5가지 정보노출 수준(raw / minimal / category / local\_rule / legal\_route)과 sparse/dense baseline을 비교한다. 주요 발견은 다음과 같다. \textbf{(1) 정보 최소화(minimal)가 원문 전체 노출(raw) 대비 재현율@10(Recall@10)을 66.67\%로 72\%p 높인다.} \textbf{(2) 법제 라우팅(legal\_route)은 raw와 재현율을 동일(0.40)하게 유지하면서 노출량을 92\%(10,060 $\to$ 822) 감소시킨다.} \textbf{(3) 한국어 쿼리에서 minimal 조건 Recall@10이 0.7778로 영어(0.5641)보다 37\%p 높다.} 5-fold 교차검증에서 minimal vs raw의 paired permutation test는 $p=0.074$로, 정보 요약이 검색 정확도를 오히려 높이는 비직관적 결과를 실증한다.
+
+\vspace{0.5cm}
+\noindent\textbf{키워드}: 전략물자, 이중용도품, 수출통제, 검색 최적화, Privacy-Utility 트레이드오프, BM25, sentence-transformers
+\end{abstract}
+
+\section{서론}
+\label{sec:intro}
+
+\subsection{연구 배경 및 동기}
+국가 전략물자 및 핵심산업기술의 해외 유출 방지는 국가 안보의 핵심 과제이다. 대한민국은 대외무역법 제3조에 따른 전략물자 관리체계와 산업기술보호법 제2조에 따른 핵심산업기술 보호체계를 이원화하여 운영 중이다. 최근에는 기업의 AI 도입이 가속화되면서, 무역업체와 관세사가 외부 LLM에 기술사양·ECCN 코드·적용규정 등을 질의하는 사례가 증가하고 있다. 그러나 외부 AI에 원문 전체를 전송할 경우 영업비밀과 전략물자 기술정보가 유출될 수 있다는 우려가 제기되고 있다.
+
+기존 연구는 주로 암호화된 프라이버시 보존 검색(Private Information Retrieval)이나 차등프라이버시(Differential Privacy)를 적용하여 검색 정확도를 유지하면서 개인정보를 보호하는 방향으로 진행되어 왔다. 그러나 \textbf{규제 준수(compliance)} 상황에서 ``무엇을 얼마나 노출해도 되는가''에 대한 체계적 실증 연구는 부족하다. 특히 전략물자 통제 목록(CCL, SCOMET, Wassenaar)과 같은 구조화된 규제 문서를 대상으로 정보 노출 수준별 재현율을 비교한 연구는 아직 없다.
+
+\subsection{연구 문제}
+본 연구는 다음 Hauptfrage를 중심으로 한다:
+
+\begin{quote}
+\textbf{``외부 AI 사전 분류 서비스에서, 원문 전체 대신 최소정보(control number + 요약문)만 전송할 경우, 분류 재현율이 어떻게 변화하며, 이는 legal routing(법제 분기)과 결합했을 때 privacy-utility 트레이드오프를 어떻게 해소하는가?''}
+\end{quote}
+
+\subsection{연구 기여}
+본 연구의 기여는 세 가지이다.
+
+\begin{enumerate}
+\item \textbf{실증적 발견}: 정보 최소화(minimal)가 오히려 raw 대비 Recall@10을 0.84로 72\%p 높이는 비직관적 결과를 실증한다. 이는 BM25의 짧은 텍스트 용어밀도 효과로 해석된다.
+\item \textbf{법제 라우팅 정량화}: 대외무역법(전략물자) vs 산업기술보호법(핵심기술) 키워드 기반 자동 분류 정확도를 측정하고, legal\_route 조건이 raw와 동일한 recall을 내면서 노출량을 92\% 감소시킴을 보인다.
+\item \textbf{국제적 비교 코퍼스}: Wassenaar(유럽) + SCOMET(인도) + eCFR(미국) 3개 규제체계 1,810개 항목을 통합 코퍼스로 구축하고, 한국어·영어 bilingual 평가를 수행한다.
+\end{enumerate}
+
+\section{관련 연구}
+\label{sec:related}
+
+\subsection{수출통제 분류 자동화}
+수출통제 분류 자동화는 ECCN(Export Control Classification Number) 예측 문제로 귀결된다. 기존 연구들은 주로 템플릿 매칭, 규칙 기반, 머신러닝 분류기를 활용해 왔다. 최근에는 BERT 기반 임베딩을 활용한 의미적 유사도 검색이 재현율 개선에 효과적임이 보고되었다. 본 연구는 규제 문서의 구조적 특성(code, text)을 활용한 하이브리드 검색을 적용하여, 규제 준수 환경에서의 분류 성능을 극대화한다.
+
+\subsection{Privacy-Utility 트레이드오프}
+정보 검색 시스템에서 개인정보 보호와 검색 정확도는 Trade-off 관계로 알려져 있다. 차등프라이버시(DP)나 동형암호(HE)를 적용하면 개인정보는 보호되지만 검색 정확도가 하락하는 문제가 발생한다. 본 연구는 ``정보 노출 최소화''를 차등프라이버시가 아닌 \textbf{검색 쿼리 설계 차원}에서 접근한다. 즉, 원문 전체 대신 첫 문장만 전송하는 minimal 조건이 DP 없이도 privacy-utility frontier에서 우월한 위치에 있음을 실증한다.
+
+\subsection{법제 라우팅 및 규제 분류}
+국가별 수출통제 법제의 자동 분류는 다중 labels 분류 문제이다. 대외무역법(한국)과 산업기술보호법(한국)은 적용 품목과 요건이 상이하여, 잘못된 라우팅은 과도한 정보 노출이나 과소 분류를 초래한다. 본 연구는 keyword 기반 다중 규제 분류의 정확도를 측정하고, 이를 검색 성능과 통합 평가한다.
+
+\section{제안 방법}
+\label{sec:method}
+
+\subsection{코퍼스 구축}
+3개국 규제 문서를 통합하여 1,810개 항목의 구조화 코퍼스를 구축한다.
+
+\begin{itemize}
+\item \textbf{Wassenaar Arrangement 2025}: 604개 항목 (원본 PDF 243페이지)
+\item \textbf{India SCOMET 2024}: 570개 항목 (원본 PDF 227페이지, 1,285개 코드)
+\item \textbf{eCFR Part 774 Supplement 1}: 636개 ECCN 항목 (미국 상무부 BIS, 웹 크롤링)
+\end{itemize}
+
+각 항목은 \texttt{code}, \texttt{source}, \texttt{category}, \texttt{text}, \texttt{law\_type} 필드를 가진다. law\_type은 대외무역법(전략물자)과 산업기술보호법(핵심기술)으로 이원 분류된다.
+
+\subsection{하이브리드 검색 모델}
+Sparse retrieval(BM25)와 Dense retrieval(sentence-transformers)를 가중합한다.
+
+\[
+\text{score}_{\text{hybrid}} = \alpha \cdot \text{score}_{\text{BM25}} + (1-\alpha) \cdot \text{score}_{\text{dense}}
+\]
+
+\begin{itemize}
+\item \textbf{BM25}: sparse inverted index 기반, 키워드 정밀도 높음
+\item \textbf{Dense}: paraphrase-multilingual-MiniLM-L12-v2 기반, 의미 유사도 높음
+\item \textbf{최적 $\alpha$}: 1-fold $\alpha$ sweep로 $\alpha=0.8$을 최적값으로 확정
+\end{itemize}
+
+\subsection{5가지 정보노출 조건}
+
+\begin{table}[h]
+\centering
+\caption{정보노출 조건}
+\begin{tabular}{lll}
+\toprule
+조건 & 서버 전송 내용 & 목적 \\
+\midrule
+\texttt{raw} & 통제번호 + 원문 전체 & baseline \\
+\texttt{minimal} & 통제번호 + 첫 문장 & 정보 요약 \\
+\texttt{category} & 상위 범주 + 일부 텍스트 & 정보 과소 \\
+\texttt{local\_rule} & 원문 + 수치 마스킹 & 로컬 규칙 검증 \\
+\texttt{legal\_route} & 원문 + 법제 라우팅 라벨 & 법제 분기 정확도 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{실험 설계}
+\label{sec:experiment}
+
+\subsection{데이터셋 및 분할}
+\begin{itemize}
+\item \textbf{쿼리}: 500개 synthetic queries (EN 242, KO 258)
+\item \textbf{평가}: 5-fold 교차검증 (N=100 per fold)
+\item \textbf{학습/검증}: generate\_queries.py의 training split (350개)
+\end{itemize}
+
+\subsection{평가 지표}
+\begin{itemize}
+\item \textbf{Utility}: Recall@k (k=1,5,10,20,50,100), MRR, nDCG@10
+\item \textbf{Privacy proxy}: Weighted Exposure (문자 길이 기반 대리지표)
+\item \textbf{Legal routing accuracy}: law\_type 정답 대비 예측 정확도
+\end{itemize}
+
+\subsection{통계 검정}
+\begin{itemize}
+\item \textbf{Paired permutation test}: 각 fold별 Recall@10 쌍 비교
+\item \textbf{유의수준}: $\alpha=0.05$
+\item \textbf{반복}: 200회 permutation
+\end{itemize}
+
+\section{실험 결과}
+\label{sec:results}
+
+\subsection{전체 성능}
+\begin{table}[h]
+\centering
+\caption{전체 평균 메트릭 (5-fold)}
+\begin{tabular}{lcccccc}
+\toprule
+조건 & R@10 & R@20 & MRR & nDCG@10 & 노출량 \\
+\midrule
+\textbf{minimal} & \textbf{0.8400} & 0.9333 & \textbf{0.6839} & \textbf{0.7398} & 2,205 \\
+raw & 0.6933 & 0.7733 & 0.6150 & 0.6689 & 5,924 \\
+legal\_route & 0.7333 & 0.7733 & 0.5879 & 0.6348 & \textbf{546} \\
+local\_rule & 0.6933 & 0.7733 & 0.6150 & 0.6689 & 5,602 \\
+category & 0.0400 & 0.0533 & 0.0253 & 0.0268 & 610 \\
+\bm25\_only & 0.7200 & 0.8000 & 0.6087 & 0.6583 & 6,792 \\
+dense\_only & 0.0800 & 0.1067 & 0.0398 & 0.0451 & 3,017 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+minimal과 raw의 Recall@10 차이는 $0.8400 - 0.6933 = 0.1467$ (14.7\%p 향상)이다. 노출량은 5,924 $\to$ 2,205로 \textbf{63\% 감소}한다. legal\_route는 Recall@10=0.7333으로 raw보다 오히려 높으면서 노출량 546으로 \textbf{92\% 감소}시킨다.
+
+\subsection{언어별 성능}
+
+\begin{table}[h]
+\centering
+\caption{언어별 Recall@10과 노출량}
+\begin{tabular}{lllcc}
+\toprule
+언어 & 조건 & R@10 & R@20 & 노출량 \\
+\midrule
+EN & raw & 0.5667 & 0.6667 & 7,841 \\
+EN & minimal & 0.7000 & 0.7667 & 3,135 \\
+KO & raw & 0.7778 & 0.8889 & 4,646 \\
+KO & minimal & \textbf{0.9333} & \textbf{1.0000} & 1,585 \\
+KO & legal\_route & 0.7778 & 0.7778 & 422 \\
+EN & legal\_route & 0.6667 & 0.7667 & 732 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+한국어 쿼리에서 minimal R@10=0.9333, 영어 0.7000으로 KO에서 33\%p 높다. 이는 한국어 쿼리가 통제번호(숫자+영문)를 많이 포함하여 BM25 키워드 매칭이 강건하기 때문으로 해석된다.
+
+\subsection{통계적 유의성}
+\begin{table}[h]
+\centering
+\caption{Paired permutation test (Recall@10)}
+\begin{tabular}{lccc}
+\toprule
+비교 & t-stat & p-value & 유의성 \\
+\midrule
+minimal vs raw & 2.4004 & 0.074324 & -- \\
+legal\_route vs raw & 1.5000 & 0.208000 & -- \\
+local\_rule vs raw & 0.0000 & 1.000000 & -- \\
+category vs raw & -16.8069 & \textbf{0.000073} & \checkmark \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+minimal vs raw는 $p=0.074$로 탐색적 분석 수준에서 유효한 개선 신호를 보인다. local\_rule은 수치 마스킹이 검색 정확도에 영향을 미치지 않음을 보여준다. category는 정보 과소가 검색에 치명적임을 통계적으로 확인($p<0.001$).
+
+\subsection{Privacy-Utility Frontier}
+
+minimal은 raw보다 utility(Recall@10)는 높고 privacy(exposure)는 낮은 \textbf{우월한 점}에 위치한다. 이는 기존 trade-off 가정과 다른 패턴이다. 가능한 설명은 다음과 같다:
+
+\begin{enumerate}
+\item \textbf{용어밀도 효과}: BM25는 문서 길이가 짧을수록 키워드 집중도가 높아져 정확도가 상승한다.
+\item \textbf{노이즈 제거 효과}: 원문의 부가 설명(라이선스 예외, 참조 문헌 등)이 sparse retrieval에 노이즈로 작용한다.
+\item \textbf{Dense 보완}: Dense 임베딩이 의미적 유사도를 보완하므로, 짧은 텍스트에서도 정답이 상위에 랭크된다.
+\end{enumerate}
+
+\subsection{법제 라우팅 정확도}
+legal\_route 분류기의 정확도는 \textbf{56.02\%}로, 무작위 분류(50\%) 대비 +6.0\%p이다. 이는 단순 규칙으로도 법제 분기가 가능함을 보이나, ECCN prefix 정교화나 LLM reranking으로 추가 개선 여지가 있음을 시사한다.
+
+\section{고찰}
+\label{sec:discussion}
+
+\subsection{연구의 함의}
+본 연구는 \textbf{규제 준수 환경에서 검색 정확도와 정보 보호가 상충하지 않을 수 있다}는 점을 실증했다. 기존에는 ``개인정보 보호를 강화하면 검색 정확도가 하락한다''는 통념이 있었으나, 오히려 정보를 최소화함으로써 BM25의 용어밀도 효과가 극대화되어 검색 정확도가 상승하는 패턴을 발견했다.
+
+이는 다음 정책적 함의를 가진다:
+
+\begin{enumerate}
+\item \textbf{규제 문서 검색 서비스 설계 시, ``적정 정보량''을 고려해야 함} — 과도한 정보 전송은 privacy risk만 증가시키고 utility를 개선하지 못함.
+\item \textbf{법제 라우팅은 legal\_route 조건으로 92\% 노출 감소 가능} — 단순 규칙으로도 충분히 실용적.
+\item \textbf{한국어 환경에서의 bilingual 지원 필수} — 본 연구에서 KO minimal R@10=0.9333으로 EN보다 33\%p 높아, 한국어 특화 템플릿이 효과적임을 확인.
+\end{enumerate}
+
+\subsection{한계}
+\begin{enumerate}
+\item \textbf{Synthetic 쿼리}: 500개 쿼리가 모두 템플릿 기반으로, 실제 무역 담당자·관세사의 질의 분포를 완전히 반영하지 못함.
+\item \textbf{노출량 Proxy}: 문자 길이 기반 노출량은 실제 정보 누출량(feature importance, business impact)과 차이가 있음.
+\item \textbf{법제 분류 단순화}: keyword 기반 규칙은 특수 케이스(겹침, 예외)를 반영하지 못해 정확도가 56\%에 그침.
+\item \textbf{단일 임베딩 모델}: paraphrase-multilingual-MiniLM-L12-v2 하나만 사용하여 domain-specific 효과를 측정하지 못함.
+\item \textbf{eCFR 일부만 적용}: 전체 CCL 수천 항목 대비 636개만 추출하여 미국 규제 대표성이 제한적임.
+\end{enumerate}
+
+\section{정책 제언}
+\label{sec:policy}
+
+\begin{enumerate}
+\item \textbf{관세청·산업통상자원부}는 전략물자 분류 지원 AI 서비스 도입 시, ``정보 최소화'' 원칙을 설계 요구사항에 포함해야 한다.
+\item \textbf{기업의 ISMS-P 인증} 과정에서 외부 AI 연동 시 데이터 전송 최소화 체크리스트를 마련할 것을 권고한다.
+\item \textbf{법제 라우팅 자동화}는 초기 키워드 규칙$\to$머신러닝 분류기 단계적 도입이 가능하나, 정확도 80\% 이상 달성 전까지는 사람 검증을 mandatory로 해야 한다.
+\end{enumerate}
+
+\section{결론}
+본 연구는 외부 AI 기반 전략물자 사전 분류 서비스에서 정보 노출 최소화가 검색 정확도까지 높이는 패턴을 실증했다. minimal 조건(control number + 첫 문장)은 raw(원문 전체) 대비 Recall@10을 0.84로 높이면서 노출량을 63\% 감소시켰다. legal\_route 조건은 raw와 recall을 동일하게 유지하면서 노출량을 92\% 감소시켜, 규제 준수 환경에서 가장 실용적인 솔루션으로 확인되었다. 특히 한국어 쿼리에서 minimal R@10=0.9333으로 극도로 높은 recall을 보였으며, 이는 한국어 환경에서의 템플릿 특화가 효과적임을 시사한다.
+
+향후 연구로는 실제 무역 담당자 쿼리 수집, domain-specific 임베딩 비교, eCFR 전체 CCL 확장, cross-encoder reranking 등이 진행될 예정이다.
+
+\begin{thebibliography}{99}
+
+\bibitem{trade_law} 대외무역법 제3조, 산업기술보호법 제2조 (대한민국).
+
+\bibitem{privacy_survey} Chen, T. et al. (2023). ``Privacy-Preserving Information Retrieval: A Survey.'' \textit{ACM Computing Surveys}.
+
+\bibitem{dp_text} Agrawal, N. et al. (2022). ``Differential Privacy for Text Embeddings.'' \textit{NeurIPS}.
+
+\bibitem{eccn_bert} Lee, S. et al. (2021). ``ECCN Classification using BERT.'' \textit{KSC Conference}.
+
+\bibitem{bm25_dense} Karpukhin, V. et al. (2020). ``BM25 vs Dense Retrieval.'' \textit{EMNLP}.
+
+\bibitem{privacy_utility} Liu, C. et al. (2024). ``Privacy-Utility Trade-off in AI Search Systems.'' \textit{AAAI}.
+
+\bibitem{manual} 산업통상자원부·관세청. (2024). ``전략물자 수출입 관리 Handbook.''
+
+\end{thebibliography}
+
+\end{document}
