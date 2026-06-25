@@ -1,164 +1,76 @@
 #!/usr/bin/env python3
+"""Summarize conservative legal/workflow routing hints.
+
+This is not a classifier accuracy experiment.  The repository deliberately no
+longer reports "legal routing accuracy" because the prior labels were
+heuristic labels, not official legal determinations.
 """
-Evaluate legal_route classifier WITHOUT using pre-existing law_type labels.
-Pure keyword + code-prefix rules only.
-"""
-import json, re
-from pathlib import Path
+
+from __future__ import annotations
+
+import json
 from collections import Counter
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 DATA_DIR = ROOT / "data"
 OUT_DIR = ROOT / "output"
+OUT_DIR.mkdir(exist_ok=True)
 
-corpus = json.loads((DATA_DIR / "corpus" / "combined.json").read_text(encoding="utf-8"))
+CORPUS_PATH = DATA_DIR / "corpus" / "combined.json"
 
-def classify_pure_rules(entry):
-    """Classify using ONLY code prefix and keyword matching."""
-    text = entry.get("text", "").lower()
-    code = entry.get("code", "").upper()
-    
-    # ECCN prefix rules (US eCFR)
-    if code.startswith("ECCN-"):
-        base = code.replace("ECCN-", "")[:2]
-        # 0A-E: military/strategic -> trade law
-        if base.startswith("0") and base[1] in "ABCDE":
-            return "대외무역법"
-        # 1C/2B/3A/5A/6A/7A/8A/9A: advanced tech -> tech protection
-        if base in ["1C", "2B", "3A", "5A", "6A", "7A", "8A", "9A"]:
-            return "산업기술보호법"
-        # 1A/2A/3A/4A/5A/6A: depends
-        if base in ["1A", "2A", "3A", "4A", "5A", "6A"]:
-            if any(kw in text for kw in ["semiconductor", "microprocessor", "integrated circuit", "encryption", "cryptographic"]):
-                return "산업기술보호법"
-            return "대외무역법"
-        # Default for ECCN
-        if base.startswith("1") or base.startswith("2"):
-            return "산업기술보호법"
-        return "대외무역법"
-    
-    # Wassenaar code patterns
-    # 0A-E: military -> trade law
-    if re.match(r'^0[ABCDE]', code):
-        return "대외무역법"
-    # 1.A -> military
-    if code.startswith("1.A"):
-        return "대외무역법"
-    # 1.B -> missile
-    if code.startswith("1.B"):
-        return "대외무역법"
-    # 2.B -> materials processing -> tech
-    if code.startswith("2.B"):
-        return "산업기술보호법"
-    # 3.A -> electronics -> tech
-    if code.startswith("3.A"):
-        return "산업기술보호법"
-    # 4.A -> sensors -> tech (sometimes military)
-    if code.startswith("4.A"):
-        if "missile" in text or "military" in text:
-            return "대외무역법"
-        return "산업기술보호법"
-    # 5.A -> telecommunications -> tech
-    if code.startswith("5.A"):
-        return "산업기술보호법"
-    # 6.A -> instruments -> tech
-    if code.startswith("6.A"):
-        return "산업기술보호법"
-    # 7.A -> aerospace -> trade
-    if code.startswith("7.A"):
-        return "대외무역법"
-    # 8.A -> marine -> trade
-    if code.startswith("8.A"):
-        return "대외무역법"
-    # 9.A -> general -> tech
-    if code.startswith("9.A"):
-        return "산업기술보호법"
-    
-    # SCOMET patterns
-    if code.startswith("SCOMET-MIL") or code.startswith("SCOMET-ML"):
-        return "대외무역법"
-    if code.startswith("SCOMET-NUM"):
-        return "산업기술보호법"
-    
-    # Text keyword fallback
-    military_kws = ["firearm", "ammunition", "weapon", "military", "tank", "aircraft",
-                    "missile", "naval", "artillery", "munitions", "armored"]
-    tech_kws = ["semiconductor", "microprocessor", "encryption", "cryptographic",
-                "integrated circuit", "chip", "wafer", "sensor", "laser", "radar"]
-    
-    mil_score = sum(1 for kw in military_kws if kw in text)
-    tech_score = sum(1 for kw in tech_kws if kw in text)
-    
-    if mil_score > tech_score:
-        return "대외무역법"
-    elif tech_score > mil_score:
-        return "산업기술보호법"
-    else:
-        return "대외무역법"  # default
-
-correct = 0
-total = 0
-confusion = {"TP": 0, "TN": 0, "FP": 0, "FN": 0}
-
-for entry in corpus:
-    true_label = entry.get("law_type", "")
-    if not true_label:
-        continue
-    
-    pred = classify_pure_rules(entry)
-    
-    true_is_trade = "대외" in true_label
-    pred_is_trade = pred == "대외무역법"
-    
-    total += 1
-    if pred_is_trade == true_is_trade:
-        correct += 1
-        if true_is_trade:
-            confusion["TP"] += 1
-        else:
-            confusion["TN"] += 1
-    else:
-        if true_is_trade:
-            confusion["FN"] += 1
-        else:
-            confusion["FP"] += 1
-
-accuracy = correct / total if total > 0 else 0
-print(f"Pure-rule legal_route accuracy: {accuracy:.4f}")
-print(f"Total evaluated: {total}")
-print(f"Confusion: {confusion}")
-
-# Dump misclassified examples
-fp_examples = []
-fn_examples = []
-for entry in corpus:
-    true_label = entry.get("law_type", "")
-    if not true_label:
-        continue
-    pred = classify_pure_rules(entry)
-    true_is_trade = "대외" in true_label
-    pred_is_trade = pred == "대외무역법"
-    if pred_is_trade != true_is_trade:
-        ex = {"code": entry["code"], "source": entry["source"], "pred": pred, "true": true_label}
-        if pred_is_trade and not true_is_trade:
-            fp_examples.append(ex)
-        else:
-            fn_examples.append(ex)
-
-print(f"\nFalse positives (pred trade, true tech): {len(fp_examples)}")
-for ex in fp_examples[:5]:
-    print(f'  {ex["code"]} ({ex["source"]}): pred={ex["pred"]}, true={ex["true"]}')
-print(f"\nFalse negatives (pred tech, true trade): {len(fn_examples)}")
-for ex in fn_examples[:5]:
-    print(f'  {ex["code"]} ({ex["source"]}): pred={ex["pred"]}, true={ex["true"]}')
-
-results = {
-    "accuracy": round(accuracy, 4),
-    "total": total,
-    "confusion": confusion,
-    "fp_examples": fp_examples[:20],
-    "fn_examples": fn_examples[:20],
+ROUTE_DESCRIPTIONS = {
+    "strategic_goods_review": "전략물자/기술 통제목록 후보 검토 및 YesTrade 자가·전문판정 안내",
+    "foreign_control_list_reference": "외국 공개 통제목록 참고자료. 한국 법적 판정에는 직접 사용하지 않고 국내 고시·YesTrade 확인 필요",
 }
-(OUT_DIR / "legal_route_pure_rules.json").write_text(
-    json.dumps(results, indent=2, ensure_ascii=False), encoding="utf-8"
-)
+
+
+def summarize(corpus: list[dict]) -> dict:
+    route_counter = Counter(entry.get("official_route", "unknown") for entry in corpus)
+    source_counter = Counter(entry.get("source", "unknown") for entry in corpus)
+    flag_counter = Counter(flag for entry in corpus for flag in entry.get("review_flags", []))
+    nct_candidates = [
+        {
+            "code": entry["code"],
+            "source": entry["source"],
+            "text_preview": entry["text"][:220],
+        }
+        for entry in corpus
+        if "possible_national_core_technology_review" in entry.get("review_flags", [])
+    ][:50]
+
+    return {
+        "disclaimer": (
+            "These are conservative workflow hints for research. They are not legal "
+            "classifications, export permits, self-classification results, or expert determinations."
+        ),
+        "route_counts": dict(route_counter),
+        "route_descriptions": ROUTE_DESCRIPTIONS,
+        "source_counts": dict(source_counter),
+        "review_flag_counts": dict(flag_counter),
+        "possible_national_core_technology_examples": nct_candidates,
+        "recommended_output_policy": [
+            "Do not output 'not controlled' or 'safe to export'.",
+            "Return candidate control entries, missing information, and official next steps.",
+            "For Korean compliance, direct users to YesTrade self/expert classification and catch-all review.",
+            "If national core technology keywords appear, add a secondary 산업기술보호법/국가핵심기술 검토 flag without claiming applicability.",
+        ],
+        "official_reference_links": {
+            "YesTrade system guidance": "https://www.yestrade.go.kr/system-guidance",
+            "YesTrade self-classification limitations": "https://www.yestrade.go.kr/judgements/self/intro",
+            "Strategic Items Export/Import Notice": "https://www.law.go.kr/LSW/admRulInfoP.do?admRulSeq=2100000270104&chrClsCd=010201",
+            "National Core Technology program": "https://kaits.or.kr/web/content.do?menu_cd=000067",
+        },
+    }
+
+
+def main() -> None:
+    corpus = json.loads(CORPUS_PATH.read_text(encoding="utf-8"))
+    result = summarize(corpus)
+    out = OUT_DIR / "routing_summary.json"
+    out.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+
+
+if __name__ == "__main__":
+    main()

@@ -1,106 +1,106 @@
-# 전략물자 AI 사전 트리아지
+# 전략물자 AI 사전 트리아지 실험
 
-**리포지토리**: https://github.com/jaepaly/2026sanbo  
-**코퍼스**: Wassenaar Arrangement 2025 (604) + India SCOMET 2024 (570) + eCFR Part 774 Supp.1 (636) = **1,810 항목**
+이 저장소는 외부 AI/검색 서비스에 기술정보를 전송할 때, 반환·처리하는 정보량을 줄이면서 공개 통제목록 후보검색 성능을 어느 정도 유지할 수 있는지 검증하기 위한 연구용 실험 저장소입니다.
 
----
+중요한 정정:
 
-## 연구 질문 (A-scenario)
+- 이 실험은 전략물자 해당/비해당을 법적으로 판정하지 않습니다.
+- 이 실험은 수출허가, 자가판정, 전문판정을 대체하지 않습니다.
+- 이전 버전의 “정답 코드가 쿼리에 포함된 A-scenario”는 후보탐지 실험으로 부적절하여 제거했습니다.
+- 법제 라우팅 “정확도” 수치는 공식 라벨이 아니므로 제거했습니다.
 
-전략물자 분류 code가 이미 알려져 있을 때, 서버가 클라이언트에게 **어떤 정보 수준으로 응답해야 recall과 privacy를 동시에 최적화할 수 있는가?**
+## 현재 연구 질문
 
-- code는 클라이언트가 이미 알고 있음 (e.g., 관세사가 ECCN 코드를 특정한 상태)
-- 서버는 code에 대한 추가 설명을 raw(원문 전체) / minimal(첫 문장) / legal_route(법제 라벨) 등으로 응답
-- 각 응답 수준별 **Recall@10**과 **Weighted Exposure(문자 길이 기반 privacy proxy)**를 측정
+공개 통제목록 설명문에서 파생한 제품·기술 설명형 쿼리를 사용할 때, 통제번호를 쿼리에 넣지 않고도 후보 통제항목을 검색할 수 있는가? 또한 검색 결과로 반환하는 정보량을 줄이면 Recall@k와 정보노출량은 어떻게 변하는가?
 
----
+## 데이터
 
-## 최종 결과 (v6.2: realistic A-scenario + embedding comparison, 5-fold, ALPHA=0.8)
+정화 후 코퍼스는 1,797개 항목입니다.
 
-| 조건 | R@10 | R@20 | MRR | nDCG@10 | 노출량 | 감소율 |
-|---|---|---|---|---|---|---|
-| **minimal** | **0.8800** | 0.92 | **0.7288** | **0.7616** | **1,701** | **71%** ↓ |
-| raw | 0.7867 | 0.88 | 0.6375 | 0.6664 | 5,921 | — |
-| **legal_route** | **0.8133** | 0.8667 | 0.5900 | 0.6391 | **497** | **92%** ↓ |
-| local_rule | 0.7867 | 0.88 | 0.6375 | 0.6664 | 5,584 | 6% ↓ |
-| category | 0.0267 | 0.0533 | 0.0328 | 0.0267 | 582 | 90% ↓ |
-| bm25_only | 0.7733 | 0.88 | 0.6324 | 0.6589 | 7,047 | — |
-| dense_only | 0.0800 | 0.1200 | 0.0553 | 0.0556 | 2,754 | — |
+| 소스 | 항목 수 | 원문 |
+|---|---:|---|
+| Wassenaar Arrangement 2025 | 585 | [공식 PDF](https://www.wassenaar.org/app/uploads/2025/12/List-of-Dual-Use-Goods-and-Technologies-and-ML-2025.pdf) |
+| India SCOMET 2024 | 575 | [DGFT 공식 PDF](https://content.dgft.gov.in/Website/UPDATED%20SCOMET%20List%202024%20as%20on%2002.09.2024.pdf) |
+| U.S. eCFR CCL, 15 CFR Part 774 Supp. 1 | 637 | [eCFR](https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-774/appendix-Supplement%20No.%201%20to%20Part%20774) |
 
-### 법제 라우팅 정확도 (순수 규칙, law_type 레이블 제외)
+품질 리포트: `data/corpus/corpus_quality_report.json`
 
-| 지표 | 값 |
-|---|---|
-| ECCN prefix + keyword 정확도 | **0.6768** |
-| 무작위 baseline (2-class) | 0.5000 |
-| 개선폭 | +17.7%p |
+## 쿼리
 
-### 언어별 하위집단
+`generate_queries.py`는 정답 통제번호를 포함하지 않는 설명형 쿼리만 생성합니다.
 
-| 언어 | 조건 | R@10 | R@20 | 노출량 |
-|---|---|---|---|---|
-| EN | minimal | 0.9083 | 0.9417 | 2,372 |
-| EN | raw | 0.7000 | 0.7667 | 8,305 |
-| KO | minimal | **0.9500** | **0.9773** | 1,431 |
-| KO | raw | 0.8500 | 0.9227 | 4,940 |
-| KO | legal_route | 0.8250 | 0.8636 | 428 |
-| EN | legal_route | 0.7667 | 0.8444 | 792 |
+- 총 쿼리: 780개
+- train/val/test: 78 / 78 / 624
+- 소스 분포: 각 소스 260개
+- 언어 분포: EN 390개, KO 390개
+- 코드 누출 검증: 통과
 
-### 임베딩 모델 비교 (A-scenario)
+품질 리포트: `data/query_quality_report.json`
 
-| 모델 | R@10 | R@20 | MRR | nDCG@10 |
-|---|---|---|---|---|
-| **MiniLM + BM25 (α=0.8)** | **0.8800** | 0.92 | 0.7288 | 0.7616 |
-| **bge-m3 + BM25 (α=0.8)** | 0.8267 | 0.88 | 0.6234 | 0.6720 |
-| mpnet + BM25 (α=0.8) | 0.8000 | 0.88 | 0.6194 | 0.6631 |
-| all-Mini + BM25 (α=0.8) | 0.7867 | 0.88 | 0.6276 | 0.6664 |
-| Dense-only (MiniLM) | 0.0800 | 0.1200 | 0.0553 | 0.0556 |
+## 현재 결과
 
-### 통계적 유의성 (Paired permutation test, Recall@10, realistic queries)
+BM25 투명 기준선 결과입니다. 수치는 후보검색 성능이지 법적 판정 정확도가 아닙니다.
 
-| 비교 | p-value | 유의성 |
-|---|---|---|
-| minimal vs raw | 0.2650 | ❌ 통계적으로 유의하지 않음 |
-| legal_route vs raw | 0.8900 | ❌ |
-| local_rule vs raw | 1.0000 | ❌ |
-| category vs raw | 0.0100 | ✅ |
+| 조건 | R@1 | R@5 | R@10 | R@20 | MRR | nDCG@10 | 평균 노출량@10 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| full_text | 0.8702 | 0.9904 | 0.9968 | 0.9984 | 0.9235 | 0.9419 | 4,834 |
+| minimal_text | 0.7837 | 0.9583 | 0.9792 | 0.9856 | 0.8607 | 0.8896 | 1,623 |
+| minimal_no_code | 0.7676 | 0.9615 | 0.9808 | 0.9856 | 0.8525 | 0.8840 | 1,592 |
+| route_only | 0.0016 | 0.0032 | 0.0080 | 0.0160 | 0.0039 | 0.0038 | 702 |
+| random_baseline | - | - | 0.0048 | - | - | - | - |
 
----
+해석:
 
-## 핵심 발견
+- `minimal_text`는 `full_text` 대비 평균 노출량@10을 약 66.4% 줄이면서 R@10은 0.9968 → 0.9792로 1.76%p 감소했습니다.
+- `minimal_no_code`도 유사하게 낮은 노출량과 높은 R@10을 보입니다.
+- `route_only`는 법제/업무흐름 힌트만으로는 후보검색이 거의 불가능하다는 음성 대조군입니다.
 
-1. **practical privacy-utility optimization**: minimal이 raw와 recall 차이가 작으면서(0.79→0.88) 노출량 71% 감소 — 현장 적용 가능
-2. **legal_route의 압도적 privacy 효율**: raw와 recall 동일(0.79→0.81)하면서 노출량 92% 감소 — 법제 분류 정확도만 보장되면 이상적
-3. **한국어 특화**: KO minimal R@10=0.95
-4. **BM25 dominant**: 임베딩 모델 바꿔도 큰 차이 없음 — sparse 검색이 code 매칭에 압도적
-5. **Dense-only 한계**: R@10=0.08 — domain 특화 필요
+상세 결과: `output/report.md`, `output/experiment_logs.json`
 
----
+## 법제·업무흐름 라우팅
 
-## 솔직한 한계
+`experiment_legal_route.py`는 정확도 평가를 하지 않습니다. 대신 보수적 업무흐름 힌트를 요약합니다.
 
-1. **Synthetic→Realistic transition**: templates가 여전히 간단함. 실제 무역 담당자의 질의는 더 복잡함
-2. **통계 유의성 부족**: realistic queries에서 p=0.26 — "minimal이 통계적으로 더 낫다"는 주장 어려움
-3. **법제 라우팅 정확도 67.68%**: 개선 여지 있음 (LLM reranking, 국가별 매핑 테이블)
-4. **단일 임베딩 모델**: bge-m3까지 비교했으나 여전히 소수
-5. **노출량 Proxy**: 문자 길이 기반. 실제 정보 누출과 차이 있음
-6. **eCFR 637개**: 전체 CCL 대비 일부
-7. **A-scenario 가정**: code가 이미 알려진 상태
+- 전략물자 후보 검토 및 YesTrade 자가·전문판정 안내
+- 외국 공개 통제목록 참고자료 표시
+- 국가핵심기술 가능 키워드가 있을 때 2차 검토 플래그 표시
 
----
+공식 참고:
 
-## 실행 방법
+- [YesTrade 제도개요](https://www.yestrade.go.kr/system-guidance)
+- [YesTrade 온라인 자가판정 한계](https://www.yestrade.go.kr/judgements/self/intro)
+- [전략물자수출입고시](https://www.law.go.kr/LSW/admRulInfoP.do?admRulSeq=2100000270104&chrClsCd=010201)
+- [국가핵심기술 제도](https://kaits.or.kr/web/content.do?menu_cd=000067)
+
+## 재현 방법
 
 ```bash
-cd C:/Users/dor12/ai-agent-privacy-demo
-uv sync
-uv run python build_corpus_v2.py
-uv run python generate_queries.py
-uv run python run_experiments_v3.py
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+
+python build_corpus_clean.py
+python generate_queries.py
+python run_experiments.py
+python experiment_legal_route.py
 ```
 
----
+## 한계
 
-## 라이선스
+- 쿼리는 공개 통제목록 설명문에서 파생한 합성 쿼리입니다. 실제 기업·관세사 질의 대표성은 아직 부족합니다.
+- 코퍼스 파싱은 정규식 기반이므로 수작업 표본 검수가 필요합니다.
+- 현재 실험은 BM25 기준선입니다. Dense retrieval, reranker, LLM 비교는 기준선이 안정화된 뒤 별도 실험으로 추가해야 합니다.
+- 노출량은 문자 수 기반 proxy입니다. 실제 영업비밀·기술정보 민감도와 동일하지 않습니다.
 
-MIT
+## 제출 논문에서 안전한 주장
+
+사용 가능:
+
+> 정답 통제번호를 쿼리에 포함하지 않는 합성 설명형 쿼리에서, 공개 통제목록 후보검색 기준 `minimal_text` 조건은 `full_text` 대비 평균 반환 정보량을 약 66.4% 줄이면서 R@10 0.9792를 유지했다.
+
+사용 금지:
+
+- “AI가 전략물자 여부를 판정한다”
+- “법제 라우팅 정확도 n%”
+- “전문판정/자가판정을 대체할 수 있다”
+- “실제 기업 질의에서 검증됐다”

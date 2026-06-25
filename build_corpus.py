@@ -4,7 +4,7 @@ import json, re, os
 from pathlib import Path
 import pdfplumber
 
-DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+DATA_DIR = Path(__file__).resolve().parent / "data"
 OUT_DIR = DATA_DIR / "corpus"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -50,16 +50,15 @@ def parse_wassenaar(path: Path):
             if m:
                 if current and current["text"]:
                     entries.append(current)
-                parts = [x for x in m.groups() if x and not re.match(r"^\d+$", x) is False or x.isdigit()]
                 # rebuild code
                 raw = m.groups()
                 code_parts = []
-                for token in [raw[0], raw[1], raw[2], raw[3], raw[4], raw[5]]:
+                for token in raw[:-1]:
                     if token is not None:
                         code_parts.append(str(token))
                 code = ".".join(code_parts)
                 # strip trailing sentence-starting conjunctives that leaked from previous entry
-                desc = m.group(6 if len(m.groups()) >= 6 else 5).strip()
+                desc = raw[-1].strip()
                 current = {
                     "code": code,
                     "text": desc,
@@ -125,7 +124,7 @@ if __name__ == "__main__":
     (OUT_DIR / "wassenaar.json").write_text(
         json.dumps(was, ensure_ascii=False, indent=2), encoding="utf-8"
     )
-    sc = parse_scomet(DATA_DIR / "india_scomet.pdf")
+    sc = parse_scomet(DATA_DIR / "india_scomet_2024_official.pdf")
     (OUT_DIR / "india_scomet.json").write_text(
         json.dumps(sc, ensure_ascii=False, indent=2), encoding="utf-8"
     )

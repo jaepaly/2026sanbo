@@ -1,0 +1,286 @@
+{
+  "disclaimer": "These are conservative workflow hints for research. They are not legal classifications, export permits, self-classification results, or expert determinations.",
+  "route_counts": {
+    "foreign_control_list_reference": 1212,
+    "strategic_goods_review": 585
+  },
+  "route_descriptions": {
+    "strategic_goods_review": "전략물자/기술 통제목록 후보 검토 및 YesTrade 자가·전문판정 안내",
+    "foreign_control_list_reference": "외국 공개 통제목록 참고자료. 한국 법적 판정에는 직접 사용하지 않고 국내 고시·YesTrade 확인 필요"
+  },
+  "source_counts": {
+    "ecfr_part774": 637,
+    "india_scomet_2024": 575,
+    "wassenaar_2025": 585
+  },
+  "review_flag_counts": {
+    "possible_national_core_technology_review": 144,
+    "contains_cross_reference": 792,
+    "short_text": 226,
+    "possible_fragment": 3
+  },
+  "possible_national_core_technology_examples": [
+    {
+      "code": "ECCN-0A002",
+      "source": "ecfr_part774",
+      "text_preview": "Power generating or propulsion equipment “specially designed” for use with space, marine or mobile “nuclear reactors”. (These items are “subject to the ITAR.” See 22 CFR parts 120 through 130.)"
+    },
+    {
+      "code": "ECCN-0E001",
+      "source": "ecfr_part774",
+      "text_preview": "“Technology,” according to the Nuclear Technology Note, for the “development,” “production,” or “use” of items described in 0A002, or 0D001."
+    },
+    {
+      "code": "ECCN-1A225",
+      "source": "ecfr_part774",
+      "text_preview": "Platinized catalysts “specially designed” or prepared for promoting the hydrogen isotope exchange reaction between hydrogen and water for the recovery of tritium from heavy water or for the production of heavy water."
+    },
+    {
+      "code": "ECCN-1B228",
+      "source": "ecfr_part774",
+      "text_preview": "Hydrogen cryogenic distillation columns having all of the characteristics described in this ECCN (see List of Items Controlled)."
+    },
+    {
+      "code": "ECCN-1C235",
+      "source": "ecfr_part774",
+      "text_preview": "Tritium, tritium compounds, mixtures containing tritium in which the ratio of tritium to hydrogen atoms exceeds 1 part in 1,000, and products or devices containing any of the foregoing."
+    },
+    {
+      "code": "ECCN-1C240",
+      "source": "ecfr_part774",
+      "text_preview": "Nickel powder or porous nickel metal, other than nickel powder or porous nickel metal, specially prepared for the manufacture of gaseous diffusion barriers subject to the export licensing authority of the Nuclear Regulat"
+    },
+    {
+      "code": "ECCN-1C298",
+      "source": "ecfr_part774",
+      "text_preview": "Graphite and deuterium that is intended for use other than in a nuclear reactor, as follows (see List of Items Controlled)."
+    },
+    {
+      "code": "ECCN-2A290",
+      "source": "ecfr_part774",
+      "text_preview": "Generators and other equipment “specially designed”, prepared, or intended for use with nuclear plants."
+    },
+    {
+      "code": "ECCN-2A291",
+      "source": "ecfr_part774",
+      "text_preview": "Equipment, except items controlled by 2A290, related to nuclear material handling and processing and to nuclear reactors, and “parts,” “components” and “accessories” therefor (see List of Items Controlled)."
+    },
+    {
+      "code": "ECCN-2B007",
+      "source": "ecfr_part774",
+      "text_preview": "“Robots” having any of the following characteristics described in the List of Items Controlled and “specially designed” controllers and “end-effectors” therefor."
+    },
+    {
+      "code": "ECCN-2B207",
+      "source": "ecfr_part774",
+      "text_preview": "“Robots”, “end-effectors” and control units, other than those controlled by 2B007, as follows (see List of Items Controlled)."
+    },
+    {
+      "code": "ECCN-2B997",
+      "source": "ecfr_part774",
+      "text_preview": "“Robots” not controlled by 2B007 or 2B207 that are capable of employing feedback information in real-time processing from one or more sensors to generate or modify “programs” or to generate or modify numerical program da"
+    },
+    {
+      "code": "ECCN-3A090",
+      "source": "ecfr_part774",
+      "text_preview": "Integrated circuits as follows (see List of Items Controlled)."
+    },
+    {
+      "code": "ECCN-3A225",
+      "source": "ecfr_part774",
+      "text_preview": "Frequency changers (a.k.a. converters or inverters) and generators, except those subject to the export licensing authority of the Nuclear Regulatory Commission (see 10 CFR part 110 ), that are usable as a variable freque"
+    },
+    {
+      "code": "ECCN-3A226",
+      "source": "ecfr_part774",
+      "text_preview": "High-power direct current power supplies having both of the following characteristics (see List of Items Controlled), excluding items that are subject to the export licensing authority of the Nuclear Regulatory Commissio"
+    },
+    {
+      "code": "ECCN-3A227",
+      "source": "ecfr_part774",
+      "text_preview": "High-voltage direct current power supplies, having both of the following characteristics (see List of Items Controlled), excluding items that are subject to the export licensing authority of the Nuclear Regulatory Commis"
+    },
+    {
+      "code": "ECCN-3A233",
+      "source": "ecfr_part774",
+      "text_preview": "Mass spectrometers, capable of measuring ions of 230 u or greater and having a resolution of better than 2 parts in 230, and ion sources therefor, excluding items that are subject to the export licensing authority of the"
+    },
+    {
+      "code": "ECCN-3B001",
+      "source": "ecfr_part774",
+      "text_preview": "Equipment for the manufacturing of semiconductor devices, materials, or related equipment, as follows (see List of Items Controlled) and “specially designed” “components” and “accessories” therefor."
+    },
+    {
+      "code": "ECCN-3B002",
+      "source": "ecfr_part774",
+      "text_preview": "Test or inspection equipment “specially designed” for testing or inspecting finished or unfinished semiconductor devices as follows (see List of Items Controlled) and “specially designed” “components” and “accessories” t"
+    },
+    {
+      "code": "ECCN-3B903",
+      "source": "ecfr_part774",
+      "text_preview": "Scanning Electron Microscope (SEM) equipment designed for imaging semiconductor devices or integrated circuits, having all of the following (See List of Items Controlled)."
+    },
+    {
+      "code": "ECCN-3B904",
+      "source": "ecfr_part774",
+      "text_preview": "Cryogenic wafer probing “equipment”, having all of the following (see List of Items Controlled)."
+    },
+    {
+      "code": "ECCN-3B993",
+      "source": "ecfr_part774",
+      "text_preview": "Specified semiconductor manufacturing equipment as follows (see list of items controls), and “specially designed” “components” and “accessories” therefor."
+    },
+    {
+      "code": "ECCN-3B994",
+      "source": "ecfr_part774",
+      "text_preview": "Semiconductor manufacturing equipment that enables “advanced-node integrated circuit” production, as follows (see list of items controls), and “specially designed” “components” and “accessories” therefor."
+    },
+    {
+      "code": "ECCN-3C004",
+      "source": "ecfr_part774",
+      "text_preview": "Hydrides of phosphorus, arsenic or antimony, having a purity better than 99.999%, even diluted in inert gases or hydrogen."
+    },
+    {
+      "code": "ECCN-3C992",
+      "source": "ecfr_part774",
+      "text_preview": "Positive resists designed for semiconductor lithography specially adjusted (optimized) for use at wavelengths between 370 and 193 nm."
+    },
+    {
+      "code": "ECCN-3D005",
+      "source": "ecfr_part774",
+      "text_preview": "“Software” “specially designed” to restore normal operation of a microcomputer, “microprocessor microcircuit” or “microcomputer microcircuit” within 1 ms after an Electromagnetic Pulse (EMP) or Electrostatic Discharge (E"
+    },
+    {
+      "code": "ECCN-3D006",
+      "source": "ecfr_part774",
+      "text_preview": "' Electronic Computer-Aided Design ' ( ' ECAD ' ) “ software ” “specially designed” for the “development” of integrated circuits having any “ Gate-All-Around Field-Effect Transistor ” ( “ GAAFET ”) structure, and having "
+    },
+    {
+      "code": "ECCN-3E002",
+      "source": "ecfr_part774",
+      "text_preview": "“ Technology ” according to the General Technology Note other than that controlled in 3E001 for the “ development ” or “ production ” of a “ microprocessor microcircuit ”, “ micro-computer microcircuit ” and microcontrol"
+    },
+    {
+      "code": "ECCN-3E004",
+      "source": "ecfr_part774",
+      "text_preview": "“Technology” “required” for the slicing, grinding and polishing of 300 mm diameter silicon wafers to achieve a 'Site Front least sQuares Range' ('SFQR') less than or equal to 20 nm at any site of 26 mm x 8 mm on the fron"
+    },
+    {
+      "code": "ECCN-3E905",
+      "source": "ecfr_part774",
+      "text_preview": "“Technology” according to the General Technology Note for the “development” or “production” of integrated circuits or devices, using “Gate all-around Field-Effect Transistor” (“GAAFET”) structures."
+    },
+    {
+      "code": "ECCN-6A005",
+      "source": "ecfr_part774",
+      "text_preview": "“Lasers”, “components” and optical equipment, as follows (see List of Items Controlled), excluding items that are subject to the export licensing authority of the Nuclear Regulatory Commission (see 10 CFR part 110 )."
+    },
+    {
+      "code": "ECCN-6A102",
+      "source": "ecfr_part774",
+      "text_preview": "Radiation hardened detectors, other than those controlled by 6A002, “specially designed” or modified for protecting against nuclear effects (e.g., Electromagnetic Pulse (EMP), X-rays, combined blast and thermal effects) "
+    },
+    {
+      "code": "ECCN-6A103",
+      "source": "ecfr_part774",
+      "text_preview": "Radomes designed to withstand a combined thermal shock greater than 100 cal/sq cm accompanied by a peak over pressure of greater than 50 kPa, usable in protecting “missiles” against nuclear effects (e.g., Electromagnetic"
+    },
+    {
+      "code": "ECCN-6A205",
+      "source": "ecfr_part774",
+      "text_preview": "“Lasers,” “laser” amplifiers and oscillators, other than those controlled by 6A005 (see List of Items Controlled), excluding items that are subject to the export licensing authority of the Nuclear Regulatory Commission ("
+    },
+    {
+      "code": "0A105",
+      "source": "india_scomet_2024",
+      "text_preview": "Any other material containing one or more of the foregoing. Note 1 Source material includes uranium and thorium ores or concentrates. Note 2 Exports of following items, for the use only in non-nuclear activities, to a gi"
+    },
+    {
+      "code": "0A206",
+      "source": "india_scomet_2024",
+      "text_preview": "Such other fissionable material determined by the Central Government from time to time. Technical note The term “uranium enriched in the isotopes 235 or 233” means uranium containing the isotopes 235 or 233 or both in an"
+    },
+    {
+      "code": "0A301",
+      "source": "india_scomet_2024",
+      "text_preview": "Deuterium and heavy water Deuterium, heavy water (deuterium oxide) and any other deuterium compound, in which the ratio of deuterium to hydrogen atoms exceeds 1:5000, for use in a nuclear reactor in quantities exceeding "
+    },
+    {
+      "code": "0A302",
+      "source": "india_scomet_2024",
+      "text_preview": "Nuclear grade graphite Nuclear grade graphite having a purity level better than 5 parts per million (ppm) boron equivalent and with a density greater than 1.5 gram/cc - for use in a nuclear reactor or any other nuclear a"
+    },
+    {
+      "code": "0A308",
+      "source": "india_scomet_2024",
+      "text_preview": "Tritium, tritium compounds or mixtures containing tritium in which the ratio of tritium to hydrogen atoms exceeds 1 part in 1000, except when utilized in such quantities and for such purposes as for organic labelled comp"
+    },
+    {
+      "code": "0B001",
+      "source": "india_scomet_2024",
+      "text_preview": "Nuclear Reactors; associated equipment, components, and systems especially designed, prepared, or adapted or used or intended to be used in such reactors including but not limited to:- a. Complete nuclear reactors b. Nuc"
+    },
+    {
+      "code": "0B002",
+      "source": "india_scomet_2024",
+      "text_preview": "Plants for processing, production, concentration, conversion or recovery of Prescribed Substances (such as uranium, plutonium, thorium, deuterium, heavy water, tritium, lithium); associated equipment, components and syst"
+    },
+    {
+      "code": "0B003",
+      "source": "india_scomet_2024",
+      "text_preview": "Plants for reprocessing of irradiated nuclear fuel and equipment, components and systems especially designed, prepared or adapted or used or intended to be used in such plants, including but not limited to: a. Irradiated"
+    },
+    {
+      "code": "0B004",
+      "source": "india_scomet_2024",
+      "text_preview": "Plants for treatment, handling, storage and transportation of radioactive wastes from nuclear reactors or from plants for processing Source Materials or Special Fissionable Materials or from nuclear reprocessing plants; "
+    },
+    {
+      "code": "0B006",
+      "source": "india_scomet_2024",
+      "text_preview": "Plants for the fabrication of nuclear reactor fuel elements, and equipment especially designed or prepared therefor including but not limited to: a. fully automatic pellet inspection stations especially designed or prepa"
+    },
+    {
+      "code": "3B008",
+      "source": "india_scomet_2024",
+      "text_preview": "Refrigeration units and equipment capable of cooling hydrogen or helium to -250 degrees Celsius (23K) or lower."
+    },
+    {
+      "code": "4A004",
+      "source": "india_scomet_2024",
+      "text_preview": "Controlled atmosphere (vacuum or inert gas) induction furnaces, and power supplies therefor, as follows: a. Furnaces having all of the following characteristics: 1. Capable of operation at temperatures above 1123 K (850 "
+    },
+    {
+      "code": "4A009",
+      "source": "india_scomet_2024",
+      "text_preview": "Platinized catalysts specially designed or prepared for promoting the hydrogen isotope exchange reaction between hydrogen and water for the recovery of tritium from heavy water or for the production of heavy water."
+    },
+    {
+      "code": "4A014",
+      "source": "india_scomet_2024",
+      "text_preview": "Superconducting solenoidal electromagnets having all of the following characteristics: a. Capable of creating magnetic fields greater than 2 T; b. A ratio of length to inner diameter greater than 2; c. Inner diameter gre"
+    },
+    {
+      "code": "4A027",
+      "source": "india_scomet_2024",
+      "text_preview": "Turboexpanders or turboexpander-compressor sets having both of the following characteristics: a. Designed for operation with an outlet temperature of 35 K (- 238 ºC) or less; and b. Designed for a throughput of hydrogen "
+    },
+    {
+      "code": "4A028",
+      "source": "india_scomet_2024",
+      "text_preview": "Water-hydrogen sulphide exchange tray columns and internal contactors, as follows: N.B.: For columns which are specially designed or prepared for the production of heavy water, see Prescribed Equipment (0B002). a. Water-"
+    }
+  ],
+  "recommended_output_policy": [
+    "Do not output 'not controlled' or 'safe to export'.",
+    "Return candidate control entries, missing information, and official next steps.",
+    "For Korean compliance, direct users to YesTrade self/expert classification and catch-all review.",
+    "If national core technology keywords appear, add a secondary 산업기술보호법/국가핵심기술 검토 flag without claiming applicability."
+  ],
+  "official_reference_links": {
+    "YesTrade system guidance": "https://www.yestrade.go.kr/system-guidance",
+    "YesTrade self-classification limitations": "https://www.yestrade.go.kr/judgements/self/intro",
+    "Strategic Items Export/Import Notice": "https://www.law.go.kr/LSW/admRulInfoP.do?admRulSeq=2100000270104&chrClsCd=010201",
+    "National Core Technology program": "https://kaits.or.kr/web/content.do?menu_cd=000067"
+  }
+}

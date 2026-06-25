@@ -1,1 +1,7 @@
-output/
+__pycache__/
+*.py[cod]
+
+output/*
+!output/report.md
+!output/experiment_logs.json
+!output/routing_summary.json

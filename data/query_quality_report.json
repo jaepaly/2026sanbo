@@ -1,0 +1,504 @@
+{
+  "generated_by": "generate_queries.py",
+  "total_queries": 780,
+  "split_sizes": {
+    "train": 78,
+    "val": 78,
+    "test": 624
+  },
+  "source_distribution": {
+    "india_scomet_2024": 260,
+    "wassenaar_2025": 260,
+    "ecfr_part774": 260
+  },
+  "language_distribution": {
+    "ko": 390,
+    "en": 390
+  },
+  "reject_count_by_reason": {
+    "description_too_short_after_code_removal": 492
+  },
+  "reject_examples": [
+    {
+      "code": "ECCN-0A504",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Optical sighting devices for firearms ; and “components” as follows"
+    },
+    {
+      "code": "ECCN-0A505",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Ammunition as follows"
+    },
+    {
+      "code": "ECCN-0A506",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Semi-Automatic Rifles as follows"
+    },
+    {
+      "code": "ECCN-0A507",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Semi-Automatic Pistols as follows"
+    },
+    {
+      "code": "ECCN-0A508",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Semi-Automatic Shotguns as follows"
+    },
+    {
+      "code": "ECCN-0A602",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Guns and Armament as follows"
+    },
+    {
+      "code": "ECCN-0A604",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Commodities related to military explosive devices and charges"
+    },
+    {
+      "code": "ECCN-0A606",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Ground vehicles and related commodities, as follows"
+    },
+    {
+      "code": "ECCN-0A614",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Military training “equipment,” as follows"
+    },
+    {
+      "code": "ECCN-0A617",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Miscellaneous “Equipment,” Materials, and Related Commodities"
+    },
+    {
+      "code": "ECCN-0A979",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Police helmets and shields; and “specially designed” “components,” n.e.s"
+    },
+    {
+      "code": "ECCN-0A981",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Equipment designed for the execution of human beings as follows"
+    },
+    {
+      "code": "ECCN-0A998",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Oil and gas exploration equipment, software, and data, as follows"
+    },
+    {
+      "code": "ECCN-0A999",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Specific Processing Equipment, as Follows"
+    },
+    {
+      "code": "ECCN-0B999",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Specific Processing Equipment, as Follows"
+    },
+    {
+      "code": "ECCN-0C617",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Miscellaneous Materials “Specially Designed” for Military Use"
+    },
+    {
+      "code": "ECCN-0D614",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "“Software” related to military training “equipment,” as follows"
+    },
+    {
+      "code": "ECCN-0D999",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Specific Software, as Follows"
+    },
+    {
+      "code": "ECCN-0E614",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "“Technology,” as follows"
+    },
+    {
+      "code": "ECCN-1A001",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "“Parts” and “components” made from fluorinated compounds, as follows"
+    },
+    {
+      "code": "ECCN-1A002",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "“Composite” structures or laminates, as follows"
+    },
+    {
+      "code": "ECCN-1A005",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Body armor and “specially designed” “components” therefor, as follows"
+    },
+    {
+      "code": "ECCN-1A008",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Charges, devices and “components”, as follows"
+    },
+    {
+      "code": "ECCN-1A231",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Target assemblies and components for the production of tritium as follows :"
+    },
+    {
+      "code": "ECCN-1A613",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Armored and protective “equipment” and related commodities, as follows"
+    },
+    {
+      "code": "ECCN-1A985",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Fingerprinting powders, dyes, and inks"
+    },
+    {
+      "code": "ECCN-1A999",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Specific Processing Equipment, n.e.s., as Follows"
+    },
+    {
+      "code": "ECCN-1B018",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Items on the Arrangement Munitions List"
+    },
+    {
+      "code": "ECCN-1B201",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Filament winding machines and related equipment, as described in this"
+    },
+    {
+      "code": "ECCN-1B231",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Tritium facilities or plants, and equipment therefor, as follows"
+    },
+    {
+      "code": "ECCN-1B999",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Specific processing equipment, n.e.s., as follows"
+    },
+    {
+      "code": "ECCN-1C002",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Metal alloys, metal alloy powder and alloyed materials, as follows"
+    },
+    {
+      "code": "ECCN-1C003",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Magnetic metals, of all types and of whatever form, having any of the following"
+    },
+    {
+      "code": "ECCN-1C006",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Fluids and lubricating materials, as follows"
+    },
+    {
+      "code": "ECCN-1C008",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Non-fluorinated polymeric substances as follows"
+    },
+    {
+      "code": "ECCN-1C009",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Unprocessed fluorinated compounds as follows"
+    },
+    {
+      "code": "ECCN-1C010",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "“Fibrous or filamentary materials” as follows"
+    },
+    {
+      "code": "ECCN-1C011",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Metals and compounds, as follows"
+    },
+    {
+      "code": "ECCN-1C116",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Maraging steels having both of the following"
+    },
+    {
+      "code": "ECCN-1C202",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Alloys other than those controlled by or as follows"
+    },
+    {
+      "code": "ECCN-1C227",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Calcium having both of the following characteristics"
+    },
+    {
+      "code": "ECCN-1C228",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Magnesium having both of the following characteristics"
+    },
+    {
+      "code": "ECCN-1C229",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Bismuth having both of the following characteristics"
+    },
+    {
+      "code": "ECCN-1C241",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Rhenium and alloys containing rhenium"
+    },
+    {
+      "code": "ECCN-1C350",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Chemicals that may be used as precursors for toxic chemical agents"
+    },
+    {
+      "code": "ECCN-1C351",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Human and animal pathogens and “toxins,” as follows"
+    },
+    {
+      "code": "ECCN-1C353",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Genetic elements and genetically modified organisms, as follows"
+    },
+    {
+      "code": "ECCN-1C354",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Plant pathogens, as follows"
+    },
+    {
+      "code": "ECCN-1C608",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "“Energetic materials” and related commodities"
+    },
+    {
+      "code": "ECCN-1C998",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Non-fluorinated polymeric substances, not controlled by , as follows"
+    },
+    {
+      "code": "ECCN-1C999",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Specific Materials, n.e.s., as Follows"
+    },
+    {
+      "code": "ECCN-1D999",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Specific Software, n.e.s., as Follows"
+    },
+    {
+      "code": "ECCN-1E002",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Other “technology” as follows"
+    },
+    {
+      "code": "ECCN-2A001",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Anti-friction bearings, bearing systems and “components,” as follows,"
+    },
+    {
+      "code": "ECCN-2A225",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Crucibles made of materials resistant to liquid actinide metals"
+    },
+    {
+      "code": "ECCN-2A226",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Valves having all of the following characteristics"
+    },
+    {
+      "code": "ECCN-2A991",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Bearings and bearing systems not controlled by"
+    },
+    {
+      "code": "ECCN-2A993",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Pumps designed to move molten metals by electromagnetic forces"
+    },
+    {
+      "code": "ECCN-2A994",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Portable electric generators and “specially designed” “parts” and “components”"
+    },
+    {
+      "code": "ECCN-2A999",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Specific Processing Equipment, n.e.s., as Follows"
+    },
+    {
+      "code": "ECCN-2B018",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Equipment on the Arrangement Munitions List"
+    },
+    {
+      "code": "ECCN-2B109",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Flow-forming machines, other than those controlled by , as follows"
+    },
+    {
+      "code": "ECCN-2B119",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Balancing machines and related equipment, as follows"
+    },
+    {
+      "code": "ECCN-2B231",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Vacuum pumps having all of the characteristics described in this"
+    },
+    {
+      "code": "ECCN-2B352",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Equipment Capable of Use in Handling Biological Materials, as Follows"
+    },
+    {
+      "code": "ECCN-2B999",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Specific Processing Equipment, n.e.s., as Follows"
+    },
+    {
+      "code": "ECCN-2D001",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "“Software”, other than that controlled by , as follows"
+    },
+    {
+      "code": "ECCN-2D992",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Specific “software”, as follows"
+    },
+    {
+      "code": "ECCN-2E003",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Other “technology”, as follows"
+    },
+    {
+      "code": "ECCN-2E018",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "“Technology” for the “use” of equipment controlled by"
+    },
+    {
+      "code": "ECCN-2E991",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "“Technology” for the “use” of equipment controlled by , , , or"
+    },
+    {
+      "code": "ECCN-2E994",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "“Technology” for the “use” of portable electric generators controlled by"
+    },
+    {
+      "code": "ECCN-3A001",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Electronic items as follows"
+    },
+    {
+      "code": "ECCN-3A002",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "General purpose “electronic assemblies,” modules and equipment, as follows"
+    },
+    {
+      "code": "ECCN-3A069",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Specific Laboratory Equipment as Follows"
+    },
+    {
+      "code": "ECCN-3A090",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Integrated circuits as follows"
+    },
+    {
+      "code": "ECCN-3A228",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Switching devices, as follows"
+    },
+    {
+      "code": "ECCN-3A232",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Detonators and multipoint initiation systems, as follows"
+    },
+    {
+      "code": "ECCN-3A611",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Military electronics, as follows"
+    },
+    {
+      "code": "ECCN-3A901",
+      "source": "ecfr_part774",
+      "reason": "description_too_short_after_code_removal",
+      "description": "Electronic items, not specified by , as follows"
+    }
+  ],
+  "leak_check_passed": true
+}
