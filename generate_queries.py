@@ -108,12 +108,12 @@ for idx, entry in enumerate(data):
         "lang": lang,
     })
 
-queries = queries[:500]
+queries = queries[:1000]
 random.shuffle(queries)
 n = len(queries)
-train = queries[: int(n * 0.7)]
-val = queries[int(n * 0.7) : int(n * 0.85)]
-test = queries[int(n * 0.85) :]
+train = queries[: int(n * 0.05)]
+val = queries[int(n * 0.05) : int(n * 0.10)]
+test = queries[int(n * 0.10) :]
 
 payload = {"train": train, "val": val, "test": test, "total": n}
 queries_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")

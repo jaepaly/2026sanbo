@@ -1,9 +1,1 @@
-output/*
-!output/report.md
-!output/report.tex
-!output/alpha_sweep.json
-!output/error_analysis.json
-!output/experiment_logs.json
-!output/rerank_results.json
-!output/legal_route_pure_rules.json
-!output/embedding_comparison.json
+output/
