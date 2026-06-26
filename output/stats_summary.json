@@ -1,0 +1,645 @@
+{
+  "meta": {
+    "task": "TASK F statistics",
+    "created_from_existing_json_only": true,
+    "bootstrap_iterations": 20000,
+    "seed": 20260626,
+    "source_files": [
+      "output/experiment_logs.json",
+      "output/paraphrase_gap.json",
+      "output/retriever_compare.json",
+      "output/external_retriever.json",
+      "output/validated_eval.json"
+    ],
+    "notes": [
+      "No new retrieval, embedding, reranking, or external API calls are run.",
+      "For aggregate-only artifacts, bootstrap vectors are reconstructed from JSON rates and evaluation counts.",
+      "For validated_eval.json, paired bootstrap uses stored per-query hit@10 values.",
+      "External candidate labels and validated corpus-text labels are not legal determinations."
+    ]
+  },
+  "dataset_sizes": {
+    "synthetic_test_queries": 624,
+    "external_candidate_label_queries": 30,
+    "validated_evaluated_queries": 13,
+    "validated_ko_n": 5,
+    "validated_en_n": 8
+  },
+  "alpha_summaries": {
+    "external_retriever": {
+      "source": "output/external_retriever.json",
+      "rows": [
+        {
+          "alpha": 1.0,
+          "label": "BM25",
+          "overall_n": 30,
+          "en_n": null,
+          "ko_n": null,
+          "recall@10": 0.0,
+          "en_recall@10": 0.0,
+          "ko_recall@10": 0.0
+        },
+        {
+          "alpha": 0.7,
+          "label": "Hybrid",
+          "overall_n": 30,
+          "en_n": null,
+          "ko_n": null,
+          "recall@10": 0.0667,
+          "en_recall@10": 0.0714,
+          "ko_recall@10": 0.0625
+        },
+        {
+          "alpha": 0.5,
+          "label": "Hybrid",
+          "overall_n": 30,
+          "en_n": null,
+          "ko_n": null,
+          "recall@10": 0.1,
+          "en_recall@10": 0.1429,
+          "ko_recall@10": 0.0625
+        },
+        {
+          "alpha": 0.3,
+          "label": "Hybrid",
+          "overall_n": 30,
+          "en_n": null,
+          "ko_n": null,
+          "recall@10": 0.1,
+          "en_recall@10": 0.1429,
+          "ko_recall@10": 0.0625
+        },
+        {
+          "alpha": 0.0,
+          "label": "Dense",
+          "overall_n": 30,
+          "en_n": null,
+          "ko_n": null,
+          "recall@10": 0.0667,
+          "en_recall@10": 0.0714,
+          "ko_recall@10": 0.0625
+        }
+      ]
+    },
+    "validated_eval": {
+      "source": "output/validated_eval.json",
+      "rows": [
+        {
+          "alpha": 1.0,
+          "label": "BM25",
+          "overall_n": 13,
+          "en_n": 8,
+          "ko_n": 5,
+          "recall@10": 0.0,
+          "en_recall@10": 0.0,
+          "ko_recall@10": 0.0
+        },
+        {
+          "alpha": 0.7,
+          "label": "Hybrid",
+          "overall_n": 13,
+          "en_n": 8,
+          "ko_n": 5,
+          "recall@10": 0.1538,
+          "en_recall@10": 0.125,
+          "ko_recall@10": 0.2
+        },
+        {
+          "alpha": 0.5,
+          "label": "Hybrid",
+          "overall_n": 13,
+          "en_n": 8,
+          "ko_n": 5,
+          "recall@10": 0.2308,
+          "en_recall@10": 0.25,
+          "ko_recall@10": 0.2
+        },
+        {
+          "alpha": 0.3,
+          "label": "Hybrid",
+          "overall_n": 13,
+          "en_n": 8,
+          "ko_n": 5,
+          "recall@10": 0.2308,
+          "en_recall@10": 0.25,
+          "ko_recall@10": 0.2
+        },
+        {
+          "alpha": 0.0,
+          "label": "Dense",
+          "overall_n": 13,
+          "en_n": 8,
+          "ko_n": 5,
+          "recall@10": 0.1538,
+          "en_recall@10": 0.125,
+          "ko_recall@10": 0.2
+        }
+      ]
+    }
+  },
+  "comparisons": [
+    {
+      "label": "synthetic_minimal_text_vs_full_text",
+      "source": "output/experiment_logs.json",
+      "method": "aggregate_binary_bootstrap_from_json_rate",
+      "n": 624,
+      "baseline": {
+        "label": "full_text",
+        "point_estimate": 0.9968,
+        "inferred_successes": 622,
+        "bootstrap_95_ci": [
+          0.991987,
+          1.0
+        ]
+      },
+      "treatment": {
+        "label": "minimal_text",
+        "point_estimate": 0.9792,
+        "inferred_successes": 611,
+        "bootstrap_95_ci": [
+          0.967949,
+          0.990385
+        ]
+      },
+      "effect_size": {
+        "type": "mean_difference_in_recall_at_10",
+        "value": -0.017628,
+        "percentage_points": -1.763
+      },
+      "difference_bootstrap_95_ci": [
+        -0.030449,
+        -0.00641
+      ],
+      "existing_permutation_p_value": 0.004998
+    },
+    {
+      "label": "synthetic_minimal_no_code_vs_full_text",
+      "source": "output/experiment_logs.json",
+      "method": "aggregate_binary_bootstrap_from_json_rate",
+      "n": 624,
+      "baseline": {
+        "label": "full_text",
+        "point_estimate": 0.9968,
+        "inferred_successes": 622,
+        "bootstrap_95_ci": [
+          0.991987,
+          1.0
+        ]
+      },
+      "treatment": {
+        "label": "minimal_no_code",
+        "point_estimate": 0.9808,
+        "inferred_successes": 612,
+        "bootstrap_95_ci": [
+          0.969551,
+          0.990385
+        ]
+      },
+      "effect_size": {
+        "type": "mean_difference_in_recall_at_10",
+        "value": -0.016026,
+        "percentage_points": -1.603
+      },
+      "difference_bootstrap_95_ci": [
+        -0.028846,
+        -0.004808
+      ],
+      "existing_permutation_p_value": 0.007496
+    },
+    {
+      "label": "synthetic_route_only_vs_full_text",
+      "source": "output/experiment_logs.json",
+      "method": "aggregate_binary_bootstrap_from_json_rate",
+      "n": 624,
+      "baseline": {
+        "label": "full_text",
+        "point_estimate": 0.9968,
+        "inferred_successes": 622,
+        "bootstrap_95_ci": [
+          0.991987,
+          1.0
+        ]
+      },
+      "treatment": {
+        "label": "route_only",
+        "point_estimate": 0.008,
+        "inferred_successes": 5,
+        "bootstrap_95_ci": [
+          0.001603,
+          0.016026
+        ]
+      },
+      "effect_size": {
+        "type": "mean_difference_in_recall_at_10",
+        "value": -0.988782,
+        "percentage_points": -98.878
+      },
+      "difference_bootstrap_95_ci": [
+        -0.996795,
+        -0.979167
+      ],
+      "existing_permutation_p_value": 0.0005
+    },
+    {
+      "label": "paraphrase_gap_minimal_text_N5_vs_N0",
+      "source": "output/paraphrase_gap.json",
+      "method": "aggregate_binary_bootstrap_from_json_rate",
+      "n": 624,
+      "baseline": {
+        "label": "minimal_text_N0",
+        "point_estimate": 0.9792,
+        "inferred_successes": 611,
+        "bootstrap_95_ci": [
+          0.967949,
+          0.990385
+        ]
+      },
+      "treatment": {
+        "label": "minimal_text_N5",
+        "point_estimate": 0.7596,
+        "inferred_successes": 474,
+        "bootstrap_95_ci": [
+          0.725962,
+          0.793269
+        ]
+      },
+      "effect_size": {
+        "type": "mean_difference_in_recall_at_10",
+        "value": -0.219551,
+        "percentage_points": -21.955
+      },
+      "difference_bootstrap_95_ci": [
+        -0.254808,
+        -0.184295
+      ]
+    },
+    {
+      "label": "paraphrase_gap_minimal_text_N10_vs_N0",
+      "source": "output/paraphrase_gap.json",
+      "method": "aggregate_binary_bootstrap_from_json_rate",
+      "n": 624,
+      "baseline": {
+        "label": "minimal_text_N0",
+        "point_estimate": 0.9792,
+        "inferred_successes": 611,
+        "bootstrap_95_ci": [
+          0.967949,
+          0.988782
+        ]
+      },
+      "treatment": {
+        "label": "minimal_text_N10",
+        "point_estimate": 0.4407,
+        "inferred_successes": 275,
+        "bootstrap_95_ci": [
+          0.402244,
+          0.480769
+        ]
+      },
+      "effect_size": {
+        "type": "mean_difference_in_recall_at_10",
+        "value": -0.538462,
+        "percentage_points": -53.846
+      },
+      "difference_bootstrap_95_ci": [
+        -0.578526,
+        -0.498397
+      ]
+    },
+    {
+      "label": "synthetic_vocab_gap_N10_dense_vs_bm25",
+      "source": "output/retriever_compare.json",
+      "method": "aggregate_binary_bootstrap_from_json_rate",
+      "n": 624,
+      "baseline": {
+        "label": "alpha=1.0",
+        "point_estimate": 0.4407,
+        "inferred_successes": 275,
+        "bootstrap_95_ci": [
+          0.400641,
+          0.480769
+        ]
+      },
+      "treatment": {
+        "label": "alpha=0.0",
+        "point_estimate": 0.2532,
+        "inferred_successes": 158,
+        "bootstrap_95_ci": [
+          0.219551,
+          0.288462
+        ]
+      },
+      "effect_size": {
+        "type": "mean_difference_in_recall_at_10",
+        "value": -0.1875,
+        "percentage_points": -18.75
+      },
+      "difference_bootstrap_95_ci": [
+        -0.238782,
+        -0.136218
+      ]
+    },
+    {
+      "label": "external_candidate_label_hybrid_alpha_0_7_vs_bm25",
+      "source": "output/external_retriever.json",
+      "method": "aggregate_binary_bootstrap_from_json_rate",
+      "n": 30,
+      "baseline": {
+        "label": "alpha=1.0",
+        "point_estimate": 0.0,
+        "inferred_successes": 0,
+        "bootstrap_95_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "treatment": {
+        "label": "alpha=0.7",
+        "point_estimate": 0.0667,
+        "inferred_successes": 2,
+        "bootstrap_95_ci": [
+          0.0,
+          0.166667
+        ]
+      },
+      "effect_size": {
+        "type": "mean_difference_in_recall_at_10",
+        "value": 0.066667,
+        "percentage_points": 6.667
+      },
+      "difference_bootstrap_95_ci": [
+        0.0,
+        0.166667
+      ]
+    },
+    {
+      "label": "external_candidate_label_hybrid_alpha_0_5_vs_bm25",
+      "source": "output/external_retriever.json",
+      "method": "aggregate_binary_bootstrap_from_json_rate",
+      "n": 30,
+      "baseline": {
+        "label": "alpha=1.0",
+        "point_estimate": 0.0,
+        "inferred_successes": 0,
+        "bootstrap_95_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "treatment": {
+        "label": "alpha=0.5",
+        "point_estimate": 0.1,
+        "inferred_successes": 3,
+        "bootstrap_95_ci": [
+          0.0,
+          0.233333
+        ]
+      },
+      "effect_size": {
+        "type": "mean_difference_in_recall_at_10",
+        "value": 0.1,
+        "percentage_points": 10.0
+      },
+      "difference_bootstrap_95_ci": [
+        0.0,
+        0.233333
+      ]
+    },
+    {
+      "label": "external_candidate_label_hybrid_alpha_0_3_vs_bm25",
+      "source": "output/external_retriever.json",
+      "method": "aggregate_binary_bootstrap_from_json_rate",
+      "n": 30,
+      "baseline": {
+        "label": "alpha=1.0",
+        "point_estimate": 0.0,
+        "inferred_successes": 0,
+        "bootstrap_95_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "treatment": {
+        "label": "alpha=0.3",
+        "point_estimate": 0.1,
+        "inferred_successes": 3,
+        "bootstrap_95_ci": [
+          0.0,
+          0.233333
+        ]
+      },
+      "effect_size": {
+        "type": "mean_difference_in_recall_at_10",
+        "value": 0.1,
+        "percentage_points": 10.0
+      },
+      "difference_bootstrap_95_ci": [
+        0.0,
+        0.233333
+      ]
+    },
+    {
+      "label": "external_candidate_label_dense_vs_bm25",
+      "source": "output/external_retriever.json",
+      "method": "aggregate_binary_bootstrap_from_json_rate",
+      "n": 30,
+      "baseline": {
+        "label": "alpha=1.0",
+        "point_estimate": 0.0,
+        "inferred_successes": 0,
+        "bootstrap_95_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "treatment": {
+        "label": "alpha=0.0",
+        "point_estimate": 0.0667,
+        "inferred_successes": 2,
+        "bootstrap_95_ci": [
+          0.0,
+          0.166667
+        ]
+      },
+      "effect_size": {
+        "type": "mean_difference_in_recall_at_10",
+        "value": 0.066667,
+        "percentage_points": 6.667
+      },
+      "difference_bootstrap_95_ci": [
+        0.0,
+        0.166667
+      ]
+    },
+    {
+      "label": "validated_hybrid_alpha_0_7_vs_bm25",
+      "source": "output/validated_eval.json",
+      "method": "paired_per_query_bootstrap",
+      "n": 13,
+      "baseline": {
+        "label": "alpha=1.0",
+        "point_estimate": 0.0,
+        "bootstrap_95_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "treatment": {
+        "label": "alpha=0.7",
+        "point_estimate": 0.1538,
+        "bootstrap_95_ci": [
+          0.0,
+          0.384615
+        ]
+      },
+      "effect_size": {
+        "type": "paired_mean_difference_in_recall_at_10",
+        "value": 0.153846,
+        "percentage_points": 15.385,
+        "wins": 2,
+        "losses": 0,
+        "no_change": 11
+      },
+      "difference_bootstrap_95_ci": [
+        0.0,
+        0.384615
+      ]
+    },
+    {
+      "label": "validated_hybrid_alpha_0_5_vs_bm25",
+      "source": "output/validated_eval.json",
+      "method": "paired_per_query_bootstrap",
+      "n": 13,
+      "baseline": {
+        "label": "alpha=1.0",
+        "point_estimate": 0.0,
+        "bootstrap_95_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "treatment": {
+        "label": "alpha=0.5",
+        "point_estimate": 0.2308,
+        "bootstrap_95_ci": [
+          0.0,
+          0.461538
+        ]
+      },
+      "effect_size": {
+        "type": "paired_mean_difference_in_recall_at_10",
+        "value": 0.230769,
+        "percentage_points": 23.077,
+        "wins": 3,
+        "losses": 0,
+        "no_change": 10
+      },
+      "difference_bootstrap_95_ci": [
+        0.0,
+        0.461538
+      ]
+    },
+    {
+      "label": "validated_hybrid_alpha_0_3_vs_bm25",
+      "source": "output/validated_eval.json",
+      "method": "paired_per_query_bootstrap",
+      "n": 13,
+      "baseline": {
+        "label": "alpha=1.0",
+        "point_estimate": 0.0,
+        "bootstrap_95_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "treatment": {
+        "label": "alpha=0.3",
+        "point_estimate": 0.2308,
+        "bootstrap_95_ci": [
+          0.0,
+          0.461538
+        ]
+      },
+      "effect_size": {
+        "type": "paired_mean_difference_in_recall_at_10",
+        "value": 0.230769,
+        "percentage_points": 23.077,
+        "wins": 3,
+        "losses": 0,
+        "no_change": 10
+      },
+      "difference_bootstrap_95_ci": [
+        0.0,
+        0.461538
+      ]
+    },
+    {
+      "label": "validated_dense_vs_bm25",
+      "source": "output/validated_eval.json",
+      "method": "paired_per_query_bootstrap",
+      "n": 13,
+      "baseline": {
+        "label": "alpha=1.0",
+        "point_estimate": 0.0,
+        "bootstrap_95_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "treatment": {
+        "label": "alpha=0.0",
+        "point_estimate": 0.1538,
+        "bootstrap_95_ci": [
+          0.0,
+          0.384615
+        ]
+      },
+      "effect_size": {
+        "type": "paired_mean_difference_in_recall_at_10",
+        "value": 0.153846,
+        "percentage_points": 15.385,
+        "wins": 2,
+        "losses": 0,
+        "no_change": 11
+      },
+      "difference_bootstrap_95_ci": [
+        0.0,
+        0.384615
+      ]
+    },
+    {
+      "label": "validated_hybrid_alpha_0_5_vs_dense",
+      "source": "output/validated_eval.json",
+      "method": "paired_per_query_bootstrap",
+      "n": 13,
+      "baseline": {
+        "label": "alpha=0.0",
+        "point_estimate": 0.1538,
+        "bootstrap_95_ci": [
+          0.0,
+          0.384615
+        ]
+      },
+      "treatment": {
+        "label": "alpha=0.5",
+        "point_estimate": 0.2308,
+        "bootstrap_95_ci": [
+          0.0,
+          0.461538
+        ]
+      },
+      "effect_size": {
+        "type": "paired_mean_difference_in_recall_at_10",
+        "value": 0.076923,
+        "percentage_points": 7.692,
+        "wins": 1,
+        "losses": 0,
+        "no_change": 12
+      },
+      "difference_bootstrap_95_ci": [
+        0.0,
+        0.230769
+      ]
+    }
+  ]
+}

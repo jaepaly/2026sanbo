@@ -110,6 +110,9 @@ python experiment_retriever_compare.py # BM25 vs Dense vs Hybrid, 합성 (TASK E
 python experiment_external_retriever.py# BM25 vs Dense vs Hybrid, 외부셋 (TASK E)
 python build_validated_queries.py      # 충돌제거 검증 라벨셋 생성 (TASK B/C)
 python evaluate_validated_queries.py   # 검증 라벨셋 retriever 평가 (TASK B/C/E)
+python experiment_crosslingual_eval.py # 한국어 KO-원문/번역/EN 비교 (TASK D)
+python experiment_stats.py             # bootstrap CI·효과크기 (TASK F)
+python make_figures.py                 # 논문용 figure 4종 (TASK F)
 ```
 
 > 참고: `experiment_*retriever*.py`와 `evaluate_validated_queries.py`는 다국어 dense 모델

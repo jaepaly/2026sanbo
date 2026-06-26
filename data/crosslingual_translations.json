@@ -1,0 +1,16 @@
+{
+  "meta": {
+    "description": "TASK D (D1): Human-translated English versions of the 5 evaluable Korean queries from external_consultation_queries_validated.json. No external API used; translations are manual to avoid sending technical descriptions to external services (consistent with the information-minimization theme).",
+    "translation_method": "manual (human)",
+    "source_file": "external_consultation_queries_validated.json",
+    "ko_sample_size": 5,
+    "caveat": "Korean evaluable sample is only 5; results are trends, not statistically robust. Sample expansion needed."
+  },
+  "translations": {
+    "ext-002": "We plan to supply plasma generation equipment for semiconductor etching processes to a Vietnamese company. We need to know the export control classification of this equipment.",
+    "ext-004": "We plan to provide a high-precision gyroscope module for drones as a sample to an overseas university. We need to verify potential military applications.",
+    "ext-006": "We want to export titanium alloy plates for aircraft to a German aerospace parts company. We heard the high material grade may make it a controlled item.",
+    "ext-016": "We supply special metal powder for 3D printers to France. It may be usable for manufacturing military components.",
+    "ext-028": "We want to export torpedo guidance control components (sonar and acoustic signal processing) to a NATO member country. It is for military use."
+  }
+}

@@ -16,3 +16,10 @@ output/*
 !output/external_retriever.md
 !output/validated_eval.json
 !output/validated_eval.md
+!output/crosslingual_eval.json
+!output/crosslingual_eval.md
+!output/stats_summary.json
+!output/fig_paraphrase_gap.png
+!output/fig_retriever_alpha.png
+!output/fig_exposure_recall.png
+!output/fig_validated_retriever.png

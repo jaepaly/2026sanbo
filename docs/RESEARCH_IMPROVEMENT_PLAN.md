@@ -121,6 +121,12 @@ Dense/하이브리드/reranker 비교가 없어 "최소노출 trade-off가 retri
 
 ### TASK D (P1) — 한국어 cross-lingual 트랙 분리  ★팀 분담 대상★
 
+> **진행 상황 (2026-06-26)**: 1차 완료(팀원 장승우, D1). `experiment_crosslingual_eval.py`,
+> `data/crosslingual_translations.json` 추가. 검증셋 KO 5개를 사람 번역하여 KO-원문/KO-번역/EN 비교.
+> KO-원문 BM25=0 → 번역 시 0.20, 다국어 dense는 번역 없이도 0.20. **재현 검증 통과(수치 완전 일치).**
+> 산출물: `output/crosslingual_eval.{json,md}`. **남은 일**: 표본 확대(KO 5개→다수), 다수 번역자/역번역
+> 검증, bge-m3/multilingual-e5 등 임베딩 비교(D3).
+
 > 배경: 코퍼스는 100% 영어인데(한글 포함 항목 0개), 외부 상담셋의 절반이 한국어다.
 > BM25는 한국어에서 어휘 매칭이 불가능(R@10=0)하고, 다국어 dense가 일부 회복함을 이미 확인했다
 > (`output/validated_eval.json`: 한국어 BM25 0 → hybrid 0.20). 이 태스크는 한국어 경로를
@@ -152,6 +158,12 @@ Dense/하이브리드/reranker 비교가 없어 "최소노출 trade-off가 retri
 - 주의: 외부 LLM/임베딩 API 호출은 연구의 "정보최소화" 주제와 충돌하므로, **로컬 모델 사용**과 "인덱싱은 로컬, 쿼리시 외부 호출 없음"을 명시.
 
 ### TASK F (P2) — 결과 시각화 + 통계 보강 + 재현성  ★팀 분담 대상★
+
+> **진행 상황 (2026-06-26)**: F1·F2 완료(팀원 yechan). `make_figures.py`(Pillow, figure 4종),
+> `experiment_stats.py`(bootstrap CI·효과크기, seed 고정) 추가. **재현 검증 통과(stats_summary.json
+> 비트 단위 일치).** 핵심: 검증셋 hybrid vs BM25 차이 95% CI가 0을 포함(n=13) → 경향으로만 서술.
+> 산출물: `output/fig_*.png`(4), `output/stats_summary.json`, `docs/statistics.md`.
+> **남은 일(F3)**: 노출량 proxy 다양화, 코퍼스 90개 표본 수작업 검수(`docs/corpus_audit.md`).
 
 > 이 태스크는 **새 실험을 돌리지 않는다.** 이미 생성된 `output/*.json`을 읽어 논문용 그림과
 > 통계 표를 만드는 작업이다. 입력 파일이 모두 저장소에 있으므로 콜드 스타트 에이전트도 수행 가능.

@@ -1,0 +1,645 @@
+{
+  "meta": {
+    "experiment": "crosslingual_ko_translation (TASK D / D1)",
+    "mode": "minimal_text",
+    "dense_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+    "alphas": [
+      1.0,
+      0.5,
+      0.0
+    ],
+    "translation_method": "manual (human), no external API",
+    "ko_sample_size": 5,
+    "en_sample_size": 8,
+    "label_nature": "Corpus-text-grounded CATEGORY labels for a retrieval target. NOT a legal export-control determination and NOT expert-validated. Labels kept only when the eCFR entry text clearly describes the item category; otherwise the query is excluded_from_metrics with a reason.",
+    "caveat": "Korean sample is only 5; results are trends, not robust. Sample expansion needed."
+  },
+  "summary": {
+    "KO-original": {
+      "alpha=1.0": {
+        "recall@10": 0.0,
+        "n": 5
+      },
+      "alpha=0.5": {
+        "recall@10": 0.2,
+        "n": 5
+      },
+      "alpha=0.0": {
+        "recall@10": 0.2,
+        "n": 5
+      }
+    },
+    "KO-translated": {
+      "alpha=1.0": {
+        "recall@10": 0.2,
+        "n": 5
+      },
+      "alpha=0.5": {
+        "recall@10": 0.2,
+        "n": 5
+      },
+      "alpha=0.0": {
+        "recall@10": 0.2,
+        "n": 5
+      }
+    },
+    "EN-original": {
+      "alpha=1.0": {
+        "recall@10": 0.0,
+        "n": 8
+      },
+      "alpha=0.5": {
+        "recall@10": 0.25,
+        "n": 8
+      },
+      "alpha=0.0": {
+        "recall@10": 0.125,
+        "n": 8
+      }
+    }
+  },
+  "per_query": {
+    "KO-original": [
+      {
+        "id": "ext-002",
+        "by_alpha": {
+          "alpha=1.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "ECCN-0A002",
+              "ECCN-0A501",
+              "ECCN-0A502"
+            ]
+          },
+          "alpha=0.5": {
+            "hit@10": 1,
+            "rank": 2,
+            "top3": [
+              "ECCN-3B993",
+              "ECCN-3B001",
+              "ECCN-3B994"
+            ]
+          },
+          "alpha=0.0": {
+            "hit@10": 1,
+            "rank": 2,
+            "top3": [
+              "ECCN-3B993",
+              "ECCN-3B001",
+              "ECCN-3B994"
+            ]
+          }
+        }
+      },
+      {
+        "id": "ext-004",
+        "by_alpha": {
+          "alpha=1.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "ECCN-0A002",
+              "ECCN-0A501",
+              "ECCN-0A502"
+            ]
+          },
+          "alpha=0.5": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "ECCN-2B116",
+              "ECCN-9B104",
+              "ECCN-5A101"
+            ]
+          },
+          "alpha=0.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "ECCN-2B116",
+              "ECCN-9B104",
+              "ECCN-5A101"
+            ]
+          }
+        }
+      },
+      {
+        "id": "ext-006",
+        "by_alpha": {
+          "alpha=1.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "ECCN-0A002",
+              "ECCN-0A501",
+              "ECCN-0A502"
+            ]
+          },
+          "alpha=0.5": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "ECCN-9B515",
+              "ECCN-9A515",
+              "0B005"
+            ]
+          },
+          "alpha=0.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "ECCN-9B515",
+              "ECCN-9A515",
+              "0B005"
+            ]
+          }
+        }
+      },
+      {
+        "id": "ext-016",
+        "by_alpha": {
+          "alpha=1.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "9.D.4.a",
+              "8D904",
+              "9.D.4"
+            ]
+          },
+          "alpha=0.5": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "9.D.4.a",
+              "9.D.4",
+              "8D904"
+            ]
+          },
+          "alpha=0.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "3D015",
+              "ECCN-3E202",
+              "ECCN-3D003"
+            ]
+          }
+        }
+      },
+      {
+        "id": "ext-028",
+        "by_alpha": {
+          "alpha=1.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "ECCN-0A002",
+              "ECCN-0A501",
+              "ECCN-0A502"
+            ]
+          },
+          "alpha=0.5": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "ECCN-0A919",
+              "ECCN-0B521",
+              "ECCN-0A521"
+            ]
+          },
+          "alpha=0.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "ECCN-0A919",
+              "ECCN-0B521",
+              "ECCN-0A521"
+            ]
+          }
+        }
+      }
+    ],
+    "KO-translated": [
+      {
+        "id": "ext-002",
+        "by_alpha": {
+          "alpha=1.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "2A008",
+              "4.A.5",
+              "8A405"
+            ]
+          },
+          "alpha=0.5": {
+            "hit@10": 1,
+            "rank": 10,
+            "top3": [
+              "2.B.5.d",
+              "8A405",
+              "4.A.5"
+            ]
+          },
+          "alpha=0.0": {
+            "hit@10": 1,
+            "rank": 4,
+            "top3": [
+              "ECCN-3B993",
+              "8B301",
+              "2.B.5.d"
+            ]
+          }
+        }
+      },
+      {
+        "id": "ext-004",
+        "by_alpha": {
+          "alpha=1.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "4B013",
+              "5C014",
+              "8.E.2.a"
+            ]
+          },
+          "alpha=0.5": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "5C014",
+              "5C009",
+              "ECCN-5A101"
+            ]
+          },
+          "alpha=0.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "5C002",
+              "ECCN-5A101",
+              "9.A.4.f"
+            ]
+          }
+        }
+      },
+      {
+        "id": "ext-006",
+        "by_alpha": {
+          "alpha=1.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "ECCN-0C521",
+              "ECCN-0A521",
+              "ECCN-0E521"
+            ]
+          },
+          "alpha=0.5": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "ECCN-0C521",
+              "8B102",
+              "ECCN-0B521"
+            ]
+          },
+          "alpha=0.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "3A118",
+              "3A107",
+              "8B103"
+            ]
+          }
+        }
+      },
+      {
+        "id": "ext-016",
+        "by_alpha": {
+          "alpha=1.0": {
+            "hit@10": 1,
+            "rank": 8,
+            "top3": [
+              "1.C.2",
+              "3B016",
+              "8C102"
+            ]
+          },
+          "alpha=0.5": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "3B016",
+              "ECCN-2B910",
+              "1.C.2"
+            ]
+          },
+          "alpha=0.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "3B016",
+              "5A216",
+              "3B007"
+            ]
+          }
+        }
+      },
+      {
+        "id": "ext-028",
+        "by_alpha": {
+          "alpha=1.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "ECCN-0A521",
+              "ECCN-0D521",
+              "ECCN-0C521"
+            ]
+          },
+          "alpha=0.5": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "ECCN-0E521",
+              "ECCN-0C521",
+              "ECCN-0B521"
+            ]
+          },
+          "alpha=0.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "ECCN-1C101",
+              "ECCN-0E521",
+              "5A202"
+            ]
+          }
+        }
+      }
+    ],
+    "EN-original": [
+      {
+        "id": "ext-003",
+        "by_alpha": {
+          "alpha=1.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "4A002",
+              "ECCN-2B201",
+              "2.B.1.b"
+            ]
+          },
+          "alpha=0.5": {
+            "hit@10": 1,
+            "rank": 4,
+            "top3": [
+              "4A002",
+              "ECCN-2B201",
+              "2.B.1.b"
+            ]
+          },
+          "alpha=0.0": {
+            "hit@10": 1,
+            "rank": 6,
+            "top3": [
+              "ECCN-2B991",
+              "ECCN-9B001",
+              "ECCN-1B201"
+            ]
+          }
+        }
+      },
+      {
+        "id": "ext-005",
+        "by_alpha": {
+          "alpha=1.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "6A008",
+              "7.D.4.a",
+              "5.A.2.e"
+            ]
+          },
+          "alpha=0.5": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "6A008",
+              "ECCN-0D521",
+              "ECCN-0C521"
+            ]
+          },
+          "alpha=0.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "ECCN-0D521",
+              "ECCN-0C521",
+              "ECCN-0B521"
+            ]
+          }
+        }
+      },
+      {
+        "id": "ext-007",
+        "by_alpha": {
+          "alpha=1.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "5C008",
+              "6.A.1.c",
+              "ECCN-6A611"
+            ]
+          },
+          "alpha=0.5": {
+            "hit@10": 1,
+            "rank": 10,
+            "top3": [
+              "ECCN-6A991",
+              "8.A.2",
+              "8A802"
+            ]
+          },
+          "alpha=0.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "ECCN-6A991",
+              "8.A.2",
+              "6.A.1.a"
+            ]
+          }
+        }
+      },
+      {
+        "id": "ext-013",
+        "by_alpha": {
+          "alpha=1.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "5A204",
+              "4A006",
+              "ECCN-4D993"
+            ]
+          },
+          "alpha=0.5": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "5A204",
+              "4A006",
+              "ECCN-9B990"
+            ]
+          },
+          "alpha=0.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "5A204",
+              "ECCN-2B116",
+              "ECCN-9B990"
+            ]
+          }
+        }
+      },
+      {
+        "id": "ext-015",
+        "by_alpha": {
+          "alpha=1.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "8.E.2.a",
+              "5.E.1.d.1",
+              "5.E.1.d.2"
+            ]
+          },
+          "alpha=0.5": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "3.A.1.b.4.b",
+              "5.E.1.d.1",
+              "5.E.1.d.2"
+            ]
+          },
+          "alpha=0.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "3.A.1.b.4.b",
+              "5.E.1.c.6",
+              "6.A.8.a"
+            ]
+          }
+        }
+      },
+      {
+        "id": "ext-017",
+        "by_alpha": {
+          "alpha=1.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "8A603",
+              "3.A.1.b.2",
+              "5.E.1.d"
+            ]
+          },
+          "alpha=0.5": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "8A603",
+              "5.E.1.d",
+              "3.A.1.b.2"
+            ]
+          },
+          "alpha=0.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "6.A.8.j",
+              "ECCN-7B994",
+              "8C608"
+            ]
+          }
+        }
+      },
+      {
+        "id": "ext-023",
+        "by_alpha": {
+          "alpha=1.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "8.E.2.a",
+              "9.E.3.a.1",
+              "8E304"
+            ]
+          },
+          "alpha=0.5": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "8.E.2.a",
+              "9.E.3.a.1",
+              "ECCN-3E004"
+            ]
+          },
+          "alpha=0.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "5C005",
+              "8A503",
+              "8B502"
+            ]
+          }
+        }
+      },
+      {
+        "id": "ext-029",
+        "by_alpha": {
+          "alpha=1.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "5.A.2.b",
+              "ECCN-2B231",
+              "3.B.1.i"
+            ]
+          },
+          "alpha=0.5": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "ECCN-2B121",
+              "ECCN-3C992",
+              "5C018"
+            ]
+          },
+          "alpha=0.0": {
+            "hit@10": 0,
+            "rank": null,
+            "top3": [
+              "ECCN-6B004",
+              "ECCN-2B121",
+              "ECCN-6C004"
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

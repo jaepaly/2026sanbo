@@ -115,6 +115,29 @@ BM25 vs Dense(다국어 MiniLM) vs Hybrid를 두 평가셋에서 비교했다(`e
 
 평가 표본 13개(영어 8, 한국어 5, 소표본). 관찰: (1) **BM25는 정답 라벨이 코퍼스에 존재하고 영어 질의여도 R@10=0** — 상담형 패러프레이즈에서 어휘 매칭이 정답 항목으로 수렴하지 못한다(라벨을 코퍼스 텍스트 기준으로 골라 BM25에 유리했음에도 0). (2) hybrid(α=0.5)가 양 극단을 모두 앞선다. (3) 라벨 노이즈 제거로 hybrid R@10이 0.10 → 0.23으로 약 2배 — 노이즈가 수치를 억눌렀음이 확인된다. 상세: `output/validated_eval.md`.
 
+### 한국어 cross-lingual 트랙 (TASK D)
+
+검증셋의 한국어 평가질의 5개를 사람이 영어로 수동 번역하여(외부 API 미사용), KO-원문 vs KO-번역 vs EN-원문을 BM25/Dense/Hybrid로 비교했다(`experiment_crosslingual_eval.py`).
+
+| track | BM25(α=1.0) | Hybrid(α=0.5) | Dense(α=0.0) | n |
+|---|---:|---:|---:|---:|
+| KO-원문 | 0.0000 | 0.2000 | 0.2000 | 5 |
+| KO-번역 | 0.2000 | 0.2000 | 0.2000 | 5 |
+| EN-원문 | 0.0000 | 0.2500 | 0.1250 | 8 |
+
+관찰(경향, 표본 5개): KO-원문에서 BM25=0인데 (a) 영어 번역 시 BM25가 0→0.20, (b) 다국어 dense는 번역 없이도 0.20을 달성한다. 즉 **번역 경로와 다국어 임베딩 경로가 모두 한국어 0점을 비슷하게 회복**시킨다. 한국어 표본이 5개로 매우 작아 절대값이 아니라 경향으로만 해석하며, 표본 확대가 후속 과제다. 상세: `output/crosslingual_eval.md`.
+
+### 통계 보강 및 figure (TASK F)
+
+기존 `output/*.json`만으로 bootstrap 95% CI·효과크기를 산출하고(`experiment_stats.py`, seed 고정, 검증셋은 per-query paired bootstrap), 논문용 그림 4종을 생성했다(`make_figures.py`):
+
+- `output/fig_paraphrase_gap.png` — 어휘격차 N별 R@10 (자기참조 의존성)
+- `output/fig_retriever_alpha.png` — 합성셋 alpha별 R@10
+- `output/fig_exposure_recall.png` — 노출량-성능 frontier
+- `output/fig_validated_retriever.png` — 검증셋 retriever별 R@10(전체/EN/KO)
+
+**통계적 주의(중요)**: 합성셋 비교(minimal vs full, N5 vs N0)는 표본이 624개로 CI가 0을 포함하지 않아 유의하다. 그러나 **검증셋의 hybrid vs BM25 차이는 +0.2308이지만 95% CI가 [0.0, 0.46]으로 0을 포함**한다(n=13). 따라서 검증셋의 retriever 우위는 **통계적으로 입증된 효과가 아니라 경향**으로 서술해야 하며, 표본 확대가 필수다. 상세: `docs/statistics.md`, `output/stats_summary.json`.
+
 ## 한국 법제도와의 연결
 
 본 연구의 minimal_text 후보검색 워크플로우는 다음 한국 법제 체계와 연결된다:
