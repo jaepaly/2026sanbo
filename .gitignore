@@ -5,3 +5,6 @@ output/*
 !output/report.md
 !output/experiment_logs.json
 !output/routing_summary.json
+!output/external_eval.json
+!output/external_eval.md
+!output/external_label_audit.json
