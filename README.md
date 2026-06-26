@@ -129,8 +129,8 @@ python make_figures.py                 # 논문용 figure 4종 (TASK F)
 
 | TASK | 담당 | 내용 | 상세 스펙 |
 |---|---|---|---|
-| **TASK F** | 팀원 A | 결과 시각화(논문 figure) + 통계 보강(CI·효과크기) + 재현성. **새 실험 없음**, 기존 `output/*.json`만 읽어 그림 생성 | `docs/RESEARCH_IMPROVEMENT_PLAN.md` §3 TASK F |
-| **TASK D** | 팀원 B | 한국어 cross-lingual 트랙(번역 필드/동의어 사전/다국어 임베딩). 검증셋 기준 KO 회복 정량화 | `docs/RESEARCH_IMPROVEMENT_PLAN.md` §3 TASK D |
+| **TASK F** | 이예찬 | 결과 시각화(논문 figure) + 통계 보강(CI·효과크기) + 재현성. **새 실험 없음**, 기존 `output/*.json`만 읽어 그림 생성 | `docs/RESEARCH_IMPROVEMENT_PLAN.md` §3 TASK F |
+| **TASK D** | 장승우 | 한국어 cross-lingual 트랙(번역 필드/동의어 사전/다국어 임베딩). 검증셋 기준 KO 회복 정량화 | `docs/RESEARCH_IMPROVEMENT_PLAN.md` §3 TASK D |
 
 **현재 진행 중인 라운드 (2026-06-26~)** — TASK F·D는 완료(검증·반영됨). 다음 분담:
 
