@@ -88,6 +88,15 @@ Dense/하이브리드/reranker 비교가 없어 "최소노출 trade-off가 retri
 
 ### TASK B (P0) — 검증된 정답을 가진 외부 평가셋 v2
 
+> **진행 상황 (2026-06-26)**: 1차 완료(TASK C 포함). `build_validated_queries.py`로
+> `data/external_consultation_queries_validated.json` 생성: 라벨을 eCFR full code로
+> 핀 고정(충돌 0), eCFR 텍스트가 항목을 명확히 기술하는 13개만 검증 라벨 부여, 나머지
+> 17개는 사유와 함께 metrics 제외. `evaluate_validated_queries.py`로 exact 매칭 재평가:
+> BM25 R@10=0(영어 포함), hybrid(α=0.5) 0.2308, 한국어 0→0.20. 라벨 노이즈 제거로
+> hybrid가 0.10→0.23으로 약 2배. 산출물: `output/validated_eval.{json,md}`.
+> **남은 일**: 전문가(관세사/수출통제 실무자) 검수로 라벨을 법적 수준으로 승격, 표본 확대,
+> eCFR 외 통제체계까지 단일출처 정답 확장.
+
 **문제**: 추정 라벨 + 코드 충돌. **목표**: 단일 통제체계로 한정한 신뢰 가능한 정답.
 
 - 방법:
@@ -98,6 +107,10 @@ Dense/하이브리드/reranker 비교가 없어 "최소노출 trade-off가 retri
 - 수용기준: 코드 충돌 0건, 모든 정답에 1차 근거 링크, `label_confidence` 전부 medium 이상.
 
 ### TASK C (P0/버그) — 출처 인지 코드 매칭
+
+> **진행 상황 (2026-06-26)**: 완료(TASK B에 통합). 검증셋은 라벨을 full eCFR code로 저장하고
+> `evaluate_validated_queries.py`가 exact code equality로 매칭하므로 정규화 충돌이 원천적으로
+>발생하지 않는다. 기존 `evaluate_external_queries.py`의 충돌 감사(`has_code_collision`)는 진단용으로 유지.
 
 **문제**: `normalize_code`가 `ECCN-2B001`과 SCOMET `2B001`을 동일시. **목표**: 충돌 무력화.
 

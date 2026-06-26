@@ -1,0 +1,490 @@
+{
+  "meta": {
+    "count": 30,
+    "evaluated_count": 13,
+    "excluded_count": 17,
+    "label_space": "eCFR full codes only (collision-free, exact match)",
+    "label_nature": "Corpus-text-grounded CATEGORY labels for a retrieval target. NOT a legal export-control determination and NOT expert-validated. Labels kept only when the eCFR entry text clearly describes the item category; otherwise the query is excluded_from_metrics with a reason.",
+    "built_by": "build_validated_queries.py"
+  },
+  "queries": [
+    {
+      "id": "ext-001",
+      "lang": "ko",
+      "query": "리튬이온 배터리 양극재 제조에 쓰이는 화학물질을 인도에 수출하려 합니다. 관련 통제항목이 있는지 확인 부탁드립니다.",
+      "context": "배터리 소재 화학물질 수출, 인도 행",
+      "validated_labels": [],
+      "label_confidence": "none",
+      "label_basis_corpus_text": "",
+      "excluded_from_metrics": true,
+      "exclusion_reason": "Lithium-ion battery cathode chemicals do not map to a clear single eCFR entry; original labels (1C350 toxic precursors, 1C991 vaccines) mismatch.",
+      "original_candidate_labels": [
+        "1C350",
+        "1C991"
+      ]
+    },
+    {
+      "id": "ext-002",
+      "lang": "ko",
+      "query": "반도체 식각 공정용 플라즈마 발생장비를 베트남 업체에 공급 예정입니다. 해당 장비의 통제 분류를 알고 싶습니다.",
+      "context": "반도체 제조 장비, 베트남 행",
+      "validated_labels": [
+        "ECCN-3B001"
+      ],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3B001 = semiconductor manufacturing equipment; matches plasma etching equipment.",
+      "excluded_from_metrics": false,
+      "exclusion_reason": "",
+      "original_candidate_labels": [
+        "3B001",
+        "3B002"
+      ]
+    },
+    {
+      "id": "ext-003",
+      "lang": "en",
+      "query": "We are exporting a CNC machining center with 5-axis simultaneous control capability. Which ECCN categories might apply?",
+      "context": "5-axis CNC, high-precision machining",
+      "validated_labels": [
+        "ECCN-2B001"
+      ],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 2B001 = machine tools for cutting metals; matches 5-axis CNC machining center.",
+      "excluded_from_metrics": false,
+      "exclusion_reason": "",
+      "original_candidate_labels": [
+        "2B001",
+        "2B002"
+      ]
+    },
+    {
+      "id": "ext-004",
+      "lang": "ko",
+      "query": "드론용 고정밀 자이로스코프 모듈을 해외 대학에 샘플로 제공할 예정입니다. 군용 가능성이 있는지 확인 필요합니다.",
+      "context": "드론 부품, 자이로스코프, 대학 샘플",
+      "validated_labels": [
+        "ECCN-7A002"
+      ],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 7A002 = gyros / angular rate sensors; matches drone gyroscope module.",
+      "excluded_from_metrics": false,
+      "exclusion_reason": "",
+      "original_candidate_labels": [
+        "7A001",
+        "7A002"
+      ]
+    },
+    {
+      "id": "ext-005",
+      "lang": "en",
+      "query": "Cryptographic software source code will be transferred to a foreign subsidiary for internal development. Does export control apply?",
+      "context": "암호화 소프트웨어 소스코드 해외 이전",
+      "validated_labels": [
+        "ECCN-5D002",
+        "ECCN-5D991"
+      ],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 5D002 = encryption software; matches cryptographic source code.",
+      "excluded_from_metrics": false,
+      "exclusion_reason": "",
+      "original_candidate_labels": [
+        "5D002",
+        "5D991"
+      ]
+    },
+    {
+      "id": "ext-006",
+      "lang": "ko",
+      "query": "항공기용 타이타늄 합금 판재를 독일 항공부품사에 수출하려 합니다. 재료 등급이 높아 관심 대상일 수 있다고 들었습니다.",
+      "context": "항공우주 재료, 타이타늄 합금, 독일",
+      "validated_labels": [
+        "ECCN-1C002"
+      ],
+      "label_confidence": "medium",
+      "label_basis_corpus_text": "eCFR 1C002 = metal alloys (incl. titanium aluminides); plausible for titanium alloy plate.",
+      "excluded_from_metrics": false,
+      "exclusion_reason": "",
+      "original_candidate_labels": [
+        "1C002",
+        "2C002"
+      ]
+    },
+    {
+      "id": "ext-007",
+      "lang": "en",
+      "query": "We are shipping test equipment for underwater acoustic communication systems. This could be used for submarine applications. Please advise.",
+      "context": "수중 음향 통신 테스트 장비",
+      "validated_labels": [
+        "ECCN-6A001"
+      ],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 6A001 = acoustic systems; matches underwater acoustic test equipment.",
+      "excluded_from_metrics": false,
+      "exclusion_reason": "",
+      "original_candidate_labels": [
+        "6A001",
+        "6A002"
+      ]
+    },
+    {
+      "id": "ext-008",
+      "lang": "ko",
+      "query": "의료용 MRI 장비의 일부 부품(저온 냉각 시스템)을 캐나다에 수리용으로 보냅니다. 통제 대상인가요?",
+      "context": "의료용 MRI 부품, 저온 냉각, 수리용",
+      "validated_labels": [],
+      "label_confidence": "none",
+      "label_basis_corpus_text": "",
+      "excluded_from_metrics": true,
+      "exclusion_reason": "MRI cryogenic cooling part: 3A001/3A002 are generic; no clear single-entry match.",
+      "original_candidate_labels": [
+        "3A001",
+        "3A002"
+      ]
+    },
+    {
+      "id": "ext-009",
+      "lang": "en",
+      "query": "A foreign collaborator requested our advanced FPGA firmware for image processing. Is this likely subject to export control?",
+      "context": "FPGA 펌웨어, 이미지 처리, 해외 협력사",
+      "validated_labels": [],
+      "label_confidence": "none",
+      "label_basis_corpus_text": "",
+      "excluded_from_metrics": true,
+      "exclusion_reason": "FPGA firmware for image processing: ambiguous between 3D001/5D002; no clear match.",
+      "original_candidate_labels": [
+        "3D001",
+        "5D002"
+      ]
+    },
+    {
+      "id": "ext-010",
+      "lang": "ko",
+      "query": "무인항공기(드론)용 연료전지 스택을 UAE에 시범 공급합니다. 군용 드론이 아닌 민간 촬영용입니다.",
+      "context": "드론 연료전지, UAE, 민간",
+      "validated_labels": [],
+      "label_confidence": "none",
+      "label_basis_corpus_text": "",
+      "excluded_from_metrics": true,
+      "exclusion_reason": "UAV fuel cell stack: 1A001/1A002 (fluorinated/composite) mismatch the item.",
+      "original_candidate_labels": [
+        "1A001",
+        "1A002"
+      ]
+    },
+    {
+      "id": "ext-011",
+      "lang": "en",
+      "query": "Our company wants to send electronic components to a distributor in Malaysia for assembly into a commercial product. Are any controls relevant?",
+      "context": "전자부품, 말레이시아, 조립용",
+      "validated_labels": [],
+      "label_confidence": "none",
+      "label_basis_corpus_text": "",
+      "excluded_from_metrics": true,
+      "exclusion_reason": "Query intentionally generic ('electronic components'); no single ground-truth entry.",
+      "original_candidate_labels": [
+        "3A001",
+        "3A090"
+      ]
+    },
+    {
+      "id": "ext-012",
+      "lang": "ko",
+      "query": "레이저 거리측정기(최대 10km)를 스위스 측량업체에 수출합니다. 군용 전용이 아닙니다.",
+      "context": "레이저 거리측정기, 스위스, 민간",
+      "validated_labels": [],
+      "label_confidence": "none",
+      "label_basis_corpus_text": "",
+      "excluded_from_metrics": true,
+      "exclusion_reason": "Laser rangefinder: labels 6A001 (acoustic)/6A008 (radar) are wrong category; lasers fall under 6A005-series not in matched labels.",
+      "original_candidate_labels": [
+        "6A001",
+        "6A008"
+      ]
+    },
+    {
+      "id": "ext-013",
+      "lang": "en",
+      "query": "We are exporting software that controls vibration test equipment for satellite components. Is the software itself controlled?",
+      "context": "진동 테스트 장비 제어 소프트웨어, 위성 부품",
+      "validated_labels": [
+        "ECCN-2D001"
+      ],
+      "label_confidence": "medium",
+      "label_basis_corpus_text": "eCFR 2D001 = software for 2B test/production equipment; plausible for vibration-test control software.",
+      "excluded_from_metrics": false,
+      "exclusion_reason": "",
+      "original_candidate_labels": [
+        "2D001",
+        "2D002"
+      ]
+    },
+    {
+      "id": "ext-014",
+      "lang": "ko",
+      "query": "고압 수소 저장탱크(700bar)를 일본에 수출합니다. 청정에너지 차량용입니다.",
+      "context": "고압 수소 저장탱크, 일본, 청정에너지",
+      "validated_labels": [],
+      "label_confidence": "none",
+      "label_basis_corpus_text": "",
+      "excluded_from_metrics": true,
+      "exclusion_reason": "High-pressure hydrogen tank: 1C005/1C006 (superconductors/fluids) mismatch the item.",
+      "original_candidate_labels": [
+        "1C005",
+        "1C006"
+      ]
+    },
+    {
+      "id": "ext-015",
+      "lang": "en",
+      "query": "A research institute in Singapore wants to buy our high-speed oscilloscope with bandwidth over 1 GHz. Which controls may apply?",
+      "context": "고속 오실로스코프, 1GHz 이상, 싱가포르 연구기관",
+      "validated_labels": [
+        "ECCN-3A002"
+      ],
+      "label_confidence": "medium",
+      "label_basis_corpus_text": "eCFR 3A002 = general purpose electronic test/measurement equipment; plausible for >1GHz oscilloscope.",
+      "excluded_from_metrics": false,
+      "exclusion_reason": "",
+      "original_candidate_labels": [
+        "3A001",
+        "3A002"
+      ]
+    },
+    {
+      "id": "ext-016",
+      "lang": "ko",
+      "query": "3D 프린터용 특수 금분소재를 프랑스에 공급합니다. 군용 부품 제조 가능성이 있다고 합니다.",
+      "context": "3D 프린팅 분말, 프랑스, 군용 가능성",
+      "validated_labels": [
+        "ECCN-1C002"
+      ],
+      "label_confidence": "medium",
+      "label_basis_corpus_text": "eCFR 1C002 = metal alloy powder; plausible for 3D-printing metal powder.",
+      "excluded_from_metrics": false,
+      "exclusion_reason": "",
+      "original_candidate_labels": [
+        "1C002",
+        "1C003"
+      ]
+    },
+    {
+      "id": "ext-017",
+      "lang": "en",
+      "query": "We are shipping radar components with GaAs MMIC technology to a NATO partner country. What should we check first?",
+      "context": "레이다 부품, GaAs MMIC, NATO 동맹국",
+      "validated_labels": [
+        "ECCN-3A001"
+      ],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3A001 = electronic items (incl. MMICs at 3A001.b.2); matches GaAs MMIC radar components.",
+      "excluded_from_metrics": false,
+      "exclusion_reason": "",
+      "original_candidate_labels": [
+        "3A001",
+        "6A001"
+      ]
+    },
+    {
+      "id": "ext-018",
+      "lang": "ko",
+      "query": "해양 탐사용 무인수상선(USV)용 추진 시스템을 호주에 수출합니다. 연구용으로 활용 예정입니다.",
+      "context": "무인수상선 추진 시스템, 호주, 연구",
+      "validated_labels": [],
+      "label_confidence": "none",
+      "label_basis_corpus_text": "",
+      "excluded_from_metrics": true,
+      "exclusion_reason": "USV propulsion: 1A001/1A002 mismatch the item.",
+      "original_candidate_labels": [
+        "1A001",
+        "1A002"
+      ]
+    },
+    {
+      "id": "ext-019",
+      "lang": "en",
+      "query": "A supplier in India asked for technical data on our composite honeycomb structure used in aircraft floor panels. Is this controlled?",
+      "context": "항공기 복합재 허니콤 구조 기술자료, 인도 공급사",
+      "validated_labels": [],
+      "label_confidence": "none",
+      "label_basis_corpus_text": "",
+      "excluded_from_metrics": true,
+      "exclusion_reason": "Composite honeycomb tech data: 2C001 absent in eCFR, 2E001 link weak; no clear match.",
+      "original_candidate_labels": [
+        "2C001",
+        "2E001"
+      ]
+    },
+    {
+      "id": "ext-020",
+      "lang": "ko",
+      "query": "의료용 진단 장비에 쓰이는 고선능 검출기 모듈을 독일에 수출하려 합니다. 일반 의료용입니다.",
+      "context": "의료용 검출기 모듈, 독일, 일반 의료",
+      "validated_labels": [],
+      "label_confidence": "none",
+      "label_basis_corpus_text": "",
+      "excluded_from_metrics": true,
+      "exclusion_reason": "Medical detector module: 3A001 generic, 3A980 (voiceprint) wrong; no clear match.",
+      "original_candidate_labels": [
+        "3A001",
+        "3A980"
+      ]
+    },
+    {
+      "id": "ext-021",
+      "lang": "en",
+      "query": "We plan to export a cryogenic pump for liquid hydrogen to a South Korean aerospace company. Which ECCN should we look at?",
+      "context": "액체 수소용 극저온 펌프, 한국 우주항공사",
+      "validated_labels": [],
+      "label_confidence": "none",
+      "label_basis_corpus_text": "",
+      "excluded_from_metrics": true,
+      "exclusion_reason": "Liquid-hydrogen cryogenic pump: 2B002/2B003 (machine tools) mismatch the item.",
+      "original_candidate_labels": [
+        "2B002",
+        "2B003"
+      ]
+    },
+    {
+      "id": "ext-022",
+      "lang": "ko",
+      "query": "방사선 탐지용 고압 검출기를 태국 세관에 공급합니다. 비확산 목적입니다.",
+      "context": "방사선 검출기, 태국 세관, 비확산",
+      "validated_labels": [],
+      "label_confidence": "none",
+      "label_basis_corpus_text": "",
+      "excluded_from_metrics": true,
+      "exclusion_reason": "Radiation detector: 6A001 (acoustic)/6A002 (optical) wrong category.",
+      "original_candidate_labels": [
+        "6A001",
+        "6A002"
+      ]
+    },
+    {
+      "id": "ext-023",
+      "lang": "en",
+      "query": "An overseas university requested encryption chips for a research collaboration. We need to understand if any licenses are required.",
+      "context": "암호화 칩, 해외 대학, 연구 협력",
+      "validated_labels": [
+        "ECCN-5A002",
+        "ECCN-5A991"
+      ],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 5A002 = information security systems/components; matches encryption chips.",
+      "excluded_from_metrics": false,
+      "exclusion_reason": "",
+      "original_candidate_labels": [
+        "5A002",
+        "5A991"
+      ]
+    },
+    {
+      "id": "ext-024",
+      "lang": "ko",
+      "query": "초고압 터보 압축기(유량 1000 Nm3/h 이상)를 사우디에 수출합니다. 가스 정제 플랜트용입니다.",
+      "context": "초고압 터보 압축기, 사우디, 가스 정제",
+      "validated_labels": [],
+      "label_confidence": "none",
+      "label_basis_corpus_text": "",
+      "excluded_from_metrics": true,
+      "exclusion_reason": "Turbo compressor: 2B001/2B002 (machine tools) mismatch the item.",
+      "original_candidate_labels": [
+        "2B001",
+        "2B002"
+      ]
+    },
+    {
+      "id": "ext-025",
+      "lang": "en",
+      "query": "We are providing technical drawings for a centrifugal pump with multi-stage high-pressure design to a Brazilian partner.",
+      "context": "다단계 고압 원심펌프 기술도면, 브라질 협력사",
+      "validated_labels": [],
+      "label_confidence": "none",
+      "label_basis_corpus_text": "",
+      "excluded_from_metrics": true,
+      "exclusion_reason": "Multi-stage centrifugal pump: 2B001 (machine tools)/2D001 mismatch the item.",
+      "original_candidate_labels": [
+        "2B001",
+        "2D001"
+      ]
+    },
+    {
+      "id": "ext-026",
+      "lang": "ko",
+      "query": "드론 제어용 RF 모듈(5GHz 대역, 10km 이상)을 인도네시아에 수출합니다. 민간 농업용입니다.",
+      "context": "드론 RF 모듈, 5GHz, 인도네시아, 농업",
+      "validated_labels": [],
+      "label_confidence": "none",
+      "label_basis_corpus_text": "",
+      "excluded_from_metrics": true,
+      "exclusion_reason": "Drone RF module 5GHz: 7A001/7A002 (accelerometers/gyros) wrong category; RF falls under 5A001-series.",
+      "original_candidate_labels": [
+        "7A001",
+        "7A002"
+      ]
+    },
+    {
+      "id": "ext-027",
+      "lang": "en",
+      "query": "Chemical precursor materials for semiconductor photoresist are being sent to a distributor in Taiwan. Are these dual-use controlled?",
+      "context": "반도체 포토레지스트 전구체, 대만 유통사",
+      "validated_labels": [],
+      "label_confidence": "none",
+      "label_basis_corpus_text": "",
+      "excluded_from_metrics": true,
+      "exclusion_reason": "Semiconductor photoresist precursor: 1C350 (toxic precursors)/1C991 (vaccines) mismatch the item.",
+      "original_candidate_labels": [
+        "1C350",
+        "1C991"
+      ]
+    },
+    {
+      "id": "ext-028",
+      "lang": "ko",
+      "query": "어뢰 유도제어 부품(소나/음향 신호 처리)을 NATO 회원국에 수출하려 합니다. 군용입니다.",
+      "context": "어뢰 유도제어 부품, NATO 회원국, 군용",
+      "validated_labels": [
+        "ECCN-6A001"
+      ],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 6A001 = acoustic systems; matches torpedo sonar / acoustic signal processing.",
+      "excluded_from_metrics": false,
+      "exclusion_reason": "",
+      "original_candidate_labels": [
+        "6A001",
+        "6A008"
+      ]
+    },
+    {
+      "id": "ext-029",
+      "lang": "en",
+      "query": "We have a customer in Israel requesting a high-precision angular positioning table used in semiconductor lithography. Is this an ECCN-controlled item?",
+      "context": "반도체 노광용 고정밀 각도 위치결정 테이블, 이스라엘 고객",
+      "validated_labels": [
+        "ECCN-3B001"
+      ],
+      "label_confidence": "medium",
+      "label_basis_corpus_text": "eCFR 3B001 = semiconductor manufacturing equipment; plausible for lithography positioning table.",
+      "excluded_from_metrics": false,
+      "exclusion_reason": "",
+      "original_candidate_labels": [
+        "3B001",
+        "3B002"
+      ]
+    },
+    {
+      "id": "ext-030",
+      "lang": "ko",
+      "query": "전기차 배터리 열관리 시스템용 냉각판을 미국에 수출합니다. 민간 전기차 제조사입니다.",
+      "context": "전기차 배터리 열관리 냉각판, 미국, 민간",
+      "validated_labels": [],
+      "label_confidence": "none",
+      "label_basis_corpus_text": "",
+      "excluded_from_metrics": true,
+      "exclusion_reason": "EV battery cooling plate: 1C002 (alloys)/1C005 link weak; no clear single match.",
+      "original_candidate_labels": [
+        "1C002",
+        "1C005"
+      ]
+    }
+  ]
+}

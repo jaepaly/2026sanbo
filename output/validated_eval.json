@@ -1,0 +1,773 @@
+{
+  "meta": {
+    "mode": "minimal_text",
+    "dense_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+    "alphas": [
+      1.0,
+      0.7,
+      0.5,
+      0.3,
+      0.0
+    ],
+    "evaluated_count": 13,
+    "excluded_count": 17,
+    "matching": "exact full-code equality (collision-free)",
+    "label_nature": "Corpus-text-grounded CATEGORY labels for a retrieval target. NOT a legal export-control determination and NOT expert-validated. Labels kept only when the eCFR entry text clearly describes the item category; otherwise the query is excluded_from_metrics with a reason."
+  },
+  "summary": {
+    "alpha=1.0": {
+      "recall@10": 0.0,
+      "ko_recall@10": 0.0,
+      "en_recall@10": 0.0,
+      "ko_n": 5,
+      "en_n": 8
+    },
+    "alpha=0.7": {
+      "recall@10": 0.1538,
+      "ko_recall@10": 0.2,
+      "en_recall@10": 0.125,
+      "ko_n": 5,
+      "en_n": 8
+    },
+    "alpha=0.5": {
+      "recall@10": 0.2308,
+      "ko_recall@10": 0.2,
+      "en_recall@10": 0.25,
+      "ko_n": 5,
+      "en_n": 8
+    },
+    "alpha=0.3": {
+      "recall@10": 0.2308,
+      "ko_recall@10": 0.2,
+      "en_recall@10": 0.25,
+      "ko_n": 5,
+      "en_n": 8
+    },
+    "alpha=0.0": {
+      "recall@10": 0.1538,
+      "ko_recall@10": 0.2,
+      "en_recall@10": 0.125,
+      "ko_n": 5,
+      "en_n": 8
+    }
+  },
+  "per_query": [
+    {
+      "id": "ext-002",
+      "lang": "ko",
+      "confidence": "high",
+      "labels": [
+        "ECCN-3B001"
+      ],
+      "by_alpha": {
+        "alpha=1.0": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "ECCN-0A002",
+            "ECCN-0A501",
+            "ECCN-0A502"
+          ]
+        },
+        "alpha=0.7": {
+          "hit@10": 1,
+          "rank": 2,
+          "top3": [
+            "ECCN-3B993",
+            "ECCN-3B001",
+            "ECCN-3B994"
+          ]
+        },
+        "alpha=0.5": {
+          "hit@10": 1,
+          "rank": 2,
+          "top3": [
+            "ECCN-3B993",
+            "ECCN-3B001",
+            "ECCN-3B994"
+          ]
+        },
+        "alpha=0.3": {
+          "hit@10": 1,
+          "rank": 2,
+          "top3": [
+            "ECCN-3B993",
+            "ECCN-3B001",
+            "ECCN-3B994"
+          ]
+        },
+        "alpha=0.0": {
+          "hit@10": 1,
+          "rank": 2,
+          "top3": [
+            "ECCN-3B993",
+            "ECCN-3B001",
+            "ECCN-3B994"
+          ]
+        }
+      }
+    },
+    {
+      "id": "ext-003",
+      "lang": "en",
+      "confidence": "high",
+      "labels": [
+        "ECCN-2B001"
+      ],
+      "by_alpha": {
+        "alpha=1.0": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "4A002",
+            "ECCN-2B201",
+            "2.B.1.b"
+          ]
+        },
+        "alpha=0.7": {
+          "hit@10": 1,
+          "rank": 5,
+          "top3": [
+            "4A002",
+            "ECCN-2B201",
+            "2.B.1.b"
+          ]
+        },
+        "alpha=0.5": {
+          "hit@10": 1,
+          "rank": 4,
+          "top3": [
+            "4A002",
+            "ECCN-2B201",
+            "2.B.1.b"
+          ]
+        },
+        "alpha=0.3": {
+          "hit@10": 1,
+          "rank": 2,
+          "top3": [
+            "ECCN-2B201",
+            "ECCN-2B001",
+            "4A002"
+          ]
+        },
+        "alpha=0.0": {
+          "hit@10": 1,
+          "rank": 6,
+          "top3": [
+            "ECCN-2B991",
+            "ECCN-9B001",
+            "ECCN-1B201"
+          ]
+        }
+      }
+    },
+    {
+      "id": "ext-004",
+      "lang": "ko",
+      "confidence": "high",
+      "labels": [
+        "ECCN-7A002"
+      ],
+      "by_alpha": {
+        "alpha=1.0": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "ECCN-0A002",
+            "ECCN-0A501",
+            "ECCN-0A502"
+          ]
+        },
+        "alpha=0.7": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "ECCN-2B116",
+            "ECCN-9B104",
+            "ECCN-5A101"
+          ]
+        },
+        "alpha=0.5": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "ECCN-2B116",
+            "ECCN-9B104",
+            "ECCN-5A101"
+          ]
+        },
+        "alpha=0.3": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "ECCN-2B116",
+            "ECCN-9B104",
+            "ECCN-5A101"
+          ]
+        },
+        "alpha=0.0": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "ECCN-2B116",
+            "ECCN-9B104",
+            "ECCN-5A101"
+          ]
+        }
+      }
+    },
+    {
+      "id": "ext-005",
+      "lang": "en",
+      "confidence": "high",
+      "labels": [
+        "ECCN-5D002",
+        "ECCN-5D991"
+      ],
+      "by_alpha": {
+        "alpha=1.0": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "6A008",
+            "7.D.4.a",
+            "5.A.2.e"
+          ]
+        },
+        "alpha=0.7": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "6A008",
+            "7.D.4.a",
+            "ECCN-0D521"
+          ]
+        },
+        "alpha=0.5": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "6A008",
+            "ECCN-0D521",
+            "ECCN-0C521"
+          ]
+        },
+        "alpha=0.3": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "ECCN-0D521",
+            "ECCN-0C521",
+            "ECCN-0B521"
+          ]
+        },
+        "alpha=0.0": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "ECCN-0D521",
+            "ECCN-0C521",
+            "ECCN-0B521"
+          ]
+        }
+      }
+    },
+    {
+      "id": "ext-006",
+      "lang": "ko",
+      "confidence": "medium",
+      "labels": [
+        "ECCN-1C002"
+      ],
+      "by_alpha": {
+        "alpha=1.0": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "ECCN-0A002",
+            "ECCN-0A501",
+            "ECCN-0A502"
+          ]
+        },
+        "alpha=0.7": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "ECCN-9B515",
+            "ECCN-9A515",
+            "0B005"
+          ]
+        },
+        "alpha=0.5": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "ECCN-9B515",
+            "ECCN-9A515",
+            "0B005"
+          ]
+        },
+        "alpha=0.3": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "ECCN-9B515",
+            "ECCN-9A515",
+            "0B005"
+          ]
+        },
+        "alpha=0.0": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "ECCN-9B515",
+            "ECCN-9A515",
+            "0B005"
+          ]
+        }
+      }
+    },
+    {
+      "id": "ext-007",
+      "lang": "en",
+      "confidence": "high",
+      "labels": [
+        "ECCN-6A001"
+      ],
+      "by_alpha": {
+        "alpha=1.0": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "5C008",
+            "6.A.1.c",
+            "ECCN-6A611"
+          ]
+        },
+        "alpha=0.7": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "ECCN-6A991",
+            "8A802",
+            "8.A.2"
+          ]
+        },
+        "alpha=0.5": {
+          "hit@10": 1,
+          "rank": 10,
+          "top3": [
+            "ECCN-6A991",
+            "8.A.2",
+            "8A802"
+          ]
+        },
+        "alpha=0.3": {
+          "hit@10": 1,
+          "rank": 8,
+          "top3": [
+            "ECCN-6A991",
+            "8.A.2",
+            "8A802"
+          ]
+        },
+        "alpha=0.0": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "ECCN-6A991",
+            "8.A.2",
+            "6.A.1.a"
+          ]
+        }
+      }
+    },
+    {
+      "id": "ext-013",
+      "lang": "en",
+      "confidence": "medium",
+      "labels": [
+        "ECCN-2D001"
+      ],
+      "by_alpha": {
+        "alpha=1.0": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "5A204",
+            "4A006",
+            "ECCN-4D993"
+          ]
+        },
+        "alpha=0.7": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "5A204",
+            "4A006",
+            "ECCN-9B990"
+          ]
+        },
+        "alpha=0.5": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "5A204",
+            "4A006",
+            "ECCN-9B990"
+          ]
+        },
+        "alpha=0.3": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "5A204",
+            "4A006",
+            "ECCN-9B990"
+          ]
+        },
+        "alpha=0.0": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "5A204",
+            "ECCN-2B116",
+            "ECCN-9B990"
+          ]
+        }
+      }
+    },
+    {
+      "id": "ext-015",
+      "lang": "en",
+      "confidence": "medium",
+      "labels": [
+        "ECCN-3A002"
+      ],
+      "by_alpha": {
+        "alpha=1.0": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "8.E.2.a",
+            "5.E.1.d.1",
+            "5.E.1.d.2"
+          ]
+        },
+        "alpha=0.7": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "5.E.1.d.1",
+            "5.E.1.d.2",
+            "3.A.1.b.4.b"
+          ]
+        },
+        "alpha=0.5": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "3.A.1.b.4.b",
+            "5.E.1.d.1",
+            "5.E.1.d.2"
+          ]
+        },
+        "alpha=0.3": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "3.A.1.b.4.b",
+            "5.E.1.d.2",
+            "5.E.1.d.1"
+          ]
+        },
+        "alpha=0.0": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "3.A.1.b.4.b",
+            "5.E.1.c.6",
+            "6.A.8.a"
+          ]
+        }
+      }
+    },
+    {
+      "id": "ext-016",
+      "lang": "ko",
+      "confidence": "medium",
+      "labels": [
+        "ECCN-1C002"
+      ],
+      "by_alpha": {
+        "alpha=1.0": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "9.D.4.a",
+            "8D904",
+            "9.D.4"
+          ]
+        },
+        "alpha=0.7": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "9.D.4.a",
+            "8D904",
+            "9.D.4"
+          ]
+        },
+        "alpha=0.5": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "9.D.4.a",
+            "9.D.4",
+            "8D904"
+          ]
+        },
+        "alpha=0.3": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "9.D.4.a",
+            "9.D.4",
+            "8D904"
+          ]
+        },
+        "alpha=0.0": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "3D015",
+            "ECCN-3E202",
+            "ECCN-3D003"
+          ]
+        }
+      }
+    },
+    {
+      "id": "ext-017",
+      "lang": "en",
+      "confidence": "high",
+      "labels": [
+        "ECCN-3A001"
+      ],
+      "by_alpha": {
+        "alpha=1.0": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "8A603",
+            "3.A.1.b.2",
+            "5.E.1.d"
+          ]
+        },
+        "alpha=0.7": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "8A603",
+            "5.E.1.d",
+            "3.A.1.b.2"
+          ]
+        },
+        "alpha=0.5": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "8A603",
+            "5.E.1.d",
+            "3.A.1.b.2"
+          ]
+        },
+        "alpha=0.3": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "8A608",
+            "6.A.8.j",
+            "6.A.8.h"
+          ]
+        },
+        "alpha=0.0": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "6.A.8.j",
+            "ECCN-7B994",
+            "8C608"
+          ]
+        }
+      }
+    },
+    {
+      "id": "ext-023",
+      "lang": "en",
+      "confidence": "high",
+      "labels": [
+        "ECCN-5A002",
+        "ECCN-5A991"
+      ],
+      "by_alpha": {
+        "alpha=1.0": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "8.E.2.a",
+            "9.E.3.a.1",
+            "8E304"
+          ]
+        },
+        "alpha=0.7": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "8.E.2.a",
+            "9.E.3.a.1",
+            "ECCN-3E004"
+          ]
+        },
+        "alpha=0.5": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "8.E.2.a",
+            "9.E.3.a.1",
+            "ECCN-3E004"
+          ]
+        },
+        "alpha=0.3": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "8.E.2.a",
+            "ECCN-0E521",
+            "ECCN-0D521"
+          ]
+        },
+        "alpha=0.0": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "5C005",
+            "8A503",
+            "8B502"
+          ]
+        }
+      }
+    },
+    {
+      "id": "ext-028",
+      "lang": "ko",
+      "confidence": "high",
+      "labels": [
+        "ECCN-6A001"
+      ],
+      "by_alpha": {
+        "alpha=1.0": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "ECCN-0A002",
+            "ECCN-0A501",
+            "ECCN-0A502"
+          ]
+        },
+        "alpha=0.7": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "ECCN-0A919",
+            "ECCN-0B521",
+            "ECCN-0A521"
+          ]
+        },
+        "alpha=0.5": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "ECCN-0A919",
+            "ECCN-0B521",
+            "ECCN-0A521"
+          ]
+        },
+        "alpha=0.3": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "ECCN-0A919",
+            "ECCN-0B521",
+            "ECCN-0A521"
+          ]
+        },
+        "alpha=0.0": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "ECCN-0A919",
+            "ECCN-0B521",
+            "ECCN-0A521"
+          ]
+        }
+      }
+    },
+    {
+      "id": "ext-029",
+      "lang": "en",
+      "confidence": "medium",
+      "labels": [
+        "ECCN-3B001"
+      ],
+      "by_alpha": {
+        "alpha=1.0": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "5.A.2.b",
+            "ECCN-2B231",
+            "3.B.1.i"
+          ]
+        },
+        "alpha=0.7": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "ECCN-2B121",
+            "ECCN-3C992",
+            "5C018"
+          ]
+        },
+        "alpha=0.5": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "ECCN-2B121",
+            "ECCN-3C992",
+            "5C018"
+          ]
+        },
+        "alpha=0.3": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "ECCN-2B121",
+            "ECCN-3C992",
+            "5C018"
+          ]
+        },
+        "alpha=0.0": {
+          "hit@10": 0,
+          "rank": null,
+          "top3": [
+            "ECCN-6B004",
+            "ECCN-2B121",
+            "ECCN-6C004"
+          ]
+        }
+      }
+    }
+  ]
+}
