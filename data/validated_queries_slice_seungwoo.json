@@ -1,0 +1,274 @@
+{
+  "queries": [
+    {
+      "id": "g-seungwoo-001",
+      "lang": "ko",
+      "query": "밀폐 용기 안에서 절연성 액체를 전자 부품에 직접 뿌려 작동 온도를 유지시키는 냉각 장치를 베트남 데이터센터에 납품하려 합니다. 수출 통제 대상인지 확인이 필요합니다.",
+      "context": "베트남 / 전자장비 분사식 냉각 시스템",
+      "validated_labels": ["ECCN-3A003"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3A003: 밀폐 용기 내 유전성 유체 분사 방식 전자부품 냉각 시스템"
+    },
+    {
+      "id": "g-seungwoo-002",
+      "lang": "ko",
+      "query": "모터 구동용으로 쓰이는 가변 주파수 변환 장치를 인도 제조사에 공급할 예정입니다. 원자력 규제 대상은 아닌데 일반 수출 통제에 걸리는지 궁금합니다.",
+      "context": "인도 / 가변주파수 모터 드라이브 변환기",
+      "validated_labels": ["ECCN-3A225"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3A225: 가변/고정 주파수 모터 드라이브로 쓰이는 주파수 변환기"
+    },
+    {
+      "id": "g-seungwoo-003",
+      "lang": "en",
+      "query": "We are exporting a high-current DC power feed unit to a research lab in Taiwan. It is not under nuclear regulatory scope. Could you tell me the classification?",
+      "context": "Taiwan / high-power DC power supply",
+      "validated_labels": ["ECCN-3A226"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3A226: high-power direct current power supplies"
+    },
+    {
+      "id": "g-seungwoo-004",
+      "lang": "ko",
+      "query": "높은 전압을 공급하는 직류 전원 장치를 독일 연구소에 보내려 합니다. 원자력 관련 품목은 아니라고 들었는데 통제 분류를 알고 싶습니다.",
+      "context": "독일 / 고전압 직류 전원공급장치",
+      "validated_labels": ["ECCN-3A227"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3A227: high-voltage direct current power supplies"
+    },
+    {
+      "id": "g-seungwoo-005",
+      "lang": "ko",
+      "query": "무거운 분자 이온까지 측정할 수 있고 분해능이 매우 높은 질량 분석 장비를 일본 대학에 수출하려 합니다. 통제 품목인지 검토 부탁드립니다.",
+      "context": "일본 / 고분해능 질량분석기",
+      "validated_labels": ["ECCN-3A233"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3A233: 230u 이상 이온 측정 가능 고분해능 질량분석기"
+    },
+    {
+      "id": "g-seungwoo-006",
+      "lang": "en",
+      "query": "Our company makes lie-detection instruments and stress-analysis devices for security screening. We want to ship them to a client in Brazil. What is the export category?",
+      "context": "Brazil / polygraph and psychological stress analysis equipment",
+      "validated_labels": ["ECCN-3A981"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3A981: polygraphs, psychological stress analysis equipment"
+    },
+    {
+      "id": "g-seungwoo-007",
+      "lang": "ko",
+      "query": "완성 단계의 반도체 소자를 검사하고 시험하기 위해 특별히 만든 장비를 말레이시아 공장에 공급하려 합니다. 분류 확인이 필요합니다.",
+      "context": "말레이시아 / 반도체 소자 검사·시험 장비",
+      "validated_labels": ["ECCN-3B002"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3B002: 반도체 소자 시험·검사 전용 장비"
+    },
+    {
+      "id": "g-seungwoo-008",
+      "lang": "ko",
+      "query": "최첨단 미세공정 집적회로 생산을 가능하게 하는 반도체 제조 장비를 중국 협력사에 보내려 합니다. 통제 대상인지 매우 궁금합니다.",
+      "context": "중국 / 첨단 노드 반도체 제조 장비",
+      "validated_labels": ["ECCN-3B994"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3B994: advanced-node 집적회로 생산 가능 반도체 제조 장비"
+    },
+    {
+      "id": "g-seungwoo-009",
+      "lang": "en",
+      "query": "We supply wafer substrates layered with gallium nitride and silicon carbide films for power electronics. A customer in Singapore requested them. Which control code applies?",
+      "context": "Singapore / SiC/GaN epitaxial substrate materials",
+      "validated_labels": ["ECCN-3C006"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3C006: SiC, GaN 등 에피택셜 층 기판 소재"
+    },
+    {
+      "id": "g-seungwoo-010",
+      "lang": "ko",
+      "query": "전자기 펄스나 정전기 충격이 발생해도 마이크로컴퓨터가 1밀리초 안에 정상 동작을 회복하게 만드는 소프트웨어를 해외 방산업체에 제공하려 합니다. 통제 여부를 알고 싶습니다.",
+      "context": "해외 방산업체 / EMP·ESD 복구 소프트웨어",
+      "validated_labels": ["ECCN-3D005"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3D005: EMP/ESD 후 1ms 내 정상복구 소프트웨어"
+    },
+    {
+      "id": "g-seungwoo-011",
+      "lang": "ko",
+      "query": "게이트올어라운드 트랜지스터 구조의 집적회로를 설계하기 위한 전자 설계 자동화 소프트웨어를 대만 팹리스에 공급하려 합니다. 분류 검토가 필요합니다.",
+      "context": "대만 / GAAFET 설계용 ECAD 소프트웨어",
+      "validated_labels": ["ECCN-3D006"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3D006: GAAFET 구조 IC 개발용 ECAD 소프트웨어"
+    },
+    {
+      "id": "g-seungwoo-012",
+      "lang": "en",
+      "query": "We license design know-how for building 32-bit-and-above processor cores with advanced arithmetic units. A firm in India wants the package. What classification is this?",
+      "context": "India / processor core development technology",
+      "validated_labels": ["ECCN-3E002"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3E002: 32비트 이상 마이크로프로세서 코어 개발 기술"
+    },
+    {
+      "id": "g-seungwoo-013",
+      "lang": "ko",
+      "query": "300밀리미터 실리콘 웨이퍼를 매우 평탄하게 절삭하고 연마하는 데 필요한 공정 기술을 외국 파운드리에 이전하려 합니다. 통제 대상인지 확인 부탁드립니다.",
+      "context": "외국 파운드리 / 300mm 웨이퍼 가공 기술",
+      "validated_labels": ["ECCN-3E004"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3E004: 300mm 실리콘 웨이퍼 평탄 가공 기술 (SFQR 20nm 이하)"
+    },
+    {
+      "id": "g-seungwoo-014",
+      "lang": "en",
+      "query": "We have analog and digital computing units modified for use in missile platforms. A defense partner abroad requested them. Could you confirm the export control code?",
+      "context": "overseas defense / computers modified for missiles",
+      "validated_labels": ["ECCN-4A101"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 4A101: 미사일용으로 개조된 아날로그/디지털 컴퓨터"
+    },
+    {
+      "id": "g-seungwoo-015",
+      "lang": "ko",
+      "query": "실시간 처리 장비를 위해 소스 코드를 자동으로 생성해 주는 운영체제 소프트웨어를 해외 업체에 납품할 예정입니다. 통제 분류를 알고 싶습니다.",
+      "context": "해외 업체 / 실시간 처리용 소스코드 자동생성 소프트웨어",
+      "validated_labels": ["ECCN-4D993"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 4D993: 실시간 처리 장비용 소스코드 자동생성 소프트웨어"
+    },
+    {
+      "id": "g-seungwoo-016",
+      "lang": "ko",
+      "query": "사거리 300킬로미터 이상 무인 비행체에 쓰도록 설계된 원격 측정 및 원격 제어 장비를 외국 항공우주 기관에 보내려 합니다. 분류 확인이 필요합니다.",
+      "context": "외국 항공우주 기관 / 장거리 UAV 원격측정·제어 장비",
+      "validated_labels": ["ECCN-5A101"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 5A101: 300km 이상 UAV/로켓용 텔레메트리·텔레컨트롤 장비"
+    },
+    {
+      "id": "g-seungwoo-017",
+      "lang": "en",
+      "query": "We make devices that can covertly capture wire and electronic communications. A buyer in the Middle East is interested. What is the proper export classification?",
+      "context": "Middle East / covert communication interception devices",
+      "validated_labels": ["ECCN-5A980"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 5A980: 통신 비밀 가로채기용 장치"
+    },
+    {
+      "id": "g-seungwoo-018",
+      "lang": "ko",
+      "query": "통신망에서 경로를 상황에 따라 동적으로 다시 잡아주는 라우팅 소프트웨어를 해외 통신사에 공급하려 합니다. 통제 품목인지 검토 부탁합니다.",
+      "context": "해외 통신사 / 동적 적응 라우팅 소프트웨어",
+      "validated_labels": ["ECCN-5D991"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 5D991: dynamic adaptive routing 소프트웨어"
+    },
+    {
+      "id": "g-seungwoo-019",
+      "lang": "ko",
+      "query": "물속에서 전기장을 감지하는 센서와 자기장 측정 장비를 외국 해양연구소에 수출하려 합니다. 군용 가능성도 있어 분류 확인이 필요합니다.",
+      "context": "외국 해양연구소 / 수중 전기장·자기 센서",
+      "validated_labels": ["ECCN-6A006"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 6A006: 자력계, 수중 전기장 센서 등"
+    },
+    {
+      "id": "g-seungwoo-020",
+      "lang": "en",
+      "query": "Our product is a sensor hardened against nuclear radiation effects, usable on missile platforms, rated for very high total dose. A foreign client asked about it. Which ECCN?",
+      "context": "foreign client / radiation-hardened missile-capable detector",
+      "validated_labels": ["ECCN-6A102"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 6A102: 핵 효과 방호용 방사선 경화 검출기 (미사일용)"
+    },
+    {
+      "id": "g-seungwoo-021",
+      "lang": "ko",
+      "query": "공중이나 해상에서 중력 값을 정밀하게 측정하는 장비를 외국 측량 회사에 공급하려 합니다. 통제 대상인지 알고 싶습니다.",
+      "context": "외국 측량회사 / 항공·해상용 중력계",
+      "validated_labels": ["ECCN-6A107"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 6A107: 항공/해상용 중력계·중력 경사계"
+    },
+    {
+      "id": "g-seungwoo-022",
+      "lang": "ko",
+      "query": "물속 물체를 탐지하고 위치를 파악하는 해양 음향 장비를 동남아 조선소에 납품할 예정입니다. 분류 검토가 필요합니다.",
+      "context": "동남아 조선소 / 수중 탐지 음향 장비",
+      "validated_labels": ["ECCN-6A991"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 6A991: 수중 물체 탐지·측위용 해양 음향 장비"
+    },
+    {
+      "id": "g-seungwoo-023",
+      "lang": "en",
+      "query": "We sell optical sensing fiber that is structurally modified to have a very short beat length for high birefringence. A customer in Europe wants it. What classification applies?",
+      "context": "Europe / high-birefringence optical sensing fiber",
+      "validated_labels": ["ECCN-6C992"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 6C992: beat length 500mm 미만 고복굴절 광센싱 파이버"
+    },
+    {
+      "id": "g-seungwoo-024",
+      "lang": "ko",
+      "query": "고속 카메라와 영상 장치의 성능을 끌어올리거나 제한을 풀어주는 소프트웨어를 해외 연구기관에 제공하려 합니다. 통제 여부를 확인하고 싶습니다.",
+      "context": "해외 연구기관 / 고속 카메라 성능 향상 소프트웨어",
+      "validated_labels": ["ECCN-6D201"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 6D201: 고속 카메라·이미징 장치 성능 향상 소프트웨어"
+    },
+    {
+      "id": "g-seungwoo-025",
+      "lang": "ko",
+      "query": "도플러 속도계를 방위 기준과 결합해 이동 거리 대비 오차가 매우 작은 수중 음향 항법 시스템을 외국 해군 협력사에 수출하려 합니다. 분류 확인 부탁드립니다.",
+      "context": "외국 해군 협력사 / 수중 소나 항법 시스템",
+      "validated_labels": ["ECCN-7A008"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 7A008: 도플러 속도 기반 수중 소나 항법 시스템"
+    },
+    {
+      "id": "g-seungwoo-026",
+      "lang": "en",
+      "query": "Our device determines orientation by automatically tracking stars or satellites, used for navigation. A foreign aerospace firm requested a sample. Which control code?",
+      "context": "foreign aerospace / celestial-tracking orientation device",
+      "validated_labels": ["ECCN-7A104"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 7A104: 천체/위성 추적 방위 결정 장치 (자이로-아스트로 컴퍼스)"
+    },
+    {
+      "id": "g-seungwoo-027",
+      "lang": "ko",
+      "query": "특정 전자기 발생원의 방위를 알아내는 수동형 방향 탐지 센서를 외국 업체에 보내려 합니다. 미사일 용도 가능성이 있어 분류 확인이 필요합니다.",
+      "context": "외국 업체 / 미사일용 수동 방향탐지 센서",
+      "validated_labels": ["ECCN-7A115"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 7A115: 미사일용 수동형 방향탐지(전자기원 방위) 센서"
+    },
+    {
+      "id": "g-seungwoo-028",
+      "lang": "en",
+      "query": "We provide know-how needed to operate and maintain military acoustic and radar gear that falls outside standard munitions lists. A partner abroad asked. What ECCN is this?",
+      "context": "overseas partner / military acoustic-radar support technology",
+      "validated_labels": ["ECCN-6E619"],
+      "label_confidence": "medium",
+      "label_basis_corpus_text": "eCFR 6E619: 6B619 장비 운용·정비 기술"
+    },
+    {
+      "id": "g-seungwoo-029",
+      "lang": "ko",
+      "query": "로켓이나 무인기의 레이더 반사 면적을 측정하기 위해 특별히 만든 시스템을 외국 항공 회사에 공급하려 합니다. 사거리가 긴 비행체용이라 통제 여부가 궁금합니다.",
+      "context": "외국 항공회사 / 장거리 비행체 RCS 측정 시스템",
+      "validated_labels": ["ECCN-6B108"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 6B108: 300km 이상 로켓/미사일/UAV용 레이더 반사면적 측정 시스템"
+    },
+    {
+      "id": "g-seungwoo-030",
+      "lang": "en",
+      "query": "Our software boosts the performance of frequency converters and generators to reach a specified high level. A buyer overseas requested it. Which export classification fits?",
+      "context": "overseas buyer / frequency changer performance software",
+      "validated_labels": ["ECCN-3D202"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3D202: 주파수 변환기/발전기 성능 향상 소프트웨어 (3A225 수준)"
+    }
+  ]
+}
