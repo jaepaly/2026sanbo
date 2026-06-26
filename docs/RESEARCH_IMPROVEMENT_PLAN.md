@@ -192,6 +192,51 @@ Dense/하이브리드/reranker 비교가 없어 "최소노출 trade-off가 retri
 - 코퍼스 검수: 출처별 30개=90개 표본 수작업 검수 → `docs/corpus_audit.md`, 파싱 오류율.
 - 재현성: 시드 고정 확인, 1커맨드 실행 스크립트.
 
+### TASK G (P0) — 검증 질의셋 대규모 확장 (역생성)  ★팀 분담 대상★
+
+> **왜 1순위인가**: 현재 검증셋 n=13(KO 5)이라 hybrid vs BM25 차이의 95% CI가 0을 포함한다
+> (`docs/statistics.md`). 표본을 80~100개로 키우면 그 효과가 통계적으로 입증될 수 있다.
+> 이 태스크가 ①(표본 확대)과 ②(자기참조 제거)를 동시에 해결한다.
+
+**핵심 아이디어 — 역생성으로 정답을 구조적으로 확정**: 알려진 eCFR 항목을 먼저 고르고, 그 항목을
+설명하는 상담형 질의를 *항목 텍스트를 베끼지 않고* 작성한다. 그러면 라벨은 그 항목의 코드로 확정되며
+(판단 불필요), 패러프레이즈라 자기참조도 없다.
+
+**분할(중요)**: 여러 팀원이 각자 80개를 만들면 기준이 갈라진다. eCFR 항목을 **겹치지 않게** 나눠
+각자 ~30개씩 만들고 팀장이 병합한다. 예: 팀원별로 eCFR 카테고리(1~9) 또는 코드 인덱스 구간을 배정.
+
+**절차(각 팀원, 기계적)**:
+1. 담당 구간의 eCFR 항목(`source=ecfr_part774`) 중 설명 가능한 항목을 ~30개 선택(서로 겹치지 않게).
+2. 각 항목마다 상담형 질의를 작성: 실제 시나리오(국가·맥락·용도)를 담되, **통제번호·항목 원문 구절을
+   직접 인용 금지**. 한국어/영어 섞어 작성(슬라이스 내 **한국어 ≥ 40%**).
+3. 라벨 = 그 항목의 **정확한 full code**(`ECCN-XXXX`). 구조적으로 확정.
+4. 제출 전 **반드시** `python validate_query_slice.py data/<슬라이스>.json` 통과(아래 게이트).
+
+**게이트(`validate_query_slice.py`가 자동 검사)**:
+- 라벨이 exact eCFR 코드(충돌 0), 코드누출 0, 질의-항목 Jaccard < 0.30(자기참조 차단), KO 비율 ≥ 0.40, 슬라이스 ≥ 25개.
+
+**슬라이스 스키마** (`data/validated_queries_slice_<이름>.json`):
+```json
+{"queries": [
+  {"id": "g-<이름>-001", "lang": "ko", "query": "...상담형 문장...",
+   "context": "국가/용도 요약", "validated_labels": ["ECCN-3B001"],
+   "label_confidence": "high", "label_basis_corpus_text": "해당 eCFR 텍스트 근거"}
+]}
+```
+- 출력: 슬라이스 JSON + `docs/RESULT_REPORT_TEMPLATE.md` 양식 리포트.
+- 수용기준: `validate_query_slice.py` exit 0(전 게이트 통과), ≥25개, KO ≥40%.
+- 병합·재평가(팀장, TASK I): 슬라이스들을 합쳐 `evaluate_validated_queries.py`/`experiment_stats.py` 재실행.
+- 주의: 라벨은 여전히 코퍼스 텍스트 근거 카테고리 라벨(법적·전문가 판정 아님). 단 역생성이라 "이 항목을 묘사한 질의"라는 의미에서 정답이 확정적이다.
+
+### TASK H (P1) — 임베딩 robustness  ★팀 분담 대상★
+
+> **순서 주의**: 의미 있는 결과는 TASK G(확장셋) 이후다. 지금 n=13에서 돌리면 CI가 0을 포함해 흐리다.
+> 2단계로: (1) 지금 인프라 작성 + 현재 검증셋 smoke test, (2) G 완료 후 확장셋 재실행.
+
+- 방법: `evaluate_validated_queries.py`의 dense 모델을 교체해 비교. 팀원별 모델 1개씩 병렬(예: A=`BAAI/bge-m3`, B=`intfloat/multilingual-e5-base`). 현재 MiniLM과 동일 평가셋·동일 매칭으로 BM25/Dense/Hybrid R@10(전체/EN/KO) 비교.
+- 출력: `output/embedding_robustness_<모델>.json` + 리포트. 외부 API 미사용(로컬 모델), 명시.
+- 수용기준: 동일 평가셋에서 모델만 바뀐 재현 가능한 비교. dense/hybrid 우위가 모델 불문 유지되는지 보고.
+
 ---
 
 ## 4. 평가 프로토콜 권고

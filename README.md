@@ -132,6 +132,15 @@ python make_figures.py                 # 논문용 figure 4종 (TASK F)
 | **TASK F** | 팀원 A | 결과 시각화(논문 figure) + 통계 보강(CI·효과크기) + 재현성. **새 실험 없음**, 기존 `output/*.json`만 읽어 그림 생성 | `docs/RESEARCH_IMPROVEMENT_PLAN.md` §3 TASK F |
 | **TASK D** | 팀원 B | 한국어 cross-lingual 트랙(번역 필드/동의어 사전/다국어 임베딩). 검증셋 기준 KO 회복 정량화 | `docs/RESEARCH_IMPROVEMENT_PLAN.md` §3 TASK D |
 
+**현재 진행 중인 라운드 (2026-06-26~)** — TASK F·D는 완료(검증·반영됨). 다음 분담:
+
+| TASK | 담당 | 내용 | 상세 스펙 |
+|---|---|---|---|
+| **TASK G** | 팀원들(분할) | 검증 질의셋 80~100개로 확장. eCFR 항목 **역생성**으로 정답 확정 + 패러프레이즈로 자기참조 제거. 각자 겹치지 않는 ~30개씩 → 팀장 병합 | `docs/RESEARCH_IMPROVEMENT_PLAN.md` §3 TASK G |
+
+> TASK G는 **반드시** `python validate_query_slice.py data/<슬라이스>.json`을 통과(exit 0)한 뒤 제출.
+> 라벨 정확성·코드누출·자기참조 Jaccard<0.30·한국어 비율을 자동 검사하므로 팀장 검증이 1커맨드로 끝난다.
+
 이미 완료된 TASK A/B/C/E의 배경·함정은 같은 문서와 `docs/case_analysis.md`, `PAPER.md`에 정리돼 있습니다.
 
 ### 2. 환경 셋업 (각 팀원, 1회)
@@ -192,6 +201,25 @@ docs/RESEARCH_IMPROVEMENT_PLAN.md, PAPER.md, docs/case_analysis.md를 읽어 맥
 마지막으로 docs/RESULT_REPORT_TEMPLATE.md를 복사해 report_task_d_<이름>.md로 채워라
 (기준 커밋 해시, 생성 파일 목록, 핵심 결과표, 재현 방법, 가드레일 체크 포함).
 이 리포트와 생성한 JSON/MD 파일들을 함께 제출하면 된다고 안내하라.
+```
+
+**TASK G 담당 — 에이전트 프롬프트** (담당 eCFR 구간을 `<배정구간>`에 기입)
+```
+이 저장소(2026sanbo)는 전략물자 사전 트리아지 정보최소화 연구다. 먼저 README.md,
+docs/RESEARCH_IMPROVEMENT_PLAN.md(§3 TASK G), PAPER.md, docs/case_analysis.md를 읽어
+맥락과 "절대 하지 말 것"을 파악하라. 목표: 검증 질의셋을 역생성으로 확장한다.
+- data/corpus/combined.json에서 source=ecfr_part774 항목 중 내 담당 구간 <배정구간>
+  (다른 팀원과 겹치지 않게)에서 설명 가능한 항목 약 30개를 고른다.
+- 각 항목마다, 그 항목을 묘사하는 상담형 질의를 작성한다. 실제 시나리오(국가/용도)를 담되
+  통제번호와 항목 원문 구절을 직접 인용하지 마라(자기참조 금지). 한국어를 40% 이상 포함.
+- 라벨(validated_labels)은 그 항목의 정확한 full code(ECCN-XXXX)로 둔다.
+- 결과를 data/validated_queries_slice_<이름>.json에 §3 TASK G 스키마대로 저장한다.
+- 제출 전 반드시 `python validate_query_slice.py data/validated_queries_slice_<이름>.json`을
+  실행해 exit 0(모든 게이트 통과: 라벨 정확·코드누출0·Jaccard<0.30·KO≥40%·≥25개)을 확인하라.
+  실패하면 해당 질의를 고쳐 다시 통과시켜라.
+금지: 추정 라벨을 "정답(법적)"으로 호칭, "AI가 전략물자 판정" 류 주장, 항목 원문 베껴쓰기.
+마지막으로 docs/RESULT_REPORT_TEMPLATE.md를 복사해 report_task_g_<이름>.md로 채우고,
+슬라이스 JSON과 validate_query_slice.py의 통과 출력을 함께 제출하면 된다고 안내하라.
 ```
 
 ### 5. 결과물 제출 (md 리포트 방식 — 기본)
