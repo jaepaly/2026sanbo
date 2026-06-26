@@ -112,6 +112,95 @@ python build_validated_queries.py      # 충돌제거 검증 라벨셋 생성 (T
 python evaluate_validated_queries.py   # 검증 라벨셋 retriever 평가 (TASK B/C/E)
 ```
 
+> 참고: `experiment_*retriever*.py`와 `evaluate_validated_queries.py`는 다국어 dense 모델
+> (`paraphrase-multilingual-MiniLM-L12-v2`, 약 470MB)을 처음 실행 시 자동 다운로드합니다.
+> 무거운 임베딩 연산은 로컬에서 수행되며 외부 추론 API를 호출하지 않습니다.
+
+---
+
+## 팀 협업 가이드 (작업 분담)
+
+이 저장소는 팀 분담으로 진행됩니다. 각 팀원은 저장소를 클론하고, **자신의 AI 에이전트에게 저장소를 읽힌 뒤** 아래 담당 TASK를 수행하고, 산출물을 PR(권장) 또는 파일로 제출합니다.
+
+### 1. 담당 분배
+
+| TASK | 담당 | 내용 | 상세 스펙 |
+|---|---|---|---|
+| **TASK F** | 팀원 A | 결과 시각화(논문 figure) + 통계 보강(CI·효과크기) + 재현성. **새 실험 없음**, 기존 `output/*.json`만 읽어 그림 생성 | `docs/RESEARCH_IMPROVEMENT_PLAN.md` §3 TASK F |
+| **TASK D** | 팀원 B | 한국어 cross-lingual 트랙(번역 필드/동의어 사전/다국어 임베딩). 검증셋 기준 KO 회복 정량화 | `docs/RESEARCH_IMPROVEMENT_PLAN.md` §3 TASK D |
+
+이미 완료된 TASK A/B/C/E의 배경·함정은 같은 문서와 `docs/case_analysis.md`, `PAPER.md`에 정리돼 있습니다.
+
+### 2. 환경 셋업 (각 팀원, 1회)
+
+```bash
+git clone https://github.com/jaepaly/2026sanbo.git
+cd 2026sanbo
+python -m venv .venv
+.venv\Scripts\activate          # Windows. (mac/linux: source .venv/bin/activate)
+pip install -r requirements.txt
+```
+
+### 3. 작업 흐름 (Git)
+
+```bash
+git checkout -b task-f-<이름>    # 예: task-f-jihoon  (TASK D는 task-d-<이름>)
+# ... 에이전트로 작업 수행, output/ 산출물 생성 ...
+git add <생성·수정 파일>
+git commit -m "TASK F: 논문 figure 4종 + 통계 표 생성"
+git push origin task-f-<이름>
+# GitHub에서 Pull Request 생성 → 리뷰 요청
+```
+
+> 충돌 방지: TASK F는 주로 `make_figures.py`·`output/fig_*.png`·`docs/statistics.md`를,
+> TASK D는 `data/*crosslingual*`·`output/crosslingual_*`를 건드립니다. 서로 다른 파일이라
+> 병렬 작업해도 충돌이 거의 없습니다. 기존 스크립트(`run_experiments.py` 등)는 수정하지 마세요.
+
+### 4. 에이전트에게 줄 프롬프트 (복붙용)
+
+**TASK F 담당 — 에이전트 프롬프트**
+```
+이 저장소(2026sanbo)는 전략물자 사전 트리아지 정보최소화 연구다. 먼저 README.md,
+docs/RESEARCH_IMPROVEMENT_PLAN.md, PAPER.md를 읽어 맥락과 "절대 하지 말 것"을 파악하라.
+그다음 docs/RESEARCH_IMPROVEMENT_PLAN.md의 TASK F(시각화+통계)를 수행하라:
+- 새 실험을 돌리지 말고 기존 output/*.json만 읽어 make_figures.py를 작성하고
+  output/에 fig_paraphrase_gap.png, fig_retriever_alpha.png, fig_exposure_recall.png,
+  fig_validated_retriever.png 4종을 생성하라. 수치는 JSON과 정확히 일치해야 한다.
+- experiment_stats.py로 주요 비교의 bootstrap 95% CI와 효과크기를 output/stats_summary.json,
+  docs/statistics.md에 정리하라.
+금지: 합성 R@10 0.97을 무수식 헤드라인화, 추정 라벨을 "정답"으로 호칭, "AI가 전략물자 판정" 류 주장.
+작업 후 변경 파일을 새 브랜치에 커밋·푸시하고 무엇을 만들었는지 요약하라.
+```
+
+**TASK D 담당 — 에이전트 프롬프트**
+```
+이 저장소(2026sanbo)는 전략물자 사전 트리아지 정보최소화 연구다. 먼저 README.md,
+docs/RESEARCH_IMPROVEMENT_PLAN.md, PAPER.md, docs/case_analysis.md를 읽어 맥락을 파악하라.
+핵심 사실: 코퍼스는 100% 영어라 BM25가 한국어 질의에서 R@10=0이고, 다국어 dense가 일부
+회복한다(output/validated_eval.json). docs/RESEARCH_IMPROVEMENT_PLAN.md의 TASK D를 수행하라:
+- data/external_consultation_queries_validated.json을 기준 평가셋으로,
+  KO-원문 vs KO-번역 vs EN, 그리고 BM25/dense/hybrid를 비교해
+  output/crosslingual_eval.json, output/crosslingual_eval.md를 생성하라.
+- 외부 API를 쓰면 반드시 명시하라(정보최소화 주제와 충돌). 가능하면 로컬 모델 사용.
+- 한국어 표본이 5개로 작으니 결론은 "경향"으로 서술하고 표본 확대 필요성을 명시하라.
+금지: 추정 라벨을 "정답"으로 호칭, "AI가 전략물자 판정" 류 주장.
+작업 후 변경 파일을 새 브랜치에 커밋·푸시하고 요약하라.
+```
+
+### 5. 결과물 제출
+
+- **방법 A (권장): Pull Request** — 위 흐름대로 브랜치 푸시 후 PR 생성. 리뷰·머지로 합칩니다.
+- **방법 B: 파일 전송** — PR이 어려우면 생성된 `output/` 산출물(PNG·JSON·MD)과 새 스크립트를 압축해 전달. 단, 어떤 커밋/브랜치 기준인지 명시.
+
+### 6. 반드시 지킬 것 (회귀 방지)
+
+- 합성 R@10 0.9792는 **자기참조 재검색**이므로 무수식 헤드라인 금지(`docs/case_analysis.md`).
+- 외부/검증셋 라벨은 **정답이 아님**(코퍼스 텍스트 근거 카테고리 라벨). "정답"으로 부르지 말 것.
+- "AI가 전략물자 판정/자가판정 대체", "법제 라우팅 정확도 n%" 류 주장 금지(`PAPER.md` 참조).
+- 기존 산출물 수치를 임의로 바꾸지 말 것. figure/통계는 기존 `output/*.json`과 일치해야 함.
+
+---
+
 ## 한계
 
 - 합성 쿼리는 각 코퍼스 항목 **자기 본문**에서 코드만 제거해 만든 것이라 정답 문서와 near-duplicate입니다(평균 Jaccard 0.485). 따라서 합성 R@10 0.9792는 자기참조 재검색 성능에 가깝고, 후보 발견 능력의 절대 지표로 직접 일반화할 수 없습니다. `experiment_paraphrase_gap.py`로 검증: 정답 문서와 공유하는 변별(고-IDF) 토큰 5개를 제거하면 minimal_text R@10이 0.9792→0.7596, 10개에서 0.4407로 떨어집니다(`output/paraphrase_gap.md`).

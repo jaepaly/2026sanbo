@@ -119,14 +119,21 @@ Dense/하이브리드/reranker 비교가 없어 "최소노출 trade-off가 retri
 - 수용기준: `candidate_label_collision_count`가 평가 로직에서 0이 되거나, 충돌 질의가 명시적으로 제외/표기됨.
 - 참고: 충돌 진단 인프라는 이미 추가됨(`has_code_collision`, `candidate_label_collision_count`). 이를 평가 매칭까지 반영하면 됨.
 
-### TASK D (P1) — 한국어 cross-lingual 트랙 분리
+### TASK D (P1) — 한국어 cross-lingual 트랙 분리  ★팀 분담 대상★
 
-- 방법(택1):
-  - (D1) `query_en` 번역 필드를 모든 한국어 질의에 추가하고 EN/KO 평가를 별도 보고.
-  - (D2) 도메인 한영 동의어 사전(`data/domain_synonyms.json`) 구축 후 쿼리 확장.
-  - (D3) 다국어 임베딩(예: bge-m3, 이미 v6.2에서 0.83 언급됨) 기반 dense retrieval로 KO 트랙만 별도 비교.
-- 출력: `output/crosslingual_eval.json` + EN-only vs KO-원문 vs KO-번역 비교표.
-- 수용기준: "코퍼스가 영어라 한국어가 0점"이라는 당연한 결과를, "번역/임베딩으로 KO가 X→Y로 회복"이라는 정량 기여로 전환.
+> 배경: 코퍼스는 100% 영어인데(한글 포함 항목 0개), 외부 상담셋의 절반이 한국어다.
+> BM25는 한국어에서 어휘 매칭이 불가능(R@10=0)하고, 다국어 dense가 일부 회복함을 이미 확인했다
+> (`output/validated_eval.json`: 한국어 BM25 0 → hybrid 0.20). 이 태스크는 한국어 경로를
+> 정식 기여로 만든다. **검증셋(`data/external_consultation_queries_validated.json`)을 기준 평가셋으로 사용.**
+
+- 방법(택1 또는 병행):
+  - (D1) `query_en` 필드: 검증셋의 한국어 질의에 영어 번역을 추가하고, KO-원문 vs KO-번역 vs EN-원문 BM25/dense 비교. (번역은 사람 또는 로컬 모델; 외부 API 사용 시 명시)
+  - (D2) 도메인 한영 동의어 사전 `data/domain_synonyms.json` 구축(예: 자이로스코프↔gyroscope, 식각↔etching) 후 한국어 쿼리 확장 → BM25 회복 측정.
+  - (D3) 다국어 임베딩 비교: 현재 `paraphrase-multilingual-MiniLM` 외 `bge-m3`, `intfloat/multilingual-e5` 등으로 한국어 R@10 비교.
+- 입력: `data/external_consultation_queries_validated.json`, `data/corpus/combined.json`
+- 출력: `output/crosslingual_eval.json` + `output/crosslingual_eval.md` (KO-원문 vs KO-번역 vs EN, retriever별 R@10 표)
+- 수용기준: "코퍼스가 영어라 한국어 0점"이라는 당연한 결과를 "번역/동의어/다국어 임베딩으로 KO가 X→Y로 회복"이라는 정량 기여로 전환. 외부 API 사용 여부를 반드시 명시(정보최소화 주제와 충돌 주의).
+- 주의: 검증셋 한국어 표본은 5개로 매우 작다. 결론은 "경향"으로 서술하고, 표본 확대 필요성을 명시.
 
 ### TASK E (P1) — retriever 비교 트랙
 
@@ -144,11 +151,34 @@ Dense/하이브리드/reranker 비교가 없어 "최소노출 trade-off가 retri
 - 핵심 질문: **"최소노출 trade-off 곡선이 retriever를 바꾸면 어떻게 이동하는가."** 이게 논문의 두 번째 축이 될 수 있다.
 - 주의: 외부 LLM/임베딩 API 호출은 연구의 "정보최소화" 주제와 충돌하므로, **로컬 모델 사용**과 "인덱싱은 로컬, 쿼리시 외부 호출 없음"을 명시.
 
-### TASK F (P2) — proxy/검수/재현성
+### TASK F (P2) — 결과 시각화 + 통계 보강 + 재현성  ★팀 분담 대상★
 
-- 노출량 proxy: 문자 수 외에 (1) 토큰 수, (2) 고유명사·수치 사양 수(민감도 가중) 버전 추가.
-- 코퍼스 검수: 출처별 30개씩 90개 표본 수작업 검수 리포트(`docs/corpus_audit.md`), 파싱 오류율 보고.
-- 재현성: `requirements.txt` 버전 핀, 시드 고정 확인, 실행 1커맨드 스크립트.
+> 이 태스크는 **새 실험을 돌리지 않는다.** 이미 생성된 `output/*.json`을 읽어 논문용 그림과
+> 통계 표를 만드는 작업이다. 입력 파일이 모두 저장소에 있으므로 콜드 스타트 에이전트도 수행 가능.
+
+**F1. 논문용 figure 생성** — `make_figures.py` 신규 작성 (matplotlib, 외부 API 없음)
+- 입력(이미 존재):
+  - `output/paraphrase_gap.json` — 어휘격차 N별 R@10 (minimal_text/full_text)
+  - `output/retriever_compare.json` — 합성셋 어휘격차×alpha R@10
+  - `output/external_retriever.json` — 외부셋 retriever별 R@10(전체/EN/KO)
+  - `output/validated_eval.json` — 검증셋 retriever별 R@10(전체/EN/KO)
+  - `output/experiment_logs.json` — 노출량@10 (full/minimal/minimal_no_code/route_only)
+- 출력(권장 4개, `output/`에 PNG, 150dpi 이상):
+  1. `fig_paraphrase_gap.png` — x=제거 변별토큰 N, y=R@10, minimal_text vs full_text 두 곡선. "자기참조 의존성".
+  2. `fig_retriever_alpha.png` — x=alpha(BM25↔Dense), y=R@10, 어휘격차 N별 곡선. "합성셋에서 BM25 우위".
+  3. `fig_exposure_recall.png` — x=평균 노출량@10, y=R@10, 조건별 점(full/minimal/minimal_no_code). "노출-성능 frontier".
+  4. `fig_validated_retriever.png` — 막대그래프, retriever별 전체/EN/KO R@10. "검증셋에서 BM25=0, hybrid 우위, 한국어 회복".
+- 수용기준: 4개 PNG 생성, 각 그림에 제목·축라벨·범례, 수치는 위 JSON과 정확히 일치. 한글 폰트 깨지면 영문 라벨 허용.
+
+**F2. 통계 보강** — `experiment_stats.py` 또는 기존 결과에 부가
+- bootstrap 신뢰구간(R@10), 효과크기(Cliff's delta 또는 평균차), permutation p값 정리.
+- 출력: `output/stats_summary.json` + `docs/statistics.md` 표.
+- 수용기준: 주요 비교(minimal vs full, hybrid vs BM25)에 점추정+95% CI 동반.
+
+**F3. (선택) proxy/검수/재현성**
+- 노출량 proxy: 문자 수 외 토큰 수·수치사양 수 버전.
+- 코퍼스 검수: 출처별 30개=90개 표본 수작업 검수 → `docs/corpus_audit.md`, 파싱 오류율.
+- 재현성: 시드 고정 확인, 1커맨드 실행 스크립트.
 
 ---
 
