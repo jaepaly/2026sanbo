@@ -70,6 +70,12 @@ Dense/하이브리드/reranker 비교가 없어 "최소노출 trade-off가 retri
 
 ### TASK A (P0) — 정직한 합성 평가셋 재구성: paraphrase split
 
+> **진행 상황 (2026-06-26)**: 1차 완료. `experiment_paraphrase_gap.py`로 자기참조 의존성을
+> 정량화했다(쿼리-정답 평균 Jaccard 0.485; 변별토큰 5개 제거 시 minimal_text R@10
+> 0.9792→0.7596, 10개 제거 시 0.4407). 산출물: `output/paraphrase_gap.{json,md}`.
+> **남은 일**: 아래 A1~A3로 *생성형* 패러프레이즈 평가셋(`data/queries_paraphrased.json`)을
+> 별도 구축해 "교정된 헤드라인 R@k"를 확보. 현재 실험은 ablation(증거)이고, A1~A3는 대체 평가셋이다.
+
 **문제**: 쿼리=정답 본문. **목표**: 쿼리를 정답 본문과 어휘적으로 분리.
 
 - 입력: `data/corpus/combined.json`

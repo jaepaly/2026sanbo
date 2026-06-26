@@ -1,0 +1,122 @@
+{
+  "experiment": "self_retrieval_dependency_vocab_gap",
+  "corpus_size": 1797,
+  "query_count": 624,
+  "ablation_levels": [
+    0,
+    1,
+    2,
+    3,
+    5,
+    10
+  ],
+  "method": "Remove the N highest-IDF tokens shared between each query and its answer document, then recompute BM25 ranking. No external model.",
+  "results": {
+    "minimal_text": {
+      "summary": [
+        {
+          "n_removed_high_idf_shared_terms": 0,
+          "recall@1": 0.7837,
+          "recall@5": 0.9583,
+          "recall@10": 0.9792,
+          "mean_jaccard_vs_answer": 0.4845,
+          "mean_terms_removed": 0
+        },
+        {
+          "n_removed_high_idf_shared_terms": 1,
+          "recall@1": 0.734,
+          "recall@5": 0.9343,
+          "recall@10": 0.9728,
+          "mean_jaccard_vs_answer": 0.457,
+          "mean_terms_removed": 1.17
+        },
+        {
+          "n_removed_high_idf_shared_terms": 2,
+          "recall@1": 0.6923,
+          "recall@5": 0.8942,
+          "recall@10": 0.9311,
+          "mean_jaccard_vs_answer": 0.4295,
+          "mean_terms_removed": 2.38
+        },
+        {
+          "n_removed_high_idf_shared_terms": 3,
+          "recall@1": 0.6202,
+          "recall@5": 0.8397,
+          "recall@10": 0.8862,
+          "mean_jaccard_vs_answer": 0.4019,
+          "mean_terms_removed": 3.59
+        },
+        {
+          "n_removed_high_idf_shared_terms": 5,
+          "recall@1": 0.5256,
+          "recall@5": 0.7099,
+          "recall@10": 0.7596,
+          "mean_jaccard_vs_answer": 0.347,
+          "mean_terms_removed": 6.09
+        },
+        {
+          "n_removed_high_idf_shared_terms": 10,
+          "recall@1": 0.2708,
+          "recall@5": 0.4006,
+          "recall@10": 0.4407,
+          "mean_jaccard_vs_answer": 0.2132,
+          "mean_terms_removed": 12.21
+        }
+      ],
+      "query_count": 624
+    },
+    "full_text": {
+      "summary": [
+        {
+          "n_removed_high_idf_shared_terms": 0,
+          "recall@1": 0.8702,
+          "recall@5": 0.9904,
+          "recall@10": 0.9968,
+          "mean_jaccard_vs_answer": 0.5576,
+          "mean_terms_removed": 0
+        },
+        {
+          "n_removed_high_idf_shared_terms": 1,
+          "recall@1": 0.8526,
+          "recall@5": 0.9888,
+          "recall@10": 0.9952,
+          "mean_jaccard_vs_answer": 0.5334,
+          "mean_terms_removed": 1.08
+        },
+        {
+          "n_removed_high_idf_shared_terms": 2,
+          "recall@1": 0.8317,
+          "recall@5": 0.976,
+          "recall@10": 0.9856,
+          "mean_jaccard_vs_answer": 0.5091,
+          "mean_terms_removed": 2.23
+        },
+        {
+          "n_removed_high_idf_shared_terms": 3,
+          "recall@1": 0.8077,
+          "recall@5": 0.9583,
+          "recall@10": 0.9744,
+          "mean_jaccard_vs_answer": 0.4849,
+          "mean_terms_removed": 3.37
+        },
+        {
+          "n_removed_high_idf_shared_terms": 5,
+          "recall@1": 0.7452,
+          "recall@5": 0.9103,
+          "recall@10": 0.9295,
+          "mean_jaccard_vs_answer": 0.4365,
+          "mean_terms_removed": 5.67
+        },
+        {
+          "n_removed_high_idf_shared_terms": 10,
+          "recall@1": 0.5705,
+          "recall@5": 0.7276,
+          "recall@10": 0.7596,
+          "mean_jaccard_vs_answer": 0.3166,
+          "mean_terms_removed": 11.56
+        }
+      ],
+      "query_count": 624
+    }
+  }
+}

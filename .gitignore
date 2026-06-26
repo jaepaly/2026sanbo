@@ -8,3 +8,5 @@ output/*
 !output/external_eval.json
 !output/external_eval.md
 !output/external_label_audit.json
+!output/paraphrase_gap.json
+!output/paraphrase_gap.md
