@@ -117,6 +117,15 @@ Dense/하이브리드/reranker 비교가 없어 "최소노출 trade-off가 retri
 
 ### TASK E (P1) — retriever 비교 트랙
 
+> **진행 상황 (2026-06-26)**: 1차 완료. `experiment_retriever_compare.py`(합성 어휘격차)와
+> `experiment_external_retriever.py`(외부 상담셋) 추가. 발견:
+> (1) 자기참조 합성셋에서는 BM25가 모든 어휘격차 레벨에서 dense 우위 → 합성 benchmark는
+>     retriever 비교에 부적합. (2) 합성 "한국어" 쿼리가 영어 본문이라 언어 분리가 가짜임을 발견.
+> (3) 외부 상담셋에서 BM25 R@10=0인데 hybrid(α=0.5) 0.10, 한국어 0→0.0625로 회복 →
+>     다국어 dense의 cross-lingual 가치 입증. 산출물: `output/retriever_compare.{json,md}`,
+>     `output/external_retriever.{json,md}`. **남은 일**: LLM reranker(Ollama) 추가는 선택,
+>     검증된 라벨셋(TASK B) 확보 후 절대 R@10 재측정.
+
 - 방법: 동일 평가셋(TASK A/B 산출물)에서 BM25 vs dense(bge-m3/e5) vs 하이브리드(BM25+dense, RRF) vs +LLM reranker 비교. 각 조건에서 노출량@10 동시 측정.
 - 출력: `output/retriever_comparison.json` + 노출량-R@10 frontier 그래프.
 - 핵심 질문: **"최소노출 trade-off 곡선이 retriever를 바꾸면 어떻게 이동하는가."** 이게 논문의 두 번째 축이 될 수 있다.

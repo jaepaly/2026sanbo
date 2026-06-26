@@ -106,12 +106,15 @@ python run_experiments.py
 python experiment_legal_route.py
 python evaluate_external_queries.py    # 외부 모사 질의 stress test
 python experiment_paraphrase_gap.py    # 자기참조 의존성 검증 (TASK A)
+python experiment_retriever_compare.py # BM25 vs Dense vs Hybrid, 합성 (TASK E)
+python experiment_external_retriever.py# BM25 vs Dense vs Hybrid, 외부셋 (TASK E)
 ```
 
 ## 한계
 
 - 합성 쿼리는 각 코퍼스 항목 **자기 본문**에서 코드만 제거해 만든 것이라 정답 문서와 near-duplicate입니다(평균 Jaccard 0.485). 따라서 합성 R@10 0.9792는 자기참조 재검색 성능에 가깝고, 후보 발견 능력의 절대 지표로 직접 일반화할 수 없습니다. `experiment_paraphrase_gap.py`로 검증: 정답 문서와 공유하는 변별(고-IDF) 토큰 5개를 제거하면 minimal_text R@10이 0.9792→0.7596, 10개에서 0.4407로 떨어집니다(`output/paraphrase_gap.md`).
 - 외부 모사 질의셋(`data/external_consultation_queries.json`) 30개의 `candidate_labels`는 연구자 예비 추정값이며 검증된 정답이 아닙니다. 30개 중 13개는 코드 정규화 충돌을 가집니다. 따라서 R@10=0은 "BM25 현장 성능=0"이 아니라 "불확실한 후보 라벨 기준 비수렴"으로 읽어야 합니다.
+- Retriever 비교(TASK E): 자기참조 합성셋은 BM25에 구조적으로 유리해 retriever 비교에 부적합합니다(합성 "한국어" 쿼리는 영어 본문이라 언어 분리도 가짜). 진짜 한국어가 있는 외부셋에서는 BM25 R@10=0인데 다국어 hybrid(α=0.5)가 0.10, 한국어 0→0.0625로 회복합니다(`output/external_retriever.md`). 즉 cross-lingual엔 다국어 dense가 필요합니다.
 - 코퍼스 파싱은 정규식 기반이므로 수작업 표본 검수가 필요합니다.
 - 현재 실험은 BM25 기준선입니다. Dense retrieval, reranker, LLM 비교는 기준선이 안정화된 뒤 별도 실험으로 추가해야 합니다.
 - 노출량은 문자 수 기반 proxy입니다. 실제 영업비밀·기술정보 민감도와 동일하지 않습니다.

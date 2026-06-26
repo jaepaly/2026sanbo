@@ -10,3 +10,7 @@ output/*
 !output/external_label_audit.json
 !output/paraphrase_gap.json
 !output/paraphrase_gap.md
+!output/retriever_compare.json
+!output/retriever_compare.md
+!output/external_retriever.json
+!output/external_retriever.md

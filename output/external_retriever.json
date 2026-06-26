@@ -1,0 +1,41 @@
+{
+  "experiment": "external_retriever_comparison",
+  "mode": "minimal_text",
+  "dense_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "alphas": [
+    1.0,
+    0.7,
+    0.5,
+    0.3,
+    0.0
+  ],
+  "corpus_size": 1797,
+  "query_count": 30,
+  "summary": {
+    "alpha=1.0": {
+      "recall@10": 0.0,
+      "ko_recall@10": 0.0,
+      "en_recall@10": 0.0
+    },
+    "alpha=0.7": {
+      "recall@10": 0.0667,
+      "ko_recall@10": 0.0625,
+      "en_recall@10": 0.0714
+    },
+    "alpha=0.5": {
+      "recall@10": 0.1,
+      "ko_recall@10": 0.0625,
+      "en_recall@10": 0.1429
+    },
+    "alpha=0.3": {
+      "recall@10": 0.1,
+      "ko_recall@10": 0.0625,
+      "en_recall@10": 0.1429
+    },
+    "alpha=0.0": {
+      "recall@10": 0.0667,
+      "ko_recall@10": 0.0625,
+      "en_recall@10": 0.0714
+    }
+  }
+}
