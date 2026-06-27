@@ -1,0 +1,68 @@
+{
+  "meta": {
+    "mode": "minimal_text",
+    "dense_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+    "n": 71,
+    "n_en": 26,
+    "n_ko": 45,
+    "bootstrap_iters": 20000,
+    "seed": 20260626,
+    "label_nature": "corpus-text-grounded category labels; not legal/expert determinations"
+  },
+  "summary": {
+    "alpha=1.0": {
+      "recall@10": 0.169,
+      "en_recall@10": 0.4231,
+      "ko_recall@10": 0.0222
+    },
+    "alpha=0.7": {
+      "recall@10": 0.5493,
+      "en_recall@10": 0.4615,
+      "ko_recall@10": 0.6
+    },
+    "alpha=0.5": {
+      "recall@10": 0.5775,
+      "en_recall@10": 0.5385,
+      "ko_recall@10": 0.6
+    },
+    "alpha=0.3": {
+      "recall@10": 0.5775,
+      "en_recall@10": 0.5385,
+      "ko_recall@10": 0.6
+    },
+    "alpha=0.0": {
+      "recall@10": 0.5493,
+      "en_recall@10": 0.4615,
+      "ko_recall@10": 0.6
+    }
+  },
+  "comparisons": {
+    "hybrid_0.5_vs_bm25": {
+      "mean_diff": 0.4085,
+      "diff_95_ci": [
+        0.2958,
+        0.5211
+      ],
+      "wins": 29,
+      "losses": 0
+    },
+    "dense_vs_bm25": {
+      "mean_diff": 0.3803,
+      "diff_95_ci": [
+        0.2535,
+        0.493
+      ],
+      "wins": 28,
+      "losses": 1
+    },
+    "hybrid_0.7_vs_bm25": {
+      "mean_diff": 0.3803,
+      "diff_95_ci": [
+        0.2676,
+        0.493
+      ],
+      "wins": 27,
+      "losses": 0
+    }
+  }
+}

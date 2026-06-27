@@ -136,7 +136,26 @@ BM25 vs Dense(다국어 MiniLM) vs Hybrid를 두 평가셋에서 비교했다(`e
 - `output/fig_exposure_recall.png` — 노출량-성능 frontier
 - `output/fig_validated_retriever.png` — 검증셋 retriever별 R@10(전체/EN/KO)
 
-**통계적 주의(중요)**: 합성셋 비교(minimal vs full, N5 vs N0)는 표본이 624개로 CI가 0을 포함하지 않아 유의하다. 그러나 **검증셋의 hybrid vs BM25 차이는 +0.2308이지만 95% CI가 [0.0, 0.46]으로 0을 포함**한다(n=13). 따라서 검증셋의 retriever 우위는 **통계적으로 입증된 효과가 아니라 경향**으로 서술해야 하며, 표본 확대가 필수다. 상세: `docs/statistics.md`, `output/stats_summary.json`.
+**통계적 주의(중요)**: 합성셋 비교(minimal vs full, N5 vs N0)는 표본이 624개로 CI가 0을 포함하지 않아 유의하다. 그러나 **검증셋의 hybrid vs BM25 차이는 +0.2308이지만 95% CI가 [0.0, 0.46]으로 0을 포함**한다(n=13). 따라서 n=13 단계에서 검증셋의 retriever 우위는 통계적으로 입증된 효과가 아니라 경향이었다. 상세: `docs/statistics.md`, `output/stats_summary.json`.
+
+### 검증셋 확장(TASK G/I): 효과의 통계적 입증
+
+표본을 키우기 위해, eCFR 항목을 먼저 고르고 그 항목을 묘사하는 상담형 질의를 *원문을 베끼지 않고* 역생성하여(라벨이 구조적으로 확정되고 자기참조가 제거됨) 60개를 추가했다(`validate_query_slice.py`로 코드누출·Jaccard<0.30·한국어비율 자동 검증). 원본 검증셋과 병합(중복 코드 자동 배제)하여 **n=71(영어 26, 한국어 45)**로 재평가했다(`build_expanded_validated.py`).
+
+| retriever | 전체 R@10 | 영어 R@10 | 한국어 R@10 |
+|---|---:|---:|---:|
+| BM25 (α=1.0) | 0.1690 | 0.4231 | **0.0222** |
+| **hybrid (α=0.5)** | **0.5775** | 0.5385 | **0.6000** |
+| Dense (α=0.0) | 0.5493 | 0.4615 | 0.6000 |
+
+paired bootstrap 95% CI(seed 고정, 20,000회):
+
+| 비교 | 평균차 | 95% CI | wins/losses |
+|---|---:|---|---:|
+| hybrid(α=0.5) vs BM25 | +0.4085 | **[0.296, 0.521]** | 29 / 0 |
+| Dense vs BM25 | +0.3803 | [0.254, 0.493] | 28 / 1 |
+
+**핵심**: n=13에서 0을 포함하던(비유의) hybrid–BM25 차이의 95% CI가 **n=71에서 [0.296, 0.521]로 0을 벗어났다 — 효과가 통계적으로 입증되었다.** 또한 한국어에서 BM25는 R@10 0.022로 사실상 실패하지만(코퍼스 100% 영어) 다국어 hybrid/dense는 0.60으로 회복한다(KO n=45). 즉 정보최소화 후보검색에서 BM25 sparse retrieval은 상담형·한국어 질의에 부적합하며, 다국어 hybrid가 통계적으로 유의하게 우월하다. 상세: `output/validated_expanded_eval.md`.
 
 ## 한국 법제도와의 연결
 

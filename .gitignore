@@ -23,3 +23,5 @@ output/*
 !output/fig_retriever_alpha.png
 !output/fig_exposure_recall.png
 !output/fig_validated_retriever.png
+!output/validated_expanded_eval.json
+!output/validated_expanded_eval.md
