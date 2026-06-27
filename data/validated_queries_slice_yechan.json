@@ -1,0 +1,354 @@
+{
+  "meta": {
+    "task": "TASK G",
+    "owner": "yechan",
+    "source": "data/corpus/combined.json",
+    "source_filter": "source=ecfr_part774",
+    "assigned_range": "eCFR categories 0, 1, 2, and 8 (code prefixes ECCN-0, ECCN-1, ECCN-2, ECCN-8)",
+    "generation_method": "reverse generation from known eCFR corpus entries; no external API",
+    "label_nature": "Corpus-text-grounded category labels for retrieval evaluation, not legal export-control determinations.",
+    "category_distribution": {
+      "0xxx": 4,
+      "1xxx": 10,
+      "2xxx": 10,
+      "8xxx": 6
+    },
+    "notes": [
+      "Queries avoid control codes and direct quotation of the source entry wording.",
+      "Korean ratio is intentionally above 40 percent for cross-lingual stress testing.",
+      "No entries from eCFR categories 3, 4, 5, 6, 7, or 9 are included."
+    ]
+  },
+  "queries": [
+    {
+      "id": "g-yechan-001",
+      "lang": "ko",
+      "query": "국내 총기 액세서리 업체가 사냥용 조준경 모듈과 교체용 렌즈 하우징을 캐나다 유통사에 보내려 합니다. 군용 장비는 아니라고 하나 공개 통제목록 후보를 사전에 확인하고 싶습니다.",
+      "context": "캐나다 수출 / 총기용 광학 조준 보조장치",
+      "validated_labels": ["ECCN-0A504"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 총기용 광학 조준 관련 장치와 부속 요소를 다룬다.",
+      "source_corpus_index": 4,
+      "source_local_index": 4
+    },
+    {
+      "id": "g-yechan-002",
+      "lang": "ko",
+      "query": "시위 대응 장비 제조사가 차량 탑재형 고압 살수 장비를 중동 지역 공공기관에 납품하려고 합니다. 군사 장비가 아니라는 설명만으로 충분한지 후보 항목 검토가 필요합니다.",
+      "context": "중동 공공기관 납품 / 군중 통제용 고압 살수 장비",
+      "validated_labels": ["ECCN-0A977"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 군중 통제 목적으로 쓰이는 고압 분사 시스템과 관련 부품을 포괄한다.",
+      "source_corpus_index": 17,
+      "source_local_index": 17
+    },
+    {
+      "id": "g-yechan-003",
+      "lang": "ko",
+      "query": "방호장비 회사가 경찰용 헬멧과 투명 보호판을 남미 조달청 입찰에 공급하려 합니다. 일반 안전장비와 구분되는 통제목록 후보가 있는지 사전 확인이 필요합니다.",
+      "context": "남미 조달 입찰 / 경찰 방호구",
+      "validated_labels": ["ECCN-0A979"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 경찰용 머리 보호구와 방패 및 관련 요소를 대상으로 한다.",
+      "source_corpus_index": 19,
+      "source_local_index": 19
+    },
+    {
+      "id": "g-yechan-004",
+      "lang": "ko",
+      "query": "교정시설 장비 납품사가 해외 교도소에 전자식 구속 벨트와 다중 고정 의자 부품을 공급하려 합니다. 인권 민감 품목이라 수출 전 후보 분류를 확인하고 싶습니다.",
+      "context": "해외 교정시설 납품 / 구속 및 고정 장비",
+      "validated_labels": ["ECCN-0A982"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 법집행·구금 환경에서 쓰이는 구속 장치와 관련 부속품을 다룬다.",
+      "source_corpus_index": 21,
+      "source_local_index": 21
+    },
+    {
+      "id": "g-yechan-005",
+      "lang": "ko",
+      "query": "항공 부품사가 탄소섬유 적층 패널을 프랑스 위성 구조물 업체에 샘플로 보내려 합니다. 단순 복합재인지 통제목록 후보가 될 수 있는지 검토 요청입니다.",
+      "context": "프랑스 샘플 수출 / 항공우주용 복합재 패널",
+      "validated_labels": ["ECCN-1A002"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 복합재 구조물과 적층 형태의 재료를 대상으로 한다.",
+      "source_corpus_index": 62,
+      "source_local_index": 62
+    },
+    {
+      "id": "g-yechan-006",
+      "lang": "ko",
+      "query": "연구소가 화학 누출 현장 대응용 휴대형 탐지기와 보호 장구 세트를 싱가포르 파트너에게 이전하려 합니다. 비군사용 안전 장비지만 후보 항목 확인이 필요합니다.",
+      "context": "싱가포르 이전 / 화학 탐지 및 보호 장비",
+      "validated_labels": ["ECCN-1A004"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 비군사용 보호·탐지 장비와 그 구성요소를 다룬다.",
+      "source_corpus_index": 64,
+      "source_local_index": 64
+    },
+    {
+      "id": "g-yechan-007",
+      "lang": "ko",
+      "query": "방탄복 제조사가 경호업체용 경량 방호 조끼와 세라믹 삽입판을 아랍에미리트에 판매하려 합니다. 개인 보호용이라고 하지만 사전 후보검색이 필요합니다.",
+      "context": "아랍에미리트 판매 / 개인 방호복과 삽입판",
+      "validated_labels": ["ECCN-1A005"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 신체 방호 장비와 그 전용 구성요소를 포함한다.",
+      "source_corpus_index": 65,
+      "source_local_index": 65
+    },
+    {
+      "id": "g-yechan-008",
+      "lang": "ko",
+      "query": "로봇 장비 업체가 의심 물체 제거용 원격 작업 플랫폼을 우크라이나 민간 복구 프로젝트에 기증하려 합니다. 폭발물 처리 가능성이 있어 후보 항목을 확인하고 싶습니다.",
+      "context": "우크라이나 복구 프로젝트 / 폭발물 처리용 원격 장비",
+      "validated_labels": ["ECCN-1A006"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 급조 폭발물 처리에 맞춘 장비와 관련 부속 요소를 다룬다.",
+      "source_corpus_index": 66,
+      "source_local_index": 66
+    },
+    {
+      "id": "g-yechan-009",
+      "lang": "ko",
+      "query": "드론 개발사가 레이더와 열 신호를 낮추는 외장 코팅 시제품을 터키 협력사에 테스트용으로 보내려 합니다. 항공 플랫폼 적용 가능성이 있어 통제목록 후보를 봐야 합니다.",
+      "context": "터키 테스트 이전 / 무인기용 저피탐 코팅",
+      "validated_labels": ["ECCN-1A101"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 로켓·미사일·무인항공기에 적용 가능한 신호 저감 장치를 다룬다.",
+      "source_corpus_index": 69,
+      "source_local_index": 69
+    },
+    {
+      "id": "g-yechan-010",
+      "lang": "ko",
+      "query": "복합재 설비 회사가 항공기용 적층 부품 생산라인의 자동 검사 장비를 이탈리아 공장에 설치하려 합니다. 제작 장비 자체가 통제목록 후보인지 문의합니다.",
+      "context": "이탈리아 공장 설치 / 복합재 생산·검사 설비",
+      "validated_labels": ["ECCN-1B001"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 복합재 구조물 또는 섬유계 재료의 생산·검사 장비를 대상으로 한다.",
+      "source_corpus_index": 83,
+      "source_local_index": 83
+    },
+    {
+      "id": "g-yechan-011",
+      "lang": "ko",
+      "query": "금속 소재 업체가 초내열 합금 분말 제조용 분무 설비를 인도 합작법인에 이전하려 합니다. 일반 분말 장비인지 통제목록 후보인지 사전 확인을 요청합니다.",
+      "context": "인도 합작법인 이전 / 합금 분말 제조 설비",
+      "validated_labels": ["ECCN-1B002"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 금속 합금 분말 또는 입자 재료 생산 장비를 다룬다.",
+      "source_corpus_index": 84,
+      "source_local_index": 84
+    },
+    {
+      "id": "g-yechan-012",
+      "lang": "ko",
+      "query": "화학 장비 회사가 고점도 추진제 원료를 균질하게 섞는 산업용 혼합기를 브라질 로켓 연구기관에 납품하려 합니다. 연구용 장비라며 후보검색을 요청했습니다.",
+      "context": "브라질 연구기관 납품 / 추진제 원료 혼합 장비",
+      "validated_labels": ["ECCN-1B117"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 추진제 계열 물질 제조에 쓰이는 배치형 혼합 장비를 다룬다.",
+      "source_corpus_index": 91,
+      "source_local_index": 91
+    },
+    {
+      "id": "g-yechan-013",
+      "lang": "en",
+      "query": "A carbon fiber producer is quoting continuous reinforcement tow and pre-impregnated sheets for a satellite structure vendor in Spain. The export team wants candidate categories before releasing samples.",
+      "context": "Spain satellite vendor / carbon fiber tow and prepreg sheets",
+      "validated_labels": ["ECCN-1C010"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 첨단 복합재에 쓰이는 섬유상 강화 재료를 다룬다.",
+      "source_corpus_index": 116,
+      "source_local_index": 116
+    },
+    {
+      "id": "g-yechan-014",
+      "lang": "en",
+      "query": "A chemical distributor plans to send solid rocket ingredient chemicals to a university propulsion lab in the United Kingdom. The customer says it is for academic testing, but the supplier needs a candidate-code review.",
+      "context": "United Kingdom university lab / propulsion ingredient chemicals",
+      "validated_labels": ["ECCN-1C111"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 추진제 성분으로 쓰일 수 있는 화학 재료를 다룬다.",
+      "source_corpus_index": 123,
+      "source_local_index": 123
+    },
+    {
+      "id": "g-yechan-015",
+      "lang": "ko",
+      "query": "정밀 베어링 업체가 고속 스핀들용 베어링 조립품을 독일 공작기계 제조사에 공급하려 합니다. 일반 산업재로만 보기 어려워 수출 전 후보 항목 확인을 요청했습니다.",
+      "context": "독일 공작기계 제조사 / 고속 스핀들 베어링",
+      "validated_labels": ["ECCN-2A001"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 고정밀 베어링 시스템과 관련 구성품을 다룬다.",
+      "source_corpus_index": 198,
+      "source_local_index": 198
+    },
+    {
+      "id": "g-yechan-016",
+      "lang": "ko",
+      "query": "세라믹 부품 회사가 방사성 금속 용융 실험에 쓰는 특수 도가니를 캐나다 원자력 연구기관에 보내려 합니다. 실험 소모품이지만 후보검색이 필요합니다.",
+      "context": "캐나다 원자력 연구기관 / 방사성 금속용 도가니",
+      "validated_labels": ["ECCN-2A225"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 액체 상태의 방사성 금속에 견디는 도가니류를 다룬다.",
+      "source_corpus_index": 200,
+      "source_local_index": 200
+    },
+    {
+      "id": "g-yechan-017",
+      "lang": "ko",
+      "query": "밸브 제조사가 고부식성 핵연료 공정 라인에 들어가는 소형 차단 밸브를 일본 플랜트 업체에 납품하려 합니다. 재질과 용도 때문에 사전 검토가 필요합니다.",
+      "context": "일본 플랜트 업체 / 핵연료 공정용 밸브",
+      "validated_labels": ["ECCN-2A226"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 특정 핵 관련 공정에 쓰일 수 있는 밸브류를 다룬다.",
+      "source_corpus_index": 201,
+      "source_local_index": 201
+    },
+    {
+      "id": "g-yechan-018",
+      "lang": "ko",
+      "query": "보안검색 장비 업체가 원거리에서 의복 안 물체를 확인하는 밀리미터파 스캐너를 공항 운영사에 판매하려 합니다. 감시 장비 성격이 있어 후보 항목을 확인합니다.",
+      "context": "공항 운영사 판매 / 원거리 은닉물 탐지 장비",
+      "validated_labels": ["ECCN-2A984"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 특정 주파수 대역을 이용한 원거리 은닉물 탐지 장비를 다룬다.",
+      "source_corpus_index": 205,
+      "source_local_index": 205
+    },
+    {
+      "id": "g-yechan-019",
+      "lang": "ko",
+      "query": "발전기 업체가 이동식 전원 장치를 아프리카 광산 현장에 공급하려 합니다. 민수 장비지만 야외 작전 지원에 전용될 수 있어 사전 후보검색을 요청합니다.",
+      "context": "아프리카 광산 현장 / 이동식 발전 장치",
+      "validated_labels": ["ECCN-2A994"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 이동 가능한 발전 장치와 그 관련 구성요소를 다룬다.",
+      "source_corpus_index": 209,
+      "source_local_index": 209
+    },
+    {
+      "id": "g-yechan-020",
+      "lang": "ko",
+      "query": "공작기계 회사가 다축 동시제어 머시닝센터를 베트남 항공부품 업체에 수출하려 합니다. 금속과 세라믹 가공이 가능해 공개 목록 후보를 확인하고 싶습니다.",
+      "context": "베트남 항공부품 업체 / 다축 수치제어 가공기",
+      "validated_labels": ["ECCN-2B001"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 전자식 제어장치를 갖춘 고성능 절삭 가공 장비를 다룬다.",
+      "source_corpus_index": 211,
+      "source_local_index": 211
+    },
+    {
+      "id": "g-yechan-021",
+      "lang": "ko",
+      "query": "소재 공정 장비사가 고온·고압으로 항공용 분말 부품을 치밀화하는 프레스를 스웨덴 연구소에 납품하려 합니다. 장비 사양이 민감해 후보 항목 확인이 필요합니다.",
+      "context": "스웨덴 연구소 / 고온 고압 치밀화 프레스",
+      "validated_labels": ["ECCN-2B004"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 고온에서 등방압 처리를 수행하는 프레스 장비를 다룬다.",
+      "source_corpus_index": 214,
+      "source_local_index": 214
+    },
+    {
+      "id": "g-yechan-022",
+      "lang": "ko",
+      "query": "정밀측정 장비 회사가 항공기 엔진 부품 검사에 쓰는 3차원 좌표 측정 시스템을 이탈리아 고객에게 공급하려 합니다. 위치 피드백 정밀도가 높아 사전 검토가 필요합니다.",
+      "context": "이탈리아 고객 / 정밀 치수 측정 시스템",
+      "validated_labels": ["ECCN-2B006"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 고정밀 치수 측정·위치 피드백 관련 장비를 다룬다.",
+      "source_corpus_index": 216,
+      "source_local_index": 216
+    },
+    {
+      "id": "g-yechan-023",
+      "lang": "en",
+      "query": "An automation integrator will export a sensor-guided industrial arm for handling hazardous samples inside a shielded laboratory in Finland. The buyer asks for a pre-triage category before procurement.",
+      "context": "Finland shielded laboratory / sensor-guided industrial arm",
+      "validated_labels": ["ECCN-2B007"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 특정 성능 조건을 갖춘 로봇 장치와 제어·작업 말단부를 다룬다.",
+      "source_corpus_index": 217,
+      "source_local_index": 217
+    },
+    {
+      "id": "g-yechan-024",
+      "lang": "en",
+      "query": "A chemical plant builder is quoting glass-lined reactors, corrosion-resistant heat exchangers, and process skid modules for a pesticide precursor facility in Malaysia. Compliance needs a controlled-list candidate before sending the proposal.",
+      "context": "Malaysia chemical facility / corrosion-resistant process equipment",
+      "validated_labels": ["ECCN-2B350"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 화학 제조 시설에 쓰이는 내식성 공정 장비군을 다룬다.",
+      "source_corpus_index": 244,
+      "source_local_index": 244
+    },
+    {
+      "id": "g-yechan-025",
+      "lang": "ko",
+      "query": "해양로봇 업체가 심해 케이블 점검용 무인 잠수 조사정과 해상 회수용 소형 선박을 노르웨이 에너지 회사에 판매하려 합니다. 해양 장비 후보 항목을 확인해야 합니다.",
+      "context": "노르웨이 에너지 회사 / 무인 잠수 조사정과 지원 선박",
+      "validated_labels": ["ECCN-8A001"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 수중 운용 플랫폼과 수상 운용 선박을 다룬다.",
+      "source_corpus_index": 520,
+      "source_local_index": 520
+    },
+    {
+      "id": "g-yechan-026",
+      "lang": "ko",
+      "query": "선박 장비 회사가 수중 위치추적 모듈과 저소음 추진 부품을 싱가포르 해양 연구기관에 공급하려 합니다. 해저 조사용이지만 공개 목록 후보 확인이 필요합니다.",
+      "context": "싱가포르 해양 연구기관 / 수중 위치추적 및 추진 장비",
+      "validated_labels": ["ECCN-8A002"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 해양 시스템과 관련 장비·부품을 대상으로 한다.",
+      "source_corpus_index": 521,
+      "source_local_index": 521
+    },
+    {
+      "id": "g-yechan-027",
+      "lang": "ko",
+      "query": "조선소가 해저 관측용 소형 잠수정을 호주 대학 컨소시엄에 인도하려 합니다. 민간 연구 목적이지만 잠수 선박 계열 후보 항목을 먼저 확인하려 합니다.",
+      "context": "호주 대학 컨소시엄 / 해저 관측용 잠수정",
+      "validated_labels": ["ECCN-8A620"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 잠수 선박과 해양 관측 관련 물품을 다룬다.",
+      "source_corpus_index": 524,
+      "source_local_index": 524
+    },
+    {
+      "id": "g-yechan-028",
+      "lang": "en",
+      "query": "A ship model testing facility plans to export a low-noise hydrodynamic test channel for measuring propeller signatures to a university in Denmark. The team wants a retrieval label before contracting.",
+      "context": "Denmark university / low-noise hydrodynamic test channel",
+      "validated_labels": ["ECCN-8B001"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 선박 모형의 음향 특성 측정에 쓰이는 저소음 유동 시험 설비를 다룬다.",
+      "source_corpus_index": 526,
+      "source_local_index": 526
+    },
+    {
+      "id": "g-yechan-029",
+      "lang": "en",
+      "query": "A buoyancy material supplier is sending glass-microsphere foam blocks for deep-sea instrument housings to a Chilean oceanography project. The export group needs pre-triage because the blocks are designed for long underwater deployment.",
+      "context": "Chile oceanography project / deep-sea buoyancy foam blocks",
+      "validated_labels": ["ECCN-8C001"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 수중 사용을 위해 설계된 부력성 복합 발포 재료를 다룬다.",
+      "source_corpus_index": 529,
+      "source_local_index": 529
+    },
+    {
+      "id": "g-yechan-030",
+      "lang": "en",
+      "query": "An offshore software vendor will provide a control program for an unmanned subsea inspection vehicle used in petroleum pipeline surveys in Qatar. The company wants a category candidate before delivery.",
+      "context": "Qatar offshore survey / subsea inspection vehicle control program",
+      "validated_labels": ["ECCN-8D999"],
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 석유·가스 산업용 무인 수중 장비 운용 프로그램을 다룬다.",
+      "source_corpus_index": 535,
+      "source_local_index": 535
+    }
+  ]
+}
