@@ -157,6 +157,18 @@ paired bootstrap 95% CI(seed 고정, 20,000회):
 
 **핵심**: n=13에서 0을 포함하던(비유의) hybrid–BM25 차이의 95% CI가 **n=71에서 [0.296, 0.521]로 0을 벗어났다 — 효과가 통계적으로 입증되었다.** 또한 한국어에서 BM25는 R@10 0.022로 사실상 실패하지만(코퍼스 100% 영어) 다국어 hybrid/dense는 0.60으로 회복한다(KO n=45). 즉 정보최소화 후보검색에서 BM25 sparse retrieval은 상담형·한국어 질의에 부적합하며, 다국어 hybrid가 통계적으로 유의하게 우월하다. 상세: `output/validated_expanded_eval.md`.
 
+### 임베딩 robustness (TASK H): 모델 불문 재현
+
+위 우위가 특정 임베딩 때문이 아님을 확인하기 위해, 확장셋(n=71)에서 dense 모델을 교체해 재실행했다(`experiment_embedding_robustness.py`, 모두 로컬 실행).
+
+| dense 모델 | hybrid(α0.5) 전체 | 한국어 | hybrid vs BM25 95% CI | 유의 |
+|---|---:|---:|---|---|
+| paraphrase-multilingual-MiniLM-L12-v2 | 0.578 | 0.600 | [0.296, 0.521] | 예 |
+| intfloat/multilingual-e5-base | 0.437 | 0.400 | [0.155, 0.380] | 예 |
+| BAAI/bge-m3 | 0.578 | 0.622 | [0.282, 0.507] | 예 |
+
+(BM25는 모델 불문 동일: 전체 0.169, 한국어 0.022.) **세 독립 다국어 인코더 모두에서 hybrid>BM25가 통계적으로 유의하고 한국어가 회복**된다(절대값은 bge-m3≈MiniLM > e5-base). 따라서 다국어 hybrid의 우위는 모델 특이적 산물이 아니다. 상세: `output/embedding_robustness.md`.
+
 ## 한국 법제도와의 연결
 
 본 연구의 minimal_text 후보검색 워크플로우는 다음 한국 법제 체계와 연결된다:

@@ -1,0 +1,140 @@
+{
+  "meta": {
+    "mode": "minimal_text",
+    "n": 71,
+    "n_en": 26,
+    "n_ko": 45,
+    "alphas": [
+      1.0,
+      0.7,
+      0.5,
+      0.3,
+      0.0
+    ],
+    "bootstrap_iters": 20000,
+    "seed": 20260626,
+    "note": "BM25 identical across models; only the dense model changes."
+  },
+  "results": {
+    "paraphrase-multilingual-MiniLM-L12-v2": {
+      "summary": {
+        "alpha=1.0": {
+          "recall@10": 0.169,
+          "en_recall@10": 0.4231,
+          "ko_recall@10": 0.0222
+        },
+        "alpha=0.7": {
+          "recall@10": 0.5493,
+          "en_recall@10": 0.4615,
+          "ko_recall@10": 0.6
+        },
+        "alpha=0.5": {
+          "recall@10": 0.5775,
+          "en_recall@10": 0.5385,
+          "ko_recall@10": 0.6
+        },
+        "alpha=0.3": {
+          "recall@10": 0.5775,
+          "en_recall@10": 0.5385,
+          "ko_recall@10": 0.6
+        },
+        "alpha=0.0": {
+          "recall@10": 0.5493,
+          "en_recall@10": 0.4615,
+          "ko_recall@10": 0.6
+        }
+      },
+      "hybrid0.5_vs_bm25": {
+        "mean_diff": 0.4085,
+        "diff_95_ci": [
+          0.2958,
+          0.5211
+        ],
+        "significant": true,
+        "wins": 29,
+        "losses": 0
+      },
+      "model_id": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+    },
+    "multilingual-e5-base": {
+      "summary": {
+        "alpha=1.0": {
+          "recall@10": 0.169,
+          "en_recall@10": 0.4231,
+          "ko_recall@10": 0.0222
+        },
+        "alpha=0.7": {
+          "recall@10": 0.4225,
+          "en_recall@10": 0.4615,
+          "ko_recall@10": 0.4
+        },
+        "alpha=0.5": {
+          "recall@10": 0.4366,
+          "en_recall@10": 0.5,
+          "ko_recall@10": 0.4
+        },
+        "alpha=0.3": {
+          "recall@10": 0.4507,
+          "en_recall@10": 0.5385,
+          "ko_recall@10": 0.4
+        },
+        "alpha=0.0": {
+          "recall@10": 0.4225,
+          "en_recall@10": 0.4615,
+          "ko_recall@10": 0.4
+        }
+      },
+      "hybrid0.5_vs_bm25": {
+        "mean_diff": 0.2676,
+        "diff_95_ci": [
+          0.1549,
+          0.3803
+        ],
+        "significant": true,
+        "wins": 20,
+        "losses": 1
+      },
+      "model_id": "intfloat/multilingual-e5-base"
+    },
+    "bge-m3": {
+      "summary": {
+        "alpha=1.0": {
+          "recall@10": 0.169,
+          "en_recall@10": 0.4231,
+          "ko_recall@10": 0.0222
+        },
+        "alpha=0.7": {
+          "recall@10": 0.5634,
+          "en_recall@10": 0.4615,
+          "ko_recall@10": 0.6222
+        },
+        "alpha=0.5": {
+          "recall@10": 0.5634,
+          "en_recall@10": 0.4615,
+          "ko_recall@10": 0.6222
+        },
+        "alpha=0.3": {
+          "recall@10": 0.5775,
+          "en_recall@10": 0.5,
+          "ko_recall@10": 0.6222
+        },
+        "alpha=0.0": {
+          "recall@10": 0.5634,
+          "en_recall@10": 0.4615,
+          "ko_recall@10": 0.6222
+        }
+      },
+      "hybrid0.5_vs_bm25": {
+        "mean_diff": 0.3944,
+        "diff_95_ci": [
+          0.2817,
+          0.507
+        ],
+        "significant": true,
+        "wins": 28,
+        "losses": 0
+      },
+      "model_id": "BAAI/bge-m3"
+    }
+  }
+}

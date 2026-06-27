@@ -25,3 +25,5 @@ output/*
 !output/fig_validated_retriever.png
 !output/validated_expanded_eval.json
 !output/validated_expanded_eval.md
+!output/embedding_robustness.json
+!output/embedding_robustness.md
