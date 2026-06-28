@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "n": 71,
+    "n_en": 26,
+    "n_ko": 45,
+    "dense_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+    "modes": [
+      "full_text",
+      "minimal_text",
+      "minimal_no_code"
+    ],
+    "seed": 20260626,
+    "label_nature": "corpus-text-grounded category labels; not legal/expert"
+  },
+  "per_mode": {
+    "full_text": {
+      "exposure@10_mean": 3952.0,
+      "retrievers": {
+        "BM25": {
+          "recall@10": 0.1831,
+          "en_recall@10": 0.4615,
+          "ko_recall@10": 0.0222
+        },
+        "hybrid": {
+          "recall@10": 0.6056,
+          "en_recall@10": 0.5385,
+          "ko_recall@10": 0.6444
+        },
+        "dense": {
+          "recall@10": 0.5915,
+          "en_recall@10": 0.5,
+          "ko_recall@10": 0.6444
+        }
+      }
+    },
+    "minimal_text": {
+      "exposure@10_mean": 1753.6,
+      "retrievers": {
+        "BM25": {
+          "recall@10": 0.169,
+          "en_recall@10": 0.4231,
+          "ko_recall@10": 0.0222
+        },
+        "hybrid": {
+          "recall@10": 0.5775,
+          "en_recall@10": 0.5385,
+          "ko_recall@10": 0.6
+        },
+        "dense": {
+          "recall@10": 0.5493,
+          "en_recall@10": 0.4615,
+          "ko_recall@10": 0.6
+        }
+      }
+    },
+    "minimal_no_code": {
+      "exposure@10_mean": 1662.5,
+      "retrievers": {
+        "BM25": {
+          "recall@10": 0.169,
+          "en_recall@10": 0.4231,
+          "ko_recall@10": 0.0222
+        },
+        "hybrid": {
+          "recall@10": 0.5211,
+          "en_recall@10": 0.5,
+          "ko_recall@10": 0.5333
+        },
+        "dense": {
+          "recall@10": 0.507,
+          "en_recall@10": 0.4615,
+          "ko_recall@10": 0.5333
+        }
+      }
+    }
+  },
+  "key_comparison": {
+    "hybrid_minimal_text_vs_full_text": {
+      "mean_diff_recall@10": -0.0282,
+      "diff_95_ci": [
+        -0.1127,
+        0.0423
+      ],
+      "significant_loss": false,
+      "exposure_cut_pct": 55.6
+    }
+  }
+}

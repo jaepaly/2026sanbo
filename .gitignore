@@ -27,3 +27,5 @@ output/*
 !output/validated_expanded_eval.md
 !output/embedding_robustness.json
 !output/embedding_robustness.md
+!output/exposure_frontier_validated.json
+!output/exposure_frontier_validated.md
