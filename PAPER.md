@@ -1,230 +1,212 @@
-# 논문 초안 메모 — 전략물자 AI 사전 트리아지
+# 최소정보노출 사전검토에서의 전략물자 후보검색: 자기참조 평가의 함정과 다국어 하이브리드 검색의 필요성
 
-## 권장 제목
+> 본 문서는 산업보안논문경진대회 제출용 논문 초안이다. 모든 수치는 저장소의 재현 가능한 스크립트(시드 고정, 외부 추론 API 미사용)가 생성한 `output/*.json`에서 직접 가져왔으며, 14절(재현성)에 청구↔근거 매핑을 둔다.
 
-기술정보 최소노출과 전략물자 후보검색 성능의 상충관계: 공개 통제목록 기반 설명형 쿼리 실험
+## 초록
 
-## 초록 초안
+기업이 외부 인공지능·검색 서비스로 전략물자 통제목록 후보를 탐색하려면 제품·기술 사양을 외부 시스템에 전송해야 하는 정보노출 부담을 진다. 본 연구는 법적 판정이 아닌 **사전 후보검색** 단계에서, 반환·처리하는 통제목록 정보량을 줄이면서 후보검색 성능을 유지할 수 있는지를 실험적으로 분석한다. Wassenaar Arrangement 2025, India SCOMET 2024, U.S. eCFR Commerce Control List를 정화해 1,797개 항목 코퍼스를 구축하고, 두 종류의 평가셋(① 통제목록 설명문에서 파생한 합성 쿼리 780개, ② 통제항목을 *역으로* 묘사한 검증 상담형 질의 71개)을 사용한다.
 
-외부 인공지능 또는 검색 서비스를 활용해 전략물자 통제목록 후보를 탐색할 때, 기업은 기술사양과 제품 설명을 외부 시스템에 전송해야 하는 부담을 가진다. 본 연구는 법적 판정이 아닌 사전 후보검색 단계에서, 반환·처리되는 통제목록 정보량을 줄이면서 후보검색 성능을 얼마나 유지할 수 있는지 실험적으로 분석한다. Wassenaar Arrangement 2025, India SCOMET 2024, U.S. eCFR Commerce Control List의 공개 통제목록을 정화하여 1,797개 항목의 코퍼스를 구축하고, 정답 통제번호가 포함되지 않는 설명형 합성 쿼리 780개를 생성하였다. BM25 기준선 실험 결과, `minimal_text` 조건은 `full_text` 대비 평균 노출량@10을 약 66.4% 감소시키면서 Recall@10 0.9792를 유지했다. 다만 이 합성 쿼리는 코퍼스 항목 자기 본문에서 파생되어 정답 문서와 near-duplicate 관계이므로, 이 절대수치는 자기참조 재검색에 가깝고 후보 발견 능력으로 직접 일반화되지 않는다. 
+세 가지 핵심 결과를 보고한다. 첫째, **자기참조 합성 평가의 위험**: 합성 쿼리가 정답 문서 본문에서 파생될 때 BM25는 R@10 0.9792로 보이지만, 정답과 공유하는 변별어를 5개만 제거하면 0.7596으로 급락한다. 즉 이 수치는 후보 발견이 아니라 자기참조 재검색에 가깝다. 둘째, **검증 데이터에서의 정보최소화**: 비자기참조 검증셋(n=71)에서 반환 정보량을 55.6% 줄여도(full_text→minimal_text) 하이브리드 검색의 R@10 변화는 통계적으로 유의하지 않다(차이 −0.028, 95% CI [−0.113, +0.042]). 셋째, **저노출 후보검색에는 다국어 하이브리드가 필요**: 같은 검증셋에서 BM25는 R@10 0.169(한국어 0.022)에 그치지만 다국어 하이브리드는 0.578(한국어 0.600)이며, 그 차이는 통계적으로 유의하고(95% CI [0.296, 0.521], 29승 0패) 세 개의 독립 다국어 임베딩에서 모두 재현된다.
 
-추가로, 본 연구는 상담형 모사 질의셋(`data/external_consultation_queries.json`) 30개를 `evaluate_external_queries.py`로 평가하였다. synthetic benchmark에서는 minimal_text가 R@10 0.9792를 보였으나, 상담형 모사 질의셋에서는 R@10=0이 나왔다. 이는 BM25-only baseline이 어휘 불일치·도메인 설명 격차에서 구조적으로 약하다는 한계를 명확히 보여준다. 본 연구의 기여는 최종 성능 시스템이 아니라 최소정보노출 평가 프레임워크와 baseline 구축이다. 외부 질의 결과는 개선 필요성을 보여주는 stress test다. 한국 대외무역법·전략물자 수출입고시·산업기술보호법·국가핵심기술 제도와 연계하여, 최소정보노출형 사전검토 workflow를 제안한다. 다만, 본 시스템이 실제 현장 검증을 완료한 것은 아니다.
+본 연구의 기여는 배포형 판정 시스템이 아니라 (1) 노출량-성능을 함께 보는 최소노출 평가 프레임워크, (2) 자기참조 평가 과대평가의 정량적 폭로와 교정, (3) 충돌 없는 코퍼스 텍스트 근거 검증 질의셋과 자동 누출검사기다. 본 시스템은 전략물자 해당 여부를 판정하지 않으며, 한국 대외무역법·전략물자수출입고시·산업기술보호법·국가핵심기술 제도와 연계한 보수적 사전검토 보조로 한정한다.
 
-## 연구질문
+---
 
-1. 정답 통제번호를 쿼리에 포함하지 않는 설명형 쿼리에서도 공개 통제목록 후보검색이 가능한가?
-2. 반환 정보량을 `full_text`에서 `minimal_text`로 줄이면 Recall@k와 평균 노출량은 어떻게 변하는가?
-3. 법제·업무흐름 힌트만 제공하는 `route_only` 조건은 후보검색에 충분한가?
-4. 검색 결과는 어떤 표현 정책을 따라야 법적 판정 오해를 줄일 수 있는가?
-5. 상담형 모사 질의셋에서 minimal_text 조건의 후보검색 성능은 어떤 패턴을 보이는가?
+## 1. 서론
 
-## 실험 설계
+### 1.1 문제의식
+전략물자 수출 시 기업은 자사 품목이 통제목록에 해당하는지 사전 검토해야 한다. 최근 외부 LLM·검색 서비스를 이용한 후보검색이 늘고 있으나, 이 과정에서 **도면·사양·기술설명 등 민감한 기술정보가 외부 시스템으로 전송**된다. 이는 산업보안 관점에서 영업비밀·국가핵심기술 유출 위험을 수반한다. 본 연구는 "후보검색 성능을 유지하면서 외부로 노출·반환하는 정보량을 줄일 수 있는가"라는 **정보최소화(minimum necessary disclosure)** 질문을 다룬다.
 
-### 코퍼스
+### 1.2 본 연구가 하지 않는 것 (범위 한정)
+본 시스템은 전략물자 해당/비해당을 **법적으로 판정하지 않는다.** 자가판정·전문판정을 대체하거나 보조하지 않으며, 산출물은 "후보 통제항목 목록"일 뿐이다. 모든 수치는 후보검색 성능(Recall@k)이며 법적 분류 정확도가 아니다.
 
-| 소스 | 항목 수 | 성격 |
-|---|---:|---|
-| Wassenaar Arrangement 2025 | 585 | 국제 이중용도·군용물자 통제목록 |
-| India SCOMET 2024 | 575 | 인도 SCOMET 공개 통제목록 |
-| U.S. eCFR CCL | 637 | 미국 EAR Commerce Control List |
+### 1.3 기여
+1. **최소노출 평가 프레임워크**: 노출 모드(full/minimal/minimal_no_code)와 retriever(BM25/dense/hybrid)를 교차하여 노출량-성능 frontier를 정식화한다.
+2. **자기참조 평가의 과대평가 폭로와 교정**: 합성 벤치마크가 sparse retrieval을 과대평가함을 정량화하고(어휘 민감도), 비자기참조 검증셋으로 교정한다.
+3. **충돌 없는 검증 질의셋과 자동 검사기**: 통제항목을 역으로 묘사한 71개 검증 질의와, 코드누출·자기참조(Jaccard)·언어비율을 강제하는 `validate_query_slice.py`.
+4. **한국 법제 연계 워크플로우**: 판정이 아닌 사전검토 보조로 한정한 보수적 설계.
 
-### 비교 조건
+---
 
-| 조건 | 색인·반환 정보 | 목적 |
+## 2. 배경 및 관련 연구
+
+- **전략물자 통제체계**: Wassenaar(국제 이중용도·군용), India SCOMET, U.S. EAR Commerce Control List(eCFR Part 774). 항목은 통제번호(ECCN 등)와 설명문으로 구성된다.
+- **검색 기반 분류**: 통제목록 후보검색은 정보검색(IR) 문제로 볼 수 있다. 선행연구로 수출통제 분류에 BERT·머신러닝을 적용한 사례(Ryu et al. 2025; Nelson, WCO)가 있으나, 본 연구의 초점은 분류 정확도가 아니라 **정보노출 최소화 하에서의 후보검색**이다.
+- **정보최소화·보안**: 외부 추론 호출 자체가 노출 경로이므로, 본 연구는 인덱싱·검색을 로컬에서 수행하고 외부 추론 API를 호출하지 않는 설계를 전제로 한다.
+- **한국 법제**: 대외무역법, 전략물자수출입고시, 산업기술보호법, 국가핵심기술 제도(6절).
+
+---
+
+## 3. 데이터와 방법
+
+### 3.1 코퍼스
+정화 후 1,797개 항목.
+
+| 소스 | 항목 수 |
+|---|---:|
+| Wassenaar Arrangement 2025 | 585 |
+| India SCOMET 2024 | 575 |
+| U.S. eCFR CCL (15 CFR Part 774 Supp.1) | 637 |
+
+코퍼스는 **100% 영어**(한글 포함 항목 0개)이며, 이는 한국어 질의의 cross-lingual 문제(4.6)의 배경이 된다.
+
+### 3.2 노출 조건(반환 정보량)
+| 조건 | 색인·반환 정보 | 노출량 proxy |
 |---|---|---|
-| `full_text` | 통제번호 + 원문 설명 전체 | 상한 기준선 |
-| `minimal_text` | 통제번호 + 첫 핵심 설명 | 정보 최소화 후보 |
-| `minimal_no_code` | 첫 핵심 설명, 통제번호 제외 | 코드 노출까지 줄인 조건 |
-| `route_only` | 통제체계·업무흐름 힌트 | 극단적 저노출 음성 대조군 |
+| `full_text` | 통제번호 + 설명 전체 | 전체 문자 수 |
+| `minimal_text` | 통제번호 + 첫 핵심 문장 | 첫 문장 문자 수 |
+| `minimal_no_code` | 첫 핵심 문장(통제번호 제외) | 첫 문장 문자 수 |
+| `route_only` | 통제체계·업무흐름 힌트 | 극단 저노출 음성 대조군 |
 
-### 외부 모사 질의셋
-- `data/external_consultation_queries.json`: 상담형 모사 질의셋 30개 (KO 16, EN 14). 각 질의별 연구자가 예비로 부여한 `candidate_labels` (정답 아님).
-- `docs/case_analysis.md`: 실제 코드 산출 결과를 바탕으로 한 사례 분석 5개
-- `output/external_eval.json`, `output/external_eval.md`: 평가 결과
+노출량@10 = top-10 반환 문서의 노출 proxy 합(문자 수 기반 proxy이며 실제 민감도와 동일하지 않음, 7절).
 
-### 외부 모사 질의셋 결과
-`evaluate_external_queries.py`로 실제 평가한 결과, 모든 조건에서 R@10=0이 나왔다.
+### 3.3 검색기(retriever)
+- **BM25**: 투명 sparse 기준선(자체 구현, k1=1.2, b=0.75).
+- **Dense**: 다국어 문장 임베딩(`paraphrase-multilingual-MiniLM-L12-v2`; robustness용으로 `multilingual-e5-base`, `bge-m3` 추가). 코사인 유사도.
+- **Hybrid**: 쿼리별 min-max 정규화 후 `α·BM25 + (1−α)·Dense` (α=0.5 기본). 모든 임베딩은 로컬 실행, 외부 추론 API 미사용.
 
-| 조건 | R@1 | R@5 | R@10 | 영어 R@10 | 한국어 R@10 | zero-score 수 | 라벨충돌 질의수 |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| minimal_text | 0.0000 | 0.0000 | 0.0000 | 0.0000 | 0.0000 | 14 | 13 |
-| minimal_no_code | 0.0000 | 0.0000 | 0.0000 | 0.0000 | 0.0000 | 14 | 13 |
-| full_text | 0.0000 | 0.0000 | 0.0000 | 0.0000 | 0.0000 | 12 | 13 |
+### 3.4 평가셋
+1. **합성셋(780)**: 각 코퍼스 항목 본문에서 통제번호를 제거해 템플릿에 감싼 설명형 쿼리(train/val/test = 78/78/624). 코드누출 자동 차단. **한계: 쿼리가 정답 문서 본문에서 파생되어 near-duplicate**(4.1).
+2. **검증 상담형 질의셋(71)**: 통제항목을 *먼저 고르고 그 항목을 묘사하는* 상담형 질의를 원문 인용 없이 역생성(라벨이 구조적으로 확정). eCFR full code로 핀 고정(충돌 0). `validate_query_slice.py`가 코드누출 0, 질의-항목 Jaccard < 0.30, 한국어 비율 ≥ 0.40을 강제. 영어 26 / 한국어 45.
+   - 라벨 성격: **코퍼스 텍스트 근거 카테고리 라벨**(법적 판정 아님, 전문가 검증 아님).
 
-주의: 이 R@10=0은 연구자가 예비 부여한(검증되지 않은) `candidate_labels` 기준이며, 30개 중 13개 질의는 코드 정규화 충돌을 가진다. 따라서 "BM25의 현장 성능=0"이 아니라 "불확실한 후보 라벨 기준 비수렴"으로 읽어야 한다.
+### 3.5 지표·통계
+Recall@1/5/10, MRR, nDCG@10, 노출량@10. 통계는 seed 고정 bootstrap(20,000회) 95% 신뢰구간과 효과크기(평균차); 검증셋은 질의별 hit를 쓰는 paired bootstrap. 합성셋 조건 비교는 permutation test 병행.
 
-세부 분석: `docs/case_analysis.md` 참조.
+---
 
-## BM25-only baseline로 충분한 이유
+## 4. 결과
 
-본 연구는 BM25-only sparse retrieval을 기준선으로 사용한다. 이 선택은 다음과 같은 이유로 방어 가능하다:
+### 4.1 자기참조 합성 평가의 과대평가
+합성셋에서 `minimal_text`는 `full_text` 대비 노출량@10을 **66.4% 감소**(4,834→1,623자)시키면서 R@10 0.9968→0.9792를 보였다. 그러나 쿼리-정답(minimal_text) 평균 Jaccard가 **0.485**로, 쿼리와 정답 문서가 near-duplicate다. 정답 문서와 공유하는 고-IDF 변별어를 N개 제거하면:
 
-1. **투명성**: BM25는 사전학습된 임베딩이나 블랙박스 LLM reranker를 포함하지 않는다. 모든 점수는 용어 출현 빈도와 문서 길이 정규화로 계산된다. 심사위원이 코드와 수식을 직접 확인할 수 있다.
-2. **현실적인 보안 요구**: 외부 AI 서비스에 기술정보를 전송하는 시나리오에서, 가장 안전한 설계는 "외부 모델 호출 자체를 최소화"하는 것이다. BM25-only는 인덱싱은 사전에 로컬에서 수행하고, 쿼리 단계에서도 외부 추론 API를 호출하지 않는다.
-3. **성능-보안 트레이드오프 명확화**: 합성 benchmark에서 66% 감소한 노출량에 비해 R@10은 약 1.8%p만 감소했다. 이 수치는 "최소노출이 성능을 크게 해치지 않는다"는 정량적 근거를 제공한다. 다만 상담형 모사 질의셋에서 R@10=0이 나온 점은, 이 수치가 모든 실제 질의에 직접 일반화될 수 없음을 보여준다.
-4. **확장 가능성**: 본 baseline이 안정화된 후에 Dense retrieval이나 reranker를 부가 실험으로 추가할 수 있으나, 이는 연구 질문(정보최소화)의 핵심을 흐리지 않아야 한다. 후속 연구로 분리하는 방식을 권장한다.
+| 제거 변별어 N | R@10 (minimal_text) |
+|---:|---:|
+| 0 (기존 헤드라인) | 0.9792 |
+| 5 | 0.7596 |
+| 10 | 0.4407 |
 
-다만, 사례 분석(ext-003, ext-005)에서 확인된 바와 같이, BM25-only는 어휘 불일치·도메인 설명 격차에서 한계가 있다. 이를 보완하기 위해서는 (1) 동의어·유의어 확장, (2) domain-specific synonym dictionary, (3) Dense retrieval을 2nd stage rerank로 제한적 도입 등의 확장이 가능하다.
+변별어 5개 제거에 R@10이 −22%p, 10개에 반토막. **합성 R@10 0.9792는 후보 발견이 아니라 자기참조 재검색에 가깝다.** 따라서 절대수치를 헤드라인으로 쓰지 않는다.
 
-## 해석
+### 4.2 검색기 비교: 합성셋은 BM25를 구조적으로 과대평가
+자기참조 합성셋에서는 BM25가 모든 어휘격차 레벨에서 dense를 앞서고(N=10에서도 0.441 vs 0.253), 합성 "한국어" 쿼리가 한국어 지시문 + **영어 본문**이라 BM25 한국어 R@10이 0.98로 나오는 등 언어 분리가 가짜다. **즉 합성 벤치마크는 retriever 비교·cross-lingual 평가에 부적합하다.** 반면 진짜 패러프레이즈·진짜 한국어가 있는 외부 상담셋에서는 BM25 R@10=0인데 다국어 hybrid가 매칭을 회복한다(4.3에서 검증 라벨로 정밀화).
 
-`minimal_text`와 `minimal_no_code`는 `full_text`보다 R@10이 낮지만, 감소 폭은 약 1.6~1.8%p 수준이다. 반면 평균 노출량@10은 약 66~67% 감소한다. 따라서 사전 트리아지 단계에서는 원문 전체를 반환하기보다 핵심 설명 중심 후보목록을 먼저 제공하고, 사용자가 공식 판정 절차로 이동하도록 설계하는 편이 안전하다.
-
-`route_only`는 성능이 낮다. 이는 법제 안내만으로는 기술적 후보검색을 대체할 수 없음을 보여준다. 따라서 법제 라우팅은 검색 대체물이 아니라 검색 결과에 붙는 보수적 안내 레이어로 다루어야 한다.
-
-### 합성 benchmark 절대수치의 한계 (중요)
-
-합성 쿼리(`generate_queries.py`)는 각 코퍼스 항목 **자기 자신의 본문**에서 통제번호만 제거해 템플릿에 감싼 것이고, 검색 대상 문서(`minimal_text`)는 **같은 항목 본문의 첫 문장**이다. 즉 쿼리와 정답 문서가 동일 원문에서 파생된 near-duplicate 관계이므로(쿼리-정답 minimal_text 문서 평균 Jaccard 0.485), R@10 0.9792는 "후보 발견" 능력이라기보다 **자기참조 재검색(self-retrieval)** 성능에 가깝다.
-
-이 의존성을 정량화하기 위해, 외부 모델 없이 결정론적으로 각 쿼리가 정답 문서와 공유하는 **고-IDF(변별) 토큰을 N개 제거**하고 R@k를 재측정했다(`experiment_paraphrase_gap.py`). 사용자가 통제목록의 희소 전문어를 인용하지 않고 일반어로 기술하는 상황을 모사한 것이다.
-
-| 제거 변별토큰 수(minimal_text) | R@1 | R@5 | R@10 | 평균 Jaccard |
-|---:|---:|---:|---:|---:|
-| 0 (기존 헤드라인) | 0.7837 | 0.9583 | 0.9792 | 0.485 |
-| 3 | 0.6202 | 0.8397 | 0.8862 | 0.402 |
-| 5 | 0.5256 | 0.7099 | 0.7596 | 0.347 |
-| 10 | 0.2708 | 0.4006 | 0.4407 | 0.213 |
-
-변별 토큰 5개만 제거해도 R@10이 0.9792 → 0.7596(−22%p), 10개에서 0.4407로 반토막 난다. `minimal_text`(첫 문장만 색인)는 `full_text`보다 훨씬 가파르게 붕괴한다. 따라서 본 연구의 핵심 기여는 절대 성능 수치가 아니라 (1) 노출량-성능 trade-off 곡선의 형태, (2) 합성 평가와 독립 패러프레이즈 평가 사이의 일반화 격차(generalization gap), (3) 그 격차의 어휘 민감도 정량화다. 상담형 모사 질의셋에서 R@10이 무너진 것은 이 격차의 직접 증거다. 상세: `output/paraphrase_gap.md`.
-
-### Retriever 비교: 합성 benchmark는 BM25에 구조적으로 유리하다
-
-BM25 vs Dense(다국어 MiniLM) vs Hybrid를 두 평가셋에서 비교했다(`experiment_retriever_compare.py`, `experiment_external_retriever.py`).
-
-**(가) 자기참조 합성셋**: BM25가 모든 어휘격차 레벨에서 Dense를 앞선다(N=10에서도 BM25 0.4407 > Dense 0.2532). 또한 합성 "한국어" 쿼리는 한국어 지시문에 **영어 기술설명 본문**이 들어 있어 BM25 한국어 R@10이 0.98로 나온다 — 즉 합성셋의 언어 분리는 가짜다. **합성 benchmark는 retriever 비교·cross-lingual 평가에 부적합하다.**
-
-**(나) 외부 상담셋(진짜 패러프레이즈·진짜 한국어)**: BM25는 전 조건 R@10=0(코퍼스 100% 영어 → 한국어 어휘 매칭 불가)인데, 다국어 dense·hybrid가 매칭을 회복한다.
+### 4.3 검증셋과 표본 확장: 효과의 통계적 입증
+충돌·추정 라벨을 제거한 검증셋에서 출발(n=13: BM25 0.000, hybrid 0.231, dense 0.154; 단 hybrid−BM25의 95% CI [0.0, 0.46]은 0을 포함, 비유의). 이어 통제항목을 역생성한 검증 질의 60개를 추가·병합(중복 코드 자동 배제)하여 **n=71(영어 26, 한국어 45)**로 확대:
 
 | retriever | 전체 R@10 | 영어 R@10 | 한국어 R@10 |
 |---|---:|---:|---:|
-| BM25 (α=1.0) | 0.0000 | 0.0000 | 0.0000 |
-| **hybrid (α=0.5)** | **0.1000** | 0.1429 | **0.0625** |
-| Dense (α=0.0) | 0.0667 | 0.0714 | 0.0625 |
+| BM25 (α=1.0) | 0.169 | 0.423 | 0.022 |
+| **Hybrid (α=0.5)** | **0.578** | 0.538 | **0.600** |
+| Dense (α=0.0) | 0.549 | 0.462 | 0.600 |
 
-한국어 R@10이 0 → 0.0625로, hybrid 전체가 0 → 0.10으로 회복된다(절대값은 라벨 노이즈로 낮음). 핵심 메시지: **자기참조 합성 평가는 BM25를 과대평가하고 다국어 dense의 cross-lingual 가치를 가린다.** 따라서 정보최소화 효과는 평가설계·retriever 선택에 강하게 의존한다. 상세: `output/retriever_compare.md`, `output/external_retriever.md`.
+paired bootstrap 95% CI: **Hybrid−BM25 = +0.409, [0.296, 0.521], 29승 0패**; Dense−BM25 = +0.380, [0.254, 0.493]. **n=13에서 0을 포함하던 차이가 n=71에서 0을 벗어나 통계적으로 유의**해졌다. BM25는 영어에서도 0.42, 한국어에서 0.022로 상담형·한국어 질의에 부적합하다.
 
-### 검증 라벨셋: 충돌 제거 후 재평가
+### 4.4 임베딩 robustness
+같은 확장셋에서 dense 모델을 교체:
 
-원본 외부셋의 라벨 노이즈(13/30 코드충돌 + 의미 불일치)를 제거하기 위해, eCFR 텍스트가 항목을 명확히 기술하는 경우에만 **full code(ECCN-XXXX)로 핀 고정한 검증 라벨**을 부여하고(나머지 17개는 사유와 함께 metrics 제외), exact code 매칭으로 재평가했다(`build_validated_queries.py`, `evaluate_validated_queries.py`). 라벨은 법적 판정이 아니라 코퍼스 텍스트 근거 카테고리 라벨이다(전문가 검증 아님).
-
-| retriever | R@10 | 영어 R@10 | 한국어 R@10 |
-|---|---:|---:|---:|
-| BM25 (α=1.0) | 0.0000 | 0.0000 | 0.0000 |
-| **hybrid (α=0.5)** | **0.2308** | 0.2500 | 0.2000 |
-| Dense (α=0.0) | 0.1538 | 0.1250 | 0.2000 |
-
-평가 표본 13개(영어 8, 한국어 5, 소표본). 관찰: (1) **BM25는 정답 라벨이 코퍼스에 존재하고 영어 질의여도 R@10=0** — 상담형 패러프레이즈에서 어휘 매칭이 정답 항목으로 수렴하지 못한다(라벨을 코퍼스 텍스트 기준으로 골라 BM25에 유리했음에도 0). (2) hybrid(α=0.5)가 양 극단을 모두 앞선다. (3) 라벨 노이즈 제거로 hybrid R@10이 0.10 → 0.23으로 약 2배 — 노이즈가 수치를 억눌렀음이 확인된다. 상세: `output/validated_eval.md`.
-
-### 한국어 cross-lingual 트랙 (TASK D)
-
-검증셋의 한국어 평가질의 5개를 사람이 영어로 수동 번역하여(외부 API 미사용), KO-원문 vs KO-번역 vs EN-원문을 BM25/Dense/Hybrid로 비교했다(`experiment_crosslingual_eval.py`).
-
-| track | BM25(α=1.0) | Hybrid(α=0.5) | Dense(α=0.0) | n |
-|---|---:|---:|---:|---:|
-| KO-원문 | 0.0000 | 0.2000 | 0.2000 | 5 |
-| KO-번역 | 0.2000 | 0.2000 | 0.2000 | 5 |
-| EN-원문 | 0.0000 | 0.2500 | 0.1250 | 8 |
-
-관찰(경향, 표본 5개): KO-원문에서 BM25=0인데 (a) 영어 번역 시 BM25가 0→0.20, (b) 다국어 dense는 번역 없이도 0.20을 달성한다. 즉 **번역 경로와 다국어 임베딩 경로가 모두 한국어 0점을 비슷하게 회복**시킨다. 한국어 표본이 5개로 매우 작아 절대값이 아니라 경향으로만 해석하며, 표본 확대가 후속 과제다. 상세: `output/crosslingual_eval.md`.
-
-### 통계 보강 및 figure (TASK F)
-
-기존 `output/*.json`만으로 bootstrap 95% CI·효과크기를 산출하고(`experiment_stats.py`, seed 고정, 검증셋은 per-query paired bootstrap), 논문용 그림 4종을 생성했다(`make_figures.py`):
-
-- `output/fig_paraphrase_gap.png` — 어휘격차 N별 R@10 (자기참조 의존성)
-- `output/fig_retriever_alpha.png` — 합성셋 alpha별 R@10
-- `output/fig_exposure_recall.png` — 노출량-성능 frontier
-- `output/fig_validated_retriever.png` — 검증셋 retriever별 R@10(전체/EN/KO)
-
-**통계적 주의(중요)**: 합성셋 비교(minimal vs full, N5 vs N0)는 표본이 624개로 CI가 0을 포함하지 않아 유의하다. 그러나 **검증셋의 hybrid vs BM25 차이는 +0.2308이지만 95% CI가 [0.0, 0.46]으로 0을 포함**한다(n=13). 따라서 n=13 단계에서 검증셋의 retriever 우위는 통계적으로 입증된 효과가 아니라 경향이었다. 상세: `docs/statistics.md`, `output/stats_summary.json`.
-
-### 검증셋 확장(TASK G/I): 효과의 통계적 입증
-
-표본을 키우기 위해, eCFR 항목을 먼저 고르고 그 항목을 묘사하는 상담형 질의를 *원문을 베끼지 않고* 역생성하여(라벨이 구조적으로 확정되고 자기참조가 제거됨) 60개를 추가했다(`validate_query_slice.py`로 코드누출·Jaccard<0.30·한국어비율 자동 검증). 원본 검증셋과 병합(중복 코드 자동 배제)하여 **n=71(영어 26, 한국어 45)**로 재평가했다(`build_expanded_validated.py`).
-
-| retriever | 전체 R@10 | 영어 R@10 | 한국어 R@10 |
-|---|---:|---:|---:|
-| BM25 (α=1.0) | 0.1690 | 0.4231 | **0.0222** |
-| **hybrid (α=0.5)** | **0.5775** | 0.5385 | **0.6000** |
-| Dense (α=0.0) | 0.5493 | 0.4615 | 0.6000 |
-
-paired bootstrap 95% CI(seed 고정, 20,000회):
-
-| 비교 | 평균차 | 95% CI | wins/losses |
-|---|---:|---|---:|
-| hybrid(α=0.5) vs BM25 | +0.4085 | **[0.296, 0.521]** | 29 / 0 |
-| Dense vs BM25 | +0.3803 | [0.254, 0.493] | 28 / 1 |
-
-**핵심**: n=13에서 0을 포함하던(비유의) hybrid–BM25 차이의 95% CI가 **n=71에서 [0.296, 0.521]로 0을 벗어났다 — 효과가 통계적으로 입증되었다.** 또한 한국어에서 BM25는 R@10 0.022로 사실상 실패하지만(코퍼스 100% 영어) 다국어 hybrid/dense는 0.60으로 회복한다(KO n=45). 즉 정보최소화 후보검색에서 BM25 sparse retrieval은 상담형·한국어 질의에 부적합하며, 다국어 hybrid가 통계적으로 유의하게 우월하다. 상세: `output/validated_expanded_eval.md`.
-
-### 임베딩 robustness (TASK H): 모델 불문 재현
-
-위 우위가 특정 임베딩 때문이 아님을 확인하기 위해, 확장셋(n=71)에서 dense 모델을 교체해 재실행했다(`experiment_embedding_robustness.py`, 모두 로컬 실행).
-
-| dense 모델 | hybrid(α0.5) 전체 | 한국어 | hybrid vs BM25 95% CI | 유의 |
+| dense 모델 | Hybrid(α0.5) 전체 | 한국어 | Hybrid−BM25 95% CI | 유의 |
 |---|---:|---:|---|---|
 | paraphrase-multilingual-MiniLM-L12-v2 | 0.578 | 0.600 | [0.296, 0.521] | 예 |
 | intfloat/multilingual-e5-base | 0.437 | 0.400 | [0.155, 0.380] | 예 |
-| BAAI/bge-m3 | 0.578 | 0.622 | [0.282, 0.507] | 예 |
+| BAAI/bge-m3 | 0.563 | 0.622 | [0.282, 0.507] | 예 |
 
-(BM25는 모델 불문 동일: 전체 0.169, 한국어 0.022.) **세 독립 다국어 인코더 모두에서 hybrid>BM25가 통계적으로 유의하고 한국어가 회복**된다(절대값은 bge-m3≈MiniLM > e5-base). 따라서 다국어 hybrid의 우위는 모델 특이적 산물이 아니다. 상세: `output/embedding_robustness.md`.
+(BM25 동일: 전체 0.169, 한국어 0.022.) **세 독립 인코더 모두 hybrid>BM25가 유의**하고 한국어가 회복된다. 우위는 모델 특이적 산물이 아니다(절대값은 MiniLM≈bge-m3 > e5-base).
 
-### 노출-성능 frontier를 검증 데이터로 (정보최소화 주장 직접 입증)
+### 4.5 노출-성능 frontier (검증 데이터)
+정보최소화 주장을 자기참조 합성셋이 아니라 **확장 검증셋(n=71)**에서 직접 측정:
 
-기존 합성 frontier(노출 66%↓, R@10 0.9792 유지)는 자기참조 합성셋 수치라 한계가 있었다. 이를 보완하기 위해 **확장 검증셋(n=71)에서 노출 모드를 변화시켜** frontier를 재측정했다(`experiment_exposure_frontier_validated.py`).
-
-| 노출 모드 | 노출량@10 | hybrid(α0.5) R@10 | BM25 R@10 |
+| 노출 모드 | 노출량@10 | Hybrid R@10 | BM25 R@10 |
 |---|---:|---:|---:|
-| full_text | 3,952 | 0.6056 | 0.1831 |
-| minimal_text | 1,754 | 0.5775 | 0.1690 |
-| minimal_no_code | 1,663 | 0.5211 | 0.1690 |
+| full_text | 3,952 | 0.606 | 0.183 |
+| minimal_text | 1,754 | 0.578 | 0.169 |
+| minimal_no_code | 1,663 | 0.521 | 0.169 |
 
-full_text → minimal_text는 **노출량을 55.6% 줄이면서** hybrid R@10은 0.6056 → 0.5775로 변하고, 그 차이의 paired bootstrap 95% CI는 **[−0.113, +0.042]로 0을 포함 — 통계적으로 유의한 성능 손실이 없다.** 즉 **정보최소화가 성능을 유의하게 해치지 않는다는 핵심 주장이, 자기참조 합성셋이 아니라 비자기참조 검증셋에서 입증**된다. (BM25는 노출을 늘려도 0.17대로 정체 — 한계는 정보량이 아니라 어휘·언어 불일치임을 재확인.) 상세: `output/exposure_frontier_validated.md`.
+full_text→minimal_text는 **노출량 55.6% 감소**에 hybrid R@10 0.606→0.578, 차이 −0.028, **95% CI [−0.113, +0.042]로 0을 포함 — 유의한 성능 손실 없음.** 즉 정보최소화가 성능을 유의하게 해치지 않는다는 핵심 주장이 검증 데이터로 입증된다. BM25는 노출을 늘려도 0.17대로 정체 — 한계가 정보량이 아니라 어휘·언어 불일치임을 재확인한다.
 
-이로써 본 연구의 두 축이 모두 검증 데이터 위에 선다: (1) 정보최소화는 성능을 유의하게 해치지 않으며(노출 −55.6%, 유의 손실 없음), (2) 그 저노출 후보검색에는 BM25가 아니라 다국어 hybrid가 통계적으로 유의하게 필요하다.
+### 4.6 한국어 cross-lingual
+코퍼스가 100% 영어라 BM25는 한국어에서 어휘 매칭이 불가능하다. 검증셋 한국어 질의 5개를 사람이 영어로 수동 번역(외부 API 미사용)해 비교:
 
-## 한국 법제도와의 연결
+| track | BM25 | Hybrid(α0.5) | Dense | n |
+|---|---:|---:|---:|---:|
+| KO-원문 | 0.000 | 0.200 | 0.200 | 5 |
+| KO-번역 | 0.200 | 0.200 | 0.200 | 5 |
+| EN-원문 | 0.000 | 0.250 | 0.125 | 8 |
 
-본 연구의 minimal_text 후보검색 워크플로우는 다음 한국 법제 체계와 연결된다:
-- 대외무역법 제18조(전략물자 수출 제한) 및 전략물자 수출입고시(신고 절차)
-- 산업기술보호법(해외 기술 유출 방지)
-- 국가핵심기술 제도(해외 이전 승인)
+KO-원문 BM25=0에서 (a) 영어 번역 시 BM25 0→0.20, (b) 다국어 dense는 번역 없이도 0.20. **번역 경로와 다국어 임베딩 경로가 한국어 0점을 비슷하게 회복**한다(표본 5개, 경향). 4.3의 확장셋(한국어 n=45)에서 다국어 hybrid의 한국어 0.60은 이를 더 큰 표본으로 뒷받침한다.
 
-워크플로우는 다음을 전제로 한다:
-1. 본 시스템은 사전 후보검색 보조로만 사용된다.
-2. 최종 판정은 YesTrade 자가판정 또는 전문판정, 관세사 검토, 산업통상자원부 승인 절차를 따른다.
-3. 기술자료(도면, 특허, 소스코드)가 함께 이전되는 경우, 산업기술보호법상 별도 검토가 필요하다.
+---
 
-상세 workflow: `docs/korean_regulatory_framework.md`
+## 5. 논의
 
-## 절대 쓰면 안 되는 주장
+본 연구의 두 축이 모두 검증 데이터 위에 선다.
+1. **정보최소화는 성능을 유의하게 해치지 않는다**(노출 −55.6%, 유의 손실 없음; 4.5).
+2. **그 저노출 후보검색에는 BM25가 아니라 다국어 hybrid가 통계적으로 유의하게 필요하다**(4.3–4.4).
 
-- AI가 전략물자 해당/비해당을 판정한다.
-- 본 시스템이 YesTrade 자가판정 또는 전문판정을 대신하거나 보조하는 기능을 제공하지 않는다.
-- 법제 라우팅 정확도가 검증되었다.
-- 상담형 모사 질의셋을 넘어 실제 기업·관세사 질의까지 일반화가 확인되었다.
-- 국가핵심기술 해당 여부를 자동 판단한다.
-- BM25 baseline이 "실제 현장에서 충분하다"고 단정한다. 상담형 모사 질의셋 결과에서 calibration이 필요함을 항상 언급해야 한다.
+부수적이지만 방법론적으로 중요한 기여는 **자기참조 합성 평가가 sparse retrieval을 과대평가**한다는 정량적 폭로다(4.1–4.2). 정보검색·RAG 연구에서 평가셋을 코퍼스에서 자동 파생할 때 흔한 함정이며, 본 연구는 역생성·자동 누출검사로 이를 교정하는 절차를 제시한다. 실용적 함의: 외부 AI 사전검토 도구는 (a) 반환 정보량을 최소화하고, (b) 한국어·상담형 질의를 위해 다국어 dense/hybrid를 채택해야 하며, (c) 산출물을 후보목록으로 한정하고 공식 판정 절차로 연결해야 한다.
 
-## 검증된 참고문헌·근거 링크
+---
 
-- [Wassenaar Arrangement Control Lists](https://www.wassenaar.org/control-lists/)
-- [Wassenaar Arrangement 2025 PDF](https://www.wassenaar.org/app/uploads/2025/12/List-of-Dual-Use-Goods-and-Technologies-and-ML-2025.pdf)
+## 6. 한국 법제도 연계 및 운영 워크플로우
+
+minimal_text 후보검색은 다음과 연계된다: 대외무역법 제18조(전략물자 수출 제한)·전략물자수출입고시(신고 절차), 산업기술보호법(해외 기술유출 방지), 국가핵심기술 제도(해외 이전 승인). 워크플로우 전제:
+1. 본 시스템은 **사전 후보검색 보조로만** 사용한다.
+2. 최종 판정은 YesTrade 자가판정/전문판정, 관세사 검토, 산업통상자원부 승인을 따른다.
+3. 기술자료(도면·특허·소스코드) 동반 이전 시 산업기술보호법상 별도 검토가 필요하다.
+
+상세: `docs/korean_regulatory_framework.md`.
+
+---
+
+## 7. 한계
+
+1. **라벨이 전문가 검증이 아님**: 검증 라벨은 코퍼스 텍스트 근거 카테고리 라벨이며 법적·전문가 판정이 아니다. 관세사/실무자 검수가 후속 과제다.
+2. **질의가 합성(역생성)**: 실제 기업·관세사 질의가 아니다. 역생성으로 라벨 확정성과 자기참조 제거는 달성했으나 현장 대표성은 제한된다.
+3. **표본·라벨공간**: 검증셋 n=71(영어 26/한국어 45)로 여전히 중간 규모이며, 정답 라벨은 eCFR로 한정했다.
+4. **절대 성능은 중간 수준**: 최고 hybrid R@10 0.578로 top-10에서 관련 항목의 약 42%를 놓친다. 배포 가능성을 주장하지 않으며 사전검토 보조로만 본다.
+5. **단일 라벨**: 한 질의에 한 항목을 정답으로 두어, 여러 ECCN에 걸치는 품목에서 과소집계될 수 있다(상대 비교에는 영향이 작다).
+6. **노출량 proxy**: 문자 수 기반으로 실제 영업비밀 민감도와 동일하지 않다.
+
+---
+
+## 8. 결론
+
+외부 AI 기반 전략물자 사전검토에서 **정보최소화는 후보검색 성능을 유의하게 해치지 않으며(노출 −55.6%, 유의 손실 없음), 그 저노출 후보검색에는 sparse BM25가 아니라 다국어 hybrid 검색이 통계적으로 유의하게 필요**하다(세 임베딩에서 재현, 한국어 회복). 또한 자기참조 합성 평가가 sparse retrieval을 과대평가함을 정량적으로 보였다. 향후 과제: 전문가 라벨 검수, 실제 기업 질의 확보, 표본·라벨공간 확대, 민감도 가중 노출 proxy.
+
+---
+
+## 9. 절대 쓰면 안 되는 주장 (작성 가드레일)
+- "AI가 전략물자 해당/비해당을 판정한다."
+- "본 시스템이 자가판정/전문판정을 대체·보조한다."
+- "추정 라벨/검증 라벨이 법적 정답이다."
+- "법제 라우팅 정확도가 검증되었다."
+- "실제 기업·관세사 질의까지 일반화가 확인되었다."
+- "합성 R@10 0.9792가 후보검색 성능이다"(자기참조 재검색임을 명시).
+
+---
+
+## 10. 참고문헌·근거 링크
+- [Wassenaar Arrangement Control Lists](https://www.wassenaar.org/control-lists/) · [2025 PDF](https://www.wassenaar.org/app/uploads/2025/12/List-of-Dual-Use-Goods-and-Technologies-and-ML-2025.pdf)
 - [DGFT Updated SCOMET List 2024 PDF](https://content.dgft.gov.in/Website/UPDATED%20SCOMET%20List%202024%20as%20on%2002.09.2024.pdf)
 - [eCFR 15 CFR Part 774 Supplement No. 1](https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-774/appendix-Supplement%20No.%201%20to%20Part%20774)
 - [BIS Interactive Commerce Control List](https://www.bis.gov/regulations/ear/interactive-commerce-control-list)
-- [YesTrade 제도개요](https://www.yestrade.go.kr/system-guidance)
-- [YesTrade 온라인 자가판정 한계](https://www.yestrade.go.kr/judgements/self/intro)
-- [전략물자수출입고시](https://www.law.go.kr/LSW/admRulInfoP.do?admRulSeq=2100000270104&chrClsCd=010201)
-- [국가핵심기술 제도](https://kaits.or.kr/web/content.do?menu_cd=000067)
-- [Ryu, Won & Kim, Intelligent Decision Support System for Nuclear Export Control: A BERT-Based Approach](https://www.tandfonline.com/doi/full/10.1080/00295450.2025.2556617)
-- [Nelson, Improving Strategic Trade Detection and Classification Through Machine Learning](https://mag.wcoomd.org/magazine/wco-news-94/strategic-trade-detection-machine-learning/)
+- [YesTrade 제도개요](https://www.yestrade.go.kr/system-guidance) · [온라인 자가판정 한계](https://www.yestrade.go.kr/judgements/self/intro)
+- [전략물자수출입고시](https://www.law.go.kr/LSW/admRulInfoP.do?admRulSeq=2100000270104&chrClsCd=010201) · [국가핵심기술 제도](https://kaits.or.kr/web/content.do?menu_cd=000067)
+- [Ryu, Won & Kim (2025), Intelligent Decision Support System for Nuclear Export Control: A BERT-Based Approach](https://www.tandfonline.com/doi/full/10.1080/00295450.2025.2556617)
+- [Nelson, Improving Strategic Trade Detection and Classification Through Machine Learning (WCO News 94)](https://mag.wcoomd.org/magazine/wco-news-94/strategic-trade-detection-machine-learning/)
 
-## 다음 보강 과제
+---
 
-1. 상담형 모사 질의셋`(`data/external_consultation_queries.json`)의 라벨 정확성 검증 및 불일치 코드 파싱 오류 수정 (예: 2B001이 bio agent로 파싱된 문제)
-2. 한국어 질의 대응: 영어 번역 필드(`query_en`) 추가 또는 도메인 동의어 사전(`domain_synonyms.json`) 구축
-3. 통제목록 파싱 결과 표본 100개 수작업 검수
-4. Dense retrieval 추가 실험 (후속 연구)
-5. 전문가 2인 이상 후보 적합성 평가 (별도 연구)
-6. 노출량 proxy를 문자 수에서 민감도 가중치 기반으로 확장
+## 11. 재현성 (청구 ↔ 근거)
+
+| 결과(절) | 스크립트 | 산출물 |
+|---|---|---|
+| 합성 frontier·자기참조(4.1) | `run_experiments.py`, `experiment_paraphrase_gap.py` | `output/experiment_logs.json`, `output/paraphrase_gap.{json,md}` |
+| 검색기 비교(4.2) | `experiment_retriever_compare.py`, `experiment_external_retriever.py` | `output/retriever_compare.*`, `output/external_retriever.*` |
+| 검증셋·확장·유의성(4.3) | `build_validated_queries.py`, `validate_query_slice.py`, `evaluate_validated_queries.py`, `build_expanded_validated.py` | `output/validated_eval.*`, `output/validated_expanded_eval.*` |
+| 임베딩 robustness(4.4) | `experiment_embedding_robustness.py` | `output/embedding_robustness.*` |
+| 노출 frontier 검증(4.5) | `experiment_exposure_frontier_validated.py` | `output/exposure_frontier_validated.*` |
+| 한국어 cross-lingual(4.6) | `experiment_crosslingual_eval.py` | `output/crosslingual_eval.*` |
+| 통계·figure | `experiment_stats.py`, `make_figures.py` | `output/stats_summary.json`, `docs/statistics.md`, `output/fig_*.png` |
+
+모든 실험은 seed 고정·결정론적이며 외부 추론 API를 호출하지 않는다(dense 임베딩은 로컬 모델). 검증 데이터: `data/external_consultation_queries_validated.json`, `data/validated_queries_slice_*.json`, `data/validated_queries_expanded.json`.
