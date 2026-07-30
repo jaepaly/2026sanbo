@@ -344,7 +344,7 @@ for t in tests/test_*.py; do python "$t"; done
 > 코퍼스를 교정판으로 갈아서 임베딩 계산을 다시 돌려야 합니다. 판단할 건 없고 결과 파일 1개만 보내주면 됩니다.
 >
 > ```bash
-> git clone -b fix/research-integrity https://github.com/jaepaly/2026sanbo.git
+> git clone https://github.com/jaepaly/2026sanbo.git
 > cd 2026sanbo
 > python -m venv .venv
 > .venv\Scripts\activate
