@@ -186,7 +186,7 @@ python build_expanded_validated.py     # 검증셋+G슬라이스 병합 → data
 
 # 검증셋 헤드라인 (n=71). 이 한 스크립트가 아래 3개를 대체한다.
 python experiment_validated_suite.py
-#   SANBO_MODELS=MiniLM python experiment_validated_suite.py   # 단일 모델 스모크(수 분)
+#   SANBO_MODELS=MiniLM python experiment_validated_suite.py   # 단일 모델 스모크
 
 python experiment_stats.py             # 통계 재집계 → output/stats_summary.json, docs/statistics.md
 python make_figures.py                 # figure 5종 → output/fig_*.png
@@ -259,296 +259,172 @@ v1 파서에 결함이 있고, 그중 일부는 **코퍼스에 존재하지 않�
 
 ---
 
-### 실행 순서
+### 내가 할 일
 
-모든 명령 앞에 `PYTHONIOENCODING=utf-8`을 붙이십시오. Windows 기본 콘솔(cp949)에서 한글·en dash 출력이 깨집니다.
+배정받은 **모델 하나**를 돌려서 결과 파일 **하나**를 보내면 끝입니다. 판단할 것은 없습니다.
+
+먼저 콘솔 인코딩을 설정합니다. Windows 기본 콘솔(cp949)에서는 한글 출력이 깨집니다.
 
 ```bash
-# PowerShell 이면 먼저
 $env:PYTHONIOENCODING="utf-8"
 ```
 
-#### Step 0 — 교체 (팀장, 1회, 즉시)
+mac/linux 라면:
 
 ```bash
-python adopt_corpus_v2.py --check
+export PYTHONIOENCODING=utf-8
 ```
 
-바뀔 내용을 출력만 하고 파일은 건드리지 않습니다. 확인 후:
+#### 1. 저장소 준비
+
+```bash
+git clone https://github.com/jaepaly/2026sanbo.git
+```
+
+```bash
+cd 2026sanbo && python -m venv .venv && .venv\Scripts\activate && pip install -r requirements.txt
+```
+
+이미 클론해 둔 저장소가 있으면 `git pull` 하십시오.
+
+#### 2. 코퍼스를 교정판으로 맞춘다
 
 ```bash
 python adopt_corpus_v2.py
 ```
 
-v1은 `data/corpus/combined_v1_superseded.json`으로 보존되고, 양쪽 SHA-256이 `data/corpus/corpus_version_manifest.json`에 기록됩니다. 되돌리려면 `python adopt_corpus_v2.py --revert`.
+"이미 v2가 활성 상태입니다"가 나오면 정상이니 다음으로 넘어가십시오.
 
-#### Step 1 — 합성셋 (팀장, 약 15분, 임베딩 없음)
+#### 3. 배정받은 모델을 돌린다
 
-```bash
-python generate_queries.py
-python run_experiments.py
-python experiment_paraphrase_gap.py
-```
-
-주장 1(자기참조 과대평가)이 여기서 나옵니다. 모델 다운로드가 없어 빠릅니다.
-
-#### Step 2 — 검증셋 3모델 (분담, 여기가 무거움)
-
-각자 **모델 하나씩** 맡습니다.
+`<배정모델>` 자리에 아래 표에서 받은 값을 그대로 넣으십시오.
 
 ```bash
 python run_model_shard.py <배정모델>
+```
+
+중간에 끊어도 안전합니다. 부분 결과를 쓰지 않으므로 처음부터 다시 돌리면 됩니다.
+
+#### 4. 검증한다
+
+```bash
 python validate_shard.py output/shards/shard_<배정모델>.json
 ```
 
-검증이 exit 0이면 `output/shards/shard_<배정모델>.json` **이 파일 하나만** 팀장에게 보냅니다.
+마지막 줄이 **"모든 검증 통과"** 여야 합니다. 실패하면 출력을 그대로 공유해 주십시오. 아래 '내 결과가 맞는지 확인하기'와 '문제가 생기면'을 먼저 보셔도 됩니다.
 
-> `output/shards/`에 예전 샤드가 있으면 **먼저 지우십시오.** v1 기준 샤드와 v2 기준 샤드가 섞이면 `merge_shards.py`가 BM25 벡터 불일치로 병합을 거부합니다(그게 정상 동작입니다).
+#### 5. 파일 하나만 보낸다
 
-#### Step 3 — 병합·재집계 (팀장, 수 분)
-
-```bash
-python merge_shards.py
-python report_exposure_decomposition.py
-python experiment_disclosure_frontier.py
-python audit_ladder_selfreference.py
-python experiment_stats.py
-python make_figures.py
+```
+output/shards/shard_<배정모델>.json
 ```
 
-`merge_shards.py`는 재인코딩을 하지 않고 샤드의 hit 벡터만 읽습니다.
-
-#### Step 4 — 검증 (팀장)
-
-```bash
-python verify_claims.py
-for t in tests/test_*.py; do python "$t"; done
-```
-
-`verify_claims.py`가 통과할 때까지 **논문에 수치를 옮기지 마십시오.** MISMATCH 목록이 곧 고쳐야 할 논문 수치 목록입니다.
+이 파일만 보내면 됩니다. 커밋도, PR도 필요 없습니다. 다른 파일은 건드리지 마십시오.
 
 ---
 
-### 배정표
+### 모델 배정
 
-| 담당 | `<배정모델>` | 모델 | CPU 예상 | GPU 예상 |
-|---|---|---|---:|---:|
-| (팀원 A) | `bge-m3` | BAAI/bge-m3 (568M) | 약 60분 | 1~2분 |
-| (팀원 B) | `e5-base` | intfloat/multilingual-e5-base (278M) | 약 20분 | 1분 미만 |
-| 팀장 | `MiniLM` | paraphrase-multilingual-MiniLM-L12-v2 (118M) | 약 5분 | 즉시 |
+| 담당 | `<배정모델>` | 모델 |
+|---|---|---|
+| 이예찬 | `bge-m3` | BAAI/bge-m3 |
+| 장승우 | `e5-base` | intfloat/multilingual-e5-base |
+| 박재현 | `MiniLM` | paraphrase-multilingual-MiniLM-L12-v2 |
 
-`MiniLM`이 primary model입니다. 노출량@10과 등가성 검정이 primary model의 랭킹을 따르므로 **MiniLM 샤드는 반드시 있어야 합니다.** 나머지 둘은 robustness 주장용이라 하나 빠져도 분석은 돌아가고, 빠진 모델은 `meta.missing_models`에 기록됩니다.
+GPU가 있으면 훨씬 빠릅니다. 없어도 그냥 돌아갑니다.
 
-### 팀원에게 보낼 메시지 (복붙용)
+---
 
-> 코퍼스를 교정판으로 갈아서 임베딩 계산을 다시 돌려야 합니다. 판단할 건 없고 결과 파일 1개만 보내주면 됩니다.
->
-> ```bash
-> git clone https://github.com/jaepaly/2026sanbo.git
-> cd 2026sanbo
-> python -m venv .venv
-> .venv\Scripts\activate
-> pip install -r requirements.txt
-> ```
->
-> ```bash
-> python adopt_corpus_v2.py
-> ```
->
-> ```bash
-> python run_model_shard.py <배정모델>
-> ```
->
-> ```bash
-> python validate_shard.py output/shards/shard_<배정모델>.json
-> ```
->
-> 마지막 명령이 "모든 검증 통과"로 끝나면 `output/shards/shard_<배정모델>.json`만 보내주세요.
-> 다른 파일은 건드리지 말고 커밋도 필요 없습니다. 검증이 실패하면 출력을 그대로 알려주세요.
+### 내 결과가 맞는지 확인하기
 
-### 자기검증용 기대값
+`validate_shard.py` 출력에서 아래 값을 직접 확인하십시오. **세 사람의 값이 서로 같아야 합니다.** BM25는 임베딩 모델을 전혀 쓰지 않으므로 모델이 달라도 결과가 같아야 하고, 다르면 무언가 잘못된 것입니다.
 
-각 단계 후 아래와 맞는지 확인하십시오. 틀리면 뭔가 잘못됐습니다.
-
-| 확인 지점 | 기대값 |
+| 확인 항목 | 기대값 |
 |---|---|
-| Step 0 후 코퍼스 | 1,783건 (eCFR 637 / SCOMET 578 / Wassenaar 568) |
-| Step 0 후 유령 항목 | `1.A.n` `2.A.n` `2.A.t` `3.A.n` `5.A.n` 이 **없어야** 함 |
-| Step 0 후 복구 항목 | `3.A.2.d.4` `3.A.2.d.5` `3.A.2.d.6` 이 **있어야** 함 |
-| Step 2 각 샤드 | BM25 R@10 = **11/71** (minimal_text). 세 샤드가 전부 같아야 함 |
-| Step 2 각 샤드 | BM25 무신호 질의 = **44/71**, hybrid≡dense = **44/71** |
-| Step 3 후 검증셋 R@10 | BM25 0.1549 / dense 0.5493 / hybrid 0.5775 (MiniLM, minimal_text) — **v1과 동일해야 함** |
-| Step 3 후 한국어 | BM25 0.0000 / hybrid 0.6000, hybrid−dense 승패무 **0/0/45** |
-| Step 3 후 노출량@10 | full_text 약 **9,730자**, minimal_text 약 **1,811자**, 감소율 약 **81.4%** |
-| Step 1 후 합성셋 | **미지.** v1의 0.9968 / 0.9792 / 0.7596 / 0.4407과 달라집니다. 새 값을 그대로 쓰되 ablation이 단조 감소하는지 확인하십시오 |
+| BM25 R@10 (minimal_text) | **11/71** |
+| BM25 무신호 질의 | **44/71** |
+| hybrid ≡ dense 건수 | **44/71** |
+| hit 벡터 길이 | 71 |
+| 코퍼스 항목수 | 1,783 |
 
-> Step 3의 검증셋 R@10이 v1 값과 **다르면** 문제가 있습니다. 측정 결과 213개 판정이 전부 동일했으므로, 달라진다면 샤드가 섞였거나 다른 질의셋을 쓴 것입니다.
+교정판 코퍼스가 제대로 적용됐는지 확인하려면:
 
-### 흔한 문제
+```bash
+python -c "import json;c=json.load(open('data/corpus/combined.json',encoding='utf-8'));k={e['code'] for e in c};print(len(c), [x for x in ['3.A.n','5.A.n'] if x in k] or 'ok', [x for x in ['3.A.2.d.4'] if x in k])"
+```
+
+`1783 ok ['3.A.2.d.4']` 가 나와야 합니다.
+
+---
+
+### 문제가 생기면
 
 | 증상 | 대응 |
 |---|---|
-| `merge_shards.py`가 BM25 벡터 불일치를 보고 | v1 기준 샤드가 섞여 있습니다. `output/shards/`를 비우고 Step 2를 다시 하십시오 |
-| `adopt_corpus_v2.py`가 "이미 v2가 활성"이라고 함 | 정상입니다. Step 1로 넘어가십시오 |
-| `verify_claims.py`가 MISMATCH를 많이 보고 | 정상입니다. 논문을 아직 안 고쳤기 때문입니다. 그 목록이 할 일입니다 |
 | 한글이 `?`나 깨진 문자로 출력 | `PYTHONIOENCODING=utf-8`을 설정하지 않았습니다 |
 | 모델 다운로드가 느림 | `pip install hf_xet` |
 | 메모리 부족 | `experiment_validated_suite.py`의 `batch_size=32`를 8로 낮추십시오. 결과는 동일합니다 |
-| 되돌리고 싶음 | `python adopt_corpus_v2.py --revert` 후 Step 1~4를 다시 실행 |
+| `revision: None` 경고 | `pip install huggingface_hub` 후 다시 돌리십시오. 재현성 기록이 비면 논문 부록에 쓸 수 없습니다 |
+| `validate_shard.py`가 BM25 불일치를 보고 | 코퍼스·질의 파일이 최신인지 확인하십시오. `git pull` 후 `python adopt_corpus_v2.py`, 그다음 3번부터 다시 |
+| `output/shards/`에 예전 파일이 있음 | 지우고 3번부터 다시 돌리십시오. 예전 코퍼스로 계산된 결과가 섞이면 안 됩니다 |
+| 그 외 | `validate_shard.py` 출력 전체를 공유해 주십시오 |
 
 ---
 
-## 팀 협업 가이드 (작업 분담)
+### 하지 말아야 할 것
 
-이 저장소는 팀 분담으로 진행됩니다. 각 팀원은 저장소를 클론하고, **자신의 AI 에이전트에게 저장소를 읽힌 뒤** 아래 담당 TASK를 수행하고, 산출물을 PR(권장) 또는 파일로 제출합니다.
+| 항목 | 이유 |
+|---|---|
+| `retrieval_core.py` 수정 | 33개 검증이 걸려 있고 scipy와 대조되어 있습니다. 여기가 틀리면 모든 수치가 조용히 틀어집니다 |
+| 등가성 마진 δ, α, 시드 변경 | 실험 전에 고정한 값입니다. 결과를 보고 바꾸면 사전지정의 의미가 사라집니다 |
+| `output/` 의 다른 파일 수정·삭제 | 자기 샤드 외에는 건드리지 마십시오 |
+| 논문 수치를 직접 고치기 | `verify_claims.py`가 산출물과 대조합니다. 손으로 고치면 대조가 깨집니다 |
 
-### 1. 담당 분배
-
-| TASK | 담당 | 내용 | 상세 스펙 |
-|---|---|---|---|
-| **TASK F** | 이예찬 | 결과 시각화(논문 figure) + 통계 보강(CI·효과크기) + 재현성. **새 실험 없음**, 기존 `output/*.json`만 읽어 그림 생성 | `docs/RESEARCH_IMPROVEMENT_PLAN.md` §3 TASK F |
-| **TASK D** | 장승우 | 한국어 cross-lingual 트랙(번역 필드/동의어 사전/다국어 임베딩). 검증셋 기준 KO 회복 정량화 | `docs/RESEARCH_IMPROVEMENT_PLAN.md` §3 TASK D |
-
-**현재 진행 중인 라운드 (2026-06-26~)** — TASK F·D는 완료(검증·반영됨). 다음 분담:
-
-| TASK | 담당 | 내용 | 상세 스펙 |
-|---|---|---|---|
-| **TASK G** | 팀원들(분할) | 검증 질의셋 80~100개로 확장. eCFR 항목 **역생성**으로 정답 확정 + 패러프레이즈로 자기참조 제거. 각자 겹치지 않는 ~30개씩 → 팀장 병합 | `docs/RESEARCH_IMPROVEMENT_PLAN.md` §3 TASK G |
-
-> TASK G는 **반드시** `python validate_query_slice.py data/<슬라이스>.json`을 통과(exit 0)한 뒤 제출.
-> 라벨 정확성·코드누출·자기참조 Jaccard<0.30·한국어 비율을 자동 검사하므로 팀장 검증이 1커맨드로 끝난다.
-
-**TASK G 구간 배정 (3명 팀: 팀장=H/병합/I, 팀원 2명=G 분할)** — 겹치지 않는 eCFR 카테고리를 나눠 각자 ~40개씩 역생성 → 합계 ~80개. 각자 한국어 ≥ 40%.
-
-| 담당 | `<배정구간>` (TASK G 프롬프트에 기입) | eCFR 풀 | 목표 |
-|---|---|---:|---:|
-| 이예찬 | eCFR 카테고리 **0·1·2·8** (`0xxx`,`1xxx`,`2xxx`,`8xxx` — 핵·소재·화학·생물·기계가공·해양) | 308 | ~40 |
-| 장승우 | eCFR 카테고리 **3·4·5·6·7·9** (`3xxx`,`4xxx`,`5xxx`,`6xxx`,`7xxx`,`9xxx` — 전자·컴퓨터·통신·센서·항법·항공우주) | 329 | ~40 |
-
-> 슬라이스 id에 담당자명을 넣고(`g-<이름>-001`) 코드 접두가 겹치지 않으므로 병합 시 중복이 자동 배제된다.
-> 팀장은 H(임베딩 robustness)를 먼저 인프라/smoke로 준비하고, G 슬라이스가 모이면 병합 후 TASK I(재집계)와 H 본실행을 수행한다.
-
-이미 완료된 TASK A/B/C/E의 배경·함정은 같은 문서와 `docs/case_analysis.md`, `PAPER.md`에 정리돼 있습니다.
-
-### 2. 환경 셋업 (각 팀원, 1회)
-
-```bash
-git clone https://github.com/jaepaly/2026sanbo.git
-cd 2026sanbo
-python -m venv .venv
-.venv\Scripts\activate          # Windows. (mac/linux: source .venv/bin/activate)
-pip install -r requirements.txt
-```
-
-### 3. 작업 흐름 (Git)
-
-```bash
-git checkout -b task-f-<이름>    # 예: task-f-jihoon  (TASK D는 task-d-<이름>)
-# ... 에이전트로 작업 수행, output/ 산출물 생성 ...
-git add <생성·수정 파일>
-git commit -m "TASK F: 논문 figure 4종 + 통계 표 생성"
-git push origin task-f-<이름>
-# GitHub에서 Pull Request 생성 → 리뷰 요청
-```
-
-> 충돌 방지: TASK F는 주로 `make_figures.py`·`output/fig_*.png`·`docs/statistics.md`를,
-> TASK D는 `data/*crosslingual*`·`output/crosslingual_*`를 건드립니다. 서로 다른 파일이라
-> 병렬 작업해도 충돌이 거의 없습니다. 기존 스크립트(`run_experiments.py` 등)는 수정하지 마세요.
-
-### 4. 에이전트에게 줄 프롬프트 (복붙용)
-
-> ⚠ **아래 TASK F·D 프롬프트는 당시 지시 기록(archival)이다.** 그대로 재사용하지 마라.
-> 이후 감사에서 다음이 바뀌었다: figure는 4종이 아니라 **5종**이고,
-> 검증셋 소스는 `output/validated_eval.json`(n=13)이 아니라
-> `output/validated_suite.json`(n=71)이다. "bootstrap 95% CI"만 요구하던 통계 지시도
-> **exact McNemar / Clopper-Pearson primary**로 바뀌었다(`docs/statistics.md` §5).
-
-**TASK F 담당 — 에이전트 프롬프트 (archival)**
-```
-이 저장소(2026sanbo)는 전략물자 사전 트리아지 정보최소화 연구다. 먼저 README.md,
-docs/RESEARCH_IMPROVEMENT_PLAN.md, PAPER.md를 읽어 맥락과 "절대 하지 말 것"을 파악하라.
-그다음 docs/RESEARCH_IMPROVEMENT_PLAN.md의 TASK F(시각화+통계)를 수행하라:
-- 새 실험을 돌리지 말고 기존 output/*.json만 읽어 make_figures.py를 작성하고
-  output/에 fig_paraphrase_gap.png, fig_retriever_alpha.png, fig_exposure_recall.png,
-  fig_validated_retriever.png 4종을 생성하라. 수치는 JSON과 정확히 일치해야 한다.
-- experiment_stats.py로 주요 비교의 bootstrap 95% CI와 효과크기를 output/stats_summary.json,
-  docs/statistics.md에 정리하라.
-금지: 합성 R@10 0.97을 무수식 헤드라인화, 추정 라벨을 "정답"으로 호칭, "AI가 전략물자 판정" 류 주장.
-마지막으로 docs/RESULT_REPORT_TEMPLATE.md를 복사해 report_task_f_<이름>.md로 채워라
-(기준 커밋 해시, 생성 파일 목록, 핵심 결과표, 재현 방법, 가드레일 체크 포함).
-이 리포트와 생성한 PNG/JSON 파일들을 함께 제출하면 된다고 안내하라.
-```
-
-**TASK D 담당 — 에이전트 프롬프트 (archival)**
-```
-이 저장소(2026sanbo)는 전략물자 사전 트리아지 정보최소화 연구다. 먼저 README.md,
-docs/RESEARCH_IMPROVEMENT_PLAN.md, PAPER.md, docs/case_analysis.md를 읽어 맥락을 파악하라.
-핵심 사실: 코퍼스는 100% 영어라 BM25가 한국어 질의에서 R@10=0이고, 다국어 dense가 일부
-회복한다(output/validated_eval.json). docs/RESEARCH_IMPROVEMENT_PLAN.md의 TASK D를 수행하라:
-- data/external_consultation_queries_validated.json을 기준 평가셋으로,
-  KO-원문 vs KO-번역 vs EN, 그리고 BM25/dense/hybrid를 비교해
-  output/crosslingual_eval.json, output/crosslingual_eval.md를 생성하라.
-- 외부 API를 쓰면 반드시 명시하라(정보최소화 주제와 충돌). 가능하면 로컬 모델 사용.
-- 한국어 표본이 5개로 작으니 결론은 "경향"으로 서술하고 표본 확대 필요성을 명시하라.
-금지: 추정 라벨을 "정답"으로 호칭, "AI가 전략물자 판정" 류 주장.
-마지막으로 docs/RESULT_REPORT_TEMPLATE.md를 복사해 report_task_d_<이름>.md로 채워라
-(기준 커밋 해시, 생성 파일 목록, 핵심 결과표, 재현 방법, 가드레일 체크 포함).
-이 리포트와 생성한 JSON/MD 파일들을 함께 제출하면 된다고 안내하라.
-```
-
-**TASK G 담당 — 에이전트 프롬프트** (담당 eCFR 구간을 `<배정구간>`에 기입)
-```
-이 저장소(2026sanbo)는 전략물자 사전 트리아지 정보최소화 연구다. 먼저 README.md,
-docs/RESEARCH_IMPROVEMENT_PLAN.md(§3 TASK G), PAPER.md, docs/case_analysis.md를 읽어
-맥락과 "절대 하지 말 것"을 파악하라. 목표: 검증 질의셋을 역생성으로 확장한다.
-- data/corpus/combined.json에서 source=ecfr_part774 항목 중 내 담당 구간 <배정구간>
-  (다른 팀원과 겹치지 않게)에서 설명 가능한 항목 약 30개를 고른다.
-- 각 항목마다, 그 항목을 묘사하는 상담형 질의를 작성한다. 실제 시나리오(국가/용도)를 담되
-  통제번호와 항목 원문 구절을 직접 인용하지 마라(자기참조 금지). 한국어를 40% 이상 포함.
-- 라벨(validated_labels)은 그 항목의 정확한 full code(ECCN-XXXX)로 둔다.
-- 결과를 data/validated_queries_slice_<이름>.json에 §3 TASK G 스키마대로 저장한다.
-- 제출 전 반드시 `python validate_query_slice.py data/validated_queries_slice_<이름>.json`을
-  실행해 exit 0(모든 게이트 통과: 라벨 정확·코드누출0·Jaccard<0.30·KO≥40%·≥25개)을 확인하라.
-  실패하면 해당 질의를 고쳐 다시 통과시켜라.
-금지: 추정 라벨을 "정답(법적)"으로 호칭, "AI가 전략물자 판정" 류 주장, 항목 원문 베껴쓰기.
-마지막으로 docs/RESULT_REPORT_TEMPLATE.md를 복사해 report_task_g_<이름>.md로 채우고,
-슬라이스 JSON과 validate_query_slice.py의 통과 출력을 함께 제출하면 된다고 안내하라.
-```
-
-### 5. 결과물 제출 (md 리포트 방식 — 기본)
-
-각 팀원은 **표준 md 리포트 1장 + 생성한 산출물 파일**을 팀장에게 전달합니다. PR/push 권한이 필요 없습니다.
-
-1. `docs/RESULT_REPORT_TEMPLATE.md`를 복사해 채운다 → `report_task_f_<이름>.md` (또는 `report_task_d_<이름>.md`)
-2. 리포트에 **기준 커밋 해시, 무엇을 했는지, 생성 파일 목록, 핵심 결과표, 재현 방법, 가드레일 체크**를 기입
-3. 리포트 md와 **생성한 산출물 파일을 함께** 전달 (md만으로는 부족 — 아래 주의)
-   - **TASK F**: 그림은 PNG라 md에 안 담깁니다 → `output/fig_*.png`, `make_figures.py`, `output/stats_summary.json`을 **파일로 같이** 보낼 것
-   - **TASK D**: `output/crosslingual_eval.json`, `output/crosslingual_eval.md`, 추가 스크립트를 같이 보낼 것
-4. 전달 수단은 자유(메신저/메일/드라이브). 어느 커밋 기준인지만 리포트에 명시.
-
-> (선택) PR을 쓸 수 있는 팀원은 §3 흐름대로 브랜치 푸시 후 PR을 열어도 됩니다. md 리포트 방식과 둘 중 편한 것을 쓰면 됩니다.
-
-> 팀장 통합: 받은 md 리포트의 수치·해석을 `PAPER.md`에, 그림 PNG는 `output/`에 넣고 README/PAPER에서 참조하면 됩니다.
-
-### 6. 반드시 지킬 것 (회귀 방지)
-
-- 합성 R@10 0.9792는 **자기참조 재검색**이므로 무수식 헤드라인 금지(`docs/case_analysis.md`).
-- 외부/검증셋 라벨은 **정답이 아님**(코퍼스 텍스트 근거 카테고리 라벨). "정답"으로 부르지 말 것.
-- "AI가 전략물자 판정/자가판정 대체", "법제 라우팅 정확도 n%" 류 주장 금지(`PAPER.md` 참조).
-- 기존 산출물 수치를 임의로 바꾸지 말 것. figure/통계는 기존 `output/*.json`과 일치해야 함.
-  수치가 실제로 바뀌면 **삭제하지 말고 before/after를 함께 남길 것**(예: `docs/statistics.md` §3·§6,
-  `docs/statistics_n13_superseded.md`, 각 JSON의 `*_legacy` 필드).
-- **랭킹에 `np.argsort(-scores)`를 쓰지 말 것.** 동점 순서가 정렬 구현에 좌우된다.
-  `retrieval_core.rank_indices`를 쓰고, 점수 벡터가 전부 0인 질의는 **검색 실패**로
-  집계할 것(코퍼스 앞머리 k행을 결과로 세지 말 것).
-- **집계 rate에서 per-query hit 벡터를 재구성하지 말 것.** 각 실험 스크립트가
-  `hit_vectors`를 JSON에 저장하므로 그것을 읽어 paired 검정을 할 것. 벡터가 없으면
-  추정하지 말고 "짝지음 불가"로 표시할 것.
-- **"CI가 0을 포함"을 등가성의 근거로 쓰지 말 것**(귀무가설 수용). 사전지정 마진 δ에
-  대한 TOST를 쓸 것. 소표본에서는 percentile bootstrap 대신 exact McNemar /
-  Clopper-Pearson을 primary로 쓸 것.
 
 ---
+
+## 완료된 이전 라운드 (기록)
+
+아래 작업은 모두 완료되어 저장소에 반영되어 있습니다. 상세 스펙과 당시 사용한 프롬프트는
+[`docs/RESEARCH_IMPROVEMENT_PLAN.md`](docs/RESEARCH_IMPROVEMENT_PLAN.md)에 있습니다.
+
+| TASK | 내용 | 산출물 |
+|---|---|---|
+| A | 합성셋 자기참조 의존성 정량화 | `output/paraphrase_gap.*` |
+| B/C | 코드 충돌 제거 + 검증 라벨셋 구축 | `data/external_consultation_queries_validated.json` |
+| D | 한국어 cross-lingual 트랙 | `output/crosslingual_eval.*` |
+| E | BM25 vs Dense vs Hybrid 비교 | `output/retriever_compare.*` |
+| F | 논문 figure + 통계 보강 | `output/fig_*.png`, `docs/statistics.md` |
+| G | 검증 질의셋 역생성 확장 (n=71) | `data/validated_queries_slice_*.json` |
+| H | 임베딩 robustness (3개 인코더) | `output/validated_suite.*` |
+| I | 슬라이스 병합·재집계 | `data/validated_queries_expanded.json` |
+
+이후 외부 감사에서 나온 결함 수정 내역은 커밋 히스토리와 아래 문서에 있습니다.
+
+| 문서 | 내용 |
+|---|---|
+| [`docs/threat_model.md`](docs/threat_model.md) | 보호자산·신뢰경계·노출채널 정의 |
+| [`docs/selfreference.md`](docs/selfreference.md) | 자기참조 게이트의 공허성과 대칭 ablation |
+| [`docs/corpus_parsing_fixes.md`](docs/corpus_parsing_fixes.md) | 코퍼스 파서 결함과 교정 (원문 인용 16건) |
+| [`docs/label_audit.md`](docs/label_audit.md) | 정답셋 오염 감사 |
+| [`docs/statistics.md`](docs/statistics.md) | 검증셋 통계 (paired bootstrap · exact McNemar · TOST) |
+| [`docs/reproducibility.md`](docs/reproducibility.md) | 전체 재현 절차와 환경 |
+| [`docs/claim_registry.json`](docs/claim_registry.json) | 논문 수치 ↔ 산출물 대조 결과 |
+
+검증 명령:
+
+```bash
+python verify_claims.py
+```
+
+논문의 모든 수치를 산출물과 대조합니다. 불일치 목록이 곧 고쳐야 할 논문 수치 목록입니다.
+
+```bash
+python tests/test_retrieval_core.py
+```
+
+통계 코어 검증(scipy와 독립 대조). `tests/` 아래 나머지 테스트도 같은 방식으로 실행합니다.
+
 
 ## 한계
 
