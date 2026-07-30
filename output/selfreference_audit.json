@@ -1,0 +1,2680 @@
+{
+  "experiment": "language_neutral_selfreference_gate_audit",
+  "meta": {
+    "n": 71,
+    "n_scored": 71,
+    "by_lang": {
+      "en": 26,
+      "ko": 45
+    },
+    "queries_file": "validated_queries_expanded.json",
+    "answer_text_mode": "minimal_text (색인 텍스트와 동일 정의, retrieval_core.index_text)",
+    "seed": 20260626,
+    "old_gate": "jaccard(tokenize(query), tokenize(minimal_text)) < 0.30",
+    "old_gate_defect": "tokenize는 [A-Za-z0-9가-힣]+이고 코퍼스는 100% 영어 → 한국어 질의의 교집합은 원리상 공집합. 전체 71개의 63%(45개)에서 게이트가 아무것도 검사하지 않았고, 영어 26개에서도 한 번도 발동하지 않았다."
+  },
+  "env": {
+    "numpy": "2.2.6",
+    "python": "3.10.5",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "torch": "2.6.0+cpu",
+    "sentence_transformers": "3.4.1",
+    "seed": 20260626,
+    "gate_model": "sentence-transformers/LaBSE"
+  },
+  "calibration": {
+    "gate_model": "sentence-transformers/LaBSE",
+    "gate_model_alternative_considered": "sentence-transformers/distiluse-base-multilingual-cased-v2",
+    "eval_models_excluded": [
+      "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+      "intfloat/multilingual-e5-base",
+      "BAAI/bge-m3"
+    ],
+    "rule": "tau_semantic = floor_2dp(POS-B의 10퍼센타일). POS-B는 정답 항목을 한국어로 옮긴 근거문 ↔ 정답 영어 원문의 cos이며, 71개 질의의 cos 값과 독립이다.",
+    "rationale": "정당한 패러프레이즈 질의는 '정답 항목의 한국어 대역'보다 정답과 덜 비슷해야 한다. 10퍼센타일은 보수적(플래그가 덜 나오는) 컷이므로 자기참조 잔존 주장에 불리한 방향이다.",
+    "tau_semantic": 0.44,
+    "tau_semantic_sensitivity_median_cut": 0.55,
+    "pos_a_human_translation_pairs": {
+      "stats": {
+        "n": 5,
+        "mean": 0.8384,
+        "sd": 0.0197,
+        "min": 0.8226,
+        "p10": 0.823,
+        "median": 0.8307,
+        "p90": 0.86,
+        "max": 0.8697
+      },
+      "pairs": [
+        {
+          "pair_id": "ext-002",
+          "cos": 0.8226
+        },
+        {
+          "pair_id": "ext-004",
+          "cos": 0.8236
+        },
+        {
+          "pair_id": "ext-006",
+          "cos": 0.8307
+        },
+        {
+          "pair_id": "ext-016",
+          "cos": 0.8697
+        },
+        {
+          "pair_id": "ext-028",
+          "cos": 0.8455
+        }
+      ]
+    },
+    "pos_b_korean_basis_vs_answer": {
+      "stats": {
+        "n": 57,
+        "mean": 0.5515,
+        "sd": 0.0767,
+        "min": 0.3615,
+        "p10": 0.4425,
+        "median": 0.5579,
+        "p90": 0.64,
+        "max": 0.708
+      },
+      "pairs": [
+        {
+          "pair_id": "g-seungwoo-001",
+          "cos": 0.6398
+        },
+        {
+          "pair_id": "g-seungwoo-002",
+          "cos": 0.5757
+        },
+        {
+          "pair_id": "g-seungwoo-005",
+          "cos": 0.6266
+        },
+        {
+          "pair_id": "g-seungwoo-007",
+          "cos": 0.5791
+        },
+        {
+          "pair_id": "g-seungwoo-008",
+          "cos": 0.6404
+        },
+        {
+          "pair_id": "g-seungwoo-009",
+          "cos": 0.5564
+        },
+        {
+          "pair_id": "g-seungwoo-010",
+          "cos": 0.661
+        },
+        {
+          "pair_id": "g-seungwoo-011",
+          "cos": 0.6437
+        },
+        {
+          "pair_id": "g-seungwoo-012",
+          "cos": 0.5623
+        },
+        {
+          "pair_id": "g-seungwoo-013",
+          "cos": 0.708
+        },
+        {
+          "pair_id": "g-seungwoo-014",
+          "cos": 0.605
+        },
+        {
+          "pair_id": "g-seungwoo-015",
+          "cos": 0.5982
+        },
+        {
+          "pair_id": "g-seungwoo-016",
+          "cos": 0.6561
+        },
+        {
+          "pair_id": "g-seungwoo-017",
+          "cos": 0.5545
+        },
+        {
+          "pair_id": "g-seungwoo-018",
+          "cos": 0.4889
+        },
+        {
+          "pair_id": "g-seungwoo-019",
+          "cos": 0.5142
+        },
+        {
+          "pair_id": "g-seungwoo-020",
+          "cos": 0.5922
+        },
+        {
+          "pair_id": "g-seungwoo-021",
+          "cos": 0.51
+        },
+        {
+          "pair_id": "g-seungwoo-022",
+          "cos": 0.6347
+        },
+        {
+          "pair_id": "g-seungwoo-023",
+          "cos": 0.5179
+        },
+        {
+          "pair_id": "g-seungwoo-024",
+          "cos": 0.6719
+        },
+        {
+          "pair_id": "g-seungwoo-025",
+          "cos": 0.4275
+        },
+        {
+          "pair_id": "g-seungwoo-026",
+          "cos": 0.5421
+        },
+        {
+          "pair_id": "g-seungwoo-027",
+          "cos": 0.5723
+        },
+        {
+          "pair_id": "g-seungwoo-028",
+          "cos": 0.5914
+        },
+        {
+          "pair_id": "g-seungwoo-029",
+          "cos": 0.6382
+        },
+        {
+          "pair_id": "g-seungwoo-030",
+          "cos": 0.6391
+        },
+        {
+          "pair_id": "g-yechan-001",
+          "cos": 0.617
+        },
+        {
+          "pair_id": "g-yechan-002",
+          "cos": 0.506
+        },
+        {
+          "pair_id": "g-yechan-003",
+          "cos": 0.547
+        },
+        {
+          "pair_id": "g-yechan-004",
+          "cos": 0.4517
+        },
+        {
+          "pair_id": "g-yechan-005",
+          "cos": 0.4759
+        },
+        {
+          "pair_id": "g-yechan-006",
+          "cos": 0.6078
+        },
+        {
+          "pair_id": "g-yechan-007",
+          "cos": 0.5493
+        },
+        {
+          "pair_id": "g-yechan-008",
+          "cos": 0.551
+        },
+        {
+          "pair_id": "g-yechan-009",
+          "cos": 0.5579
+        },
+        {
+          "pair_id": "g-yechan-010",
+          "cos": 0.5681
+        },
+        {
+          "pair_id": "g-yechan-011",
+          "cos": 0.6075
+        },
+        {
+          "pair_id": "g-yechan-012",
+          "cos": 0.4614
+        },
+        {
+          "pair_id": "g-yechan-013",
+          "cos": 0.4334
+        },
+        {
+          "pair_id": "g-yechan-014",
+          "cos": 0.4485
+        },
+        {
+          "pair_id": "g-yechan-015",
+          "cos": 0.4866
+        },
+        {
+          "pair_id": "g-yechan-016",
+          "cos": 0.5524
+        },
+        {
+          "pair_id": "g-yechan-017",
+          "cos": 0.3615
+        },
+        {
+          "pair_id": "g-yechan-018",
+          "cos": 0.5426
+        },
+        {
+          "pair_id": "g-yechan-019",
+          "cos": 0.5862
+        },
+        {
+          "pair_id": "g-yechan-020",
+          "cos": 0.4736
+        },
+        {
+          "pair_id": "g-yechan-021",
+          "cos": 0.4314
+        },
+        {
+          "pair_id": "g-yechan-022",
+          "cos": 0.5004
+        },
+        {
+          "pair_id": "g-yechan-023",
+          "cos": 0.5819
+        },
+        {
+          "pair_id": "g-yechan-024",
+          "cos": 0.4191
+        },
+        {
+          "pair_id": "g-yechan-025",
+          "cos": 0.5194
+        },
+        {
+          "pair_id": "g-yechan-026",
+          "cos": 0.5963
+        },
+        {
+          "pair_id": "g-yechan-027",
+          "cos": 0.6215
+        },
+        {
+          "pair_id": "g-yechan-028",
+          "cos": 0.4126
+        },
+        {
+          "pair_id": "g-yechan-029",
+          "cos": 0.4536
+        },
+        {
+          "pair_id": "g-yechan-030",
+          "cos": 0.5645
+        }
+      ]
+    },
+    "neg_unrelated_pairs": {
+      "stats": {
+        "n": 1420,
+        "mean": 0.1598,
+        "sd": 0.0909,
+        "min": -0.1422,
+        "p10": 0.0375,
+        "median": 0.1667,
+        "p90": 0.2707,
+        "max": 0.459
+      },
+      "samples_per_query": 20,
+      "seed": 20260626
+    },
+    "separation_pos_b_minus_neg": 0.3917,
+    "caveats": [
+      "POS-A는 n=5로 매우 작다 — 참고값.",
+      "POS-B 근거문은 요약된 대역이라 완전 번역보다 cos이 낮게 나오는 하한 성향이 있다.",
+      "정답과의 유사도만으로 '좋은 질의'와 '베낀 질의'를 원리적으로 구분할 수 없다. 최종 판정은 사람이 해야 한다 — 확인 필요."
+    ]
+  },
+  "verdict_primary": {
+    "tau_semantic": 0.44,
+    "max_jaccard": 0.3,
+    "n": 71,
+    "lexical_failures": [],
+    "semantic_failures": [
+      {
+        "id": "g-seungwoo-010",
+        "lang": "ko",
+        "answer_code": "ECCN-3D005",
+        "semantic_cos": 0.5639,
+        "lexical_jaccard": 0.0
+      },
+      {
+        "id": "g-seungwoo-029",
+        "lang": "ko",
+        "answer_code": "ECCN-6B108",
+        "semantic_cos": 0.5547,
+        "lexical_jaccard": 0.0
+      },
+      {
+        "id": "g-seungwoo-013",
+        "lang": "ko",
+        "answer_code": "ECCN-3E004",
+        "semantic_cos": 0.5199,
+        "lexical_jaccard": 0.0
+      },
+      {
+        "id": "g-seungwoo-024",
+        "lang": "ko",
+        "answer_code": "ECCN-6D201",
+        "semantic_cos": 0.5195,
+        "lexical_jaccard": 0.0
+      },
+      {
+        "id": "g-seungwoo-027",
+        "lang": "ko",
+        "answer_code": "ECCN-7A115",
+        "semantic_cos": 0.5147,
+        "lexical_jaccard": 0.0
+      },
+      {
+        "id": "g-seungwoo-001",
+        "lang": "ko",
+        "answer_code": "ECCN-3A003",
+        "semantic_cos": 0.5101,
+        "lexical_jaccard": 0.0
+      },
+      {
+        "id": "g-seungwoo-016",
+        "lang": "ko",
+        "answer_code": "ECCN-5A101",
+        "semantic_cos": 0.5055,
+        "lexical_jaccard": 0.0
+      },
+      {
+        "id": "g-seungwoo-015",
+        "lang": "ko",
+        "answer_code": "ECCN-4D993",
+        "semantic_cos": 0.4944,
+        "lexical_jaccard": 0.0
+      },
+      {
+        "id": "g-seungwoo-026",
+        "lang": "en",
+        "answer_code": "ECCN-7A104",
+        "semantic_cos": 0.4942,
+        "lexical_jaccard": 0.1556
+      },
+      {
+        "id": "g-seungwoo-022",
+        "lang": "ko",
+        "answer_code": "ECCN-6A991",
+        "semantic_cos": 0.4698,
+        "lexical_jaccard": 0.0
+      },
+      {
+        "id": "g-yechan-018",
+        "lang": "ko",
+        "answer_code": "ECCN-2A984",
+        "semantic_cos": 0.4584,
+        "lexical_jaccard": 0.0
+      },
+      {
+        "id": "g-seungwoo-030",
+        "lang": "en",
+        "answer_code": "ECCN-3D202",
+        "semantic_cos": 0.4495,
+        "lexical_jaccard": 0.2105
+      },
+      {
+        "id": "g-seungwoo-007",
+        "lang": "ko",
+        "answer_code": "ECCN-3B002",
+        "semantic_cos": 0.4481,
+        "lexical_jaccard": 0.0
+      },
+      {
+        "id": "g-seungwoo-020",
+        "lang": "en",
+        "answer_code": "ECCN-6A102",
+        "semantic_cos": 0.445,
+        "lexical_jaccard": 0.1509
+      }
+    ],
+    "n_lexical_failures": 0,
+    "n_semantic_failures": 14,
+    "caught_only_by_semantic": [
+      "g-seungwoo-001",
+      "g-seungwoo-007",
+      "g-seungwoo-010",
+      "g-seungwoo-013",
+      "g-seungwoo-015",
+      "g-seungwoo-016",
+      "g-seungwoo-020",
+      "g-seungwoo-022",
+      "g-seungwoo-024",
+      "g-seungwoo-026",
+      "g-seungwoo-027",
+      "g-seungwoo-029",
+      "g-seungwoo-030",
+      "g-yechan-018"
+    ],
+    "lexical_void_by_lang": {
+      "en": {
+        "n": 26,
+        "mean_jaccard": 0.0953,
+        "max_jaccard": 0.2364,
+        "all_exactly_zero": false,
+        "ever_triggered_at_0.30": false,
+        "warning": null
+      },
+      "ko": {
+        "n": 45,
+        "mean_jaccard": 0.0,
+        "max_jaccard": 0.0,
+        "all_exactly_zero": true,
+        "ever_triggered_at_0.30": false,
+        "warning": "어휘 Jaccard가 45개 전부 정확히 0 — 이 언어에서 어휘 게이트는 아무것도 검사하지 않는다(코퍼스가 100% 영어이므로 교집합이 원리상 공집합)."
+      }
+    }
+  },
+  "verdict_sensitivity_median_cut": {
+    "tau_semantic": 0.55,
+    "max_jaccard": 0.3,
+    "n": 71,
+    "lexical_failures": [],
+    "semantic_failures": [
+      {
+        "id": "g-seungwoo-010",
+        "lang": "ko",
+        "answer_code": "ECCN-3D005",
+        "semantic_cos": 0.5639,
+        "lexical_jaccard": 0.0
+      },
+      {
+        "id": "g-seungwoo-029",
+        "lang": "ko",
+        "answer_code": "ECCN-6B108",
+        "semantic_cos": 0.5547,
+        "lexical_jaccard": 0.0
+      }
+    ],
+    "n_lexical_failures": 0,
+    "n_semantic_failures": 2,
+    "caught_only_by_semantic": [
+      "g-seungwoo-010",
+      "g-seungwoo-029"
+    ],
+    "lexical_void_by_lang": {
+      "en": {
+        "n": 26,
+        "mean_jaccard": 0.0953,
+        "max_jaccard": 0.2364,
+        "all_exactly_zero": false,
+        "ever_triggered_at_0.30": false,
+        "warning": null
+      },
+      "ko": {
+        "n": 45,
+        "mean_jaccard": 0.0,
+        "max_jaccard": 0.0,
+        "all_exactly_zero": true,
+        "ever_triggered_at_0.30": false,
+        "warning": "어휘 Jaccard가 45개 전부 정확히 0 — 이 언어에서 어휘 게이트는 아무것도 검사하지 않는다(코퍼스가 100% 영어이므로 교집합이 원리상 공집합)."
+      }
+    }
+  },
+  "distribution_by_lang": {
+    "en": {
+      "n": 26,
+      "lexical_jaccard": {
+        "mean": 0.0953,
+        "max": 0.2364,
+        "all_exactly_zero": false
+      },
+      "lexical_jaccard_first_label": {
+        "mean": 0.0941,
+        "max": 0.2364,
+        "all_exactly_zero": false
+      },
+      "semantic_cos_first_label": {
+        "mean": 0.2598,
+        "max": 0.4942
+      },
+      "semantic_cos": {
+        "mean": 0.2616,
+        "sd": 0.1174,
+        "min": 0.0132,
+        "median": 0.272,
+        "max": 0.4942
+      },
+      "semantic_z_vs_corpus_mean": 1.663
+    },
+    "ko": {
+      "n": 45,
+      "lexical_jaccard": {
+        "mean": 0.0,
+        "max": 0.0,
+        "all_exactly_zero": true
+      },
+      "lexical_jaccard_first_label": {
+        "mean": 0.0,
+        "max": 0.0,
+        "all_exactly_zero": true
+      },
+      "semantic_cos_first_label": {
+        "mean": 0.3637,
+        "max": 0.5639
+      },
+      "semantic_cos": {
+        "mean": 0.3637,
+        "sd": 0.1045,
+        "min": 0.1547,
+        "median": 0.3613,
+        "max": 0.5639
+      },
+      "semantic_z_vs_corpus_mean": 2.211
+    }
+  },
+  "distribution_by_origin": {
+    "slice_seungwoo": {
+      "n": 29,
+      "lexical_jaccard": {
+        "mean": 0.051,
+        "max": 0.2364,
+        "all_exactly_zero": false
+      },
+      "lexical_jaccard_first_label": {
+        "mean": 0.051,
+        "max": 0.2364,
+        "all_exactly_zero": false
+      },
+      "semantic_cos_first_label": {
+        "mean": 0.4157,
+        "max": 0.5639
+      },
+      "semantic_cos": {
+        "mean": 0.4157,
+        "sd": 0.0952,
+        "min": 0.1589,
+        "median": 0.4196,
+        "max": 0.5639
+      },
+      "semantic_z_vs_corpus_mean": 2.955
+    },
+    "slice_yechan": {
+      "n": 29,
+      "lexical_jaccard": {
+        "mean": 0.0193,
+        "max": 0.1538,
+        "all_exactly_zero": false
+      },
+      "lexical_jaccard_first_label": {
+        "mean": 0.0193,
+        "max": 0.1538,
+        "all_exactly_zero": false
+      },
+      "semantic_cos_first_label": {
+        "mean": 0.2935,
+        "max": 0.4584
+      },
+      "semantic_cos": {
+        "mean": 0.2935,
+        "sd": 0.0802,
+        "min": 0.1253,
+        "median": 0.2917,
+        "max": 0.4584
+      },
+      "semantic_z_vs_corpus_mean": 1.713
+    },
+    "validated_base": {
+      "n": 13,
+      "lexical_jaccard": {
+        "mean": 0.0339,
+        "max": 0.1071,
+        "all_exactly_zero": false
+      },
+      "lexical_jaccard_first_label": {
+        "mean": 0.0314,
+        "max": 0.1071,
+        "all_exactly_zero": false
+      },
+      "semantic_cos_first_label": {
+        "mean": 0.1963,
+        "max": 0.3436
+      },
+      "semantic_cos": {
+        "mean": 0.1999,
+        "sd": 0.0877,
+        "min": 0.0132,
+        "median": 0.2219,
+        "max": 0.3436
+      },
+      "semantic_z_vs_corpus_mean": 0.569
+    }
+  },
+  "histograms": {
+    "lexical_jaccard_all": {
+      "bin_edges": [
+        0.0,
+        0.05,
+        0.1,
+        0.15,
+        0.2,
+        0.25,
+        0.3,
+        0.35,
+        0.4,
+        0.45,
+        0.5
+      ],
+      "counts": [
+        51,
+        8,
+        6,
+        4,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "semantic_cos_all": {
+      "bin_edges": [
+        0.0,
+        0.05,
+        0.1,
+        0.15,
+        0.2,
+        0.25,
+        0.3,
+        0.35,
+        0.4,
+        0.45,
+        0.5,
+        0.55,
+        0.6,
+        0.65,
+        0.7,
+        0.75,
+        0.8,
+        0.85,
+        0.9,
+        0.95,
+        1.0
+      ],
+      "counts": [
+        1,
+        1,
+        4,
+        4,
+        8,
+        12,
+        13,
+        9,
+        8,
+        4,
+        5,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "semantic_cos_ko": {
+      "bin_edges": [
+        0.0,
+        0.05,
+        0.1,
+        0.15,
+        0.2,
+        0.25,
+        0.3,
+        0.35,
+        0.4,
+        0.45,
+        0.5,
+        0.55,
+        0.6,
+        0.65,
+        0.7,
+        0.75,
+        0.8,
+        0.85,
+        0.9,
+        0.95,
+        1.0
+      ],
+      "counts": [
+        0,
+        0,
+        0,
+        2,
+        5,
+        7,
+        7,
+        8,
+        6,
+        3,
+        5,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "semantic_cos_en": {
+      "bin_edges": [
+        0.0,
+        0.05,
+        0.1,
+        0.15,
+        0.2,
+        0.25,
+        0.3,
+        0.35,
+        0.4,
+        0.45,
+        0.5,
+        0.55,
+        0.6,
+        0.65,
+        0.7,
+        0.75,
+        0.8,
+        0.85,
+        0.9,
+        0.95,
+        1.0
+      ],
+      "counts": [
+        1,
+        1,
+        4,
+        2,
+        3,
+        5,
+        6,
+        1,
+        2,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "calibration_pos_b": {
+      "bin_edges": [
+        0.0,
+        0.05,
+        0.1,
+        0.15,
+        0.2,
+        0.25,
+        0.3,
+        0.35,
+        0.4,
+        0.45,
+        0.5,
+        0.55,
+        0.6,
+        0.65,
+        0.7,
+        0.75,
+        0.8,
+        0.85,
+        0.9,
+        0.95,
+        1.0
+      ],
+      "counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        6,
+        7,
+        10,
+        17,
+        12,
+        3,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "top_side_by_side": [
+    {
+      "rank": 1,
+      "id": "g-seungwoo-010",
+      "lang": "ko",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-3D005",
+      "semantic_cos": 0.5639,
+      "lexical_jaccard": 0.0,
+      "semantic_z_vs_corpus": 4.462,
+      "query": "전자기 펄스나 정전기 충격이 발생해도 마이크로컴퓨터가 1밀리초 안에 정상 동작을 회복하게 만드는 소프트웨어를 해외 방산업체에 제공하려 합니다. 통제 여부를 알고 싶습니다.",
+      "answer_minimal_text": "ECCN-3D005 “Software” “specially designed” to restore normal operation of a microcomputer, “microprocessor microcircuit” or “microcomputer microcircuit” within 1 ms after an Electromagnetic Pulse (EMP) or Electrostatic Discharge (ESD) disruption, without loss of continua"
+    },
+    {
+      "rank": 2,
+      "id": "g-seungwoo-029",
+      "lang": "ko",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-6B108",
+      "semantic_cos": 0.5547,
+      "lexical_jaccard": 0.0,
+      "semantic_z_vs_corpus": 3.408,
+      "query": "로켓이나 무인기의 레이더 반사 면적을 측정하기 위해 특별히 만든 시스템을 외국 항공 회사에 공급하려 합니다. 사거리가 긴 비행체용이라 통제 여부가 궁금합니다.",
+      "answer_minimal_text": "ECCN-6B108 Systems, other than those controlled by 6B008, “specially designed” for radar cross section measurement usable for rockets, missiles, or unmanned aerial vehicles capable of achieving a “range” equal to or greater than 300 km and their subsystems."
+    },
+    {
+      "rank": 3,
+      "id": "g-seungwoo-013",
+      "lang": "ko",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-3E004",
+      "semantic_cos": 0.5199,
+      "lexical_jaccard": 0.0,
+      "semantic_z_vs_corpus": 4.225,
+      "query": "300밀리미터 실리콘 웨이퍼를 매우 평탄하게 절삭하고 연마하는 데 필요한 공정 기술을 외국 파운드리에 이전하려 합니다. 통제 대상인지 확인 부탁드립니다.",
+      "answer_minimal_text": "ECCN-3E004 “Technology” “required” for the slicing, grinding and polishing of 300 mm diameter silicon wafers to achieve a 'Site Front least sQuares Range' ('SFQR') less than or equal to 20 nm at any site of 26 mm x 8 mm on the front surface of the wafer and an edge exclu"
+    },
+    {
+      "rank": 4,
+      "id": "g-seungwoo-024",
+      "lang": "ko",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-6D201",
+      "semantic_cos": 0.5195,
+      "lexical_jaccard": 0.0,
+      "semantic_z_vs_corpus": 3.515,
+      "query": "고속 카메라와 영상 장치의 성능을 끌어올리거나 제한을 풀어주는 소프트웨어를 해외 연구기관에 제공하려 합니다. 통제 여부를 확인하고 싶습니다.",
+      "answer_minimal_text": "ECCN-6D201 “Software” “specially designed” to enhance or release the performance characteristics of high-speed cameras and imaging devices, and components therefor, to meet or exceed the level of the performance characteristics described in ECCN 6A203."
+    },
+    {
+      "rank": 5,
+      "id": "g-seungwoo-027",
+      "lang": "ko",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-7A115",
+      "semantic_cos": 0.5147,
+      "lexical_jaccard": 0.0,
+      "semantic_z_vs_corpus": 4.665,
+      "query": "특정 전자기 발생원의 방위를 알아내는 수동형 방향 탐지 센서를 외국 업체에 보내려 합니다. 미사일 용도 가능성이 있어 분류 확인이 필요합니다.",
+      "answer_minimal_text": "ECCN-7A115 Passive sensors for determining bearing to specific electromagnetic sources (direction finding equipment) or terrain characteristics, designed or modified for use in “missiles”."
+    },
+    {
+      "rank": 6,
+      "id": "g-seungwoo-001",
+      "lang": "ko",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-3A003",
+      "semantic_cos": 0.5101,
+      "lexical_jaccard": 0.0,
+      "semantic_z_vs_corpus": 4.477,
+      "query": "밀폐 용기 안에서 절연성 액체를 전자 부품에 직접 뿌려 작동 온도를 유지시키는 냉각 장치를 베트남 데이터센터에 납품하려 합니다. 수출 통제 대상인지 확인이 필요합니다.",
+      "answer_minimal_text": "ECCN-3A003 Spray cooling thermal management systems employing closed loop fluid handling and reconditioning equipment in a sealed enclosure where a dielectric fluid is sprayed onto electronic “components” using “specially designed” spray nozzles that are designed to main"
+    },
+    {
+      "rank": 7,
+      "id": "g-seungwoo-016",
+      "lang": "ko",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-5A101",
+      "semantic_cos": 0.5055,
+      "lexical_jaccard": 0.0,
+      "semantic_z_vs_corpus": 2.079,
+      "query": "사거리 300킬로미터 이상 무인 비행체에 쓰도록 설계된 원격 측정 및 원격 제어 장비를 외국 항공우주 기관에 보내려 합니다. 분류 확인이 필요합니다.",
+      "answer_minimal_text": "ECCN-5A101 Telemetering and telecontrol equipment, including ground equipment, designed or modified for unmanned aerial vehicle (including cruise missiles, target drones, and reconnaissance drones) or rocket systems (including ballistic missiles, space launch vehicles, a"
+    },
+    {
+      "rank": 8,
+      "id": "g-seungwoo-015",
+      "lang": "ko",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-4D993",
+      "semantic_cos": 0.4944,
+      "lexical_jaccard": 0.0,
+      "semantic_z_vs_corpus": 3.677,
+      "query": "실시간 처리 장비를 위해 소스 코드를 자동으로 생성해 주는 운영체제 소프트웨어를 해외 업체에 납품할 예정입니다. 통제 분류를 알고 싶습니다.",
+      "answer_minimal_text": "ECCN-4D993 “Program” proof and validation “software,” “software” allowing the automatic generation of “source codes,” and operating system “software” that are “specially designed” for “real-time processing” equipment (see List of Items Controlled)."
+    },
+    {
+      "rank": 9,
+      "id": "g-seungwoo-026",
+      "lang": "en",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-7A104",
+      "semantic_cos": 0.4942,
+      "lexical_jaccard": 0.1556,
+      "semantic_z_vs_corpus": 3.599,
+      "query": "Our device determines orientation by automatically tracking stars or satellites, used for navigation. A foreign aerospace firm requested a sample. Which control code?",
+      "answer_minimal_text": "ECCN-7A104 Gyro-astro compasses and other devices, other than those controlled by 7A004, which derive position or orientation by means of automatically tracking celestial bodies or satellites and “specially designed” “parts” and “components” therefor."
+    },
+    {
+      "rank": 10,
+      "id": "g-seungwoo-022",
+      "lang": "ko",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-6A991",
+      "semantic_cos": 0.4698,
+      "lexical_jaccard": 0.0,
+      "semantic_z_vs_corpus": 3.526,
+      "query": "물속 물체를 탐지하고 위치를 파악하는 해양 음향 장비를 동남아 조선소에 납품할 예정입니다. 분류 검토가 필요합니다.",
+      "answer_minimal_text": "ECCN-6A991 Marine or terrestrial acoustic equipment, n.e.s., capable of detecting or locating underwater objects or features or positioning surface vessels or underwater vehicles;"
+    },
+    {
+      "rank": 11,
+      "id": "g-yechan-018",
+      "lang": "ko",
+      "origin": "slice_yechan",
+      "answer_code": "ECCN-2A984",
+      "semantic_cos": 0.4584,
+      "lexical_jaccard": 0.0,
+      "semantic_z_vs_corpus": 3.705,
+      "query": "보안검색 장비 업체가 원거리에서 의복 안 물체를 확인하는 밀리미터파 스캐너를 공항 운영사에 판매하려 합니다. 감시 장비 성격이 있어 후보 항목을 확인합니다.",
+      "answer_minimal_text": "ECCN-2A984 Concealed object detection equipment operating in the frequency range from 30 GHz to 3000 GHz and having a spatial resolution of 0.1 milliradian up to and including 1 milliradian at a standoff distance of 100 meters;"
+    },
+    {
+      "rank": 12,
+      "id": "g-seungwoo-030",
+      "lang": "en",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-3D202",
+      "semantic_cos": 0.4495,
+      "lexical_jaccard": 0.2105,
+      "semantic_z_vs_corpus": 4.528,
+      "query": "Our software boosts the performance of frequency converters and generators to reach a specified high level. A buyer overseas requested it. Which export classification fits?",
+      "answer_minimal_text": "ECCN-3D202 “Software” “specially designed” to enhance or release the performance characteristics of frequency changers or generators to meet or exceed the level of the performance characteristics described in ECCN 3A225."
+    },
+    {
+      "rank": 13,
+      "id": "g-seungwoo-007",
+      "lang": "ko",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-3B002",
+      "semantic_cos": 0.4481,
+      "lexical_jaccard": 0.0,
+      "semantic_z_vs_corpus": 2.506,
+      "query": "완성 단계의 반도체 소자를 검사하고 시험하기 위해 특별히 만든 장비를 말레이시아 공장에 공급하려 합니다. 분류 확인이 필요합니다.",
+      "answer_minimal_text": "ECCN-3B002 Test or inspection equipment “specially designed” for testing or inspecting finished or unfinished semiconductor devices as follows (see List of Items Controlled) and “specially designed” “components” and “accessories” therefor."
+    },
+    {
+      "rank": 14,
+      "id": "g-seungwoo-020",
+      "lang": "en",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-6A102",
+      "semantic_cos": 0.445,
+      "lexical_jaccard": 0.1509,
+      "semantic_z_vs_corpus": 3.277,
+      "query": "Our product is a sensor hardened against nuclear radiation effects, usable on missile platforms, rated for very high total dose. A foreign client asked about it. Which ECCN?",
+      "answer_minimal_text": "ECCN-6A102 Radiation hardened detectors, other than those controlled by 6A002, “specially designed” or modified for protecting against nuclear effects (e.g., Electromagnetic Pulse (EMP), X-rays, combined blast and thermal effects) and usable for “missiles,” designed or r"
+    },
+    {
+      "rank": 15,
+      "id": "g-seungwoo-002",
+      "lang": "ko",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-3A225",
+      "semantic_cos": 0.4384,
+      "lexical_jaccard": 0.0,
+      "semantic_z_vs_corpus": 3.339,
+      "query": "모터 구동용으로 쓰이는 가변 주파수 변환 장치를 인도 제조사에 공급할 예정입니다. 원자력 규제 대상은 아닌데 일반 수출 통제에 걸리는지 궁금합니다.",
+      "answer_minimal_text": "ECCN-3A225 Frequency changers (a.k.a. converters or inverters) and generators, except those subject to the export licensing authority of the Nuclear Regulatory Commission (see 10 CFR part 110 ), that are usable as a variable frequency or fixed frequency motor drive and h"
+    }
+  ],
+  "per_query": [
+    {
+      "id": "ext-002",
+      "lang": "ko",
+      "origin": "validated_base",
+      "answer_code": "ECCN-3B001",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.2667,
+      "semantic_cos_first_label": 0.2667,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-3B001": 0.2667
+      },
+      "corpus_null_mean": 0.2084,
+      "corpus_null_sd": 0.0741,
+      "semantic_z_vs_corpus": 0.787,
+      "semantic_percentile_vs_corpus": 78.23,
+      "query": "반도체 식각 공정용 플라즈마 발생장비를 베트남 업체에 공급 예정입니다. 해당 장비의 통제 분류를 알고 싶습니다."
+    },
+    {
+      "id": "ext-003",
+      "lang": "en",
+      "origin": "validated_base",
+      "answer_code": "ECCN-2B001",
+      "lexical_jaccard": 0.0889,
+      "lexical_jaccard_first_label": 0.0889,
+      "lexical_shared_tokens": [
+        "control",
+        "eccn",
+        "which",
+        "with"
+      ],
+      "lexical_structurally_void": false,
+      "semantic_cos": 0.3436,
+      "semantic_cos_first_label": 0.3436,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-2B001": 0.3436
+      },
+      "corpus_null_mean": 0.2215,
+      "corpus_null_sd": 0.1089,
+      "semantic_z_vs_corpus": 1.121,
+      "semantic_percentile_vs_corpus": 89.76,
+      "query": "We are exporting a CNC machining center with 5-axis simultaneous control capability. Which ECCN categories might apply?"
+    },
+    {
+      "id": "ext-004",
+      "lang": "ko",
+      "origin": "validated_base",
+      "answer_code": "ECCN-7A002",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.2244,
+      "semantic_cos_first_label": 0.2244,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-7A002": 0.2244
+      },
+      "corpus_null_mean": 0.1575,
+      "corpus_null_sd": 0.0748,
+      "semantic_z_vs_corpus": 0.894,
+      "semantic_percentile_vs_corpus": 81.9,
+      "query": "드론용 고정밀 자이로스코프 모듈을 해외 대학에 샘플로 제공할 예정입니다. 군용 가능성이 있는지 확인 필요합니다."
+    },
+    {
+      "id": "ext-005",
+      "lang": "en",
+      "origin": "validated_base",
+      "answer_code": "ECCN-5D991",
+      "lexical_jaccard": 0.0698,
+      "lexical_jaccard_first_label": 0.037,
+      "lexical_shared_tokens": [
+        "development",
+        "for",
+        "software"
+      ],
+      "lexical_structurally_void": false,
+      "semantic_cos": 0.1353,
+      "semantic_cos_first_label": 0.0884,
+      "n_gold_labels": 2,
+      "semantic_cos_all_labels": {
+        "ECCN-5D002": 0.0884,
+        "ECCN-5D991": 0.1353
+      },
+      "corpus_null_mean": 0.0539,
+      "corpus_null_sd": 0.0777,
+      "semantic_z_vs_corpus": 1.047,
+      "semantic_percentile_vs_corpus": 85.18,
+      "query": "Cryptographic software source code will be transferred to a foreign subsidiary for internal development. Does export control apply?"
+    },
+    {
+      "id": "ext-006",
+      "lang": "ko",
+      "origin": "validated_base",
+      "answer_code": "ECCN-1C002",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.2219,
+      "semantic_cos_first_label": 0.2219,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-1C002": 0.2219
+      },
+      "corpus_null_mean": 0.1546,
+      "corpus_null_sd": 0.0686,
+      "semantic_z_vs_corpus": 0.981,
+      "semantic_percentile_vs_corpus": 86.25,
+      "query": "항공기용 타이타늄 합금 판재를 독일 항공부품사에 수출하려 합니다. 재료 등급이 높아 관심 대상일 수 있다고 들었습니다."
+    },
+    {
+      "id": "ext-007",
+      "lang": "en",
+      "origin": "validated_base",
+      "answer_code": "ECCN-6A001",
+      "lexical_jaccard": 0.1034,
+      "lexical_jaccard_first_label": 0.1034,
+      "lexical_shared_tokens": [
+        "acoustic",
+        "equipment",
+        "systems"
+      ],
+      "lexical_structurally_void": false,
+      "semantic_cos": 0.2346,
+      "semantic_cos_first_label": 0.2346,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-6A001": 0.2346
+      },
+      "corpus_null_mean": 0.1646,
+      "corpus_null_sd": 0.0879,
+      "semantic_z_vs_corpus": 0.797,
+      "semantic_percentile_vs_corpus": 79.4,
+      "query": "We are shipping test equipment for underwater acoustic communication systems. This could be used for submarine applications. Please advise."
+    },
+    {
+      "id": "ext-013",
+      "lang": "en",
+      "origin": "validated_base",
+      "answer_code": "ECCN-2D001",
+      "lexical_jaccard": 0.1071,
+      "lexical_jaccard_first_label": 0.1071,
+      "lexical_shared_tokens": [
+        "controlled",
+        "software",
+        "that"
+      ],
+      "lexical_structurally_void": false,
+      "semantic_cos": 0.204,
+      "semantic_cos_first_label": 0.204,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-2D001": 0.204
+      },
+      "corpus_null_mean": 0.14,
+      "corpus_null_sd": 0.0857,
+      "semantic_z_vs_corpus": 0.747,
+      "semantic_percentile_vs_corpus": 76.28,
+      "query": "We are exporting software that controls vibration test equipment for satellite components. Is the software itself controlled?"
+    },
+    {
+      "id": "ext-015",
+      "lang": "en",
+      "origin": "validated_base",
+      "answer_code": "ECCN-3A002",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.0928,
+      "semantic_cos_first_label": 0.0928,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-3A002": 0.0928
+      },
+      "corpus_null_mean": 0.1344,
+      "corpus_null_sd": 0.0965,
+      "semantic_z_vs_corpus": -0.432,
+      "semantic_percentile_vs_corpus": 32.8,
+      "query": "A research institute in Singapore wants to buy our high-speed oscilloscope with bandwidth over 1 GHz. Which controls may apply?"
+    },
+    {
+      "id": "ext-016",
+      "lang": "ko",
+      "origin": "validated_base",
+      "answer_code": "ECCN-1C002",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.1927,
+      "semantic_cos_first_label": 0.1927,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-1C002": 0.1927
+      },
+      "corpus_null_mean": 0.1827,
+      "corpus_null_sd": 0.0893,
+      "semantic_z_vs_corpus": 0.113,
+      "semantic_percentile_vs_corpus": 51.78,
+      "query": "3D 프린터용 특수 금분소재를 프랑스에 공급합니다. 군용 부품 제조 가능성이 있다고 합니다."
+    },
+    {
+      "id": "ext-017",
+      "lang": "en",
+      "origin": "validated_base",
+      "answer_code": "ECCN-3A001",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.1424,
+      "semantic_cos_first_label": 0.1424,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-3A001": 0.1424
+      },
+      "corpus_null_mean": 0.1631,
+      "corpus_null_sd": 0.0809,
+      "semantic_z_vs_corpus": -0.255,
+      "semantic_percentile_vs_corpus": 35.86,
+      "query": "We are shipping radar components with GaAs MMIC technology to a NATO partner country. What should we check first?"
+    },
+    {
+      "id": "ext-023",
+      "lang": "en",
+      "origin": "validated_base",
+      "answer_code": "ECCN-5A002",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.0132,
+      "semantic_cos_first_label": 0.0132,
+      "n_gold_labels": 2,
+      "semantic_cos_all_labels": {
+        "ECCN-5A002": 0.0132,
+        "ECCN-5A991": 0.004
+      },
+      "corpus_null_mean": 0.0464,
+      "corpus_null_sd": 0.0629,
+      "semantic_z_vs_corpus": -0.528,
+      "semantic_percentile_vs_corpus": 29.69,
+      "query": "An overseas university requested encryption chips for a research collaboration. We need to understand if any licenses are required."
+    },
+    {
+      "id": "ext-028",
+      "lang": "ko",
+      "origin": "validated_base",
+      "answer_code": "ECCN-6A001",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.3022,
+      "semantic_cos_first_label": 0.3022,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-6A001": 0.3022
+      },
+      "corpus_null_mean": 0.2014,
+      "corpus_null_sd": 0.0924,
+      "semantic_z_vs_corpus": 1.091,
+      "semantic_percentile_vs_corpus": 90.48,
+      "query": "어뢰 유도제어 부품(소나/음향 신호 처리)을 NATO 회원국에 수출하려 합니다. 군용입니다."
+    },
+    {
+      "id": "ext-029",
+      "lang": "en",
+      "origin": "validated_base",
+      "answer_code": "ECCN-3B001",
+      "lexical_jaccard": 0.0714,
+      "lexical_jaccard_first_label": 0.0714,
+      "lexical_shared_tokens": [
+        "controlled",
+        "eccn",
+        "semiconductor"
+      ],
+      "lexical_structurally_void": false,
+      "semantic_cos": 0.2253,
+      "semantic_cos_first_label": 0.2253,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-3B001": 0.2253
+      },
+      "corpus_null_mean": 0.1321,
+      "corpus_null_sd": 0.0905,
+      "semantic_z_vs_corpus": 1.03,
+      "semantic_percentile_vs_corpus": 87.36,
+      "query": "We have a customer in Israel requesting a high-precision angular positioning table used in semiconductor lithography. Is this an ECCN-controlled item?"
+    },
+    {
+      "id": "g-seungwoo-001",
+      "lang": "ko",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-3A003",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.5101,
+      "semantic_cos_first_label": 0.5101,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-3A003": 0.5101
+      },
+      "corpus_null_mean": 0.1683,
+      "corpus_null_sd": 0.0763,
+      "semantic_z_vs_corpus": 4.477,
+      "semantic_percentile_vs_corpus": 100.0,
+      "query": "밀폐 용기 안에서 절연성 액체를 전자 부품에 직접 뿌려 작동 온도를 유지시키는 냉각 장치를 베트남 데이터센터에 납품하려 합니다. 수출 통제 대상인지 확인이 필요합니다."
+    },
+    {
+      "id": "g-seungwoo-002",
+      "lang": "ko",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-3A225",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.4384,
+      "semantic_cos_first_label": 0.4384,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-3A225": 0.4384
+      },
+      "corpus_null_mean": 0.1965,
+      "corpus_null_sd": 0.0724,
+      "semantic_z_vs_corpus": 3.339,
+      "semantic_percentile_vs_corpus": 100.0,
+      "query": "모터 구동용으로 쓰이는 가변 주파수 변환 장치를 인도 제조사에 공급할 예정입니다. 원자력 규제 대상은 아닌데 일반 수출 통제에 걸리는지 궁금합니다."
+    },
+    {
+      "id": "g-seungwoo-003",
+      "lang": "en",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-3A226",
+      "lexical_jaccard": 0.1538,
+      "lexical_jaccard_first_label": 0.1538,
+      "lexical_shared_tokens": [
+        "are",
+        "current",
+        "high",
+        "nuclear",
+        "power",
+        "regulatory",
+        "the",
+        "to"
+      ],
+      "lexical_structurally_void": false,
+      "semantic_cos": 0.3617,
+      "semantic_cos_first_label": 0.3617,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-3A226": 0.3617
+      },
+      "corpus_null_mean": 0.1314,
+      "corpus_null_sd": 0.0699,
+      "semantic_z_vs_corpus": 3.297,
+      "semantic_percentile_vs_corpus": 99.94,
+      "query": "We are exporting a high-current DC power feed unit to a research lab in Taiwan. It is not under nuclear regulatory scope. Could you tell me the classification?"
+    },
+    {
+      "id": "g-seungwoo-004",
+      "lang": "ko",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-3A227",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.4074,
+      "semantic_cos_first_label": 0.4074,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-3A227": 0.4074
+      },
+      "corpus_null_mean": 0.2005,
+      "corpus_null_sd": 0.0837,
+      "semantic_z_vs_corpus": 2.473,
+      "semantic_percentile_vs_corpus": 100.0,
+      "query": "높은 전압을 공급하는 직류 전원 장치를 독일 연구소에 보내려 합니다. 원자력 관련 품목은 아니라고 들었는데 통제 분류를 알고 싶습니다."
+    },
+    {
+      "id": "g-seungwoo-005",
+      "lang": "ko",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-3A233",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.3854,
+      "semantic_cos_first_label": 0.3854,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-3A233": 0.3854
+      },
+      "corpus_null_mean": 0.1552,
+      "corpus_null_sd": 0.073,
+      "semantic_z_vs_corpus": 3.153,
+      "semantic_percentile_vs_corpus": 99.94,
+      "query": "무거운 분자 이온까지 측정할 수 있고 분해능이 매우 높은 질량 분석 장비를 일본 대학에 수출하려 합니다. 통제 품목인지 검토 부탁드립니다."
+    },
+    {
+      "id": "g-seungwoo-006",
+      "lang": "en",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-3A981",
+      "lexical_jaccard": 0.0732,
+      "lexical_jaccard_first_label": 0.0732,
+      "lexical_shared_tokens": [
+        "and",
+        "for",
+        "in"
+      ],
+      "lexical_structurally_void": false,
+      "semantic_cos": 0.1589,
+      "semantic_cos_first_label": 0.1589,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-3A981": 0.1589
+      },
+      "corpus_null_mean": 0.1197,
+      "corpus_null_sd": 0.0746,
+      "semantic_z_vs_corpus": 0.526,
+      "semantic_percentile_vs_corpus": 68.49,
+      "query": "Our company makes lie-detection instruments and stress-analysis devices for security screening. We want to ship them to a client in Brazil. What is the export category?"
+    },
+    {
+      "id": "g-seungwoo-007",
+      "lang": "ko",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-3B002",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.4481,
+      "semantic_cos_first_label": 0.4481,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-3B002": 0.4481
+      },
+      "corpus_null_mean": 0.2032,
+      "corpus_null_sd": 0.0977,
+      "semantic_z_vs_corpus": 2.506,
+      "semantic_percentile_vs_corpus": 99.83,
+      "query": "완성 단계의 반도체 소자를 검사하고 시험하기 위해 특별히 만든 장비를 말레이시아 공장에 공급하려 합니다. 분류 확인이 필요합니다."
+    },
+    {
+      "id": "g-seungwoo-008",
+      "lang": "ko",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-3B994",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.4196,
+      "semantic_cos_first_label": 0.4196,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-3B994": 0.4196
+      },
+      "corpus_null_mean": 0.1984,
+      "corpus_null_sd": 0.0833,
+      "semantic_z_vs_corpus": 2.653,
+      "semantic_percentile_vs_corpus": 100.0,
+      "query": "최첨단 미세공정 집적회로 생산을 가능하게 하는 반도체 제조 장비를 중국 협력사에 보내려 합니다. 통제 대상인지 매우 궁금합니다."
+    },
+    {
+      "id": "g-seungwoo-009",
+      "lang": "en",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-3C006",
+      "lexical_jaccard": 0.1132,
+      "lexical_jaccard_first_label": 0.1132,
+      "lexical_shared_tokens": [
+        "a",
+        "carbide",
+        "gallium",
+        "nitride",
+        "silicon",
+        "with"
+      ],
+      "lexical_structurally_void": false,
+      "semantic_cos": 0.2868,
+      "semantic_cos_first_label": 0.2868,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-3C006": 0.2868
+      },
+      "corpus_null_mean": 0.1148,
+      "corpus_null_sd": 0.0794,
+      "semantic_z_vs_corpus": 2.165,
+      "semantic_percentile_vs_corpus": 99.28,
+      "query": "We supply wafer substrates layered with gallium nitride and silicon carbide films for power electronics. A customer in Singapore requested them. Which control code applies?"
+    },
+    {
+      "id": "g-seungwoo-010",
+      "lang": "ko",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-3D005",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.5639,
+      "semantic_cos_first_label": 0.5639,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-3D005": 0.5639
+      },
+      "corpus_null_mean": 0.2005,
+      "corpus_null_sd": 0.0814,
+      "semantic_z_vs_corpus": 4.462,
+      "semantic_percentile_vs_corpus": 100.0,
+      "query": "전자기 펄스나 정전기 충격이 발생해도 마이크로컴퓨터가 1밀리초 안에 정상 동작을 회복하게 만드는 소프트웨어를 해외 방산업체에 제공하려 합니다. 통제 여부를 알고 싶습니다."
+    },
+    {
+      "id": "g-seungwoo-011",
+      "lang": "ko",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-3D006",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.3846,
+      "semantic_cos_first_label": 0.3846,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-3D006": 0.3846
+      },
+      "corpus_null_mean": 0.1345,
+      "corpus_null_sd": 0.085,
+      "semantic_z_vs_corpus": 2.942,
+      "semantic_percentile_vs_corpus": 99.83,
+      "query": "게이트올어라운드 트랜지스터 구조의 집적회로를 설계하기 위한 전자 설계 자동화 소프트웨어를 대만 팹리스에 공급하려 합니다. 분류 검토가 필요합니다."
+    },
+    {
+      "id": "g-seungwoo-012",
+      "lang": "en",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-3E002",
+      "lexical_jaccard": 0.0943,
+      "lexical_jaccard_first_label": 0.0943,
+      "lexical_shared_tokens": [
+        "a",
+        "and",
+        "for",
+        "in",
+        "the"
+      ],
+      "lexical_structurally_void": false,
+      "semantic_cos": 0.3378,
+      "semantic_cos_first_label": 0.3378,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-3E002": 0.3378
+      },
+      "corpus_null_mean": 0.1671,
+      "corpus_null_sd": 0.0955,
+      "semantic_z_vs_corpus": 1.789,
+      "semantic_percentile_vs_corpus": 98.66,
+      "query": "We license design know-how for building 32-bit-and-above processor cores with advanced arithmetic units. A firm in India wants the package. What classification is this?"
+    },
+    {
+      "id": "g-seungwoo-013",
+      "lang": "ko",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-3E004",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.5199,
+      "semantic_cos_first_label": 0.5199,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-3E004": 0.5199
+      },
+      "corpus_null_mean": 0.191,
+      "corpus_null_sd": 0.0778,
+      "semantic_z_vs_corpus": 4.225,
+      "semantic_percentile_vs_corpus": 100.0,
+      "query": "300밀리미터 실리콘 웨이퍼를 매우 평탄하게 절삭하고 연마하는 데 필요한 공정 기술을 외국 파운드리에 이전하려 합니다. 통제 대상인지 확인 부탁드립니다."
+    },
+    {
+      "id": "g-seungwoo-014",
+      "lang": "en",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-4A101",
+      "lexical_jaccard": 0.1489,
+      "lexical_jaccard_first_label": 0.1489,
+      "lexical_shared_tokens": [
+        "analog",
+        "digital",
+        "for",
+        "in",
+        "modified",
+        "the",
+        "use"
+      ],
+      "lexical_structurally_void": false,
+      "semantic_cos": 0.3381,
+      "semantic_cos_first_label": 0.3381,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-4A101": 0.3381
+      },
+      "corpus_null_mean": 0.1296,
+      "corpus_null_sd": 0.0849,
+      "semantic_z_vs_corpus": 2.456,
+      "semantic_percentile_vs_corpus": 99.78,
+      "query": "We have analog and digital computing units modified for use in missile platforms. A defense partner abroad requested them. Could you confirm the export control code?"
+    },
+    {
+      "id": "g-seungwoo-015",
+      "lang": "ko",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-4D993",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.4944,
+      "semantic_cos_first_label": 0.4944,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-4D993": 0.4944
+      },
+      "corpus_null_mean": 0.1944,
+      "corpus_null_sd": 0.0816,
+      "semantic_z_vs_corpus": 3.677,
+      "semantic_percentile_vs_corpus": 100.0,
+      "query": "실시간 처리 장비를 위해 소스 코드를 자동으로 생성해 주는 운영체제 소프트웨어를 해외 업체에 납품할 예정입니다. 통제 분류를 알고 싶습니다."
+    },
+    {
+      "id": "g-seungwoo-016",
+      "lang": "ko",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-5A101",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.5055,
+      "semantic_cos_first_label": 0.5055,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-5A101": 0.5055
+      },
+      "corpus_null_mean": 0.2739,
+      "corpus_null_sd": 0.1114,
+      "semantic_z_vs_corpus": 2.079,
+      "semantic_percentile_vs_corpus": 98.89,
+      "query": "사거리 300킬로미터 이상 무인 비행체에 쓰도록 설계된 원격 측정 및 원격 제어 장비를 외국 항공우주 기관에 보내려 합니다. 분류 확인이 필요합니다."
+    },
+    {
+      "id": "g-seungwoo-017",
+      "lang": "en",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-5A980",
+      "lexical_jaccard": 0.122,
+      "lexical_jaccard_first_label": 0.122,
+      "lexical_shared_tokens": [
+        "communications",
+        "devices",
+        "electronic",
+        "the",
+        "wire"
+      ],
+      "lexical_structurally_void": false,
+      "semantic_cos": 0.2619,
+      "semantic_cos_first_label": 0.2619,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-5A980": 0.2619
+      },
+      "corpus_null_mean": 0.1081,
+      "corpus_null_sd": 0.0807,
+      "semantic_z_vs_corpus": 1.907,
+      "semantic_percentile_vs_corpus": 98.44,
+      "query": "We make devices that can covertly capture wire and electronic communications. A buyer in the Middle East is interested. What is the proper export classification?"
+    },
+    {
+      "id": "g-seungwoo-019",
+      "lang": "ko",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-6A006",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.3792,
+      "semantic_cos_first_label": 0.3792,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-6A006": 0.3792
+      },
+      "corpus_null_mean": 0.1991,
+      "corpus_null_sd": 0.0882,
+      "semantic_z_vs_corpus": 2.043,
+      "semantic_percentile_vs_corpus": 98.94,
+      "query": "물속에서 전기장을 감지하는 센서와 자기장 측정 장비를 외국 해양연구소에 수출하려 합니다. 군용 가능성도 있어 분류 확인이 필요합니다."
+    },
+    {
+      "id": "g-seungwoo-020",
+      "lang": "en",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-6A102",
+      "lexical_jaccard": 0.1509,
+      "lexical_jaccard_first_label": 0.1509,
+      "lexical_shared_tokens": [
+        "against",
+        "eccn",
+        "effects",
+        "for",
+        "hardened",
+        "nuclear",
+        "radiation",
+        "usable"
+      ],
+      "lexical_structurally_void": false,
+      "semantic_cos": 0.445,
+      "semantic_cos_first_label": 0.445,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-6A102": 0.445
+      },
+      "corpus_null_mean": 0.1582,
+      "corpus_null_sd": 0.0875,
+      "semantic_z_vs_corpus": 3.277,
+      "semantic_percentile_vs_corpus": 100.0,
+      "query": "Our product is a sensor hardened against nuclear radiation effects, usable on missile platforms, rated for very high total dose. A foreign client asked about it. Which ECCN?"
+    },
+    {
+      "id": "g-seungwoo-021",
+      "lang": "ko",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-6A107",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.4029,
+      "semantic_cos_first_label": 0.4029,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-6A107": 0.4029
+      },
+      "corpus_null_mean": 0.231,
+      "corpus_null_sd": 0.0986,
+      "semantic_z_vs_corpus": 1.745,
+      "semantic_percentile_vs_corpus": 98.11,
+      "query": "공중이나 해상에서 중력 값을 정밀하게 측정하는 장비를 외국 측량 회사에 공급하려 합니다. 통제 대상인지 알고 싶습니다."
+    },
+    {
+      "id": "g-seungwoo-022",
+      "lang": "ko",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-6A991",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.4698,
+      "semantic_cos_first_label": 0.4698,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-6A991": 0.4698
+      },
+      "corpus_null_mean": 0.179,
+      "corpus_null_sd": 0.0825,
+      "semantic_z_vs_corpus": 3.526,
+      "semantic_percentile_vs_corpus": 100.0,
+      "query": "물속 물체를 탐지하고 위치를 파악하는 해양 음향 장비를 동남아 조선소에 납품할 예정입니다. 분류 검토가 필요합니다."
+    },
+    {
+      "id": "g-seungwoo-023",
+      "lang": "en",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-6C992",
+      "lexical_jaccard": 0.2364,
+      "lexical_jaccard_first_label": 0.2364,
+      "lexical_shared_tokens": [
+        "a",
+        "beat",
+        "birefringence",
+        "have",
+        "high",
+        "in",
+        "length",
+        "modified",
+        "optical",
+        "sensing",
+        "structurally",
+        "that",
+        "to"
+      ],
+      "lexical_structurally_void": false,
+      "semantic_cos": 0.3484,
+      "semantic_cos_first_label": 0.3484,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-6C992": 0.3484
+      },
+      "corpus_null_mean": 0.0883,
+      "corpus_null_sd": 0.0787,
+      "semantic_z_vs_corpus": 3.305,
+      "semantic_percentile_vs_corpus": 99.83,
+      "query": "We sell optical sensing fiber that is structurally modified to have a very short beat length for high birefringence. A customer in Europe wants it. What classification applies?"
+    },
+    {
+      "id": "g-seungwoo-024",
+      "lang": "ko",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-6D201",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.5195,
+      "semantic_cos_first_label": 0.5195,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-6D201": 0.5195
+      },
+      "corpus_null_mean": 0.1988,
+      "corpus_null_sd": 0.0912,
+      "semantic_z_vs_corpus": 3.515,
+      "semantic_percentile_vs_corpus": 100.0,
+      "query": "고속 카메라와 영상 장치의 성능을 끌어올리거나 제한을 풀어주는 소프트웨어를 해외 연구기관에 제공하려 합니다. 통제 여부를 확인하고 싶습니다."
+    },
+    {
+      "id": "g-seungwoo-025",
+      "lang": "ko",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-7A008",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.3403,
+      "semantic_cos_first_label": 0.3403,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-7A008": 0.3403
+      },
+      "corpus_null_mean": 0.1209,
+      "corpus_null_sd": 0.0733,
+      "semantic_z_vs_corpus": 2.995,
+      "semantic_percentile_vs_corpus": 99.5,
+      "query": "도플러 속도계를 방위 기준과 결합해 이동 거리 대비 오차가 매우 작은 수중 음향 항법 시스템을 외국 해군 협력사에 수출하려 합니다. 분류 확인 부탁드립니다."
+    },
+    {
+      "id": "g-seungwoo-026",
+      "lang": "en",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-7A104",
+      "lexical_jaccard": 0.1556,
+      "lexical_jaccard_first_label": 0.1556,
+      "lexical_shared_tokens": [
+        "automatically",
+        "by",
+        "or",
+        "orientation",
+        "satellites",
+        "tracking",
+        "which"
+      ],
+      "lexical_structurally_void": false,
+      "semantic_cos": 0.4942,
+      "semantic_cos_first_label": 0.4942,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-7A104": 0.4942
+      },
+      "corpus_null_mean": 0.1571,
+      "corpus_null_sd": 0.0937,
+      "semantic_z_vs_corpus": 3.599,
+      "semantic_percentile_vs_corpus": 100.0,
+      "query": "Our device determines orientation by automatically tracking stars or satellites, used for navigation. A foreign aerospace firm requested a sample. Which control code?"
+    },
+    {
+      "id": "g-seungwoo-027",
+      "lang": "ko",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-7A115",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.5147,
+      "semantic_cos_first_label": 0.5147,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-7A115": 0.5147
+      },
+      "corpus_null_mean": 0.1791,
+      "corpus_null_sd": 0.0719,
+      "semantic_z_vs_corpus": 4.665,
+      "semantic_percentile_vs_corpus": 100.0,
+      "query": "특정 전자기 발생원의 방위를 알아내는 수동형 방향 탐지 센서를 외국 업체에 보내려 합니다. 미사일 용도 가능성이 있어 분류 확인이 필요합니다."
+    },
+    {
+      "id": "g-seungwoo-028",
+      "lang": "en",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-6E619",
+      "lexical_jaccard": 0.0208,
+      "lexical_jaccard_first_label": 0.0208,
+      "lexical_shared_tokens": [
+        "eccn"
+      ],
+      "lexical_structurally_void": false,
+      "semantic_cos": 0.3139,
+      "semantic_cos_first_label": 0.3139,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-6E619": 0.3139
+      },
+      "corpus_null_mean": 0.2099,
+      "corpus_null_sd": 0.1095,
+      "semantic_z_vs_corpus": 0.95,
+      "semantic_percentile_vs_corpus": 84.19,
+      "query": "We provide know-how needed to operate and maintain military acoustic and radar gear that falls outside standard munitions lists. A partner abroad asked. What ECCN is this?"
+    },
+    {
+      "id": "g-seungwoo-029",
+      "lang": "ko",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-6B108",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.5547,
+      "semantic_cos_first_label": 0.5547,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-6B108": 0.5547
+      },
+      "corpus_null_mean": 0.1996,
+      "corpus_null_sd": 0.1042,
+      "semantic_z_vs_corpus": 3.408,
+      "semantic_percentile_vs_corpus": 100.0,
+      "query": "로켓이나 무인기의 레이더 반사 면적을 측정하기 위해 특별히 만든 시스템을 외국 항공 회사에 공급하려 합니다. 사거리가 긴 비행체용이라 통제 여부가 궁금합니다."
+    },
+    {
+      "id": "g-seungwoo-030",
+      "lang": "en",
+      "origin": "slice_seungwoo",
+      "answer_code": "ECCN-3D202",
+      "lexical_jaccard": 0.2105,
+      "lexical_jaccard_first_label": 0.2105,
+      "lexical_shared_tokens": [
+        "frequency",
+        "generators",
+        "level",
+        "of",
+        "performance",
+        "software",
+        "the",
+        "to"
+      ],
+      "lexical_structurally_void": false,
+      "semantic_cos": 0.4495,
+      "semantic_cos_first_label": 0.4495,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-3D202": 0.4495
+      },
+      "corpus_null_mean": 0.0943,
+      "corpus_null_sd": 0.0785,
+      "semantic_z_vs_corpus": 4.528,
+      "semantic_percentile_vs_corpus": 100.0,
+      "query": "Our software boosts the performance of frequency converters and generators to reach a specified high level. A buyer overseas requested it. Which export classification fits?"
+    },
+    {
+      "id": "g-yechan-001",
+      "lang": "ko",
+      "origin": "slice_yechan",
+      "answer_code": "ECCN-0A504",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.3281,
+      "semantic_cos_first_label": 0.3281,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-0A504": 0.3281
+      },
+      "corpus_null_mean": 0.1588,
+      "corpus_null_sd": 0.0731,
+      "semantic_z_vs_corpus": 2.314,
+      "semantic_percentile_vs_corpus": 99.28,
+      "query": "국내 총기 액세서리 업체가 사냥용 조준경 모듈과 교체용 렌즈 하우징을 캐나다 유통사에 보내려 합니다. 군용 장비는 아니라고 하나 공개 통제목록 후보를 사전에 확인하고 싶습니다."
+    },
+    {
+      "id": "g-yechan-002",
+      "lang": "ko",
+      "origin": "slice_yechan",
+      "answer_code": "ECCN-0A977",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.2486,
+      "semantic_cos_first_label": 0.2486,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-0A977": 0.2486
+      },
+      "corpus_null_mean": 0.1742,
+      "corpus_null_sd": 0.0816,
+      "semantic_z_vs_corpus": 0.911,
+      "semantic_percentile_vs_corpus": 83.24,
+      "query": "시위 대응 장비 제조사가 차량 탑재형 고압 살수 장비를 중동 지역 공공기관에 납품하려고 합니다. 군사 장비가 아니라는 설명만으로 충분한지 후보 항목 검토가 필요합니다."
+    },
+    {
+      "id": "g-yechan-003",
+      "lang": "ko",
+      "origin": "slice_yechan",
+      "answer_code": "ECCN-0A979",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.3862,
+      "semantic_cos_first_label": 0.3862,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-0A979": 0.3862
+      },
+      "corpus_null_mean": 0.1678,
+      "corpus_null_sd": 0.0715,
+      "semantic_z_vs_corpus": 3.055,
+      "semantic_percentile_vs_corpus": 99.89,
+      "query": "방호장비 회사가 경찰용 헬멧과 투명 보호판을 남미 조달청 입찰에 공급하려 합니다. 일반 안전장비와 구분되는 통제목록 후보가 있는지 사전 확인이 필요합니다."
+    },
+    {
+      "id": "g-yechan-004",
+      "lang": "ko",
+      "origin": "slice_yechan",
+      "answer_code": "ECCN-0A982",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.2578,
+      "semantic_cos_first_label": 0.2578,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-0A982": 0.2578
+      },
+      "corpus_null_mean": 0.1275,
+      "corpus_null_sd": 0.0776,
+      "semantic_z_vs_corpus": 1.68,
+      "semantic_percentile_vs_corpus": 97.44,
+      "query": "교정시설 장비 납품사가 해외 교도소에 전자식 구속 벨트와 다중 고정 의자 부품을 공급하려 합니다. 인권 민감 품목이라 수출 전 후보 분류를 확인하고 싶습니다."
+    },
+    {
+      "id": "g-yechan-005",
+      "lang": "ko",
+      "origin": "slice_yechan",
+      "answer_code": "ECCN-1A002",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.2838,
+      "semantic_cos_first_label": 0.2838,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-1A002": 0.2838
+      },
+      "corpus_null_mean": 0.1682,
+      "corpus_null_sd": 0.0797,
+      "semantic_z_vs_corpus": 1.45,
+      "semantic_percentile_vs_corpus": 93.43,
+      "query": "항공 부품사가 탄소섬유 적층 패널을 프랑스 위성 구조물 업체에 샘플로 보내려 합니다. 단순 복합재인지 통제목록 후보가 될 수 있는지 검토 요청입니다."
+    },
+    {
+      "id": "g-yechan-006",
+      "lang": "ko",
+      "origin": "slice_yechan",
+      "answer_code": "ECCN-1A004",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.3774,
+      "semantic_cos_first_label": 0.3774,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-1A004": 0.3774
+      },
+      "corpus_null_mean": 0.192,
+      "corpus_null_sd": 0.0767,
+      "semantic_z_vs_corpus": 2.416,
+      "semantic_percentile_vs_corpus": 99.67,
+      "query": "연구소가 화학 누출 현장 대응용 휴대형 탐지기와 보호 장구 세트를 싱가포르 파트너에게 이전하려 합니다. 비군사용 안전 장비지만 후보 항목 확인이 필요합니다."
+    },
+    {
+      "id": "g-yechan-007",
+      "lang": "ko",
+      "origin": "slice_yechan",
+      "answer_code": "ECCN-1A005",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.1547,
+      "semantic_cos_first_label": 0.1547,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-1A005": 0.1547
+      },
+      "corpus_null_mean": 0.1251,
+      "corpus_null_sd": 0.0812,
+      "semantic_z_vs_corpus": 0.364,
+      "semantic_percentile_vs_corpus": 61.97,
+      "query": "방탄복 제조사가 경호업체용 경량 방호 조끼와 세라믹 삽입판을 아랍에미리트에 판매하려 합니다. 개인 보호용이라고 하지만 사전 후보검색이 필요합니다."
+    },
+    {
+      "id": "g-yechan-008",
+      "lang": "ko",
+      "origin": "slice_yechan",
+      "answer_code": "ECCN-1A006",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.2551,
+      "semantic_cos_first_label": 0.2551,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-1A006": 0.2551
+      },
+      "corpus_null_mean": 0.1853,
+      "corpus_null_sd": 0.0657,
+      "semantic_z_vs_corpus": 1.063,
+      "semantic_percentile_vs_corpus": 85.13,
+      "query": "로봇 장비 업체가 의심 물체 제거용 원격 작업 플랫폼을 우크라이나 민간 복구 프로젝트에 기증하려 합니다. 폭발물 처리 가능성이 있어 후보 항목을 확인하고 싶습니다."
+    },
+    {
+      "id": "g-yechan-009",
+      "lang": "ko",
+      "origin": "slice_yechan",
+      "answer_code": "ECCN-1A101",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.3461,
+      "semantic_cos_first_label": 0.3461,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-1A101": 0.3461
+      },
+      "corpus_null_mean": 0.1673,
+      "corpus_null_sd": 0.0764,
+      "semantic_z_vs_corpus": 2.339,
+      "semantic_percentile_vs_corpus": 99.22,
+      "query": "드론 개발사가 레이더와 열 신호를 낮추는 외장 코팅 시제품을 터키 협력사에 테스트용으로 보내려 합니다. 항공 플랫폼 적용 가능성이 있어 통제목록 후보를 봐야 합니다."
+    },
+    {
+      "id": "g-yechan-010",
+      "lang": "ko",
+      "origin": "slice_yechan",
+      "answer_code": "ECCN-1B001",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.3751,
+      "semantic_cos_first_label": 0.3751,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-1B001": 0.3751
+      },
+      "corpus_null_mean": 0.2128,
+      "corpus_null_sd": 0.0955,
+      "semantic_z_vs_corpus": 1.699,
+      "semantic_percentile_vs_corpus": 97.55,
+      "query": "복합재 설비 회사가 항공기용 적층 부품 생산라인의 자동 검사 장비를 이탈리아 공장에 설치하려 합니다. 제작 장비 자체가 통제목록 후보인지 문의합니다."
+    },
+    {
+      "id": "g-yechan-011",
+      "lang": "ko",
+      "origin": "slice_yechan",
+      "answer_code": "ECCN-1B002",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.4337,
+      "semantic_cos_first_label": 0.4337,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-1B002": 0.4337
+      },
+      "corpus_null_mean": 0.2047,
+      "corpus_null_sd": 0.0711,
+      "semantic_z_vs_corpus": 3.219,
+      "semantic_percentile_vs_corpus": 99.89,
+      "query": "금속 소재 업체가 초내열 합금 분말 제조용 분무 설비를 인도 합작법인에 이전하려 합니다. 일반 분말 장비인지 통제목록 후보인지 사전 확인을 요청합니다."
+    },
+    {
+      "id": "g-yechan-012",
+      "lang": "ko",
+      "origin": "slice_yechan",
+      "answer_code": "ECCN-1B117",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.2436,
+      "semantic_cos_first_label": 0.2436,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-1B117": 0.2436
+      },
+      "corpus_null_mean": 0.1999,
+      "corpus_null_sd": 0.0816,
+      "semantic_z_vs_corpus": 0.536,
+      "semantic_percentile_vs_corpus": 69.43,
+      "query": "화학 장비 회사가 고점도 추진제 원료를 균질하게 섞는 산업용 혼합기를 브라질 로켓 연구기관에 납품하려 합니다. 연구용 장비라며 후보검색을 요청했습니다."
+    },
+    {
+      "id": "g-yechan-013",
+      "lang": "en",
+      "origin": "slice_yechan",
+      "answer_code": "ECCN-1C010",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.1392,
+      "semantic_cos_first_label": 0.1392,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-1C010": 0.1392
+      },
+      "corpus_null_mean": 0.0826,
+      "corpus_null_sd": 0.0645,
+      "semantic_z_vs_corpus": 0.876,
+      "semantic_percentile_vs_corpus": 80.85,
+      "query": "A carbon fiber producer is quoting continuous reinforcement tow and pre-impregnated sheets for a satellite structure vendor in Spain. The export team wants candidate categories before releasing samples."
+    },
+    {
+      "id": "g-yechan-014",
+      "lang": "en",
+      "origin": "slice_yechan",
+      "answer_code": "ECCN-1C111",
+      "lexical_jaccard": 0.0638,
+      "lexical_jaccard_first_label": 0.0638,
+      "lexical_shared_tokens": [
+        "chemicals",
+        "for",
+        "in"
+      ],
+      "lexical_structurally_void": false,
+      "semantic_cos": 0.1253,
+      "semantic_cos_first_label": 0.1253,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-1C111": 0.1253
+      },
+      "corpus_null_mean": 0.0968,
+      "corpus_null_sd": 0.0605,
+      "semantic_z_vs_corpus": 0.472,
+      "semantic_percentile_vs_corpus": 67.26,
+      "query": "A chemical distributor plans to send solid rocket ingredient chemicals to a university propulsion lab in the United Kingdom. The customer says it is for academic testing, but the supplier needs a candidate-code review."
+    },
+    {
+      "id": "g-yechan-015",
+      "lang": "ko",
+      "origin": "slice_yechan",
+      "answer_code": "ECCN-2A001",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.245,
+      "semantic_cos_first_label": 0.245,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-2A001": 0.245
+      },
+      "corpus_null_mean": 0.1746,
+      "corpus_null_sd": 0.0772,
+      "semantic_z_vs_corpus": 0.913,
+      "semantic_percentile_vs_corpus": 83.96,
+      "query": "정밀 베어링 업체가 고속 스핀들용 베어링 조립품을 독일 공작기계 제조사에 공급하려 합니다. 일반 산업재로만 보기 어려워 수출 전 후보 항목 확인을 요청했습니다."
+    },
+    {
+      "id": "g-yechan-016",
+      "lang": "ko",
+      "origin": "slice_yechan",
+      "answer_code": "ECCN-2A225",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.3014,
+      "semantic_cos_first_label": 0.3014,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-2A225": 0.3014
+      },
+      "corpus_null_mean": 0.2047,
+      "corpus_null_sd": 0.0808,
+      "semantic_z_vs_corpus": 1.196,
+      "semantic_percentile_vs_corpus": 91.15,
+      "query": "세라믹 부품 회사가 방사성 금속 용융 실험에 쓰는 특수 도가니를 캐나다 원자력 연구기관에 보내려 합니다. 실험 소모품이지만 후보검색이 필요합니다."
+    },
+    {
+      "id": "g-yechan-017",
+      "lang": "ko",
+      "origin": "slice_yechan",
+      "answer_code": "ECCN-2A226",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.274,
+      "semantic_cos_first_label": 0.274,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-2A226": 0.274
+      },
+      "corpus_null_mean": 0.2012,
+      "corpus_null_sd": 0.0729,
+      "semantic_z_vs_corpus": 0.999,
+      "semantic_percentile_vs_corpus": 86.3,
+      "query": "밸브 제조사가 고부식성 핵연료 공정 라인에 들어가는 소형 차단 밸브를 일본 플랜트 업체에 납품하려 합니다. 재질과 용도 때문에 사전 검토가 필요합니다."
+    },
+    {
+      "id": "g-yechan-018",
+      "lang": "ko",
+      "origin": "slice_yechan",
+      "answer_code": "ECCN-2A984",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.4584,
+      "semantic_cos_first_label": 0.4584,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-2A984": 0.4584
+      },
+      "corpus_null_mean": 0.1597,
+      "corpus_null_sd": 0.0806,
+      "semantic_z_vs_corpus": 3.705,
+      "semantic_percentile_vs_corpus": 100.0,
+      "query": "보안검색 장비 업체가 원거리에서 의복 안 물체를 확인하는 밀리미터파 스캐너를 공항 운영사에 판매하려 합니다. 감시 장비 성격이 있어 후보 항목을 확인합니다."
+    },
+    {
+      "id": "g-yechan-019",
+      "lang": "ko",
+      "origin": "slice_yechan",
+      "answer_code": "ECCN-2A994",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.322,
+      "semantic_cos_first_label": 0.322,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-2A994": 0.322
+      },
+      "corpus_null_mean": 0.182,
+      "corpus_null_sd": 0.0935,
+      "semantic_z_vs_corpus": 1.497,
+      "semantic_percentile_vs_corpus": 96.21,
+      "query": "발전기 업체가 이동식 전원 장치를 아프리카 광산 현장에 공급하려 합니다. 민수 장비지만 야외 작전 지원에 전용될 수 있어 사전 후보검색을 요청합니다."
+    },
+    {
+      "id": "g-yechan-021",
+      "lang": "ko",
+      "origin": "slice_yechan",
+      "answer_code": "ECCN-2B004",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.3593,
+      "semantic_cos_first_label": 0.3593,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-2B004": 0.3593
+      },
+      "corpus_null_mean": 0.1866,
+      "corpus_null_sd": 0.085,
+      "semantic_z_vs_corpus": 2.031,
+      "semantic_percentile_vs_corpus": 98.66,
+      "query": "소재 공정 장비사가 고온·고압으로 항공용 분말 부품을 치밀화하는 프레스를 스웨덴 연구소에 납품하려 합니다. 장비 사양이 민감해 후보 항목 확인이 필요합니다."
+    },
+    {
+      "id": "g-yechan-022",
+      "lang": "ko",
+      "origin": "slice_yechan",
+      "answer_code": "ECCN-2B006",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.3613,
+      "semantic_cos_first_label": 0.3613,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-2B006": 0.3613
+      },
+      "corpus_null_mean": 0.1961,
+      "corpus_null_sd": 0.0965,
+      "semantic_z_vs_corpus": 1.711,
+      "semantic_percentile_vs_corpus": 97.05,
+      "query": "정밀측정 장비 회사가 항공기 엔진 부품 검사에 쓰는 3차원 좌표 측정 시스템을 이탈리아 고객에게 공급하려 합니다. 위치 피드백 정밀도가 높아 사전 검토가 필요합니다."
+    },
+    {
+      "id": "g-yechan-023",
+      "lang": "en",
+      "origin": "slice_yechan",
+      "answer_code": "ECCN-2B007",
+      "lexical_jaccard": 0.0435,
+      "lexical_jaccard_first_label": 0.0435,
+      "lexical_shared_tokens": [
+        "in",
+        "the"
+      ],
+      "lexical_structurally_void": false,
+      "semantic_cos": 0.1797,
+      "semantic_cos_first_label": 0.1797,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-2B007": 0.1797
+      },
+      "corpus_null_mean": 0.1352,
+      "corpus_null_sd": 0.0657,
+      "semantic_z_vs_corpus": 0.677,
+      "semantic_percentile_vs_corpus": 75.06,
+      "query": "An automation integrator will export a sensor-guided industrial arm for handling hazardous samples inside a shielded laboratory in Finland. The buyer asks for a pre-triage category before procurement."
+    },
+    {
+      "id": "g-yechan-024",
+      "lang": "en",
+      "origin": "slice_yechan",
+      "answer_code": "ECCN-2B350",
+      "lexical_jaccard": 0.087,
+      "lexical_jaccard_first_label": 0.087,
+      "lexical_shared_tokens": [
+        "and",
+        "chemical",
+        "controlled",
+        "list"
+      ],
+      "lexical_structurally_void": false,
+      "semantic_cos": 0.2788,
+      "semantic_cos_first_label": 0.2788,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-2B350": 0.2788
+      },
+      "corpus_null_mean": 0.1275,
+      "corpus_null_sd": 0.0717,
+      "semantic_z_vs_corpus": 2.111,
+      "semantic_percentile_vs_corpus": 97.61,
+      "query": "A chemical plant builder is quoting glass-lined reactors, corrosion-resistant heat exchangers, and process skid modules for a pesticide precursor facility in Malaysia. Compliance needs a controlled-list candidate before sending the proposal."
+    },
+    {
+      "id": "g-yechan-025",
+      "lang": "ko",
+      "origin": "slice_yechan",
+      "answer_code": "ECCN-8A001",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.2917,
+      "semantic_cos_first_label": 0.2917,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-8A001": 0.2917
+      },
+      "corpus_null_mean": 0.1605,
+      "corpus_null_sd": 0.0851,
+      "semantic_z_vs_corpus": 1.542,
+      "semantic_percentile_vs_corpus": 95.66,
+      "query": "해양로봇 업체가 심해 케이블 점검용 무인 잠수 조사정과 해상 회수용 소형 선박을 노르웨이 에너지 회사에 판매하려 합니다. 해양 장비 후보 항목을 확인해야 합니다."
+    },
+    {
+      "id": "g-yechan-026",
+      "lang": "ko",
+      "origin": "slice_yechan",
+      "answer_code": "ECCN-8A002",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.3163,
+      "semantic_cos_first_label": 0.3163,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-8A002": 0.3163
+      },
+      "corpus_null_mean": 0.186,
+      "corpus_null_sd": 0.097,
+      "semantic_z_vs_corpus": 1.343,
+      "semantic_percentile_vs_corpus": 94.32,
+      "query": "선박 장비 회사가 수중 위치추적 모듈과 저소음 추진 부품을 싱가포르 해양 연구기관에 공급하려 합니다. 해저 조사용이지만 공개 목록 후보 확인이 필요합니다."
+    },
+    {
+      "id": "g-yechan-027",
+      "lang": "ko",
+      "origin": "slice_yechan",
+      "answer_code": "ECCN-8A620",
+      "lexical_jaccard": 0.0,
+      "lexical_jaccard_first_label": 0.0,
+      "lexical_shared_tokens": [],
+      "lexical_structurally_void": true,
+      "semantic_cos": 0.2797,
+      "semantic_cos_first_label": 0.2797,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-8A620": 0.2797
+      },
+      "corpus_null_mean": 0.153,
+      "corpus_null_sd": 0.0712,
+      "semantic_z_vs_corpus": 1.778,
+      "semantic_percentile_vs_corpus": 96.66,
+      "query": "조선소가 해저 관측용 소형 잠수정을 호주 대학 컨소시엄에 인도하려 합니다. 민간 연구 목적이지만 잠수 선박 계열 후보 항목을 먼저 확인하려 합니다."
+    },
+    {
+      "id": "g-yechan-028",
+      "lang": "en",
+      "origin": "slice_yechan",
+      "answer_code": "ECCN-8B001",
+      "lexical_jaccard": 0.0968,
+      "lexical_jaccard_first_label": 0.0968,
+      "lexical_shared_tokens": [
+        "a",
+        "for",
+        "measuring",
+        "noise",
+        "the",
+        "to"
+      ],
+      "lexical_structurally_void": false,
+      "semantic_cos": 0.2652,
+      "semantic_cos_first_label": 0.2652,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-8B001": 0.2652
+      },
+      "corpus_null_mean": 0.0789,
+      "corpus_null_sd": 0.0684,
+      "semantic_z_vs_corpus": 2.724,
+      "semantic_percentile_vs_corpus": 99.11,
+      "query": "A ship model testing facility plans to export a low-noise hydrodynamic test channel for measuring propeller signatures to a university in Denmark. The team wants a retrieval label before contracting."
+    },
+    {
+      "id": "g-yechan-029",
+      "lang": "en",
+      "origin": "slice_yechan",
+      "answer_code": "ECCN-8C001",
+      "lexical_jaccard": 0.1136,
+      "lexical_jaccard_first_label": 0.1136,
+      "lexical_shared_tokens": [
+        "designed",
+        "foam",
+        "for",
+        "the",
+        "underwater"
+      ],
+      "lexical_structurally_void": false,
+      "semantic_cos": 0.3,
+      "semantic_cos_first_label": 0.3,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-8C001": 0.3
+      },
+      "corpus_null_mean": 0.1363,
+      "corpus_null_sd": 0.078,
+      "semantic_z_vs_corpus": 2.098,
+      "semantic_percentile_vs_corpus": 98.61,
+      "query": "A buoyancy material supplier is sending glass-microsphere foam blocks for deep-sea instrument housings to a Chilean oceanography project. The export group needs pre-triage because the blocks are designed for long underwater deployment."
+    },
+    {
+      "id": "g-yechan-030",
+      "lang": "en",
+      "origin": "slice_yechan",
+      "answer_code": "ECCN-8D999",
+      "lexical_jaccard": 0.1538,
+      "lexical_jaccard_first_label": 0.1538,
+      "lexical_shared_tokens": [
+        "for",
+        "in",
+        "software",
+        "the",
+        "unmanned",
+        "used"
+      ],
+      "lexical_structurally_void": false,
+      "semantic_cos": 0.3251,
+      "semantic_cos_first_label": 0.3251,
+      "n_gold_labels": 1,
+      "semantic_cos_all_labels": {
+        "ECCN-8D999": 0.3251
+      },
+      "corpus_null_mean": 0.1091,
+      "corpus_null_sd": 0.0729,
+      "semantic_z_vs_corpus": 2.962,
+      "semantic_percentile_vs_corpus": 99.61,
+      "query": "An offshore software vendor will provide a control program for an unmanned subsea inspection vehicle used in petroleum pipeline surveys in Qatar. The company wants a category candidate before delivery."
+    }
+  ]
+}

@@ -16,7 +16,21 @@ BM25 is model-independent and computed once. For each dense model we report
 R@10 (overall/EN/KO) at several alphas and the paired bootstrap 95% CI of
 hybrid(α=0.5) vs BM25.
 
-Run all models, or one at a time:  python experiment_embedding_robustness.py [model_id]
+정정 (M14-D1 / D3 / D4):
+
+* **모델별 bootstrap 리샘플 분리.** 이전 판은 `evaluate_model()` 안에서
+  `np.random.default_rng(SEED)`를 매번 같은 seed로 새로 만들었다. 그래서 세 모델이
+  **완전히 동일한 리샘플 인덱스 행렬**을 공유했고, 모델 간 CI가 독립적으로 얻어진
+  것처럼 보이지만 실제로는 같은 재표본 위에서 계산된 값이었다. 이제 모델 순번 i로
+  `default_rng(SEED + i)`를 만들어 분리한다(seed는 JSON에 모델별로 기록).
+* **죽은 코드 삭제.** 모듈 수준 `encode(model, texts, prefix)`는 `prefix == "e5"`
+  분기에서 `texts`를 (role, text) 튜플로 언패킹하려 하므로 문자열 리스트를 넘기면
+  즉시 ValueError였다. 호출부도 없었다. 삭제했다.
+* **결정론적 랭킹.** `np.argsort(-...)` → `retrieval_core.rank_indices`, BM25
+  점수가 전부 0인 질의는 α=1.0에서 검색 실패로 집계.
+
+무거운 3모델 전체 실행 대신 단일 모델 스모크로 검증하려면:
+  python experiment_embedding_robustness.py paraphrase-multilingual-MiniLM
 Outputs: output/embedding_robustness.json, output/embedding_robustness.md
 """
 
@@ -28,7 +42,8 @@ from pathlib import Path
 
 import numpy as np
 
-from run_experiments import BM25, build_doc_text
+import retrieval_core as rc
+from retrieval_core import BM25, index_text as build_doc_text
 
 ROOT = Path(__file__).resolve().parent
 DATA_DIR = ROOT / "data"
@@ -52,29 +67,11 @@ MODELS = [
 ]
 
 
-def minmax(x: np.ndarray) -> np.ndarray:
-    lo, hi = float(x.min()), float(x.max())
-    if hi - lo < 1e-12:
-        return np.zeros_like(x)
-    return (x - lo) / (hi - lo)
+minmax = rc.minmax
 
 
-def paired_diff_ci(diffs, rng):
-    arr = np.asarray(diffs, dtype=float)
-    n = len(arr)
-    idx = rng.integers(0, n, size=(BOOTSTRAP_ITERS, n))
-    draws = arr[idx].mean(axis=1)
-    return [round(float(np.quantile(draws, 0.025)), 4), round(float(np.quantile(draws, 0.975)), 4)]
-
-
-def encode(model, texts, prefix):
-    if prefix == "e5":
-        texts = [f"{prefix_role}: {t}" for prefix_role, t in texts]
-    return model.encode(texts, batch_size=32, normalize_embeddings=True,
-                        show_progress_bar=False).astype(np.float32)
-
-
-def evaluate_model(model_id, scheme, corpus, docs, codes, index, queries, langs):
+def evaluate_model(model_id, scheme, corpus, docs, codes, index, queries, langs,
+                   model_seed: int):
     from sentence_transformers import SentenceTransformer
     model = SentenceTransformer(model_id)
 
@@ -90,13 +87,21 @@ def evaluate_model(model_id, scheme, corpus, docs, codes, index, queries, langs)
                              normalize_embeddings=True, show_progress_bar=False).astype(np.float32)
 
     hits = {a: [] for a in ALPHAS}
+    no_signal = 0
     for qi, q in enumerate(queries):
         labels = set(q["validated_labels"])
-        bm = minmax(index.scores(q["query"]))
+        raw_bm = index.scores(q["query"])
+        signal = rc.has_signal(raw_bm)
+        if not signal:
+            no_signal += 1
+        bm = minmax(raw_bm)
         dn = minmax(doc_emb @ q_emb[qi])
         for a in ALPHAS:
-            ranked = np.argsort(-(a * bm + (1 - a) * dn))
-            top10 = [codes[i] for i in ranked[:10]]
+            if a == 1.0 and not signal:
+                top10: list[str] = []
+            else:
+                ranked = rc.rank_indices(rc.blend(bm, dn, a))
+                top10 = [codes[i] for i in ranked[:10]]
             hits[a].append(int(any(c in labels for c in top10)))
 
     def rate(vec, mask=None):
@@ -105,19 +110,28 @@ def evaluate_model(model_id, scheme, corpus, docs, codes, index, queries, langs)
 
     summary = {f"alpha={a}": {
         "recall@10": rate(hits[a]),
+        "recall@10_ci95": rc.rate_with_ci(hits[a])["ci95"],
         "en_recall@10": rate(hits[a], "en"),
         "ko_recall@10": rate(hits[a], "ko"),
     } for a in ALPHAS}
 
-    rng = np.random.default_rng(SEED)
+    # 모델별로 분리된 seed. 이전 판은 세 모델이 동일한 리샘플 행렬을 공유했다.
     diffs = [t - b for t, b in zip(hits[0.5], hits[1.0])]
-    ci = paired_diff_ci(diffs, rng)
+    boot = rc.paired_bootstrap_ci(diffs, iters=BOOTSTRAP_ITERS, seed=model_seed)
+    mc = rc.exact_mcnemar(hits[0.5], hits[1.0])
+    ci = boot["ci"]
     hybrid_vs_bm25 = {
-        "mean_diff": round(sum(diffs) / len(diffs), 4),
-        "diff_95_ci": ci, "significant": not (ci[0] <= 0 <= ci[1]),
-        "wins": sum(d > 0 for d in diffs), "losses": sum(d < 0 for d in diffs),
+        "mean_diff": boot["mean"],
+        "diff_95_ci": ci,
+        "bootstrap_excludes_zero": not (ci[0] <= 0 <= ci[1]),
+        "bootstrap_seed": model_seed,
+        "exact_mcnemar": mc,
+        "primary_test": "exact_mcnemar",
+        "wins": mc["wins"], "losses": mc["losses"], "ties": mc["ties"],
     }
-    return {"summary": summary, "hybrid0.5_vs_bm25": hybrid_vs_bm25}
+    return {"summary": summary, "hybrid0.5_vs_bm25": hybrid_vs_bm25,
+            "hit_vectors": {f"alpha={a}": hits[a] for a in ALPHAS},
+            "diagnostics": {"bm25_no_signal_queries": no_signal}}
 
 
 def main() -> None:
@@ -131,22 +145,33 @@ def main() -> None:
     index = BM25(docs)
 
     results = {}
-    for model_id, scheme in MODELS:
+    # 모델 순번을 seed offset으로 써서 리샘플 행렬을 모델별로 분리한다.
+    for i, (model_id, scheme) in enumerate(MODELS):
         if only and only not in model_id:
             continue
         short = model_id.split("/")[-1]
-        print(f"[model] {model_id} ...", flush=True)
+        model_seed = SEED + i
+        print(f"[model] {model_id} (bootstrap seed {model_seed}) ...", flush=True)
         try:
-            results[short] = evaluate_model(model_id, scheme, corpus, docs, codes, index, queries, langs)
+            results[short] = evaluate_model(model_id, scheme, corpus, docs, codes,
+                                            index, queries, langs, model_seed)
             results[short]["model_id"] = model_id
         except Exception as exc:  # keep going if one model fails to download/load
             print(f"[model] {model_id} FAILED: {exc}", flush=True)
-            results[short] = {"error": str(exc), "model_id": model_id}
+            results[short] = {"error": str(exc), "model_id": model_id,
+                              "bootstrap_seed": model_seed}
 
     n_en = langs.count("en"); n_ko = langs.count("ko")
     out = {"meta": {"mode": MODE, "n": len(queries), "n_en": n_en, "n_ko": n_ko,
-                    "alphas": ALPHAS, "bootstrap_iters": BOOTSTRAP_ITERS, "seed": SEED,
-                    "note": "BM25 identical across models; only the dense model changes."},
+                    "alphas": ALPHAS, "bootstrap_iters": BOOTSTRAP_ITERS,
+                    "seed_base": SEED,
+                    "bootstrap_seed_per_model": {
+                        m.split("/")[-1]: SEED + i for i, (m, _) in enumerate(MODELS)},
+                    "primary_test": "exact_mcnemar (paired bootstrap is secondary)",
+                    "note": "BM25 identical across models; only the dense model changes. "
+                            "Each model uses its own bootstrap seed (SEED + model index) "
+                            "so the three CIs are not computed on one shared resample matrix."},
+           "env": rc.env_meta({"seed_base": SEED}),
            "results": results}
     JSON_PATH.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
 
@@ -174,16 +199,20 @@ def main() -> None:
             continue
         s = r["summary"]
         lines.append(f"| {short} | {s['alpha=1.0']['ko_recall@10']:.3f} | {s['alpha=0.5']['ko_recall@10']:.3f} |")
-    lines += ["", "## hybrid(α0.5) vs BM25 — paired bootstrap 95% CI", "",
-              "| dense 모델 | 평균차 | 95% CI | 유의? | wins/losses |", "|---|---:|---|---|---:|"]
+    lines += ["", "## hybrid(α0.5) vs BM25 — exact McNemar(primary) + paired bootstrap(보조)", "",
+              "| dense 모델 | 평균차 | bootstrap 95% CI | bootstrap seed | 승/패/무 | exact p (양측) |",
+              "|---|---:|---|---:|---:|---:|"]
     for short, r in results.items():
         if "error" in r:
             continue
         c = r["hybrid0.5_vs_bm25"]
         ci = c["diff_95_ci"]
         lines.append(f"| {short} | {c['mean_diff']:+.4f} | [{ci[0]:.4f}, {ci[1]:.4f}] | "
-                     f"{'**예**' if c['significant'] else '아니오'} | {c['wins']}/{c['losses']} |")
-    lines += ["", "## 해석", "",
+                     f"{c['bootstrap_seed']} | {c['wins']}/{c['losses']}/{c['ties']} | "
+                     f"{c['exact_mcnemar']['p_two_sided_exact']:.3g} |")
+    lines += ["", "> 모델마다 bootstrap seed가 다르다. 이전 판은 세 모델이 동일한 리샘플 행렬을",
+              "> 공유해 CI가 독립적으로 얻어진 것처럼 보였다.", "",
+              "## 해석", "",
               "- 핵심: 여러 다국어 임베딩에서 hybrid > BM25 우위와 한국어 회복이 유지되면, 결과가 특정 모델 때문이 아님을 보인다.",
               "- 라벨은 코퍼스 텍스트 근거 카테고리 라벨(법적·전문가 판정 아님).", ""]
     MD_PATH.write_text("\n".join(lines), encoding="utf-8")

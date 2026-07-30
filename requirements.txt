@@ -1,5 +1,47 @@
-numpy>=1.24
-pdfplumber>=0.11
-# retriever comparison (TASK E): dense/hybrid retrieval
-sentence-transformers>=2.2
-torch>=2.0
+# 정확 버전 고정 (2026-07-30, `python -m pip list` 실측)
+#
+# 왜 정확 고정인가:
+#   numpy를 `>=1.24`처럼 열어 두면 정렬·부동소수 연산 세부가 버전마다 달라져
+#   동점 처리 결과가 환경마다 갈릴 수 있다. 이 프로젝트는 retrieval_core.rank_indices
+#   로 동점 처리를 결정론화했지만, 재현 보고는 "어떤 numpy에서 나온 수치인가"를
+#   함께 고정해야 감사 가능하다.
+#
+# 설치:
+#   python -m pip install -r requirements.txt
+#
+# torch는 CPU 휠(`2.6.0+cpu`)을 쓴다. PyPI 기본 인덱스에는 이 로컬 버전이 없으므로
+# CPU 인덱스를 함께 지정해야 한다:
+#   python -m pip install torch==2.6.0+cpu --index-url https://download.pytorch.org/whl/cpu
+#   python -m pip install -r requirements.txt
+#
+# 검증 환경: Python 3.10.5, Windows-10-10.0.26200-SP0
+
+# --- 핵심 수치 계산 -----------------------------------------------------------
+numpy==2.2.6
+scipy==1.15.3
+
+# --- 그림 --------------------------------------------------------------------
+matplotlib==3.10.9
+
+# --- 코퍼스 구축 (PDF 파싱) ---------------------------------------------------
+pdfplumber==0.11.10
+pdfminer.six==20260107
+pypdfium2==5.12.1
+pillow==12.3.0
+
+# --- dense/hybrid 검색 (TASK E, H) -------------------------------------------
+# torch는 위 안내대로 CPU 인덱스에서 먼저 설치할 것.
+torch==2.6.0+cpu
+sentence-transformers==3.4.1
+transformers==4.57.6
+tokenizers==0.22.2
+huggingface-hub==0.36.2
+safetensors==0.8.0
+scikit-learn==1.7.2
+tqdm==4.67.3
+
+# --- 테스트 ------------------------------------------------------------------
+pytest==9.1.1
+
+# 주의: fetch_sources.py / fetch_ecfr.py는 표준 라이브러리(urllib, xml.etree)만
+# 쓴다. 네트워크용 추가 의존성을 넣지 않았다.

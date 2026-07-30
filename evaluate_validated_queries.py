@@ -10,6 +10,16 @@ Matching is exact code equality against corpus codes, so the collision problem
 that affected the original evaluate_external_queries.py cannot occur here.
 
 Retrievers: BM25, Dense (multilingual MiniLM), Hybrid (min-max alpha blend).
+
+**대체 공지 (M9-B).** 이 스크립트의 n=13 산출물은 `experiment_validated_suite.py`
+(n=71)로 대체되었다. 논문·문서 헤드라인에 `output/validated_eval.json`을 쓰지 마라.
+n=13 수치는 감사 목적으로만 보존한다(`docs/statistics_n13_superseded.md`).
+소표본에서 percentile bootstrap CI가 0을 포함하는 것은 이산 경계 인공물이므로
+exact McNemar / Clopper-Pearson을 primary로 읽어야 한다(`docs/statistics.md` §5).
+
+정정 (M14-D4): `np.argsort(-blended)` → `retrieval_core.rank_indices`, BM25 점수가
+전부 0인 질의는 α=1.0에서 검색 실패로 집계, per-query `hit_vectors` 저장.
+
 Outputs: output/validated_eval.json, output/validated_eval.md
 """
 
@@ -20,7 +30,8 @@ from pathlib import Path
 
 import numpy as np
 
-from run_experiments import BM25, build_doc_text
+import retrieval_core as rc
+from retrieval_core import BM25, index_text as build_doc_text
 
 ROOT = Path(__file__).resolve().parent
 DATA_DIR = ROOT / "data"
@@ -36,11 +47,7 @@ DENSE_MODEL = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 ALPHAS = [1.0, 0.7, 0.5, 0.3, 0.0]
 
 
-def minmax(x: np.ndarray) -> np.ndarray:
-    lo, hi = float(x.min()), float(x.max())
-    if hi - lo < 1e-12:
-        return np.zeros_like(x)
-    return (x - lo) / (hi - lo)
+minmax = rc.minmax
 
 
 def main() -> None:
@@ -63,16 +70,24 @@ def main() -> None:
 
     rows = {a: [] for a in ALPHAS}
     per_query = []
+    no_signal = 0
     for qi, q in enumerate(scored):
         labels = set(q["validated_labels"])
-        bm = minmax(index.scores(q["query"]))
+        raw_bm = index.scores(q["query"])
+        signal = rc.has_signal(raw_bm)
+        if not signal:
+            no_signal += 1
+        bm = minmax(raw_bm)
         dn = minmax(doc_emb @ q_emb[qi])
         q_rec = {"id": q["id"], "lang": q["lang"], "confidence": q["label_confidence"],
-                 "labels": q["validated_labels"], "by_alpha": {}}
+                 "labels": q["validated_labels"], "has_bm25_signal": bool(signal),
+                 "by_alpha": {}}
         for a in ALPHAS:
-            blended = a * bm + (1 - a) * dn
-            ranked = np.argsort(-blended)
-            top10 = [codes[i] for i in ranked[:10]]
+            if a == 1.0 and not signal:
+                top10: list[str] = []
+            else:
+                ranked = rc.rank_indices(rc.blend(bm, dn, a))
+                top10 = [codes[i] for i in ranked[:10]]
             rank = next((r + 1 for r, c in enumerate(top10) if c in labels), None)
             hit = int(rank is not None)
             rows[a].append({"lang": q["lang"], "hit@10": hit, "rank": rank})
@@ -83,8 +98,10 @@ def main() -> None:
         total = len(rs) or 1
         ko = [r for r in rs if r["lang"] == "ko"]
         en = [r for r in rs if r["lang"] == "en"]
+        hits = [r["hit@10"] for r in rs]
         return {
-            "recall@10": round(sum(r["hit@10"] for r in rs) / total, 4),
+            "recall@10": round(sum(hits) / total, 4),
+            "recall@10_ci95": rc.rate_with_ci(hits)["ci95"],
             "ko_recall@10": round(sum(r["hit@10"] for r in ko) / (len(ko) or 1), 4),
             "en_recall@10": round(sum(r["hit@10"] for r in en) / (len(en) or 1), 4),
             "ko_n": len(ko), "en_n": len(en),
@@ -98,14 +115,25 @@ def main() -> None:
             "excluded_count": sum(q["excluded_from_metrics"] for q in queries),
             "matching": "exact full-code equality (collision-free)",
             "label_nature": payload["meta"]["label_nature"],
+            "superseded_by": "output/validated_suite.json (n=71). n=13 결과는 감사 보존용이며 "
+                             "헤드라인으로 인용하지 않는다. docs/statistics_n13_superseded.md 참조.",
+            "bm25_no_signal_queries": no_signal,
         },
+        "env": rc.env_meta({"seed": None, "deterministic": True}),
         "summary": summary,
+        "hit_vectors": {f"alpha={a}": [r["hit@10"] for r in rows[a]] for a in ALPHAS},
+        "langs": [q["lang"] for q in scored],
         "per_query": per_query,
     }
     JSON_PATH.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
 
     lines = [
-        "# 검증 질의셋 평가 (TASK B/C/E)",
+        "# [SUPERSEDED] 검증 질의셋 평가 (TASK B/C/E, n=13)",
+        "",
+        "> ⚠ 이 산출물은 `output/validated_suite.json`(n=71)으로 대체되었다. 헤드라인으로",
+        "> 인용하지 마라. 보존 사유와 before/after는 `docs/statistics_n13_superseded.md` 참조.",
+        "> 소표본에서 percentile bootstrap CI가 0을 포함하는 것은 이산 경계 인공물이므로",
+        "> exact McNemar / Clopper-Pearson을 primary로 읽어야 한다(`docs/statistics.md` §5).",
         "",
         f"- 질의셋: `{QUERIES_PATH.name}` (평가 {len(scored)}개 / 제외 {out['meta']['excluded_count']}개)",
         f"- 매칭: exact full eCFR code (충돌 없음) / 노출 {MODE} / Dense {DENSE_MODEL}",

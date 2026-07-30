@@ -22,6 +22,12 @@ CAVEAT: the Korean evaluable sample is only 5. Results are TRENDS, not
 statistically robust conclusions. Sample expansion is needed. Labels are
 corpus-text-grounded category labels, NOT legal determinations.
 
+정정 (M14-D3 / D4): `eval_track()`은 빈 track에서 dict 하나만 반환하고 그 밖에는
+(summary, per_query) 튜플을 반환했다. 호출부가 항상 2-튜플로 언패킹하므로 어떤
+track이 비면 `TypeError: cannot unpack non-sequence dict`로 죽었다. 이제 항상
+(summary, per_query)를 반환한다. 랭킹은 `retrieval_core.rank_indices`로 결정론화하고
+BM25 점수가 전부 0인 질의는 α=1.0에서 검색 실패로 집계한다.
+
 Outputs: output/crosslingual_eval.json, output/crosslingual_eval.md
 """
 
@@ -32,7 +38,8 @@ from pathlib import Path
 
 import numpy as np
 
-from run_experiments import BM25, build_doc_text
+import retrieval_core as rc
+from retrieval_core import BM25, index_text as build_doc_text
 
 ROOT = Path(__file__).resolve().parent
 DATA_DIR = ROOT / "data"
@@ -49,11 +56,7 @@ DENSE_MODEL = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 ALPHAS = [1.0, 0.5, 0.0]  # 1.0 = pure BM25, 0.5 = hybrid, 0.0 = pure dense
 
 
-def minmax(x: np.ndarray) -> np.ndarray:
-    lo, hi = float(x.min()), float(x.max())
-    if hi - lo < 1e-12:
-        return np.zeros_like(x)
-    return (x - lo) / (hi - lo)
+minmax = rc.minmax
 
 
 def build_tracks(queries, translations):
@@ -81,24 +84,36 @@ def build_tracks(queries, translations):
 
 
 def eval_track(track_items, index, codes, model, doc_emb):
-    """Return per-alpha recall@10 for one track."""
+    """Return (summary, per_query) for one track.
+
+    빈 track에서도 **반드시 2-튜플**을 반환한다. 이전 판은 dict 하나만 반환해서
+    호출부(`summary, per_query = eval_track(...)`)가 TypeError로 죽었다.
+    """
     if not track_items:
-        return {f"alpha={a}": {"recall@10": None, "n": 0} for a in ALPHAS}
+        return ({f"alpha={a}": {"recall@10": None, "n": 0, "recall@10_ci95": None}
+                 for a in ALPHAS}, [])
 
     q_emb = model.encode([it["text"] for it in track_items], batch_size=64,
                          normalize_embeddings=True, show_progress_bar=False).astype(np.float32)
 
     results = {a: [] for a in ALPHAS}
     per_query = []
+    no_signal = 0
     for qi, it in enumerate(track_items):
         labels = it["labels"]
-        bm = minmax(index.scores(it["text"]))
+        raw_bm = index.scores(it["text"])
+        signal = rc.has_signal(raw_bm)
+        if not signal:
+            no_signal += 1
+        bm = minmax(raw_bm)
         dn = minmax(doc_emb @ q_emb[qi])
-        rec = {"id": it["id"], "by_alpha": {}}
+        rec = {"id": it["id"], "has_bm25_signal": bool(signal), "by_alpha": {}}
         for a in ALPHAS:
-            blended = a * bm + (1 - a) * dn
-            ranked = np.argsort(-blended)
-            top10 = [codes[i] for i in ranked[:10]]
+            if a == 1.0 and not signal:
+                top10: list[str] = []
+            else:
+                ranked = rc.rank_indices(rc.blend(bm, dn, a))
+                top10 = [codes[i] for i in ranked[:10]]
             rank = next((r + 1 for r, c in enumerate(top10) if c in labels), None)
             hit = int(rank is not None)
             results[a].append(hit)
@@ -110,8 +125,11 @@ def eval_track(track_items, index, codes, model, doc_emb):
         n = len(results[a]) or 1
         summary[f"alpha={a}"] = {
             "recall@10": round(sum(results[a]) / n, 4),
+            "recall@10_ci95": rc.rate_with_ci(results[a])["ci95"],
             "n": len(results[a]),
+            "hit_vector": results[a],
         }
+    summary["bm25_no_signal_queries"] = no_signal
     return summary, per_query
 
 
@@ -145,6 +163,7 @@ def main() -> None:
             "mode": MODE,
             "dense_model": DENSE_MODEL,
             "alphas": ALPHAS,
+            "env": rc.env_meta({"seed": None, "deterministic": True}),
             "translation_method": "manual (human), no external API",
             "ko_sample_size": len(tracks["KO-original"]),
             "en_sample_size": len(tracks["EN-original"]),

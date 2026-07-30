@@ -16,6 +16,11 @@ Caveat: candidate_labels are researcher estimates (13/30 have code collisions),
 so absolute R@10 is noisy. The fair signal is the BM25-vs-dense DELTA on the
 same labels, plus the Korean zero-recall recovery.
 
+정정 (M14-D4): `np.argsort(-blended)` → `retrieval_core.rank_indices`(동점을 코퍼스
+인덱스 오름차순으로 결정론적 처리), BM25 점수가 전부 0인 질의는 α=1.0에서 검색
+실패로 집계, per-query `hit_vectors` 저장(experiment_stats.py가 반올림된 rate에서
+가짜 벡터를 재구성하지 않도록).
+
 Outputs: output/external_retriever.json, output/external_retriever.md
 """
 
@@ -26,7 +31,8 @@ from pathlib import Path
 
 import numpy as np
 
-from run_experiments import BM25, build_doc_text, tokenize
+import retrieval_core as rc
+from retrieval_core import BM25, index_text as build_doc_text, tokenize
 from evaluate_external_queries import normalize_code
 
 ROOT = Path(__file__).resolve().parent
@@ -43,11 +49,7 @@ DENSE_MODEL = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 ALPHAS = [1.0, 0.7, 0.5, 0.3, 0.0]  # 1.0 = pure BM25, 0.0 = pure dense
 
 
-def minmax(x: np.ndarray) -> np.ndarray:
-    lo, hi = float(x.min()), float(x.max())
-    if hi - lo < 1e-12:
-        return np.zeros_like(x)
-    return (x - lo) / (hi - lo)
+minmax = rc.minmax
 
 
 def evaluate():
@@ -67,14 +69,21 @@ def evaluate():
                          normalize_embeddings=True, show_progress_bar=False).astype(np.float32)
 
     rows = {a: [] for a in ALPHAS}
+    no_signal = 0
     for qi, q in enumerate(queries):
         labels = [normalize_code(c) for c in (q.get("candidate_labels") or []) if normalize_code(c)]
-        bm = minmax(index.scores(q["query"]))
+        raw_bm = index.scores(q["query"])
+        signal = rc.has_signal(raw_bm)
+        if not signal:
+            no_signal += 1
+        bm = minmax(raw_bm)
         dn = minmax(doc_emb @ q_emb[qi])
         for a in ALPHAS:
-            blended = a * bm + (1 - a) * dn
-            ranked = np.argsort(-blended)
-            top10 = [norm_codes[i] for i in ranked[:10]]
+            if a == 1.0 and not signal:
+                top10: list[str] = []
+            else:
+                ranked = rc.rank_indices(rc.blend(bm, dn, a))
+                top10 = [norm_codes[i] for i in ranked[:10]]
             hit = any(lbl in top10 for lbl in labels)
             rows[a].append({"lang": q.get("lang"), "hit@10": int(hit)})
 
@@ -82,14 +91,21 @@ def evaluate():
         total = len(rs) or 1
         ko = [r for r in rs if r["lang"] == "ko"]
         en = [r for r in rs if r["lang"] == "en"]
+        hits = [r["hit@10"] for r in rs]
         return {
-            "recall@10": round(sum(r["hit@10"] for r in rs) / total, 4),
+            "recall@10": round(sum(hits) / total, 4),
+            "recall@10_ci95": rc.rate_with_ci(hits)["ci95"],
             "ko_recall@10": round(sum(r["hit@10"] for r in ko) / (len(ko) or 1), 4),
             "en_recall@10": round(sum(r["hit@10"] for r in en) / (len(en) or 1), 4),
         }
 
     summary = {f"alpha={a}": summ(rows[a]) for a in ALPHAS}
-    return {"corpus_size": len(corpus), "query_count": len(queries), "summary": summary}
+    # 실제 per-query hit 벡터 (가짜 재구성 방지)
+    hit_vectors = {f"alpha={a}": [r["hit@10"] for r in rows[a]] for a in ALPHAS}
+    return {"corpus_size": len(corpus), "query_count": len(queries),
+            "summary": summary, "hit_vectors": hit_vectors,
+            "langs": [q.get("lang") for q in queries],
+            "diagnostics": {"bm25_no_signal_queries": no_signal}}
 
 
 def md_report(p):
@@ -123,6 +139,7 @@ def md_report(p):
 def main():
     res = evaluate()
     payload = {"experiment": "external_retriever_comparison", "mode": MODE,
+               "env": rc.env_meta({"seed": None, "deterministic": True}),
                "dense_model": DENSE_MODEL, "alphas": ALPHAS, **res}
     JSON_PATH.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     MD_PATH.write_text(md_report(payload), encoding="utf-8")

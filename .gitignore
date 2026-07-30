@@ -1,31 +1,71 @@
+# ------------------------------------------------------------------------------
+# 방침 전환: 허용목록 -> 부정목록
+#
+# 이전 .gitignore는 `output/*` 를 통째로 무시하고 파일을 하나씩 `!` 로 되살리는
+# 허용목록 방식이었다. 그래서 **새로 만든 산출물이 자동으로 무시되어** 커밋에서
+# 조용히 빠졌다. 이제 output/ 은 기본 커밋 대상이고, 임시 산출물만 골라서 무시한다.
+# ------------------------------------------------------------------------------
+
+# --- 파이썬 ---------------------------------------------------------------
 __pycache__/
 *.py[cod]
+*.egg-info/
+*.egg
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
 
-output/*
-!output/report.md
-!output/experiment_logs.json
-!output/routing_summary.json
-!output/external_eval.json
-!output/external_eval.md
-!output/external_label_audit.json
-!output/paraphrase_gap.json
-!output/paraphrase_gap.md
-!output/retriever_compare.json
-!output/retriever_compare.md
-!output/external_retriever.json
-!output/external_retriever.md
-!output/validated_eval.json
-!output/validated_eval.md
-!output/crosslingual_eval.json
-!output/crosslingual_eval.md
-!output/stats_summary.json
-!output/fig_paraphrase_gap.png
-!output/fig_retriever_alpha.png
-!output/fig_exposure_recall.png
-!output/fig_validated_retriever.png
-!output/validated_expanded_eval.json
-!output/validated_expanded_eval.md
-!output/embedding_robustness.json
-!output/embedding_robustness.md
-!output/exposure_frontier_validated.json
-!output/exposure_frontier_validated.md
+# --- 가상환경 -------------------------------------------------------------
+.venv/
+venv/
+env/
+ENV/
+
+# --- 에디터 / OS ----------------------------------------------------------
+.idea/
+.vscode/
+*.swp
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- 모델 / 캐시 ----------------------------------------------------------
+# Hugging Face 임베딩 모델은 저장소에 넣지 않는다 (수 GB). 실행 시 내려받는다.
+.cache/
+.huggingface/
+huggingface/
+hf_cache/
+transformers_cache/
+sentence_transformers_cache/
+*.safetensors
+*.bin.index.json
+*.pt
+*.ckpt
+
+# --- 산출물 ---------------------------------------------------------------
+# output/ 은 커밋한다 (재현 결과가 곧 논문 근거이므로).
+# 다만 아래 임시 경로는 무시한다.
+output/scratch/
+output/tmp/
+output/*.tmp
+output/*.partial
+output/.ipynb_checkpoints/
+
+# --- 제3자 원본 자료 (재배포 대신 재취득) ---------------------------------
+# data/SOURCES.md의 "제거 대상" 목록. `git rm --cached` 로 추적에서 뺀 뒤
+# 로컬에 남아 있어도 다시 커밋되지 않도록 막는다.
+# 재취득: `python fetch_sources.py fetch`
+data/*.pdf
+data/*.zip
+data/*.html
+# 원문 XML 캐시 (fetch_ecfr.py --save-xml)
+data/raw/
+
+# --- 로그 ---------------------------------------------------------------
+*.log
+nohup.out

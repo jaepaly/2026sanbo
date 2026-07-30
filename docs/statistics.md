@@ -1,69 +1,188 @@
-# TASK F Statistics
+# 통계 요약 (검증셋 n=71 기준)
 
-이 문서는 기존 `output/*.json`만 읽어 만든 통계 보강 결과다. 새 검색 실험, 임베딩 계산, 외부 API 호출은 수행하지 않았다.
+> **정정 이력.** 이 문서의 이전 판은 검증셋 표본을 **13개**로 적고 hybrid 우위를
+> "경향으로 보고"했다. 그 판단의 근거였던 95% CI [0.0000, 0.4615]는 아래 §5에서
+> 보이는 것처럼 **소표본 bootstrap의 이산 경계 인공물**이었다. 헤드라인 표본은
+> `output/validated_suite_smoke.json`의 **n=71**
+> (영어 26 / 한국어 45)로 교체했다.
+> n=13 판 수치는 삭제하지 않고 `docs/statistics_n13_superseded.md`에 보존했다.
 
-- Bootstrap 반복: 20,000
-- Seed: 20260626
-- 합성 테스트 쿼리: 624개
-- 외부 모사 질의: 30개
-- 검증셋 평가 표본: 13개 (EN 8, KO 5)
+> **방법 정정.** 이전 판은 반올림된 aggregate R@10에서 per-query 성공/실패 벡터를
+> *합성*한 뒤(`infer_hits`) paired 비교에 **unpaired 이항 시뮬레이션**
+> (`bootstrap_diff_ci`)을 적용했다. 두 함수는 삭제했고, 이제 실제 per-query
+> `hit_vectors`로 paired bootstrap과 exact McNemar를 계산한다. 벡터가 저장되지
+> 않은 산출물은 추정하지 않고 절대율 + Clopper-Pearson만 보고한다.
 
-## 방법
+- Bootstrap 반복: 20,000 / Seed: 20260626
+- 검증셋 primary 조건: 색인 `minimal_text`, retriever `hybrid_0.5`, dense `MiniLM`
+- 합성 테스트 쿼리 624개 / 외부 모사 질의 30개
+- 라벨은 코퍼스 텍스트 근거 카테고리 라벨이며 법적 판정·전문가 검증이 아니다.
 
-- 집계값만 저장된 파일은 JSON의 R@10과 표본 수에서 성공/실패 벡터를 재구성해 bootstrap CI를 계산했다.
-- `output/validated_eval.json`은 질의별 hit@10이 저장되어 있어 paired bootstrap으로 비교했다.
-- 효과크기는 R@10 평균차로 보고했다.
-- 외부 후보 라벨 및 검증셋 라벨은 후보검색 평가용 카테고리 라벨이며 법적 판정이나 전문가 검증 결과가 아니다.
+> ⚠ **확인 필요**: 현재 `output/validated_suite.json`(3모델 본실행)이 아직 없어
+> 단일 모델 smoke 산출물 `output/validated_suite_smoke.json`을 읽었다. 본실행이
+> 끝나면 `python experiment_stats.py`를 다시 실행해 이 문서를 갱신해야 한다.
 
-## Alpha별 원천 수치
+## 1. 검증셋 R@10 (95% CI = Clopper-Pearson 정확 이항구간)
 
-### 외부 모사 후보 라벨셋
+- source: `output/validated_suite_smoke.json` / 색인 `minimal_text`
 
-- source: `output/external_retriever.json`
-- overall n=30 (JSON에 EN/KO n은 별도 저장되지 않아 R@10만 그대로 표시)
+| retriever | 전체 R@10 | 95% CI | 영어 R@10 | 한국어 R@10 |
+|---|---:|---|---:|---:|
+| BM25 | 0.1549 | [0.0800, 0.2603] | 0.4231 | 0.0000 |
+| hybrid_0.7 | 0.5493 | [0.4266, 0.6677] | 0.4615 | 0.6000 |
+| hybrid_0.5 | 0.5775 | [0.4544, 0.6939] | 0.5385 | 0.6000 |
+| hybrid_0.3 | 0.5775 | [0.4544, 0.6939] | 0.5385 | 0.6000 |
+| dense | 0.5493 | [0.4266, 0.6677] | 0.4615 | 0.6000 |
 
-| alpha | retriever | Overall R@10 | EN R@10 | KO R@10 |
-|---:|---|---:|---:|---:|
-| 1.0 | BM25 | 0.0000 | 0.0000 | 0.0000 |
-| 0.7 | Hybrid | 0.0667 | 0.0714 | 0.0625 |
-| 0.5 | Hybrid | 0.1000 | 0.1429 | 0.0625 |
-| 0.3 | Hybrid | 0.1000 | 0.1429 | 0.0625 |
-| 0.0 | Dense | 0.0667 | 0.0714 | 0.0625 |
+> 한국어 BM25 R@10은 **0.0000**이다. 이전 산출물의 0.0222는 BM25 점수 벡터가 전부
+> 0인 질의(45개 중 44개)에 코퍼스 앞머리 10행을 결과로 집계한 데서 나온 값이다.
 
-### 검증셋
+## 2. 검증셋 검색기 비교 (primary = exact McNemar, 보조 = paired bootstrap)
 
-- source: `output/validated_eval.json`
-- overall n=13, EN n=8, KO n=5
+| 비교 | 언어 | 평균차 | bootstrap 95% CI | 승/패/무 | exact p (양측) | Holm p | 유의 |
+|---|---|---:|---|---:|---:|---:|---|
+| `hybrid_vs_bm25` | overall | +0.4225 | [0.3099, 0.5352] | 30/0/41 | 1.86e-09 | 1.68e-08 | **예** |
+| `dense_vs_bm25` | overall | +0.3944 | [0.2676, 0.5070] | 29/1/41 | 5.77e-08 | 3.46e-07 | **예** |
+| `hybrid_vs_dense` | overall | +0.0282 | [-0.0282, 0.0845] | 3/1/67 | 0.625 | 1 | 아니오 |
+| `hybrid_vs_bm25` | en | +0.1154 | [0.0000, 0.2692] | 3/0/23 | 0.25 | 1 | 아니오 |
+| `dense_vs_bm25` | en | +0.0385 | [-0.0769, 0.1538] | 2/1/23 | 1 | 1 | 아니오 |
+| `hybrid_vs_dense` | en | +0.0769 | [-0.0769, 0.2308] | 3/1/22 | 0.625 | 1 | 아니오 |
+| `hybrid_vs_bm25` | ko | +0.6000 | [0.4444, 0.7333] | 27/0/18 | 1.49e-08 | 1.19e-07 | **예** |
+| `dense_vs_bm25` | ko | +0.6000 | [0.4444, 0.7333] | 27/0/18 | 1.49e-08 | 1.19e-07 | **예** |
+| `hybrid_vs_dense` | ko | +0.0000 | [0.0000, 0.0000] | 0/0/45 | 1 | 1 | 아니오 |
 
-| alpha | retriever | Overall R@10 | EN R@10 | KO R@10 |
-|---:|---|---:|---:|---:|
-| 1.0 | BM25 | 0.0000 | 0.0000 | 0.0000 |
-| 0.7 | Hybrid | 0.1538 | 0.1250 | 0.2000 |
-| 0.5 | Hybrid | 0.2308 | 0.2500 | 0.2000 |
-| 0.3 | Hybrid | 0.2308 | 0.2500 | 0.2000 |
-| 0.0 | Dense | 0.1538 | 0.1250 | 0.2000 |
+> `hybrid_vs_dense`가 한국어에서 0승 0패인 것은 정상이다. BM25 점수가 항등 0이면
+> α<1의 혼합 점수는 dense 점수의 양의 배수이므로 **랭킹이 수학적으로 동일**하다.
+> 즉 데이터가 지지하는 진술은 '하이브리드가 필요하다'가 아니라 'dense 성분이 필요하다'다.
 
-## 주요 비교
+## 3. n=13 → n=71 before / after (조용한 덮어쓰기 방지)
 
-| 비교 | 기준 R@10 (95% CI) | 처리 R@10 (95% CI) | 효과크기: 평균차 | 차이 95% CI | 비고 |
-|---|---:|---:|---:|---:|---|
-| `synthetic_minimal_text_vs_full_text` | 0.9968 [0.9920, 1.0000] | 0.9792 [0.9679, 0.9904] | -0.0176 (-1.76pp) | [-0.0304, -0.0064] | 집계 재구성, 기존 permutation p 포함; p=0.004998 |
-| `synthetic_minimal_no_code_vs_full_text` | 0.9968 [0.9920, 1.0000] | 0.9808 [0.9696, 0.9904] | -0.0160 (-1.60pp) | [-0.0288, -0.0048] | 집계 재구성, 기존 permutation p 포함; p=0.007496 |
-| `paraphrase_gap_minimal_text_N5_vs_N0` | 0.9792 [0.9679, 0.9904] | 0.7596 [0.7260, 0.7933] | -0.2196 (-21.95pp) | [-0.2548, -0.1843] | 자기참조 의존성 민감도 |
-| `paraphrase_gap_minimal_text_N10_vs_N0` | 0.9792 [0.9679, 0.9888] | 0.4407 [0.4022, 0.4808] | -0.5385 (-53.85pp) | [-0.5785, -0.4984] | 자기참조 의존성 민감도 |
-| `external_candidate_label_hybrid_alpha_0_7_vs_bm25` | 0.0000 [0.0000, 0.0000] | 0.0667 [0.0000, 0.1667] | 0.0667 (+6.67pp) | [0.0000, 0.1667] | 외부 모사 후보 라벨 기준, 해석 주의 |
-| `external_candidate_label_hybrid_alpha_0_5_vs_bm25` | 0.0000 [0.0000, 0.0000] | 0.1000 [0.0000, 0.2333] | 0.1000 (+10.00pp) | [0.0000, 0.2333] | 외부 모사 후보 라벨 기준, 해석 주의 |
-| `external_candidate_label_hybrid_alpha_0_3_vs_bm25` | 0.0000 [0.0000, 0.0000] | 0.1000 [0.0000, 0.2333] | 0.1000 (+10.00pp) | [0.0000, 0.2333] | 외부 모사 후보 라벨 기준, 해석 주의 |
-| `external_candidate_label_dense_vs_bm25` | 0.0000 [0.0000, 0.0000] | 0.0667 [0.0000, 0.1667] | 0.0667 (+6.67pp) | [0.0000, 0.1667] | 외부 모사 후보 라벨 기준, 해석 주의 |
-| `validated_hybrid_alpha_0_7_vs_bm25` | 0.0000 [0.0000, 0.0000] | 0.1538 [0.0000, 0.3846] | 0.1538 (+15.38pp) | [0.0000, 0.3846] | paired bootstrap; wins/losses/no-change=2/0/11 |
-| `validated_hybrid_alpha_0_5_vs_bm25` | 0.0000 [0.0000, 0.0000] | 0.2308 [0.0000, 0.4615] | 0.2308 (+23.08pp) | [0.0000, 0.4615] | paired bootstrap; wins/losses/no-change=3/0/10 |
-| `validated_hybrid_alpha_0_3_vs_bm25` | 0.0000 [0.0000, 0.0000] | 0.2308 [0.0000, 0.4615] | 0.2308 (+23.08pp) | [0.0000, 0.4615] | paired bootstrap; wins/losses/no-change=3/0/10 |
-| `validated_dense_vs_bm25` | 0.0000 [0.0000, 0.0000] | 0.1538 [0.0000, 0.3846] | 0.1538 (+15.38pp) | [0.0000, 0.3846] | paired bootstrap; wins/losses/no-change=2/0/11 |
-| `validated_hybrid_alpha_0_5_vs_dense` | 0.1538 [0.0000, 0.3846] | 0.2308 [0.0000, 0.4615] | 0.0769 (+7.69pp) | [0.0000, 0.2308] | paired bootstrap; wins/losses/no-change=1/0/12 |
+| 비교 | 표본 | 처리 R@10 | 기준 R@10 | 평균차 | bootstrap 95% CI | 승/패/무 | exact p |
+|---|---:|---:|---:|---:|---|---:|---:|
+| `hybrid_vs_bm25` (before) | 13 | 0.2308 | 0.0000 | +0.2308 | [0.0000, 0.4615] | 3/0/10 | 0.25 |
+| `hybrid_vs_bm25` (after) | 71 | 0.5775 | 0.1549 | +0.4225 | [0.3099, 0.5352] | 30/0/41 | 1.86e-09 |
+| `dense_vs_bm25` (before) | 13 | 0.1538 | 0.0000 | +0.1538 | [0.0000, 0.3846] | 2/0/11 | 0.5 |
+| `dense_vs_bm25` (after) | 71 | 0.5493 | 0.1549 | +0.3944 | [0.2676, 0.5070] | 29/1/41 | 5.77e-08 |
 
-## 해석 가드레일
+> before 행은 `output/validated_eval.json`(n=13), after 행은 `output/validated_suite_smoke.json`(n=71)이다.
 
-- 합성 R@10 0.9792는 자기참조 재검색 조건에서 나온 값이므로 단독 헤드라인으로 쓰지 않는다.
-- 외부 모사 질의의 후보 라벨은 평가용 라벨이며 법적 판정으로 해석하지 않는다.
-- 검증셋은 13개 소표본이므로 hybrid 우위는 경향으로 보고하고 표본 확대 필요성을 함께 적는다.
-- 본 결과는 후보검색 통계이며 전략물자 해당 여부 판정을 의미하지 않는다.
+## 4. 그 밖의 비교
+
+| 비교 | source | 방법 | 기준 R@10 | 처리 R@10 | 평균차 | 차이 95% CI | 승/패/무 | exact p |
+|---|---|---|---:|---:|---:|---|---:|---:|
+| `synthetic_minimal_text_vs_full_text` | `experiment_logs.json` | paired | 0.9968 [0.9885, 0.9996] | 0.9792 [0.9646, 0.9889] | -0.0176 | [-0.0288, -0.0064] | 1/12/611 | 0.00342 |
+| `synthetic_minimal_no_code_vs_full_text` | `experiment_logs.json` | paired | 0.9968 [0.9885, 0.9996] | 0.9808 [0.9666, 0.9900] | -0.0160 | [-0.0272, -0.0064] | 1/11/612 | 0.00635 |
+| `synthetic_route_only_vs_full_text` | `experiment_logs.json` | paired | 0.9968 [0.9885, 0.9996] | 0.0016 [0.0000, 0.0089] | -0.9952 | [-1.0000, -0.9888] | 0/621/3 | 2.3e-187 |
+| `paraphrase_gap_minimal_text_N5_vs_N0` | `paraphrase_gap.json` | paired | 0.9792 [0.9646, 0.9889] | 0.7596 [0.7241, 0.7926] | -0.2196 | [-0.2516, -0.1875] | 1/138/485 | 4.02e-40 |
+| `paraphrase_gap_minimal_text_N10_vs_N0` | `paraphrase_gap.json` | paired | 0.9792 [0.9646, 0.9889] | 0.4407 [0.4013, 0.4807] | -0.5385 | [-0.5769, -0.4984] | 0/336/288 | 1.43e-101 |
+| `synthetic_vocab_gap_N10_dense_vs_bm25` | `retriever_compare.json` | 절대율만 | - | 0.2532 [0.2195, 0.2892] | - | 짝지음 불가 | - | - |
+| `external_candidate_label_hybrid_alpha_0_7_vs_bm25` | `external_retriever.json` | 절대율만 | - | 0.0667 [0.0082, 0.2207] | - | 짝지음 불가 | - | - |
+| `external_candidate_label_hybrid_alpha_0_5_vs_bm25` | `external_retriever.json` | 절대율만 | - | 0.1000 [0.0211, 0.2653] | - | 짝지음 불가 | - | - |
+| `external_candidate_label_hybrid_alpha_0_3_vs_bm25` | `external_retriever.json` | 절대율만 | - | 0.1000 [0.0211, 0.2653] | - | 짝지음 불가 | - | - |
+| `external_candidate_label_dense_vs_bm25` | `external_retriever.json` | 절대율만 | - | 0.0667 [0.0082, 0.2207] | - | 짝지음 불가 | - | - |
+
+> '짝지음 불가' 행은 해당 산출물에 per-query `hit_vectors`가 저장되지 않아
+> paired 검정을 계산할 수 없는 경우다. **이전 판은 여기서 aggregate rate로부터
+> 가짜 hit 벡터를 만들어 CI를 계산했다.** 그 추정은 제거했고, 해당 스크립트를
+> 재실행해 벡터를 저장하는 것이 정상 경로다:
+
+> - `synthetic_vocab_gap_N10_dense_vs_bm25`: hit_vectors 미저장 — experiment_retriever_compare.py 재실행 필요
+> - `external_candidate_label_hybrid_alpha_0_7_vs_bm25`: hit_vectors 미저장 — experiment_external_retriever.py 재실행 필요
+> - `external_candidate_label_hybrid_alpha_0_5_vs_bm25`: hit_vectors 미저장 — experiment_external_retriever.py 재실행 필요
+> - `external_candidate_label_hybrid_alpha_0_3_vs_bm25`: hit_vectors 미저장 — experiment_external_retriever.py 재실행 필요
+> - `external_candidate_label_dense_vs_bm25`: hit_vectors 미저장 — experiment_external_retriever.py 재실행 필요
+
+## 5. 소표본 bootstrap의 이산 경계 인공물 (n=13 '비유의' 판정의 정체)
+
+이전 판은 `validated_hybrid_alpha_0_5_vs_bm25`의 95% CI가 [0.0000, 0.4615]로
+0을 포함한다는 이유로 hybrid 우위를 "경향"으로만 보고했다. 그 CI의 하한 0은
+**데이터가 아니라 재표본 공간의 이산성이 만든 값**이다.
+
+### `n13_hybrid_vs_bm25` — 3승 0패 10무 (n=13)
+
+- 재표본에 승리 질의가 하나도 안 뽑힐 확률 = ((13-3)/13)^13 = **0.0330**
+- 0.025 초과? **예** → 2.5분위수가 구조적으로 0
+- 실측: 20,000회 재표본 중 평균차가 정확히 0인 비율 = 0.0352
+- percentile bootstrap 95% CI = [0.0000, 0.4615] (하한이 구조적으로 0: 예)
+- 같은 구성의 exact McNemar 양측 p = **0.25**
+
+### `n13_dense_vs_bm25` — 2승 0패 11무 (n=13)
+
+- 재표본에 승리 질의가 하나도 안 뽑힐 확률 = ((13-2)/13)^13 = **0.1140**
+- 0.025 초과? **예** → 2.5분위수가 구조적으로 0
+- 실측: 20,000회 재표본 중 평균차가 정확히 0인 비율 = 0.1157
+- percentile bootstrap 95% CI = [0.0000, 0.3846] (하한이 구조적으로 0: 예)
+- 같은 구성의 exact McNemar 양측 p = **0.5**
+
+**결론.** n=13에서 3승 0패는 percentile bootstrap으로는 *원리상* 유의해질 수 없다.
+동시에 exact McNemar p=0.25이므로 n=13은 **실제로 검정력이 부족**했다. 즉 이전 판의
+'경향으로 보고'는 결론 자체는 옳았지만 근거로 든 통계량이 잘못됐다. 소표본 이진
+짝지음에서는 percentile bootstrap 대신 **exact McNemar(짝지음 차이) /
+Clopper-Pearson(절대율)을 primary로 쓴다.**
+
+### 일반 규칙 — 이것은 n이 아니라 '승리 개수'가 결정한다
+
+P(재표본에 승리 질의가 0개) = ((n-w)/n)^n ≈ exp(-w) 이므로 이 인공물은 **표본 크기 n이 아니라 승리 개수 w가 결정한다**. exp(-3)=0.0498 > 0.025 > 0.0183=exp(-4) 이므로, 0패인 상황에서 승리가 3개 이하이면 n이 얼마든 percentile bootstrap의 하한이 0이 되고, 4개 이상이면 하한이 0을 벗어난다. n=13은 승리가 3개뿐이라 걸렸고, n=71은 승리가 30개라 걸리지 않는다.
+
+| n | 0패일 때 하한이 구조적으로 0이 되는 최대 승리 수 w | 그 w에서 P(승리 0개) | w+1에서 P(승리 0개) |
+|---:|---:|---:|---:|
+| 13 | 3 | 0.0330 | 0.0084 |
+| 20 | 3 | 0.0388 | 0.0115 |
+| 30 | 3 | 0.0424 | 0.0137 |
+| 50 | 3 | 0.0453 | 0.0155 |
+| 71 | 3 | 0.0466 | 0.0163 |
+
+> 표본을 13개에서 71개로 늘린 것 자체가 문제를 푼 게 아니다. **승리 질의가 3개에서
+> 30개로 늘어난 것**이 풀었다. 표본만 늘리고 승리가 3개에 머물렀다면 CI 하한은
+> 여전히 0이었을 것이다.
+
+## 6. 결정론적 랭킹 전환에 따른 수치 변동 (조용한 덮어쓰기 방지)
+
+- 대상: `experiment_paraphrase_gap.py`
+- 변경: np.argsort(-scores) -> retrieval_core.rank_indices (내림차순 + 인덱스 오름차순 동점처리) + 전점수 0 질의를 검색 실패로 처리
+
+**논문 주장 1의 헤드라인 R@10은 전부 불변이다:**
+
+| 수치 | 값 |
+|---|---:|
+| `synthetic_full_text_recall@10_N0` | 0.9968 (불변) |
+| `synthetic_minimal_text_recall@10_N0` | 0.9792 (불변) |
+| `synthetic_minimal_text_recall@10_N5` | 0.7596 (불변) |
+| `synthetic_minimal_text_recall@10_N10` | 0.4407 (불변) |
+
+바뀐 칸은 다음이 전부다(동점이 흔한 R@1·R@5에 집중).
+
+| 조건 | N | 지표 | before | after | Δ |
+|---|---:|---|---:|---:|---:|
+| minimal_text | 0 | recall@1 | 0.7837 | 0.7804 | -0.0033 |
+| minimal_text | 0 | recall@5 | 0.9583 | 0.9599 | +0.0016 |
+| minimal_text | 1 | recall@1 | 0.7340 | 0.7324 | -0.0016 |
+| minimal_text | 2 | recall@1 | 0.6923 | 0.6891 | -0.0032 |
+| minimal_text | 2 | recall@5 | 0.8942 | 0.8926 | -0.0016 |
+| minimal_text | 3 | recall@1 | 0.6202 | 0.6234 | +0.0032 |
+| minimal_text | 3 | recall@5 | 0.8397 | 0.8349 | -0.0048 |
+| minimal_text | 5 | recall@1 | 0.5256 | 0.5192 | -0.0064 |
+| minimal_text | 5 | recall@5 | 0.7099 | 0.7067 | -0.0032 |
+| full_text | 0 | recall@1 | 0.8702 | 0.8686 | -0.0016 |
+| full_text | 1 | recall@1 | 0.8526 | 0.8510 | -0.0016 |
+| full_text | 2 | recall@1 | 0.8317 | 0.8333 | +0.0016 |
+| full_text | 2 | recall@5 | 0.9760 | 0.9776 | +0.0016 |
+| full_text | 3 | recall@1 | 0.8077 | 0.8061 | -0.0016 |
+| full_text | 5 | recall@1 | 0.7452 | 0.7468 | +0.0016 |
+| full_text | 5 | recall@5 | 0.9103 | 0.9087 | -0.0016 |
+| full_text | 5 | recall@10 | 0.9295 | 0.9311 | +0.0016 |
+| full_text | 10 | recall@5 | 0.7276 | 0.7260 | -0.0016 |
+
+> 변동 폭은 전부 |Δ| ≤ 0.0064 (624개 중 최대 4개 질의)이며, 동점이 흔한 R@1·R@5에 몰려 있다. 방향이 양쪽으로 섞여 있는 것도 이것이 체계적 편향이 아니라 동점 순서 인공물이었음을 보여준다.
+
+## 7. 해석 가드레일
+
+- 합성셋 R@10(full_text 0.9968 / minimal_text 0.9792)은 **자기참조 재검색** 조건의
+  값이므로 단독 헤드라인으로 쓰지 않는다. 고-IDF 공유토큰 5개 제거 시 0.7596,
+  10개 제거 시 0.4407로 붕괴한다(`output/paraphrase_gap.md`).
+- 검증셋의 한국어 BM25 R@10은 0.0000이다. 어휘 교집합이 0인 질의는 top-10을 만들 수
+  없으며, 이를 '코퍼스 앞머리 10행'으로 채워 집계하면 안 된다.
+- 외부 모사 질의의 후보 라벨은 연구자 예비 추정값이며 법적 판정이 아니다.
+- `route_only`는 고유 색인문서가 소수인 퇴화 조건이므로 소수 4자리 수치에 해석을
+  부여하지 않는다.
+- 본 결과는 전부 후보검색 통계이며 전략물자 해당 여부 판정을 의미하지 않는다.

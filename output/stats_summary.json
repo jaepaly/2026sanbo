@@ -1,645 +1,1301 @@
 {
   "meta": {
-    "task": "TASK F statistics",
+    "task": "검증셋 n=71 기준 통계 재집계 (M9/M14-A 정정판)",
     "created_from_existing_json_only": true,
     "bootstrap_iterations": 20000,
     "seed": 20260626,
+    "primary_index_mode": "minimal_text",
+    "primary_retriever": "hybrid_0.5",
+    "primary_dense_model": "MiniLM",
+    "validated_source": "output/validated_suite_smoke.json",
+    "validated_source_is_smoke": true,
     "source_files": [
       "output/experiment_logs.json",
       "output/paraphrase_gap.json",
       "output/retriever_compare.json",
       "output/external_retriever.json",
-      "output/validated_eval.json"
+      "output/validated_suite_smoke.json",
+      "output/validated_eval.json (n=13, superseded — 감사 보존용)"
+    ],
+    "corrections": [
+      "삭제: infer_hits() — 반올림된 aggregate rate에서 per-query 벡터를 합성했다.",
+      "삭제: bootstrap_diff_ci() — paired 설계에 unpaired 이항 시뮬레이션을 적용했다.",
+      "삭제: bootstrap_mean_ci() — 합성 벡터의 이항 재표본. 절대율은 Clopper-Pearson으로 대체.",
+      "헤드라인 표본을 n=13에서 n=71로 교체. n=13은 docs/statistics_n13_superseded.md에 보존.",
+      "소표본 이진 짝지음의 primary 검정을 exact McNemar / Clopper-Pearson으로 변경.",
+      "per-query 벡터가 없는 산출물은 추정하지 않고 paired_test_unavailable로 표시."
     ],
     "notes": [
-      "No new retrieval, embedding, reranking, or external API calls are run.",
-      "For aggregate-only artifacts, bootstrap vectors are reconstructed from JSON rates and evaluation counts.",
-      "For validated_eval.json, paired bootstrap uses stored per-query hit@10 values.",
-      "External candidate labels and validated corpus-text labels are not legal determinations."
+      "새 검색·임베딩·외부 API 호출은 수행하지 않는다(기존 JSON만 읽는다).",
+      "검증셋/외부셋 라벨은 코퍼스 텍스트 근거 카테고리 라벨이며 법적 판정이 아니다."
     ]
+  },
+  "env": {
+    "numpy": "2.2.6",
+    "python": "3.10.5",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "torch": "2.6.0+cpu",
+    "sentence_transformers": "3.4.1",
+    "seed": 20260626,
+    "bootstrap_iterations": 20000
   },
   "dataset_sizes": {
     "synthetic_test_queries": 624,
+    "paraphrase_gap_queries": 624,
+    "retriever_compare_queries": 624,
     "external_candidate_label_queries": 30,
-    "validated_evaluated_queries": 13,
-    "validated_ko_n": 5,
-    "validated_en_n": 8
+    "validated_queries": 71,
+    "validated_en_n": 26,
+    "validated_ko_n": 45,
+    "superseded_validated_n13": 13
   },
-  "alpha_summaries": {
-    "external_retriever": {
-      "source": "output/external_retriever.json",
-      "rows": [
-        {
-          "alpha": 1.0,
-          "label": "BM25",
-          "overall_n": 30,
-          "en_n": null,
-          "ko_n": null,
-          "recall@10": 0.0,
-          "en_recall@10": 0.0,
-          "ko_recall@10": 0.0
+  "validated_recall_at_10": {
+    "source": "output/validated_suite_smoke.json",
+    "index_mode": "minimal_text",
+    "dense_model": "MiniLM",
+    "rates": {
+      "BM25": {
+        "overall": {
+          "k": 11,
+          "n": 71,
+          "rate": 0.1549,
+          "ci95": [
+            0.08,
+            0.2603
+          ]
         },
-        {
-          "alpha": 0.7,
-          "label": "Hybrid",
-          "overall_n": 30,
-          "en_n": null,
-          "ko_n": null,
-          "recall@10": 0.0667,
-          "en_recall@10": 0.0714,
-          "ko_recall@10": 0.0625
+        "en": {
+          "k": 11,
+          "n": 26,
+          "rate": 0.4231,
+          "ci95": [
+            0.2335,
+            0.6308
+          ]
         },
-        {
-          "alpha": 0.5,
-          "label": "Hybrid",
-          "overall_n": 30,
-          "en_n": null,
-          "ko_n": null,
-          "recall@10": 0.1,
-          "en_recall@10": 0.1429,
-          "ko_recall@10": 0.0625
-        },
-        {
-          "alpha": 0.3,
-          "label": "Hybrid",
-          "overall_n": 30,
-          "en_n": null,
-          "ko_n": null,
-          "recall@10": 0.1,
-          "en_recall@10": 0.1429,
-          "ko_recall@10": 0.0625
-        },
-        {
-          "alpha": 0.0,
-          "label": "Dense",
-          "overall_n": 30,
-          "en_n": null,
-          "ko_n": null,
-          "recall@10": 0.0667,
-          "en_recall@10": 0.0714,
-          "ko_recall@10": 0.0625
+        "ko": {
+          "k": 0,
+          "n": 45,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.0787
+          ]
         }
-      ]
+      },
+      "hybrid_0.7": {
+        "overall": {
+          "k": 39,
+          "n": 71,
+          "rate": 0.5493,
+          "ci95": [
+            0.4266,
+            0.6677
+          ]
+        },
+        "en": {
+          "k": 12,
+          "n": 26,
+          "rate": 0.4615,
+          "ci95": [
+            0.2659,
+            0.6663
+          ]
+        },
+        "ko": {
+          "k": 27,
+          "n": 45,
+          "rate": 0.6,
+          "ci95": [
+            0.4433,
+            0.743
+          ]
+        }
+      },
+      "hybrid_0.5": {
+        "overall": {
+          "k": 41,
+          "n": 71,
+          "rate": 0.5775,
+          "ci95": [
+            0.4544,
+            0.6939
+          ]
+        },
+        "en": {
+          "k": 14,
+          "n": 26,
+          "rate": 0.5385,
+          "ci95": [
+            0.3337,
+            0.7341
+          ]
+        },
+        "ko": {
+          "k": 27,
+          "n": 45,
+          "rate": 0.6,
+          "ci95": [
+            0.4433,
+            0.743
+          ]
+        }
+      },
+      "hybrid_0.3": {
+        "overall": {
+          "k": 41,
+          "n": 71,
+          "rate": 0.5775,
+          "ci95": [
+            0.4544,
+            0.6939
+          ]
+        },
+        "en": {
+          "k": 14,
+          "n": 26,
+          "rate": 0.5385,
+          "ci95": [
+            0.3337,
+            0.7341
+          ]
+        },
+        "ko": {
+          "k": 27,
+          "n": 45,
+          "rate": 0.6,
+          "ci95": [
+            0.4433,
+            0.743
+          ]
+        }
+      },
+      "dense": {
+        "overall": {
+          "k": 39,
+          "n": 71,
+          "rate": 0.5493,
+          "ci95": [
+            0.4266,
+            0.6677
+          ]
+        },
+        "en": {
+          "k": 12,
+          "n": 26,
+          "rate": 0.4615,
+          "ci95": [
+            0.2659,
+            0.6663
+          ]
+        },
+        "ko": {
+          "k": 27,
+          "n": 45,
+          "rate": 0.6,
+          "ci95": [
+            0.4433,
+            0.743
+          ]
+        }
+      }
+    }
+  },
+  "validated_holm_within_family": {
+    "validated71_hybrid_vs_bm25[overall]": {
+      "p_raw": 1.9e-09,
+      "p_adjusted": 1.68e-08,
+      "significant_at_0.05": true,
+      "family_size": 9
     },
-    "validated_eval": {
-      "source": "output/validated_eval.json",
-      "rows": [
-        {
-          "alpha": 1.0,
-          "label": "BM25",
-          "overall_n": 13,
-          "en_n": 8,
-          "ko_n": 5,
-          "recall@10": 0.0,
-          "en_recall@10": 0.0,
-          "ko_recall@10": 0.0
-        },
-        {
-          "alpha": 0.7,
-          "label": "Hybrid",
-          "overall_n": 13,
-          "en_n": 8,
-          "ko_n": 5,
-          "recall@10": 0.1538,
-          "en_recall@10": 0.125,
-          "ko_recall@10": 0.2
-        },
-        {
-          "alpha": 0.5,
-          "label": "Hybrid",
-          "overall_n": 13,
-          "en_n": 8,
-          "ko_n": 5,
-          "recall@10": 0.2308,
-          "en_recall@10": 0.25,
-          "ko_recall@10": 0.2
-        },
-        {
-          "alpha": 0.3,
-          "label": "Hybrid",
-          "overall_n": 13,
-          "en_n": 8,
-          "ko_n": 5,
-          "recall@10": 0.2308,
-          "en_recall@10": 0.25,
-          "ko_recall@10": 0.2
-        },
-        {
-          "alpha": 0.0,
-          "label": "Dense",
-          "overall_n": 13,
-          "en_n": 8,
-          "ko_n": 5,
-          "recall@10": 0.1538,
-          "en_recall@10": 0.125,
-          "ko_recall@10": 0.2
-        }
-      ]
+    "validated71_hybrid_vs_bm25[ko]": {
+      "p_raw": 1.49e-08,
+      "p_adjusted": 1.192e-07,
+      "significant_at_0.05": true,
+      "family_size": 9
+    },
+    "validated71_dense_vs_bm25[ko]": {
+      "p_raw": 1.49e-08,
+      "p_adjusted": 1.192e-07,
+      "significant_at_0.05": true,
+      "family_size": 9
+    },
+    "validated71_dense_vs_bm25[overall]": {
+      "p_raw": 5.77e-08,
+      "p_adjusted": 3.465e-07,
+      "significant_at_0.05": true,
+      "family_size": 9
+    },
+    "validated71_hybrid_vs_bm25[en]": {
+      "p_raw": 0.25,
+      "p_adjusted": 1.0,
+      "significant_at_0.05": false,
+      "family_size": 9
+    },
+    "validated71_hybrid_vs_dense[overall]": {
+      "p_raw": 0.625,
+      "p_adjusted": 1.0,
+      "significant_at_0.05": false,
+      "family_size": 9
+    },
+    "validated71_hybrid_vs_dense[en]": {
+      "p_raw": 0.625,
+      "p_adjusted": 1.0,
+      "significant_at_0.05": false,
+      "family_size": 9
+    },
+    "validated71_dense_vs_bm25[en]": {
+      "p_raw": 1.0,
+      "p_adjusted": 1.0,
+      "significant_at_0.05": false,
+      "family_size": 9
+    },
+    "validated71_hybrid_vs_dense[ko]": {
+      "p_raw": 1.0,
+      "p_adjusted": 1.0,
+      "significant_at_0.05": false,
+      "family_size": 9
     }
   },
   "comparisons": [
     {
       "label": "synthetic_minimal_text_vs_full_text",
       "source": "output/experiment_logs.json",
-      "method": "aggregate_binary_bootstrap_from_json_rate",
+      "method": "paired_per_query_bootstrap+exact_mcnemar",
       "n": 624,
       "baseline": {
         "label": "full_text",
-        "point_estimate": 0.9968,
-        "inferred_successes": 622,
-        "bootstrap_95_ci": [
-          0.991987,
-          1.0
+        "k": 622,
+        "n": 624,
+        "rate": 0.9968,
+        "ci95": [
+          0.9885,
+          0.9996
         ]
       },
       "treatment": {
         "label": "minimal_text",
-        "point_estimate": 0.9792,
-        "inferred_successes": 611,
-        "bootstrap_95_ci": [
-          0.967949,
-          0.990385
+        "k": 611,
+        "n": 624,
+        "rate": 0.9792,
+        "ci95": [
+          0.9646,
+          0.9889
         ]
       },
       "effect_size": {
-        "type": "mean_difference_in_recall_at_10",
-        "value": -0.017628,
-        "percentage_points": -1.763
+        "type": "paired_mean_difference_in_recall_at_10",
+        "value": -0.0176,
+        "percentage_points": -1.76
       },
       "difference_bootstrap_95_ci": [
-        -0.030449,
-        -0.00641
+        -0.0288,
+        -0.0064
       ],
-      "existing_permutation_p_value": 0.004998
+      "bootstrap_excludes_zero": true,
+      "mcnemar": {
+        "wins": 1,
+        "losses": 12,
+        "ties": 611,
+        "discordant": 13,
+        "p_two_sided_exact": 0.00341797,
+        "p_one_sided_exact": 0.999878
+      },
+      "primary_test": "exact_mcnemar",
+      "note": ""
     },
     {
       "label": "synthetic_minimal_no_code_vs_full_text",
       "source": "output/experiment_logs.json",
-      "method": "aggregate_binary_bootstrap_from_json_rate",
+      "method": "paired_per_query_bootstrap+exact_mcnemar",
       "n": 624,
       "baseline": {
         "label": "full_text",
-        "point_estimate": 0.9968,
-        "inferred_successes": 622,
-        "bootstrap_95_ci": [
-          0.991987,
-          1.0
+        "k": 622,
+        "n": 624,
+        "rate": 0.9968,
+        "ci95": [
+          0.9885,
+          0.9996
         ]
       },
       "treatment": {
         "label": "minimal_no_code",
-        "point_estimate": 0.9808,
-        "inferred_successes": 612,
-        "bootstrap_95_ci": [
-          0.969551,
-          0.990385
+        "k": 612,
+        "n": 624,
+        "rate": 0.9808,
+        "ci95": [
+          0.9666,
+          0.99
         ]
       },
       "effect_size": {
-        "type": "mean_difference_in_recall_at_10",
-        "value": -0.016026,
-        "percentage_points": -1.603
+        "type": "paired_mean_difference_in_recall_at_10",
+        "value": -0.016,
+        "percentage_points": -1.6
       },
       "difference_bootstrap_95_ci": [
-        -0.028846,
-        -0.004808
+        -0.0272,
+        -0.0064
       ],
-      "existing_permutation_p_value": 0.007496
+      "bootstrap_excludes_zero": true,
+      "mcnemar": {
+        "wins": 1,
+        "losses": 11,
+        "ties": 612,
+        "discordant": 12,
+        "p_two_sided_exact": 0.00634766,
+        "p_one_sided_exact": 0.999756
+      },
+      "primary_test": "exact_mcnemar",
+      "note": ""
     },
     {
       "label": "synthetic_route_only_vs_full_text",
       "source": "output/experiment_logs.json",
-      "method": "aggregate_binary_bootstrap_from_json_rate",
+      "method": "paired_per_query_bootstrap+exact_mcnemar",
       "n": 624,
       "baseline": {
         "label": "full_text",
-        "point_estimate": 0.9968,
-        "inferred_successes": 622,
-        "bootstrap_95_ci": [
-          0.991987,
-          1.0
+        "k": 622,
+        "n": 624,
+        "rate": 0.9968,
+        "ci95": [
+          0.9885,
+          0.9996
         ]
       },
       "treatment": {
         "label": "route_only",
-        "point_estimate": 0.008,
-        "inferred_successes": 5,
-        "bootstrap_95_ci": [
-          0.001603,
-          0.016026
+        "k": 1,
+        "n": 624,
+        "rate": 0.0016,
+        "ci95": [
+          0.0,
+          0.0089
         ]
       },
       "effect_size": {
-        "type": "mean_difference_in_recall_at_10",
-        "value": -0.988782,
-        "percentage_points": -98.878
+        "type": "paired_mean_difference_in_recall_at_10",
+        "value": -0.9952,
+        "percentage_points": -99.52
       },
       "difference_bootstrap_95_ci": [
-        -0.996795,
-        -0.979167
+        -1.0,
+        -0.9888
       ],
-      "existing_permutation_p_value": 0.0005
+      "bootstrap_excludes_zero": true,
+      "mcnemar": {
+        "wins": 0,
+        "losses": 621,
+        "ties": 3,
+        "discordant": 621,
+        "p_two_sided_exact": 2.29828e-187,
+        "p_one_sided_exact": 1.0
+      },
+      "primary_test": "exact_mcnemar",
+      "note": "route_only는 퇴화 색인(sanity check)이므로 해석 금지"
     },
     {
       "label": "paraphrase_gap_minimal_text_N5_vs_N0",
       "source": "output/paraphrase_gap.json",
-      "method": "aggregate_binary_bootstrap_from_json_rate",
+      "method": "paired_per_query_bootstrap+exact_mcnemar",
       "n": 624,
       "baseline": {
         "label": "minimal_text_N0",
-        "point_estimate": 0.9792,
-        "inferred_successes": 611,
-        "bootstrap_95_ci": [
-          0.967949,
-          0.990385
+        "k": 611,
+        "n": 624,
+        "rate": 0.9792,
+        "ci95": [
+          0.9646,
+          0.9889
         ]
       },
       "treatment": {
         "label": "minimal_text_N5",
-        "point_estimate": 0.7596,
-        "inferred_successes": 474,
-        "bootstrap_95_ci": [
-          0.725962,
-          0.793269
+        "k": 474,
+        "n": 624,
+        "rate": 0.7596,
+        "ci95": [
+          0.7241,
+          0.7926
         ]
       },
       "effect_size": {
-        "type": "mean_difference_in_recall_at_10",
-        "value": -0.219551,
-        "percentage_points": -21.955
+        "type": "paired_mean_difference_in_recall_at_10",
+        "value": -0.2196,
+        "percentage_points": -21.96
       },
       "difference_bootstrap_95_ci": [
-        -0.254808,
-        -0.184295
-      ]
+        -0.2516,
+        -0.1875
+      ],
+      "bootstrap_excludes_zero": true,
+      "mcnemar": {
+        "wins": 1,
+        "losses": 138,
+        "ties": 485,
+        "discordant": 139,
+        "p_two_sided_exact": 4.0178e-40,
+        "p_one_sided_exact": 1.0
+      },
+      "primary_test": "exact_mcnemar",
+      "note": "자기참조 의존성 민감도"
     },
     {
       "label": "paraphrase_gap_minimal_text_N10_vs_N0",
       "source": "output/paraphrase_gap.json",
-      "method": "aggregate_binary_bootstrap_from_json_rate",
+      "method": "paired_per_query_bootstrap+exact_mcnemar",
       "n": 624,
       "baseline": {
         "label": "minimal_text_N0",
-        "point_estimate": 0.9792,
-        "inferred_successes": 611,
-        "bootstrap_95_ci": [
-          0.967949,
-          0.988782
+        "k": 611,
+        "n": 624,
+        "rate": 0.9792,
+        "ci95": [
+          0.9646,
+          0.9889
         ]
       },
       "treatment": {
         "label": "minimal_text_N10",
-        "point_estimate": 0.4407,
-        "inferred_successes": 275,
-        "bootstrap_95_ci": [
-          0.402244,
-          0.480769
+        "k": 275,
+        "n": 624,
+        "rate": 0.4407,
+        "ci95": [
+          0.4013,
+          0.4807
         ]
       },
       "effect_size": {
-        "type": "mean_difference_in_recall_at_10",
-        "value": -0.538462,
-        "percentage_points": -53.846
+        "type": "paired_mean_difference_in_recall_at_10",
+        "value": -0.5385,
+        "percentage_points": -53.85
       },
       "difference_bootstrap_95_ci": [
-        -0.578526,
-        -0.498397
-      ]
+        -0.5769,
+        -0.4984
+      ],
+      "bootstrap_excludes_zero": true,
+      "mcnemar": {
+        "wins": 0,
+        "losses": 336,
+        "ties": 288,
+        "discordant": 336,
+        "p_two_sided_exact": 1.42873e-101,
+        "p_one_sided_exact": 1.0
+      },
+      "primary_test": "exact_mcnemar",
+      "note": "자기참조 의존성 민감도"
     },
     {
       "label": "synthetic_vocab_gap_N10_dense_vs_bm25",
       "source": "output/retriever_compare.json",
-      "method": "aggregate_binary_bootstrap_from_json_rate",
+      "method": "absolute_rate_only",
       "n": 624,
-      "baseline": {
-        "label": "alpha=1.0",
-        "point_estimate": 0.4407,
-        "inferred_successes": 275,
-        "bootstrap_95_ci": [
-          0.400641,
-          0.480769
-        ]
-      },
-      "treatment": {
+      "point": {
         "label": "alpha=0.0",
-        "point_estimate": 0.2532,
-        "inferred_successes": 158,
-        "bootstrap_95_ci": [
-          0.219551,
-          0.288462
+        "k_recovered_from_rate": 158,
+        "rate": 0.2532,
+        "ci95_clopper_pearson": [
+          0.2195,
+          0.2892
         ]
       },
-      "effect_size": {
-        "type": "mean_difference_in_recall_at_10",
-        "value": -0.1875,
-        "percentage_points": -18.75
-      },
-      "difference_bootstrap_95_ci": [
-        -0.238782,
-        -0.136218
-      ]
+      "paired_test_unavailable": "hit_vectors 미저장 — experiment_retriever_compare.py 재실행 필요"
     },
     {
       "label": "external_candidate_label_hybrid_alpha_0_7_vs_bm25",
       "source": "output/external_retriever.json",
-      "method": "aggregate_binary_bootstrap_from_json_rate",
+      "method": "absolute_rate_only",
       "n": 30,
-      "baseline": {
-        "label": "alpha=1.0",
-        "point_estimate": 0.0,
-        "inferred_successes": 0,
-        "bootstrap_95_ci": [
-          0.0,
-          0.0
-        ]
-      },
-      "treatment": {
+      "point": {
         "label": "alpha=0.7",
-        "point_estimate": 0.0667,
-        "inferred_successes": 2,
-        "bootstrap_95_ci": [
-          0.0,
-          0.166667
+        "k_recovered_from_rate": 2,
+        "rate": 0.0667,
+        "ci95_clopper_pearson": [
+          0.0082,
+          0.2207
         ]
       },
-      "effect_size": {
-        "type": "mean_difference_in_recall_at_10",
-        "value": 0.066667,
-        "percentage_points": 6.667
-      },
-      "difference_bootstrap_95_ci": [
-        0.0,
-        0.166667
-      ]
+      "paired_test_unavailable": "hit_vectors 미저장 — experiment_external_retriever.py 재실행 필요"
     },
     {
       "label": "external_candidate_label_hybrid_alpha_0_5_vs_bm25",
       "source": "output/external_retriever.json",
-      "method": "aggregate_binary_bootstrap_from_json_rate",
+      "method": "absolute_rate_only",
       "n": 30,
-      "baseline": {
-        "label": "alpha=1.0",
-        "point_estimate": 0.0,
-        "inferred_successes": 0,
-        "bootstrap_95_ci": [
-          0.0,
-          0.0
-        ]
-      },
-      "treatment": {
+      "point": {
         "label": "alpha=0.5",
-        "point_estimate": 0.1,
-        "inferred_successes": 3,
-        "bootstrap_95_ci": [
-          0.0,
-          0.233333
+        "k_recovered_from_rate": 3,
+        "rate": 0.1,
+        "ci95_clopper_pearson": [
+          0.0211,
+          0.2653
         ]
       },
-      "effect_size": {
-        "type": "mean_difference_in_recall_at_10",
-        "value": 0.1,
-        "percentage_points": 10.0
-      },
-      "difference_bootstrap_95_ci": [
-        0.0,
-        0.233333
-      ]
+      "paired_test_unavailable": "hit_vectors 미저장 — experiment_external_retriever.py 재실행 필요"
     },
     {
       "label": "external_candidate_label_hybrid_alpha_0_3_vs_bm25",
       "source": "output/external_retriever.json",
-      "method": "aggregate_binary_bootstrap_from_json_rate",
+      "method": "absolute_rate_only",
       "n": 30,
-      "baseline": {
-        "label": "alpha=1.0",
-        "point_estimate": 0.0,
-        "inferred_successes": 0,
-        "bootstrap_95_ci": [
-          0.0,
-          0.0
-        ]
-      },
-      "treatment": {
+      "point": {
         "label": "alpha=0.3",
-        "point_estimate": 0.1,
-        "inferred_successes": 3,
-        "bootstrap_95_ci": [
-          0.0,
-          0.233333
+        "k_recovered_from_rate": 3,
+        "rate": 0.1,
+        "ci95_clopper_pearson": [
+          0.0211,
+          0.2653
         ]
       },
-      "effect_size": {
-        "type": "mean_difference_in_recall_at_10",
-        "value": 0.1,
-        "percentage_points": 10.0
-      },
-      "difference_bootstrap_95_ci": [
-        0.0,
-        0.233333
-      ]
+      "paired_test_unavailable": "hit_vectors 미저장 — experiment_external_retriever.py 재실행 필요"
     },
     {
       "label": "external_candidate_label_dense_vs_bm25",
       "source": "output/external_retriever.json",
-      "method": "aggregate_binary_bootstrap_from_json_rate",
+      "method": "absolute_rate_only",
       "n": 30,
-      "baseline": {
-        "label": "alpha=1.0",
-        "point_estimate": 0.0,
-        "inferred_successes": 0,
-        "bootstrap_95_ci": [
-          0.0,
-          0.0
-        ]
-      },
-      "treatment": {
+      "point": {
         "label": "alpha=0.0",
-        "point_estimate": 0.0667,
-        "inferred_successes": 2,
-        "bootstrap_95_ci": [
-          0.0,
-          0.166667
+        "k_recovered_from_rate": 2,
+        "rate": 0.0667,
+        "ci95_clopper_pearson": [
+          0.0082,
+          0.2207
         ]
       },
-      "effect_size": {
-        "type": "mean_difference_in_recall_at_10",
-        "value": 0.066667,
-        "percentage_points": 6.667
-      },
-      "difference_bootstrap_95_ci": [
-        0.0,
-        0.166667
-      ]
+      "paired_test_unavailable": "hit_vectors 미저장 — experiment_external_retriever.py 재실행 필요"
     },
     {
-      "label": "validated_hybrid_alpha_0_7_vs_bm25",
-      "source": "output/validated_eval.json",
-      "method": "paired_per_query_bootstrap",
-      "n": 13,
+      "label": "validated71_hybrid_vs_bm25[overall]",
+      "source": "output/validated_suite_smoke.json",
+      "method": "paired_per_query_bootstrap+exact_mcnemar",
+      "n": 71,
       "baseline": {
-        "label": "alpha=1.0",
-        "point_estimate": 0.0,
-        "bootstrap_95_ci": [
-          0.0,
-          0.0
+        "label": "BM25",
+        "k": 11,
+        "n": 71,
+        "rate": 0.1549,
+        "ci95": [
+          0.08,
+          0.2603
         ]
       },
       "treatment": {
-        "label": "alpha=0.7",
-        "point_estimate": 0.1538,
-        "bootstrap_95_ci": [
-          0.0,
-          0.384615
+        "label": "hybrid_0.5",
+        "k": 41,
+        "n": 71,
+        "rate": 0.5775,
+        "ci95": [
+          0.4544,
+          0.6939
         ]
       },
       "effect_size": {
         "type": "paired_mean_difference_in_recall_at_10",
-        "value": 0.153846,
-        "percentage_points": 15.385,
-        "wins": 2,
+        "value": 0.4225,
+        "percentage_points": 42.25
+      },
+      "difference_bootstrap_95_ci": [
+        0.3099,
+        0.5352
+      ],
+      "bootstrap_excludes_zero": true,
+      "mcnemar": {
+        "wins": 30,
         "losses": 0,
-        "no_change": 11
+        "ties": 41,
+        "discordant": 30,
+        "p_two_sided_exact": 1.86265e-09,
+        "p_one_sided_exact": 9.31323e-10
       },
-      "difference_bootstrap_95_ci": [
-        0.0,
-        0.384615
-      ]
+      "primary_test": "exact_mcnemar",
+      "note": "색인=minimal_text, 모델=MiniLM, 언어=overall"
     },
     {
-      "label": "validated_hybrid_alpha_0_5_vs_bm25",
-      "source": "output/validated_eval.json",
-      "method": "paired_per_query_bootstrap",
-      "n": 13,
+      "label": "validated71_dense_vs_bm25[overall]",
+      "source": "output/validated_suite_smoke.json",
+      "method": "paired_per_query_bootstrap+exact_mcnemar",
+      "n": 71,
       "baseline": {
-        "label": "alpha=1.0",
-        "point_estimate": 0.0,
-        "bootstrap_95_ci": [
-          0.0,
-          0.0
+        "label": "BM25",
+        "k": 11,
+        "n": 71,
+        "rate": 0.1549,
+        "ci95": [
+          0.08,
+          0.2603
         ]
       },
       "treatment": {
-        "label": "alpha=0.5",
-        "point_estimate": 0.2308,
-        "bootstrap_95_ci": [
-          0.0,
-          0.461538
+        "label": "dense",
+        "k": 39,
+        "n": 71,
+        "rate": 0.5493,
+        "ci95": [
+          0.4266,
+          0.6677
         ]
       },
       "effect_size": {
         "type": "paired_mean_difference_in_recall_at_10",
-        "value": 0.230769,
-        "percentage_points": 23.077,
+        "value": 0.3944,
+        "percentage_points": 39.44
+      },
+      "difference_bootstrap_95_ci": [
+        0.2676,
+        0.507
+      ],
+      "bootstrap_excludes_zero": true,
+      "mcnemar": {
+        "wins": 29,
+        "losses": 1,
+        "ties": 41,
+        "discordant": 30,
+        "p_two_sided_exact": 5.7742e-08,
+        "p_one_sided_exact": 2.8871e-08
+      },
+      "primary_test": "exact_mcnemar",
+      "note": "색인=minimal_text, 모델=MiniLM, 언어=overall"
+    },
+    {
+      "label": "validated71_hybrid_vs_dense[overall]",
+      "source": "output/validated_suite_smoke.json",
+      "method": "paired_per_query_bootstrap+exact_mcnemar",
+      "n": 71,
+      "baseline": {
+        "label": "dense",
+        "k": 39,
+        "n": 71,
+        "rate": 0.5493,
+        "ci95": [
+          0.4266,
+          0.6677
+        ]
+      },
+      "treatment": {
+        "label": "hybrid_0.5",
+        "k": 41,
+        "n": 71,
+        "rate": 0.5775,
+        "ci95": [
+          0.4544,
+          0.6939
+        ]
+      },
+      "effect_size": {
+        "type": "paired_mean_difference_in_recall_at_10",
+        "value": 0.0282,
+        "percentage_points": 2.82
+      },
+      "difference_bootstrap_95_ci": [
+        -0.0282,
+        0.0845
+      ],
+      "bootstrap_excludes_zero": false,
+      "mcnemar": {
+        "wins": 3,
+        "losses": 1,
+        "ties": 67,
+        "discordant": 4,
+        "p_two_sided_exact": 0.625,
+        "p_one_sided_exact": 0.3125
+      },
+      "primary_test": "exact_mcnemar",
+      "note": "색인=minimal_text, 모델=MiniLM, 언어=overall"
+    },
+    {
+      "label": "validated71_hybrid_vs_bm25[en]",
+      "source": "output/validated_suite_smoke.json",
+      "method": "paired_per_query_bootstrap+exact_mcnemar",
+      "n": 26,
+      "baseline": {
+        "label": "BM25",
+        "k": 11,
+        "n": 26,
+        "rate": 0.4231,
+        "ci95": [
+          0.2335,
+          0.6308
+        ]
+      },
+      "treatment": {
+        "label": "hybrid_0.5",
+        "k": 14,
+        "n": 26,
+        "rate": 0.5385,
+        "ci95": [
+          0.3337,
+          0.7341
+        ]
+      },
+      "effect_size": {
+        "type": "paired_mean_difference_in_recall_at_10",
+        "value": 0.1154,
+        "percentage_points": 11.54
+      },
+      "difference_bootstrap_95_ci": [
+        0.0,
+        0.2692
+      ],
+      "bootstrap_excludes_zero": false,
+      "mcnemar": {
         "wins": 3,
         "losses": 0,
-        "no_change": 10
+        "ties": 23,
+        "discordant": 3,
+        "p_two_sided_exact": 0.25,
+        "p_one_sided_exact": 0.125
       },
-      "difference_bootstrap_95_ci": [
-        0.0,
-        0.461538
-      ]
+      "primary_test": "exact_mcnemar",
+      "note": "색인=minimal_text, 모델=MiniLM, 언어=en"
     },
     {
-      "label": "validated_hybrid_alpha_0_3_vs_bm25",
-      "source": "output/validated_eval.json",
-      "method": "paired_per_query_bootstrap",
-      "n": 13,
+      "label": "validated71_dense_vs_bm25[en]",
+      "source": "output/validated_suite_smoke.json",
+      "method": "paired_per_query_bootstrap+exact_mcnemar",
+      "n": 26,
       "baseline": {
-        "label": "alpha=1.0",
-        "point_estimate": 0.0,
-        "bootstrap_95_ci": [
-          0.0,
-          0.0
+        "label": "BM25",
+        "k": 11,
+        "n": 26,
+        "rate": 0.4231,
+        "ci95": [
+          0.2335,
+          0.6308
         ]
       },
       "treatment": {
-        "label": "alpha=0.3",
-        "point_estimate": 0.2308,
-        "bootstrap_95_ci": [
-          0.0,
-          0.461538
+        "label": "dense",
+        "k": 12,
+        "n": 26,
+        "rate": 0.4615,
+        "ci95": [
+          0.2659,
+          0.6663
         ]
       },
       "effect_size": {
         "type": "paired_mean_difference_in_recall_at_10",
-        "value": 0.230769,
-        "percentage_points": 23.077,
-        "wins": 3,
-        "losses": 0,
-        "no_change": 10
+        "value": 0.0385,
+        "percentage_points": 3.85
       },
       "difference_bootstrap_95_ci": [
-        0.0,
-        0.461538
-      ]
-    },
-    {
-      "label": "validated_dense_vs_bm25",
-      "source": "output/validated_eval.json",
-      "method": "paired_per_query_bootstrap",
-      "n": 13,
-      "baseline": {
-        "label": "alpha=1.0",
-        "point_estimate": 0.0,
-        "bootstrap_95_ci": [
-          0.0,
-          0.0
-        ]
-      },
-      "treatment": {
-        "label": "alpha=0.0",
-        "point_estimate": 0.1538,
-        "bootstrap_95_ci": [
-          0.0,
-          0.384615
-        ]
-      },
-      "effect_size": {
-        "type": "paired_mean_difference_in_recall_at_10",
-        "value": 0.153846,
-        "percentage_points": 15.385,
+        -0.0769,
+        0.1538
+      ],
+      "bootstrap_excludes_zero": false,
+      "mcnemar": {
         "wins": 2,
-        "losses": 0,
-        "no_change": 11
+        "losses": 1,
+        "ties": 23,
+        "discordant": 3,
+        "p_two_sided_exact": 1.0,
+        "p_one_sided_exact": 0.5
       },
-      "difference_bootstrap_95_ci": [
-        0.0,
-        0.384615
-      ]
+      "primary_test": "exact_mcnemar",
+      "note": "색인=minimal_text, 모델=MiniLM, 언어=en"
     },
     {
-      "label": "validated_hybrid_alpha_0_5_vs_dense",
-      "source": "output/validated_eval.json",
-      "method": "paired_per_query_bootstrap",
-      "n": 13,
+      "label": "validated71_hybrid_vs_dense[en]",
+      "source": "output/validated_suite_smoke.json",
+      "method": "paired_per_query_bootstrap+exact_mcnemar",
+      "n": 26,
       "baseline": {
-        "label": "alpha=0.0",
-        "point_estimate": 0.1538,
-        "bootstrap_95_ci": [
-          0.0,
-          0.384615
+        "label": "dense",
+        "k": 12,
+        "n": 26,
+        "rate": 0.4615,
+        "ci95": [
+          0.2659,
+          0.6663
         ]
       },
       "treatment": {
-        "label": "alpha=0.5",
-        "point_estimate": 0.2308,
-        "bootstrap_95_ci": [
-          0.0,
-          0.461538
+        "label": "hybrid_0.5",
+        "k": 14,
+        "n": 26,
+        "rate": 0.5385,
+        "ci95": [
+          0.3337,
+          0.7341
         ]
       },
       "effect_size": {
         "type": "paired_mean_difference_in_recall_at_10",
-        "value": 0.076923,
-        "percentage_points": 7.692,
-        "wins": 1,
+        "value": 0.0769,
+        "percentage_points": 7.69
+      },
+      "difference_bootstrap_95_ci": [
+        -0.0769,
+        0.2308
+      ],
+      "bootstrap_excludes_zero": false,
+      "mcnemar": {
+        "wins": 3,
+        "losses": 1,
+        "ties": 22,
+        "discordant": 4,
+        "p_two_sided_exact": 0.625,
+        "p_one_sided_exact": 0.3125
+      },
+      "primary_test": "exact_mcnemar",
+      "note": "색인=minimal_text, 모델=MiniLM, 언어=en"
+    },
+    {
+      "label": "validated71_hybrid_vs_bm25[ko]",
+      "source": "output/validated_suite_smoke.json",
+      "method": "paired_per_query_bootstrap+exact_mcnemar",
+      "n": 45,
+      "baseline": {
+        "label": "BM25",
+        "k": 0,
+        "n": 45,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.0787
+        ]
+      },
+      "treatment": {
+        "label": "hybrid_0.5",
+        "k": 27,
+        "n": 45,
+        "rate": 0.6,
+        "ci95": [
+          0.4433,
+          0.743
+        ]
+      },
+      "effect_size": {
+        "type": "paired_mean_difference_in_recall_at_10",
+        "value": 0.6,
+        "percentage_points": 60.0
+      },
+      "difference_bootstrap_95_ci": [
+        0.4444,
+        0.7333
+      ],
+      "bootstrap_excludes_zero": true,
+      "mcnemar": {
+        "wins": 27,
         "losses": 0,
-        "no_change": 12
+        "ties": 18,
+        "discordant": 27,
+        "p_two_sided_exact": 1.49012e-08,
+        "p_one_sided_exact": 7.45058e-09
+      },
+      "primary_test": "exact_mcnemar",
+      "note": "색인=minimal_text, 모델=MiniLM, 언어=ko"
+    },
+    {
+      "label": "validated71_dense_vs_bm25[ko]",
+      "source": "output/validated_suite_smoke.json",
+      "method": "paired_per_query_bootstrap+exact_mcnemar",
+      "n": 45,
+      "baseline": {
+        "label": "BM25",
+        "k": 0,
+        "n": 45,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.0787
+        ]
+      },
+      "treatment": {
+        "label": "dense",
+        "k": 27,
+        "n": 45,
+        "rate": 0.6,
+        "ci95": [
+          0.4433,
+          0.743
+        ]
+      },
+      "effect_size": {
+        "type": "paired_mean_difference_in_recall_at_10",
+        "value": 0.6,
+        "percentage_points": 60.0
+      },
+      "difference_bootstrap_95_ci": [
+        0.4444,
+        0.7333
+      ],
+      "bootstrap_excludes_zero": true,
+      "mcnemar": {
+        "wins": 27,
+        "losses": 0,
+        "ties": 18,
+        "discordant": 27,
+        "p_two_sided_exact": 1.49012e-08,
+        "p_one_sided_exact": 7.45058e-09
+      },
+      "primary_test": "exact_mcnemar",
+      "note": "색인=minimal_text, 모델=MiniLM, 언어=ko"
+    },
+    {
+      "label": "validated71_hybrid_vs_dense[ko]",
+      "source": "output/validated_suite_smoke.json",
+      "method": "paired_per_query_bootstrap+exact_mcnemar",
+      "n": 45,
+      "baseline": {
+        "label": "dense",
+        "k": 27,
+        "n": 45,
+        "rate": 0.6,
+        "ci95": [
+          0.4433,
+          0.743
+        ]
+      },
+      "treatment": {
+        "label": "hybrid_0.5",
+        "k": 27,
+        "n": 45,
+        "rate": 0.6,
+        "ci95": [
+          0.4433,
+          0.743
+        ]
+      },
+      "effect_size": {
+        "type": "paired_mean_difference_in_recall_at_10",
+        "value": 0.0,
+        "percentage_points": 0.0
       },
       "difference_bootstrap_95_ci": [
         0.0,
-        0.230769
-      ]
+        0.0
+      ],
+      "bootstrap_excludes_zero": false,
+      "mcnemar": {
+        "wins": 0,
+        "losses": 0,
+        "ties": 45,
+        "discordant": 0,
+        "p_two_sided_exact": 1.0,
+        "p_one_sided_exact": 1.0
+      },
+      "primary_test": "exact_mcnemar",
+      "note": "색인=minimal_text, 모델=MiniLM, 언어=ko"
     }
-  ]
+  ],
+  "ranking_determinism_audit": {
+    "source_script": "experiment_paraphrase_gap.py",
+    "change": "np.argsort(-scores) -> retrieval_core.rank_indices (내림차순 + 인덱스 오름차순 동점처리) + 전점수 0 질의를 검색 실패로 처리",
+    "headline_claim1_unchanged": {
+      "synthetic_full_text_recall@10_N0": 0.9968,
+      "synthetic_minimal_text_recall@10_N0": 0.9792,
+      "synthetic_minimal_text_recall@10_N5": 0.7596,
+      "synthetic_minimal_text_recall@10_N10": 0.4407
+    },
+    "changed_cells": [
+      {
+        "mode": "minimal_text",
+        "N": 0,
+        "metric": "recall@1",
+        "before": 0.7837,
+        "after": 0.7804
+      },
+      {
+        "mode": "minimal_text",
+        "N": 0,
+        "metric": "recall@5",
+        "before": 0.9583,
+        "after": 0.9599
+      },
+      {
+        "mode": "minimal_text",
+        "N": 1,
+        "metric": "recall@1",
+        "before": 0.734,
+        "after": 0.7324
+      },
+      {
+        "mode": "minimal_text",
+        "N": 2,
+        "metric": "recall@1",
+        "before": 0.6923,
+        "after": 0.6891
+      },
+      {
+        "mode": "minimal_text",
+        "N": 2,
+        "metric": "recall@5",
+        "before": 0.8942,
+        "after": 0.8926
+      },
+      {
+        "mode": "minimal_text",
+        "N": 3,
+        "metric": "recall@1",
+        "before": 0.6202,
+        "after": 0.6234
+      },
+      {
+        "mode": "minimal_text",
+        "N": 3,
+        "metric": "recall@5",
+        "before": 0.8397,
+        "after": 0.8349
+      },
+      {
+        "mode": "minimal_text",
+        "N": 5,
+        "metric": "recall@1",
+        "before": 0.5256,
+        "after": 0.5192
+      },
+      {
+        "mode": "minimal_text",
+        "N": 5,
+        "metric": "recall@5",
+        "before": 0.7099,
+        "after": 0.7067
+      },
+      {
+        "mode": "full_text",
+        "N": 0,
+        "metric": "recall@1",
+        "before": 0.8702,
+        "after": 0.8686
+      },
+      {
+        "mode": "full_text",
+        "N": 1,
+        "metric": "recall@1",
+        "before": 0.8526,
+        "after": 0.851
+      },
+      {
+        "mode": "full_text",
+        "N": 2,
+        "metric": "recall@1",
+        "before": 0.8317,
+        "after": 0.8333
+      },
+      {
+        "mode": "full_text",
+        "N": 2,
+        "metric": "recall@5",
+        "before": 0.976,
+        "after": 0.9776
+      },
+      {
+        "mode": "full_text",
+        "N": 3,
+        "metric": "recall@1",
+        "before": 0.8077,
+        "after": 0.8061
+      },
+      {
+        "mode": "full_text",
+        "N": 5,
+        "metric": "recall@1",
+        "before": 0.7452,
+        "after": 0.7468
+      },
+      {
+        "mode": "full_text",
+        "N": 5,
+        "metric": "recall@5",
+        "before": 0.9103,
+        "after": 0.9087
+      },
+      {
+        "mode": "full_text",
+        "N": 5,
+        "metric": "recall@10",
+        "before": 0.9295,
+        "after": 0.9311
+      },
+      {
+        "mode": "full_text",
+        "N": 10,
+        "metric": "recall@5",
+        "before": 0.7276,
+        "after": 0.726
+      }
+    ],
+    "reading": "변동 폭은 전부 |Δ| ≤ 0.0064 (624개 중 최대 4개 질의)이며, 동점이 흔한 R@1·R@5에 몰려 있다. 방향이 양쪽으로 섞여 있는 것도 이것이 체계적 편향이 아니라 동점 순서 인공물이었음을 보여준다."
+  },
+  "n13_to_n71_before_after": [
+    {
+      "comparison": "hybrid_vs_bm25",
+      "before": {
+        "source": "output/validated_eval.json",
+        "n": 13,
+        "treatment_rate": 0.2308,
+        "baseline_rate": 0.0,
+        "mean_diff": 0.2308,
+        "bootstrap_95_ci": [
+          0.0,
+          0.4615
+        ],
+        "bootstrap_excludes_zero": false,
+        "mcnemar_p_two_sided": 0.25,
+        "wins_losses_ties": [
+          3,
+          0,
+          10
+        ]
+      },
+      "after": {
+        "source": "output/validated_suite_smoke.json",
+        "n": 71,
+        "treatment_rate": 0.5775,
+        "baseline_rate": 0.1549,
+        "mean_diff": 0.4225,
+        "bootstrap_95_ci": [
+          0.3099,
+          0.5352
+        ],
+        "bootstrap_excludes_zero": true,
+        "mcnemar_p_two_sided": 1.86265e-09,
+        "wins_losses_ties": [
+          30,
+          0,
+          41
+        ]
+      }
+    },
+    {
+      "comparison": "dense_vs_bm25",
+      "before": {
+        "source": "output/validated_eval.json",
+        "n": 13,
+        "treatment_rate": 0.1538,
+        "baseline_rate": 0.0,
+        "mean_diff": 0.1538,
+        "bootstrap_95_ci": [
+          0.0,
+          0.3846
+        ],
+        "bootstrap_excludes_zero": false,
+        "mcnemar_p_two_sided": 0.5,
+        "wins_losses_ties": [
+          2,
+          0,
+          11
+        ]
+      },
+      "after": {
+        "source": "output/validated_suite_smoke.json",
+        "n": 71,
+        "treatment_rate": 0.5493,
+        "baseline_rate": 0.1549,
+        "mean_diff": 0.3944,
+        "bootstrap_95_ci": [
+          0.2676,
+          0.507
+        ],
+        "bootstrap_excludes_zero": true,
+        "mcnemar_p_two_sided": 5.7742e-08,
+        "wins_losses_ties": [
+          29,
+          1,
+          41
+        ]
+      }
+    }
+  ],
+  "small_sample_bootstrap_artifact": {
+    "cases": {
+      "n13_hybrid_vs_bm25": {
+        "configuration": {
+          "n": 13,
+          "wins": 3,
+          "ties": 10,
+          "losses": 0
+        },
+        "p_no_winning_query_in_a_resample": 0.0330169,
+        "formula": "((13-3)/13)^13",
+        "exceeds_2.5pct_threshold": true,
+        "empirical_fraction_of_resamples_equal_zero": 0.0352,
+        "bootstrap_mean_diff": 0.2308,
+        "bootstrap_95_ci": [
+          0.0,
+          0.4615
+        ],
+        "lower_bound_is_structurally_zero": true,
+        "exact_mcnemar": {
+          "wins": 3,
+          "losses": 0,
+          "ties": 10,
+          "discordant": 3,
+          "p_two_sided_exact": 0.25,
+          "p_one_sided_exact": 0.125
+        },
+        "reading": "승리 질의가 3개뿐이면 크기 13의 재표본에 승리가 전혀 포함되지 않을 확률이 0.0330로 0.025를 넘는다. 따라서 2.5분위수가 구조적으로 0이 되고, 3승 0패인 어떤 결과도 percentile bootstrap에서는 자동으로 'CI가 0을 포함'한다. 이는 효과가 없다는 증거가 아니라 표본이 작다는 증거다. 동일 구성의 exact McNemar 양측 p=0.25이며, 이쪽이 소표본 이진 짝지음의 primary 검정이다."
+      },
+      "n13_dense_vs_bm25": {
+        "configuration": {
+          "n": 13,
+          "wins": 2,
+          "ties": 11,
+          "losses": 0
+        },
+        "p_no_winning_query_in_a_resample": 0.113983,
+        "formula": "((13-2)/13)^13",
+        "exceeds_2.5pct_threshold": true,
+        "empirical_fraction_of_resamples_equal_zero": 0.11565,
+        "bootstrap_mean_diff": 0.1538,
+        "bootstrap_95_ci": [
+          0.0,
+          0.3846
+        ],
+        "lower_bound_is_structurally_zero": true,
+        "exact_mcnemar": {
+          "wins": 2,
+          "losses": 0,
+          "ties": 11,
+          "discordant": 2,
+          "p_two_sided_exact": 0.5,
+          "p_one_sided_exact": 0.25
+        },
+        "reading": "승리 질의가 2개뿐이면 크기 13의 재표본에 승리가 전혀 포함되지 않을 확률이 0.1140로 0.025를 넘는다. 따라서 2.5분위수가 구조적으로 0이 되고, 2승 0패인 어떤 결과도 percentile bootstrap에서는 자동으로 'CI가 0을 포함'한다. 이는 효과가 없다는 증거가 아니라 표본이 작다는 증거다. 동일 구성의 exact McNemar 양측 p=0.5이며, 이쪽이 소표본 이진 짝지음의 primary 검정이다."
+      }
+    },
+    "threshold_table": [
+      {
+        "n": 13,
+        "max_wins_with_structurally_zero_lower_bound": 3,
+        "p_no_win_at_that_w": 0.0330169,
+        "p_no_win_at_w_plus_1": 0.00839246,
+        "note": "n=13, 0패일 때 승리 수가 3개 이하이면 percentile bootstrap 2.5분위수가 구조적으로 0"
+      },
+      {
+        "n": 20,
+        "max_wins_with_structurally_zero_lower_bound": 3,
+        "p_no_win_at_that_w": 0.0387595,
+        "p_no_win_at_w_plus_1": 0.0115292,
+        "note": "n=20, 0패일 때 승리 수가 3개 이하이면 percentile bootstrap 2.5분위수가 구조적으로 0"
+      },
+      {
+        "n": 30,
+        "max_wins_with_structurally_zero_lower_bound": 3,
+        "p_no_win_at_that_w": 0.0423912,
+        "p_no_win_at_w_plus_1": 0.0136635,
+        "note": "n=30, 0패일 때 승리 수가 3개 이하이면 percentile bootstrap 2.5분위수가 구조적으로 0"
+      },
+      {
+        "n": 50,
+        "max_wins_with_structurally_zero_lower_bound": 3,
+        "p_no_win_at_that_w": 0.0453307,
+        "p_no_win_at_w_plus_1": 0.0154665,
+        "note": "n=50, 0패일 때 승리 수가 3개 이하이면 percentile bootstrap 2.5분위수가 구조적으로 0"
+      },
+      {
+        "n": 71,
+        "max_wins_with_structurally_zero_lower_bound": 3,
+        "p_no_win_at_that_w": 0.0466434,
+        "p_no_win_at_w_plus_1": 0.0162918,
+        "note": "n=71, 0패일 때 승리 수가 3개 이하이면 percentile bootstrap 2.5분위수가 구조적으로 0"
+      }
+    ],
+    "rule": "P(재표본에 승리 질의가 0개) = ((n-w)/n)^n ≈ exp(-w) 이므로 이 인공물은 **표본 크기 n이 아니라 승리 개수 w가 결정한다**. exp(-3)=0.0498 > 0.025 > 0.0183=exp(-4) 이므로, 0패인 상황에서 승리가 3개 이하이면 n이 얼마든 percentile bootstrap의 하한이 0이 되고, 4개 이상이면 하한이 0을 벗어난다. n=13은 승리가 3개뿐이라 걸렸고, n=71은 승리가 30개라 걸리지 않는다."
+  }
 }

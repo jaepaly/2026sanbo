@@ -1,0 +1,259 @@
+{
+  "meta": {
+    "purpose": "검증셋(n=71) 질의에 자기참조 압력을 가하기 위한 결정론적 상위어 치환 사전. experiment_symmetric_ablation.py가 이 파일만 읽어 조작을 수행한다.",
+    "why": "experiment_paraphrase_gap.py의 변별어 제거 ablation은 합성셋 + BM25에만 적용되었다. 즉 자기비판 도구가 경쟁 상대에게만 적용되었다. 이 사전은 같은 압력을 검증셋 x (BM25/dense/hybrid)에 대칭으로 가하기 위한 것이다.",
+    "design": {
+      "tier": "치환 강도 단계. level N에서는 tier <= N 인 규칙만 적용한다. 따라서 적용 규칙 집합은 level에 대해 중첩(nested)되며 단조증가한다.",
+      "tier1": "정답 항목을 사실상 지목하는 핵심 명사구 또는 정답 원문에서 옮겨 적은 예외조항(예: NRC 예외)을 상위어/일반 표현으로 치환",
+      "tier2": "정답 항목의 한정 수식어(성능·용도·재질 등)를 상위어로 치환",
+      "tier3": "남은 범주 명사에 대한 언어별 일반화(전 질의 공통). scope=global",
+      "determinism": "매칭된 규칙을 (tier asc, phrase 길이 desc, phrase 사전순) 으로 정렬해 순차 str.replace. tier1이 이미 치환한 구간에 tier2 구가 포함되어 있으면 tier2는 매칭되지 않으며, 이는 의도된 결정론적 동작이다(실제 적용 건수를 산출물에 기록한다)."
+    },
+    "authorship_caveat": "치환어는 질의 원문과 정답 원문을 함께 보고 사람(에이전트)이 작성한 판단이며 자동 생성이 아니다. 편향 방향을 명시한다: (1) 사용자의 실제 정보 요구(무엇을 수출하려는가)는 보존하고, (2) 정답 항목의 표현을 되받아 쓰는 어구만 제거하려 했다. 치환 후에도 정답 라벨은 변경하지 않았다. 치환된 질의가 여전히 동일 정답을 가리키는지에 대한 전문가 확인은 **확인 필요** 상태다.",
+    "labels_unchanged": true,
+    "created_for": "M4 대칭 ablation"
+  },
+  "rules": [
+    {"query_ids": ["ext-002"], "tier": 1, "lang": "ko", "phrase": "플라즈마 발생장비", "hypernym": "공정 처리 유닛", "reason": "정답 3B001은 반도체 제조 장비. 장비 종류를 지목하는 구."},
+    {"query_ids": ["ext-002"], "tier": 2, "lang": "ko", "phrase": "반도체 식각 공정용", "hypernym": "부품 가공 공정용", "reason": "'반도체'는 정답 표제어."},
+
+    {"query_ids": ["ext-003"], "tier": 1, "lang": "en", "phrase": "CNC machining center", "hypernym": "shop-floor forming apparatus", "reason": "정답 2B001은 numerical control 공작기계."},
+    {"query_ids": ["ext-003"], "tier": 2, "lang": "en", "phrase": "5-axis simultaneous control capability", "hypernym": "multi-directional handling capability", "reason": "성능 한정 수식어."},
+
+    {"query_ids": ["ext-004"], "tier": 1, "lang": "ko", "phrase": "고정밀 자이로스코프 모듈", "hypernym": "자세 관련 단위품", "reason": "정답 7A002 표제어 Gyros 직역."},
+    {"query_ids": ["ext-004"], "tier": 2, "lang": "ko", "phrase": "드론용", "hypernym": "운송체용", "reason": "용도 한정."},
+
+    {"query_ids": ["ext-005"], "tier": 1, "lang": "en", "phrase": "Cryptographic software", "hypernym": "Data handling program", "reason": "정답 5D002는 암호 소프트웨어."},
+    {"query_ids": ["ext-005"], "tier": 2, "lang": "en", "phrase": "source code", "hypernym": "internal build files", "reason": "정답 원문 표현."},
+
+    {"query_ids": ["ext-006"], "tier": 1, "lang": "ko", "phrase": "타이타늄 합금 판재", "hypernym": "금속 자재", "reason": "정답 1C002 Metal alloys 직역."},
+    {"query_ids": ["ext-006"], "tier": 2, "lang": "ko", "phrase": "재료 등급이 높아", "hypernym": "제품 규격이 높아", "reason": "재질 한정."},
+
+    {"query_ids": ["ext-007"], "tier": 1, "lang": "en", "phrase": "underwater acoustic communication systems", "hypernym": "below-surface signalling arrangements", "reason": "정답 6A001 Acoustic systems 직역."},
+    {"query_ids": ["ext-007"], "tier": 2, "lang": "en", "phrase": "test equipment", "hypernym": "checking apparatus", "reason": "정답 표제어 equipment."},
+
+    {"query_ids": ["ext-013"], "tier": 1, "lang": "en", "phrase": "vibration test equipment", "hypernym": "mechanical checking apparatus", "reason": "정답 2D001 소프트웨어의 대상 장비."},
+    {"query_ids": ["ext-013"], "tier": 2, "lang": "en", "phrase": "software that controls", "hypernym": "program that drives", "reason": "정답 표제어 Software."},
+
+    {"query_ids": ["ext-015"], "tier": 1, "lang": "en", "phrase": "high-speed oscilloscope", "hypernym": "signal viewing instrument", "reason": "정답 3A002 electronic assemblies 하위 품목."},
+    {"query_ids": ["ext-015"], "tier": 2, "lang": "en", "phrase": "bandwidth over 1 GHz", "hypernym": "a wide operating range", "reason": "성능 한정."},
+
+    {"query_ids": ["ext-016"], "tier": 1, "lang": "ko", "phrase": "특수 금분소재", "hypernym": "미세 원료", "reason": "정답 1C002 metal alloy powder 직역."},
+    {"query_ids": ["ext-016"], "tier": 2, "lang": "ko", "phrase": "3D 프린터용", "hypernym": "적층 제조용", "reason": "용도 한정."},
+
+    {"query_ids": ["ext-017"], "tier": 1, "lang": "en", "phrase": "GaAs MMIC technology", "hypernym": "compound-material circuitry", "reason": "정답 3A001 하위 품목을 특정하는 재료·소자 명칭."},
+    {"query_ids": ["ext-017"], "tier": 2, "lang": "en", "phrase": "radar components", "hypernym": "detection subassemblies", "reason": "용도 한정."},
+
+    {"query_ids": ["ext-023"], "tier": 1, "lang": "en", "phrase": "encryption chips", "hypernym": "data-protection devices", "reason": "정답 5A002 Information security 직역."},
+    {"query_ids": ["ext-023"], "tier": 2, "lang": "en", "phrase": "research collaboration", "hypernym": "joint project", "reason": "맥락 한정."},
+
+    {"query_ids": ["ext-028"], "tier": 1, "lang": "ko", "phrase": "소나/음향 신호 처리", "hypernym": "신호 처리", "reason": "정답 6A001 Acoustic 직역."},
+    {"query_ids": ["ext-028"], "tier": 2, "lang": "ko", "phrase": "어뢰 유도제어 부품", "hypernym": "수중 장비 구성물", "reason": "용도 한정."},
+
+    {"query_ids": ["ext-029"], "tier": 1, "lang": "en", "phrase": "semiconductor lithography", "hypernym": "component patterning", "reason": "정답 3B001 semiconductor 표제어."},
+    {"query_ids": ["ext-029"], "tier": 2, "lang": "en", "phrase": "high-precision angular positioning table", "hypernym": "precision alignment stage", "reason": "품목 명칭 한정."},
+
+    {"query_ids": ["g-seungwoo-001"], "tier": 1, "lang": "ko", "phrase": "절연성 액체를 전자 부품에 직접 뿌려", "hypernym": "내부 유체를 순환시켜", "reason": "정답 3A003 'dielectric fluid is sprayed onto electronic components' 직역."},
+    {"query_ids": ["g-seungwoo-001"], "tier": 2, "lang": "ko", "phrase": "밀폐 용기 안에서", "hypernym": "장치 안에서", "reason": "'sealed enclosure' 직역."},
+    {"query_ids": ["g-seungwoo-001"], "tier": 3, "lang": "ko", "phrase": "작동 온도를 유지시키는 냉각 장치", "hypernym": "온도를 관리하는 설비", "reason": "'maintain within their operating temperature' + spray cooling -> thermal management."},
+
+    {"query_ids": ["g-seungwoo-002"], "tier": 1, "lang": "ko", "phrase": "가변 주파수 변환 장치", "hypernym": "전력 변환 부품", "reason": "정답 3A225 'variable frequency ... frequency changers' 직역."},
+    {"query_ids": ["g-seungwoo-002"], "tier": 1, "lang": "ko", "phrase": "원자력 규제 대상은 아닌데", "hypernym": "별도 규제 대상은 아닌데", "reason": "정답 원문의 NRC 예외조항을 질의가 옮겨 적은 부분."},
+    {"query_ids": ["g-seungwoo-002"], "tier": 2, "lang": "ko", "phrase": "모터 구동용으로 쓰이는", "hypernym": "산업 구동용으로 쓰이는", "reason": "'usable as a ... motor drive' 직역."},
+
+    {"query_ids": ["g-seungwoo-003"], "tier": 1, "lang": "en", "phrase": "high-current DC power feed unit", "hypernym": "electrical supply unit", "reason": "정답 3A226 'High-power direct current power supplies' 직역."},
+    {"query_ids": ["g-seungwoo-003"], "tier": 1, "lang": "en", "phrase": "It is not under nuclear regulatory scope.", "hypernym": "It is not under a separate regulatory scope.", "reason": "정답 원문 NRC 예외조항 전사."},
+    {"query_ids": ["g-seungwoo-003"], "tier": 2, "lang": "en", "phrase": "research lab", "hypernym": "laboratory", "reason": "맥락 한정."},
+
+    {"query_ids": ["g-seungwoo-004"], "tier": 1, "lang": "ko", "phrase": "직류 전원 장치", "hypernym": "전원 공급 부품", "reason": "정답 3A227 'direct current power supplies' 직역."},
+    {"query_ids": ["g-seungwoo-004"], "tier": 1, "lang": "ko", "phrase": "원자력 관련 품목은 아니라고 들었는데", "hypernym": "별도 규제 품목은 아니라고 들었는데", "reason": "정답 원문 NRC 예외조항 전사."},
+    {"query_ids": ["g-seungwoo-004"], "tier": 2, "lang": "ko", "phrase": "높은 전압을 공급하는", "hypernym": "일정 전압을 공급하는", "reason": "'High-voltage' 직역."},
+
+    {"query_ids": ["g-seungwoo-005"], "tier": 1, "lang": "ko", "phrase": "질량 분석 장비", "hypernym": "성분 분석 장비", "reason": "정답 3A233 Mass spectrometers 직역."},
+    {"query_ids": ["g-seungwoo-005"], "tier": 2, "lang": "ko", "phrase": "무거운 분자 이온까지 측정할 수 있고 분해능이 매우 높은", "hypernym": "측정 범위가 넓은", "reason": "'capable of measuring ions of 230 u or greater and having a resolution' 직역."},
+
+    {"query_ids": ["g-seungwoo-006"], "tier": 1, "lang": "en", "phrase": "lie-detection instruments", "hypernym": "behavioural assessment instruments", "reason": "정답 3A981 Polygraphs."},
+    {"query_ids": ["g-seungwoo-006"], "tier": 2, "lang": "en", "phrase": "stress-analysis devices", "hypernym": "physiological screening devices", "reason": "정답 원문 괄호 예외의 biological/neurophysical responses에 대응."},
+
+    {"query_ids": ["g-seungwoo-007"], "tier": 1, "lang": "ko", "phrase": "반도체 소자를 검사하고 시험하기 위해", "hypernym": "전자 소자를 확인하기 위해", "reason": "정답 3B002 'testing or inspecting ... semiconductor devices' 직역."},
+    {"query_ids": ["g-seungwoo-007"], "tier": 2, "lang": "ko", "phrase": "완성 단계의", "hypernym": "생산 단계의", "reason": "'finished or unfinished' 직역."},
+
+    {"query_ids": ["g-seungwoo-008"], "tier": 1, "lang": "ko", "phrase": "최첨단 미세공정 집적회로", "hypernym": "고성능 집적회로", "reason": "정답 3B994 'advanced-node integrated circuit' 직역."},
+    {"query_ids": ["g-seungwoo-008"], "tier": 2, "lang": "ko", "phrase": "반도체 제조 장비", "hypernym": "부품 제조 장비", "reason": "정답 표제어 직역."},
+
+    {"query_ids": ["g-seungwoo-009"], "tier": 1, "lang": "en", "phrase": "gallium nitride and silicon carbide films", "hypernym": "specialty crystalline films", "reason": "정답 3C006 GaN/SiC epitaxial layer 직역."},
+    {"query_ids": ["g-seungwoo-009"], "tier": 2, "lang": "en", "phrase": "wafer substrates layered with", "hypernym": "base plates coated with", "reason": "'substrate' + 'epitaxial layer' 직역."},
+
+    {"query_ids": ["g-seungwoo-010"], "tier": 1, "lang": "ko", "phrase": "전자기 펄스나 정전기 충격", "hypernym": "외부 전기 충격", "reason": "정답 3D005 EMP/ESD 직역."},
+    {"query_ids": ["g-seungwoo-010"], "tier": 2, "lang": "ko", "phrase": "마이크로컴퓨터가 1밀리초 안에 정상 동작을 회복하게", "hypernym": "제어 장치가 빠르게 정상 동작을 회복하게", "reason": "'restore normal operation of a microcomputer ... within 1 ms' 직역."},
+
+    {"query_ids": ["g-seungwoo-011"], "tier": 1, "lang": "ko", "phrase": "게이트올어라운드 트랜지스터 구조", "hypernym": "차세대 소자 구조", "reason": "정답 3D006 GAAFET 음차."},
+    {"query_ids": ["g-seungwoo-011"], "tier": 2, "lang": "ko", "phrase": "전자 설계 자동화 소프트웨어", "hypernym": "설계 지원 소프트웨어", "reason": "'Electronic Computer-Aided Design software' 직역."},
+
+    {"query_ids": ["g-seungwoo-012"], "tier": 1, "lang": "en", "phrase": "32-bit-and-above processor cores", "hypernym": "standard processing cores", "reason": "정답 3E002 microprocessor core 성능 기준."},
+    {"query_ids": ["g-seungwoo-012"], "tier": 2, "lang": "en", "phrase": "advanced arithmetic units", "hypernym": "computation units", "reason": "'arithmetic' 직역."},
+    {"query_ids": ["g-seungwoo-012"], "tier": 3, "lang": "en", "phrase": "design know-how", "hypernym": "engineering know-how", "reason": "'Technology for development or production' 대응."},
+
+    {"query_ids": ["g-seungwoo-013"], "tier": 1, "lang": "ko", "phrase": "300밀리미터 실리콘 웨이퍼", "hypernym": "대구경 기판", "reason": "정답 3E004 '300 mm diameter silicon wafers' 직역."},
+    {"query_ids": ["g-seungwoo-013"], "tier": 2, "lang": "ko", "phrase": "절삭하고 연마하는 데 필요한 공정 기술", "hypernym": "가공하는 데 필요한 공정 기술", "reason": "'slicing, grinding and polishing' 직역."},
+    {"query_ids": ["g-seungwoo-013"], "tier": 3, "lang": "ko", "phrase": "매우 평탄하게", "hypernym": "규격에 맞게", "reason": "SFQR 평탄도 기준 대응."},
+
+    {"query_ids": ["g-seungwoo-014"], "tier": 1, "lang": "en", "phrase": "analog and digital computing units", "hypernym": "computation units", "reason": "정답 4A101 'Analog computers, digital computers' 직역."},
+    {"query_ids": ["g-seungwoo-014"], "tier": 2, "lang": "en", "phrase": "modified for use in missile platforms", "hypernym": "modified for use in aerospace platforms", "reason": "'designed or modified for use in missiles' 직역."},
+
+    {"query_ids": ["g-seungwoo-015"], "tier": 1, "lang": "ko", "phrase": "소스 코드를 자동으로 생성해 주는 운영체제 소프트웨어", "hypernym": "코드 작성을 돕는 시스템 소프트웨어", "reason": "정답 4D993 'automatic generation of source codes, and operating system software' 직역."},
+    {"query_ids": ["g-seungwoo-015"], "tier": 2, "lang": "ko", "phrase": "실시간 처리 장비", "hypernym": "산업 제어 장비", "reason": "'real-time processing equipment' 직역."},
+
+    {"query_ids": ["g-seungwoo-016"], "tier": 1, "lang": "ko", "phrase": "원격 측정 및 원격 제어 장비", "hypernym": "통신 지원 장비", "reason": "정답 5A101 'Telemetering and telecontrol equipment' 직역."},
+    {"query_ids": ["g-seungwoo-016"], "tier": 2, "lang": "ko", "phrase": "사거리 300킬로미터 이상 무인 비행체", "hypernym": "장거리 무인 비행체", "reason": "정답 계열의 300 km 기준 전사."},
+
+    {"query_ids": ["g-seungwoo-017"], "tier": 1, "lang": "en", "phrase": "covertly capture wire and electronic communications", "hypernym": "record electronic traffic", "reason": "정답 5A980 'surreptitious interception of wire, oral, or electronic communications' 직역."},
+    {"query_ids": ["g-seungwoo-017"], "tier": 2, "lang": "en", "phrase": "security screening", "hypernym": "screening", "reason": "용도 한정."},
+
+    {"query_ids": ["g-seungwoo-019"], "tier": 1, "lang": "ko", "phrase": "물속에서 전기장을 감지하는 센서와 자기장 측정 장비", "hypernym": "수중 물리량 측정 장비", "reason": "정답 6A006 'underwater electric field sensors' + 'Magnetometers' 직역."},
+    {"query_ids": ["g-seungwoo-019"], "tier": 2, "lang": "ko", "phrase": "군용 가능성도 있어", "hypernym": "용도가 다양해", "reason": "용도 한정."},
+
+    {"query_ids": ["g-seungwoo-020"], "tier": 1, "lang": "en", "phrase": "hardened against nuclear radiation effects", "hypernym": "tolerant to harsh environments", "reason": "정답 6A102 'Radiation hardened detectors ... protecting against nuclear effects' 직역."},
+    {"query_ids": ["g-seungwoo-020"], "tier": 2, "lang": "en", "phrase": "usable on missile platforms", "hypernym": "usable on aerospace platforms", "reason": "'usable for missiles' 직역."},
+    {"query_ids": ["g-seungwoo-020"], "tier": 3, "lang": "en", "phrase": "rated for very high total dose", "hypernym": "rated for demanding duty", "reason": "total dose 기준 대응."},
+
+    {"query_ids": ["g-seungwoo-021"], "tier": 1, "lang": "ko", "phrase": "중력 값을 정밀하게 측정하는 장비", "hypernym": "물리량 측정 장비", "reason": "정답 6A107 Gravity meters 직역."},
+    {"query_ids": ["g-seungwoo-021"], "tier": 2, "lang": "ko", "phrase": "공중이나 해상에서", "hypernym": "이동체에서", "reason": "'airborne or marine use' 직역."},
+
+    {"query_ids": ["g-seungwoo-022"], "tier": 1, "lang": "ko", "phrase": "해양 음향 장비", "hypernym": "해양 계측 장비", "reason": "정답 6A991 'Marine or terrestrial acoustic equipment' 직역."},
+    {"query_ids": ["g-seungwoo-022"], "tier": 2, "lang": "ko", "phrase": "물속 물체를 탐지하고 위치를 파악하는", "hypernym": "수중 상태를 확인하는", "reason": "'detecting or locating underwater objects' 직역."},
+
+    {"query_ids": ["g-seungwoo-023"], "tier": 1, "lang": "en", "phrase": "optical sensing fiber", "hypernym": "specialty optical filament", "reason": "정답 6C992 'Optical sensing fibers' 그대로."},
+    {"query_ids": ["g-seungwoo-023"], "tier": 2, "lang": "en", "phrase": "structurally modified to have a very short beat length for high birefringence", "hypernym": "adjusted to have a particular polarisation property", "reason": "'modified structurally to have a beat length ... (high birefringence)' 직역."},
+
+    {"query_ids": ["g-seungwoo-024"], "tier": 1, "lang": "ko", "phrase": "고속 카메라와 영상 장치의 성능을 끌어올리거나 제한을 풀어주는", "hypernym": "영상 기기의 설정을 조정하는", "reason": "정답 6D201 'enhance or release the performance characteristics of high-speed cameras and imaging devices' 직역."},
+    {"query_ids": ["g-seungwoo-024"], "tier": 2, "lang": "ko", "phrase": "해외 연구기관", "hypernym": "해외 기관", "reason": "맥락 한정."},
+
+    {"query_ids": ["g-seungwoo-025"], "tier": 1, "lang": "ko", "phrase": "도플러 속도계를 방위 기준과 결합해", "hypernym": "속도 정보를 방위 정보와 결합해", "reason": "정답 7A008 'Doppler velocity ... integrated with a heading source' 직역."},
+    {"query_ids": ["g-seungwoo-025"], "tier": 2, "lang": "ko", "phrase": "수중 음향 항법 시스템", "hypernym": "수중 위치 결정 시스템", "reason": "'Underwater sonar navigation systems' 직역."},
+    {"query_ids": ["g-seungwoo-025"], "tier": 3, "lang": "ko", "phrase": "이동 거리 대비 오차가 매우 작은", "hypernym": "오차가 작은", "reason": "'3% of distance traveled' 기준 대응."},
+
+    {"query_ids": ["g-seungwoo-026"], "tier": 1, "lang": "en", "phrase": "automatically tracking stars or satellites", "hypernym": "referencing external cues", "reason": "정답 7A104 'automatically tracking celestial bodies or satellites' 직역."},
+    {"query_ids": ["g-seungwoo-026"], "tier": 2, "lang": "en", "phrase": "determines orientation", "hypernym": "establishes heading", "reason": "'derive position or orientation' 직역."},
+
+    {"query_ids": ["g-seungwoo-027"], "tier": 1, "lang": "ko", "phrase": "수동형 방향 탐지 센서", "hypernym": "방위 확인 소자", "reason": "정답 7A115 'Passive sensors ... (direction finding equipment)' 직역."},
+    {"query_ids": ["g-seungwoo-027"], "tier": 2, "lang": "ko", "phrase": "특정 전자기 발생원의 방위를 알아내는", "hypernym": "신호원의 위치를 알아내는", "reason": "'determining bearing to specific electromagnetic sources' 직역."},
+    {"query_ids": ["g-seungwoo-027"], "tier": 3, "lang": "ko", "phrase": "미사일 용도 가능성이 있어", "hypernym": "항공 용도 가능성이 있어", "reason": "'for use in missiles' 대응."},
+
+    {"query_ids": ["g-seungwoo-028"], "tier": 1, "lang": "en", "phrase": "military acoustic and radar gear", "hypernym": "defence sensing gear", "reason": "정답 6E619가 참조하는 6B619 계열(군용 음향·레이더) 대응."},
+    {"query_ids": ["g-seungwoo-028"], "tier": 2, "lang": "en", "phrase": "operate and maintain", "hypernym": "run and service", "reason": "'operation, installation, maintenance, repair' 직역."},
+    {"query_ids": ["g-seungwoo-028"], "tier": 3, "lang": "en", "phrase": "falls outside standard munitions lists", "hypernym": "falls outside standard lists", "reason": "600-series 맥락 한정."},
+
+    {"query_ids": ["g-seungwoo-029"], "tier": 1, "lang": "ko", "phrase": "레이더 반사 면적을 측정하기 위해", "hypernym": "전파 특성을 측정하기 위해", "reason": "정답 6B108 'radar cross section measurement' 직역."},
+    {"query_ids": ["g-seungwoo-029"], "tier": 2, "lang": "ko", "phrase": "로켓이나 무인기의", "hypernym": "비행체의", "reason": "'rockets, missiles, or unmanned aerial vehicles' 직역."},
+    {"query_ids": ["g-seungwoo-029"], "tier": 3, "lang": "ko", "phrase": "사거리가 긴 비행체용이라", "hypernym": "장거리 비행체용이라", "reason": "300 km 기준 대응."},
+
+    {"query_ids": ["g-seungwoo-030"], "tier": 1, "lang": "en", "phrase": "frequency converters and generators", "hypernym": "power conversion units", "reason": "정답 3D202가 지목하는 3A225 'frequency changers or generators' 직역."},
+    {"query_ids": ["g-seungwoo-030"], "tier": 2, "lang": "en", "phrase": "boosts the performance", "hypernym": "adjusts the settings", "reason": "'enhance or release the performance characteristics' 직역."},
+
+    {"query_ids": ["g-yechan-001"], "tier": 1, "lang": "ko", "phrase": "사냥용 조준경 모듈", "hypernym": "야외용 광학 단위품", "reason": "정답 0A504 'Optical sighting devices for firearms' 직역."},
+    {"query_ids": ["g-yechan-001"], "tier": 2, "lang": "ko", "phrase": "총기 액세서리 업체", "hypernym": "레저 장비 업체", "reason": "'firearms' 직역."},
+    {"query_ids": ["g-yechan-001"], "tier": 3, "lang": "ko", "phrase": "교체용 렌즈 하우징", "hypernym": "교체용 외장 부품", "reason": "정답 하위 components 대응."},
+
+    {"query_ids": ["g-yechan-002"], "tier": 1, "lang": "ko", "phrase": "차량 탑재형 고압 살수 장비", "hypernym": "차량 탑재형 유체 분사 설비", "reason": "정답 0A977 'Water cannon systems' 직역."},
+    {"query_ids": ["g-yechan-002"], "tier": 2, "lang": "ko", "phrase": "시위 대응 장비 제조사", "hypernym": "공공 안전 장비 제조사", "reason": "'for riot or crowd control' 직역."},
+
+    {"query_ids": ["g-yechan-003"], "tier": 1, "lang": "ko", "phrase": "경찰용 헬멧과 투명 보호판", "hypernym": "작업용 머리 보호구와 투명 차단판", "reason": "정답 0A979 'Police helmets and shields' 직역."},
+    {"query_ids": ["g-yechan-003"], "tier": 2, "lang": "ko", "phrase": "방호장비 회사", "hypernym": "안전용품 회사", "reason": "범주 한정."},
+
+    {"query_ids": ["g-yechan-004"], "tier": 1, "lang": "ko", "phrase": "전자식 구속 벨트와 다중 고정 의자 부품", "hypernym": "전자식 고정 벨트와 다중 고정 좌석 부품", "reason": "정답 0A982 'Law enforcement restraint devices' 직역."},
+    {"query_ids": ["g-yechan-004"], "tier": 2, "lang": "ko", "phrase": "교정시설 장비 납품사", "hypernym": "공공시설 장비 납품사", "reason": "'Law enforcement' 대응."},
+    {"query_ids": ["g-yechan-004"], "tier": 3, "lang": "ko", "phrase": "해외 교도소", "hypernym": "해외 시설", "reason": "맥락 한정."},
+
+    {"query_ids": ["g-yechan-005"], "tier": 1, "lang": "ko", "phrase": "탄소섬유 적층 패널", "hypernym": "경량 적층 패널", "reason": "정답 1A002 'Composite structures or laminates' 직역."},
+    {"query_ids": ["g-yechan-005"], "tier": 2, "lang": "ko", "phrase": "단순 복합재인지", "hypernym": "단순 자재인지", "reason": "'Composite' 직역."},
+
+    {"query_ids": ["g-yechan-006"], "tier": 1, "lang": "ko", "phrase": "휴대형 탐지기와 보호 장구 세트", "hypernym": "휴대형 계측기와 작업 장구 세트", "reason": "정답 1A004 'Protective and detection equipment' 직역."},
+    {"query_ids": ["g-yechan-006"], "tier": 2, "lang": "ko", "phrase": "비군사용 안전 장비지만", "hypernym": "일반 안전 장비지만", "reason": "'not specially designed for military use' 직역."},
+
+    {"query_ids": ["g-yechan-007"], "tier": 1, "lang": "ko", "phrase": "경량 방호 조끼와 세라믹 삽입판", "hypernym": "경량 착용 조끼와 세라믹 판재", "reason": "정답 1A005 'Body armor' 직역."},
+    {"query_ids": ["g-yechan-007"], "tier": 2, "lang": "ko", "phrase": "방탄복 제조사", "hypernym": "의류 제조사", "reason": "'Body armor' 직역."},
+    {"query_ids": ["g-yechan-007"], "tier": 3, "lang": "ko", "phrase": "개인 보호용", "hypernym": "개인 착용용", "reason": "용도 한정."},
+
+    {"query_ids": ["g-yechan-008"], "tier": 1, "lang": "ko", "phrase": "의심 물체 제거용 원격 작업 플랫폼", "hypernym": "현장 작업용 원격 플랫폼", "reason": "정답 1A006 'disposal of Improvised Explosive Devices' 직역."},
+    {"query_ids": ["g-yechan-008"], "tier": 2, "lang": "ko", "phrase": "폭발물 처리 가능성이 있어", "hypernym": "위험물 취급 가능성이 있어", "reason": "'Explosive' 직역."},
+
+    {"query_ids": ["g-yechan-009"], "tier": 1, "lang": "ko", "phrase": "레이더와 열 신호를 낮추는 외장 코팅", "hypernym": "표면 반사 특성을 바꾸는 외장 코팅", "reason": "정답 1A101 'reduced observables such as radar reflectivity, ultraviolet/infrared signatures' 직역."},
+    {"query_ids": ["g-yechan-009"], "tier": 2, "lang": "ko", "phrase": "항공 플랫폼 적용 가능성", "hypernym": "운송체 적용 가능성", "reason": "'usable in rockets, missiles, or unmanned aerial vehicles' 대응."},
+
+    {"query_ids": ["g-yechan-010"], "tier": 1, "lang": "ko", "phrase": "적층 부품 생산라인의 자동 검사 장비", "hypernym": "부품 생산라인의 자동 확인 장비", "reason": "정답 1B001 'Equipment for the production or inspection of composite structures or laminates' 직역."},
+    {"query_ids": ["g-yechan-010"], "tier": 2, "lang": "ko", "phrase": "복합재 설비 회사", "hypernym": "소재 설비 회사", "reason": "'composite' 직역."},
+
+    {"query_ids": ["g-yechan-011"], "tier": 1, "lang": "ko", "phrase": "초내열 합금 분말 제조용 분무 설비", "hypernym": "특수 소재 미분화 설비", "reason": "정답 1B002 'Equipment designed to produce metal alloy powder' 직역."},
+    {"query_ids": ["g-yechan-011"], "tier": 2, "lang": "ko", "phrase": "일반 분말 장비인지", "hypernym": "일반 소재 장비인지", "reason": "'powder' 직역."},
+
+    {"query_ids": ["g-yechan-012"], "tier": 1, "lang": "ko", "phrase": "산업용 혼합기", "hypernym": "산업용 배합 설비", "reason": "정답 1B117 'Batch mixers' 직역."},
+    {"query_ids": ["g-yechan-012"], "tier": 2, "lang": "ko", "phrase": "고점도 추진제 원료를 균질하게 섞는", "hypernym": "고점도 원료를 균일하게 처리하는", "reason": "'propellant' 계열 대응."},
+
+    {"query_ids": ["g-yechan-013"], "tier": 1, "lang": "en", "phrase": "continuous reinforcement tow and pre-impregnated sheets", "hypernym": "continuous strand rolls and pre-coated sheets", "reason": "정답 1C010 'Fibrous or filamentary materials' 직역."},
+    {"query_ids": ["g-yechan-013"], "tier": 2, "lang": "en", "phrase": "carbon fiber producer", "hypernym": "specialty product producer", "reason": "'fibre' 직역."},
+
+    {"query_ids": ["g-yechan-014"], "tier": 1, "lang": "en", "phrase": "solid rocket ingredient chemicals", "hypernym": "specialty reactive chemicals", "reason": "정답 1C111 'Propellants and constituent chemicals for propellants' 직역."},
+    {"query_ids": ["g-yechan-014"], "tier": 2, "lang": "en", "phrase": "university propulsion lab", "hypernym": "university engineering lab", "reason": "'propellant/propulsion' 대응."},
+
+    {"query_ids": ["g-yechan-015"], "tier": 1, "lang": "ko", "phrase": "고속 스핀들용 베어링 조립품", "hypernym": "고속 회전축용 지지 조립품", "reason": "정답 2A001 'Anti-friction bearings, bearing systems' 직역."},
+    {"query_ids": ["g-yechan-015"], "tier": 2, "lang": "ko", "phrase": "정밀 베어링 업체", "hypernym": "정밀 기계부품 업체", "reason": "'bearings' 직역."},
+
+    {"query_ids": ["g-yechan-016"], "tier": 1, "lang": "ko", "phrase": "방사성 금속 용융 실험에 쓰는 특수 도가니", "hypernym": "고온 금속 용융 실험에 쓰는 특수 용기", "reason": "정답 2A225 'Crucibles made of materials resistant to liquid actinide metals' 직역."},
+    {"query_ids": ["g-yechan-016"], "tier": 2, "lang": "ko", "phrase": "원자력 연구기관", "hypernym": "연구기관", "reason": "맥락 한정."},
+
+    {"query_ids": ["g-yechan-017"], "tier": 1, "lang": "ko", "phrase": "고부식성 핵연료 공정 라인에 들어가는 소형 차단 밸브", "hypernym": "부식성 공정 라인에 들어가는 소형 유량 차단 부품", "reason": "정답 2A226 Valves 직역."},
+    {"query_ids": ["g-yechan-017"], "tier": 2, "lang": "ko", "phrase": "재질과 용도 때문에", "hypernym": "사양 때문에", "reason": "재질 한정."},
+
+    {"query_ids": ["g-yechan-018"], "tier": 1, "lang": "ko", "phrase": "밀리미터파 스캐너", "hypernym": "전파 기반 검사 장치", "reason": "정답 2A984 '30 GHz to 3000 GHz' 주파수 범위 대응."},
+    {"query_ids": ["g-yechan-018"], "tier": 2, "lang": "ko", "phrase": "원거리에서 의복 안 물체를 확인하는", "hypernym": "원거리에서 대상을 확인하는", "reason": "'Concealed object detection' 직역."},
+
+    {"query_ids": ["g-yechan-019"], "tier": 1, "lang": "ko", "phrase": "이동식 전원 장치", "hypernym": "현장용 보조 설비", "reason": "정답 2A994 'Portable electric generators' 직역."},
+    {"query_ids": ["g-yechan-019"], "tier": 2, "lang": "ko", "phrase": "발전기 업체", "hypernym": "전기기기 업체", "reason": "'generators' 직역."},
+
+    {"query_ids": ["g-yechan-021"], "tier": 1, "lang": "ko", "phrase": "고온·고압으로 항공용 분말 부품을 치밀화하는 프레스", "hypernym": "고온 조건에서 분말 부품을 성형하는 설비", "reason": "정답 2B004 'Hot isostatic presses' 직역."},
+    {"query_ids": ["g-yechan-021"], "tier": 2, "lang": "ko", "phrase": "소재 공정 장비사", "hypernym": "공정 장비사", "reason": "범주 한정."},
+
+    {"query_ids": ["g-yechan-022"], "tier": 1, "lang": "ko", "phrase": "3차원 좌표 측정 시스템", "hypernym": "형상 확인 시스템", "reason": "정답 2B006 'Dimensional inspection or measuring systems' 직역."},
+    {"query_ids": ["g-yechan-022"], "tier": 2, "lang": "ko", "phrase": "위치 피드백 정밀도", "hypernym": "측정 정밀도", "reason": "'position feedback units' 직역."},
+
+    {"query_ids": ["g-yechan-023"], "tier": 1, "lang": "en", "phrase": "sensor-guided industrial arm", "hypernym": "automated handling unit", "reason": "정답 2B007 'Robots' 및 end-effectors 대응."},
+    {"query_ids": ["g-yechan-023"], "tier": 2, "lang": "en", "phrase": "shielded laboratory", "hypernym": "restricted-access laboratory", "reason": "정답 하위 조건(방사선 환경) 대응."},
+
+    {"query_ids": ["g-yechan-024"], "tier": 1, "lang": "en", "phrase": "glass-lined reactors, corrosion-resistant heat exchangers, and process skid modules", "hypernym": "lined vessels, durable heat transfer units, and packaged process modules", "reason": "정답 2B350 'Chemical manufacturing facilities and equipment' 하위 열거 직역."},
+    {"query_ids": ["g-yechan-024"], "tier": 2, "lang": "en", "phrase": "pesticide precursor facility", "hypernym": "specialty processing facility", "reason": "'precursor' 직역."},
+
+    {"query_ids": ["g-yechan-025"], "tier": 1, "lang": "ko", "phrase": "무인 잠수 조사정과 해상 회수용 소형 선박", "hypernym": "무인 수중 조사 장비와 회수용 소형 보트", "reason": "정답 8A001 'Submersible vehicles and surface vessels' 직역."},
+    {"query_ids": ["g-yechan-025"], "tier": 2, "lang": "ko", "phrase": "해양로봇 업체", "hypernym": "해양 장비 업체", "reason": "범주 한정."},
+
+    {"query_ids": ["g-yechan-026"], "tier": 1, "lang": "ko", "phrase": "수중 위치추적 모듈과 저소음 추진 부품", "hypernym": "수중 계측 모듈과 저진동 구동 부품", "reason": "정답 8A002 'Marine systems, equipment, parts and components' 하위 열거 대응."},
+    {"query_ids": ["g-yechan-026"], "tier": 2, "lang": "ko", "phrase": "선박 장비 회사", "hypernym": "해양 장비 회사", "reason": "'Marine' 직역."},
+
+    {"query_ids": ["g-yechan-027"], "tier": 1, "lang": "ko", "phrase": "해저 관측용 소형 잠수정", "hypernym": "해저 관측용 소형 무인 기체", "reason": "정답 8A620 'Submersible vessels, oceanographic' 직역."},
+    {"query_ids": ["g-yechan-027"], "tier": 2, "lang": "ko", "phrase": "잠수 선박 계열", "hypernym": "해양 장비 계열", "reason": "'Submersible vessels' 직역."},
+
+    {"query_ids": ["g-yechan-028"], "tier": 1, "lang": "en", "phrase": "low-noise hydrodynamic test channel", "hypernym": "quiet circulation test facility", "reason": "정답 8B001 'Water Tunnels Designed to Have a Background Noise of Less Than 100 dB' 직역."},
+    {"query_ids": ["g-yechan-028"], "tier": 2, "lang": "en", "phrase": "measuring propeller signatures", "hypernym": "measuring rotor characteristics", "reason": "'Measuring Acoustic Fields Generated by a Hydro-Flow Around Propulsion System Models' 직역."},
+
+    {"query_ids": ["g-yechan-029"], "tier": 1, "lang": "en", "phrase": "glass-microsphere foam blocks", "hypernym": "lightweight buoyant filler blocks", "reason": "정답 8C001 'Syntactic foam' 직역."},
+    {"query_ids": ["g-yechan-029"], "tier": 2, "lang": "en", "phrase": "deep-sea instrument housings", "hypernym": "subsea instrument enclosures", "reason": "'designed for underwater use' 대응."},
+    {"query_ids": ["g-yechan-029"], "tier": 3, "lang": "en", "phrase": "long underwater deployment", "hypernym": "extended submerged service", "reason": "'underwater' 직역."},
+
+    {"query_ids": ["g-yechan-030"], "tier": 1, "lang": "en", "phrase": "unmanned subsea inspection vehicle", "hypernym": "remote underwater survey platform", "reason": "정답 8D999 'unmanned submersible vehicles' 직역."},
+    {"query_ids": ["g-yechan-030"], "tier": 2, "lang": "en", "phrase": "petroleum pipeline surveys", "hypernym": "energy infrastructure surveys", "reason": "'used in the oil and gas industry' 직역."},
+
+    {"query_ids": null, "tier": 3, "lang": "ko", "phrase": "소프트웨어", "hypernym": "프로그램", "reason": "전역 일반화: 정답 다수의 표제어 'Software'."},
+    {"query_ids": null, "tier": 3, "lang": "ko", "phrase": "장비", "hypernym": "품목", "reason": "전역 일반화: 정답 다수의 표제어 'equipment'."},
+    {"query_ids": null, "tier": 3, "lang": "ko", "phrase": "설비", "hypernym": "품목", "reason": "전역 일반화."},
+    {"query_ids": null, "tier": 3, "lang": "ko", "phrase": "시스템", "hypernym": "구성", "reason": "전역 일반화: 'systems'."},
+    {"query_ids": null, "tier": 3, "lang": "ko", "phrase": "부품", "hypernym": "구성물", "reason": "전역 일반화: 'components'."},
+    {"query_ids": null, "tier": 3, "lang": "ko", "phrase": "센서", "hypernym": "소자", "reason": "전역 일반화: 'sensors'."},
+    {"query_ids": null, "tier": 3, "lang": "ko", "phrase": "모듈", "hypernym": "단위품", "reason": "전역 일반화: 'modules'."},
+    {"query_ids": null, "tier": 3, "lang": "en", "phrase": "software", "hypernym": "program", "reason": "전역 일반화."},
+    {"query_ids": null, "tier": 3, "lang": "en", "phrase": "equipment", "hypernym": "hardware", "reason": "전역 일반화."},
+    {"query_ids": null, "tier": 3, "lang": "en", "phrase": "systems", "hypernym": "arrangements", "reason": "전역 일반화."},
+    {"query_ids": null, "tier": 3, "lang": "en", "phrase": "components", "hypernym": "parts", "reason": "전역 일반화."},
+    {"query_ids": null, "tier": 3, "lang": "en", "phrase": "sensor", "hypernym": "element", "reason": "전역 일반화."},
+    {"query_ids": null, "tier": 3, "lang": "en", "phrase": "devices", "hypernym": "units", "reason": "전역 일반화."}
+  ]
+}

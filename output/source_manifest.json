@@ -1,0 +1,189 @@
+{
+  "generated_by": "fetch_sources.py",
+  "command": "verify",
+  "seed": 20260730,
+  "randomness_used": "none (deterministic)",
+  "env_meta": {
+    "python": "3.10.5",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "numpy": "2.2.6",
+    "torch": "not_probed (--light-env)",
+    "sentence_transformers": "not_probed (--light-env)"
+  },
+  "access_date": "2026-07-30",
+  "exit_code": 0,
+  "results": [
+    {
+      "id": "wassenaar_2025_corr_pdf",
+      "local": "data/wassenaar_2025.pdf",
+      "status": "ok",
+      "expected_sha256": "1a92a954dc51211f6f39a8780525248d0338bc116a23f80164e2aa6541be43fb",
+      "actual_sha256": "1a92a954dc51211f6f39a8780525248d0338bc116a23f80164e2aa6541be43fb",
+      "expected_bytes": 1366353,
+      "actual_bytes": 1366353
+    },
+    {
+      "id": "india_scomet_2024_pdf",
+      "local": "data/india_scomet_2024_official.pdf",
+      "status": "ok",
+      "expected_sha256": "4e26322b3f05bea962b7451e66db967dc1ad8ed8816254e663dde80cc410681f",
+      "actual_sha256": "4e26322b3f05bea962b7451e66db967dc1ad8ed8816254e663dde80cc410681f",
+      "expected_bytes": 3812663,
+      "actual_bytes": 3812663
+    },
+    {
+      "id": "ecfr_supp1_json",
+      "local": "data/corpus/ecfr_supp1.json",
+      "status": "ok",
+      "expected_sha256": "e3df05c369a9431a5b9755f75e1528a9b65cc67254f50d5992f5c182560f29f9",
+      "actual_sha256": "e3df05c369a9431a5b9755f75e1528a9b65cc67254f50d5992f5c182560f29f9",
+      "expected_bytes": 175321,
+      "actual_bytes": 175321
+    },
+    {
+      "id": "law_korea_html",
+      "local": "data/law_korea.html",
+      "status": "ok",
+      "expected_sha256": "ffbaac38e6f1d77ea60967b29c1740e945ed4613151c14b4d9d6b1e95418e717",
+      "actual_sha256": "ffbaac38e6f1d77ea60967b29c1740e945ed4613151c14b4d9d6b1e95418e717",
+      "expected_bytes": 77374,
+      "actual_bytes": 77374
+    },
+    {
+      "id": "yestrade_post_html",
+      "local": "data/yestrade_post.html",
+      "status": "ok",
+      "expected_sha256": "fad6fade8971cc5d0b52de0349d16ab2e0d58d2e6d406d3bdb71de3077d16390",
+      "actual_sha256": "fad6fade8971cc5d0b52de0349d16ab2e0d58d2e6d406d3bdb71de3077d16390",
+      "expected_bytes": 21700,
+      "actual_bytes": 21700
+    },
+    {
+      "id": "wassenaar_2025_zip",
+      "local": "data/wassenaar_2025.zip",
+      "status": "ok",
+      "expected_sha256": "6f06d4655f79da5feac66e1edee1a6a4b6d2e568314fd44a68c27f67efb6331b",
+      "actual_sha256": "6f06d4655f79da5feac66e1edee1a6a4b6d2e568314fd44a68c27f67efb6331b",
+      "expected_bytes": 59256,
+      "actual_bytes": 59256
+    }
+  ],
+  "sources": [
+    {
+      "id": "wassenaar_2025_corr_pdf",
+      "local": "data/wassenaar_2025.pdf",
+      "url": "https://www.wassenaar.org/app/uploads/2026/01/List-of-Dual-Use-Goods-and-Technologies-and-ML-2025-Corr.pdf",
+      "sha256": "1a92a954dc51211f6f39a8780525248d0338bc116a23f80164e2aa6541be43fb",
+      "bytes": 1366353,
+      "fetchable": true,
+      "removal_target": true,
+      "rights_holder": "Wassenaar Arrangement Secretariat",
+      "license_basis": "확인 필요 (사무국 발간물, 명시적 재배포 허가 문구 미확인)",
+      "redistributable": "no",
+      "corpus_entries": 585,
+      "note": "판본은 '2025 Corr.'(2026-01-15 생성, 243쪽). build_corpus_clean.py의 SOURCE_META에 적힌 URL(/2025/12/...-ML-2025.pdf)은 정정 전 '2025' 판(2025-12-05 생성, 242쪽, sha256 2a6b2af7...)을 가리키므로 로컬 파일과 다르다. 코퍼스를 만든 실제 원본은 이 항목의 URL이다.",
+      "sha256_verified_remote": true
+    },
+    {
+      "id": "india_scomet_2024_pdf",
+      "local": "data/india_scomet_2024_official.pdf",
+      "url": "https://content.dgft.gov.in/Website/UPDATED%20SCOMET%20List%202024%20as%20on%2002.09.2024.pdf",
+      "sha256": "4e26322b3f05bea962b7451e66db967dc1ad8ed8816254e663dde80cc410681f",
+      "bytes": 3812663,
+      "fetchable": true,
+      "removal_target": true,
+      "rights_holder": "Directorate General of Foreign Trade (DGFT), Government of India",
+      "license_basis": "확인 필요 (인도 정부 저작물, GODL-India 적용 여부 미확인)",
+      "redistributable": "no",
+      "corpus_entries": 575,
+      "note": "원격 SHA-256이 로컬과 정확히 일치한다(2026-07-30 확인). 재취득으로 완전 대체 가능.",
+      "sha256_verified_remote": true
+    },
+    {
+      "id": "ecfr_supp1_json",
+      "local": "data/corpus/ecfr_supp1.json",
+      "url": null,
+      "sha256": "e3df05c369a9431a5b9755f75e1528a9b65cc67254f50d5992f5c182560f29f9",
+      "bytes": 175321,
+      "fetchable": false,
+      "delegate": "fetch_ecfr.py",
+      "fetch_hint": "`python fetch_ecfr.py --text-field full` 로 재생성",
+      "removal_target": false,
+      "rights_holder": "U.S. Government (Bureau of Industry and Security / GPO)",
+      "license_basis": "17 U.S.C. §105 (연방정부 저작물, 저작권 보호 대상 아님)",
+      "redistributable": "yes",
+      "corpus_entries": 637,
+      "note": "이 파일은 원본이 아니라 파싱 산출물이다. 재현은 `python fetch_ecfr.py --text-field full` 로 한다. 주의: data/corpus/corpus_quality_report.json에 기록된 해시는 c15d80cd131e7f0e0ee23fc8af3f729e5683b17b908c3bd927a7392aa7c43f04 이지만 현재 파일(및 HEAD 커밋본)의 해시는 e3df05c3... 이다. 즉 품질보고서가 입력 파일에 대해 stale 하다 -- 코퍼스 담당자 확인 필요.",
+      "sha256_verified_remote": false
+    },
+    {
+      "id": "law_korea_html",
+      "local": "data/law_korea.html",
+      "url": "https://www.law.go.kr/행정규칙/전략물자수출입고시",
+      "sha256": "ffbaac38e6f1d77ea60967b29c1740e945ed4613151c14b4d9d6b1e95418e717",
+      "bytes": 77374,
+      "fetchable": false,
+      "removal_target": true,
+      "rights_holder": "국가법령정보센터 (법제처) / 고시 본문은 산업통상부",
+      "license_basis": "고시 본문은 저작권법 제7조 제1호(법령)·제2호(고시)로 보호 대상 제외. 다만 국가법령정보센터 **페이지 HTML 자체**(레이아웃·스크립트)는 제7조 적용 대상이 아니다.",
+      "redistributable": "no",
+      "corpus_entries": 0,
+      "note": "파일명과 달리 내용은 '전략물자수출입고시' 페이지의 JS 셸이다. 텍스트 추출 결과 조문 0건('전략물자' 3회, '수출허가' 0회, '판정' 0회). 메타: 산업통상부고시 제2025-37호, 시행 2025-12-31. 코드에서 참조하는 곳이 없다(grep 결과 0건). JS 렌더링이므로 URL 취득만으로는 동일 바이트 재현 불가 -- 자동 재취득 미지원. 정확한 스크레이프 URL(admRulSeq 파라미터) 확인 필요.",
+      "fetch_hint": "JS 렌더링 셸이라 URL 취득만으로 동일 바이트 재현 불가 (data/SOURCES.md 참조)",
+      "sha256_verified_remote": false
+    },
+    {
+      "id": "yestrade_post_html",
+      "local": "data/yestrade_post.html",
+      "url": "https://www.yestrade.go.kr/",
+      "sha256": "fad6fade8971cc5d0b52de0349d16ab2e0d58d2e6d406d3bdb71de3077d16390",
+      "bytes": 21700,
+      "fetchable": false,
+      "removal_target": true,
+      "rights_holder": "MINISTRY OF TRADE, INDUSTRY (YesTrade 포털)",
+      "license_basis": "확인 필요 (footer에 'Copyright (C) MINISTRY OF TRADE, INDUSTRY. All Rights Reserved.' 명시)",
+      "redistributable": "no",
+      "corpus_entries": 0,
+      "note": "제목 '동향자료 > 상세보기 | YESTRADE'. 코드에서 참조하는 곳이 없다(grep 0건). 정확한 게시글 URL 확인 필요 -- 파일 내부에 canonical/og:url이 없다.",
+      "fetch_hint": "정확한 게시글 URL 미확인 (data/SOURCES.md 참조)",
+      "sha256_verified_remote": false
+    },
+    {
+      "id": "wassenaar_2025_zip",
+      "local": "data/wassenaar_2025.zip",
+      "url": null,
+      "sha256": "6f06d4655f79da5feac66e1edee1a6a4b6d2e568314fd44a68c27f67efb6331b",
+      "bytes": 59256,
+      "fetchable": false,
+      "removal_target": true,
+      "rights_holder": "Wassenaar Arrangement Secretariat (웹사이트 오류 페이지)",
+      "license_basis": "해당 없음 (통제목록 내용이 전혀 없음)",
+      "redistributable": "no",
+      "corpus_entries": 0,
+      "note": "확장자 위장. 첫 바이트가 '\\n<!doctype html>'이고 <title>은 'Page not found - The Wassenaar Arrangement'. 즉 zip이 아니라 404 오류 페이지다. 통제목록 데이터가 0건이므로 코퍼스에 기여한 바 없고 코드 참조도 0건. 재취득 대상이 아니라 **단순 삭제 대상**.",
+      "fetch_hint": "404 오류 페이지 -- 재취득 대상 아님, 삭제 대상",
+      "sha256_verified_remote": false
+    }
+  ],
+  "known_url_mismatch": {
+    "recorded_in": "build_corpus_clean.py SOURCE_META['wassenaar_2025']['source_url']",
+    "recorded_url": "https://www.wassenaar.org/app/uploads/2025/12/List-of-Dual-Use-Goods-and-Technologies-and-ML-2025.pdf",
+    "resolves_to_sha256": "2a6b2af7299523e6940fcda3dfa80263cdf58f0ac093d312f78c63db6ec1200f",
+    "resolves_to_bytes": 1361602,
+    "resolves_to_edition": "2025 (정정 전, 242쪽, CreationDate 2025-12-05)",
+    "local_file_edition": "2025 Corr. (243쪽, CreationDate 2026-01-15)",
+    "verdict": "URL과 로컬 파일이 다른 판본이다. SOURCE_META의 URL을 정정해야 한다(담당: 코퍼스 소유자)."
+  },
+  "removal_targets": [
+    "wassenaar_2025_corr_pdf",
+    "india_scomet_2024_pdf",
+    "law_korea_html",
+    "yestrade_post_html",
+    "wassenaar_2025_zip"
+  ],
+  "elapsed_sec": 2.75,
+  "notes": [
+    "이 스크립트는 어떤 파일도 삭제하지 않는다. 제거 결정과 git 히스토리 정리는 팀장 사안이다.",
+    "법적 판단이 '확인 필요'로 남은 항목은 data/SOURCES.md의 확인 경로를 따르라."
+  ]
+}
