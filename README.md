@@ -329,7 +329,6 @@ output/shards/shard_<배정모델>.json
 |---|---|---|
 | 이예찬 | `bge-m3` | BAAI/bge-m3 |
 | 장승우 | `e5-base` | intfloat/multilingual-e5-base |
-| 박재현 | `MiniLM` | paraphrase-multilingual-MiniLM-L12-v2 |
 
 GPU가 있으면 훨씬 빠릅니다. 없어도 그냥 돌아갑니다.
 
