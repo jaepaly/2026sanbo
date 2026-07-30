@@ -209,6 +209,195 @@ python make_figures.py                 # figure 5종 → output/fig_*.png
 
 ---
 
+## 코퍼스 v2 채택 매뉴얼
+
+### 왜 교체하는가
+
+v1 파서에 결함이 있고, 그중 일부는 **코퍼스에 존재하지 않는 문서를 만들었습니다.**
+
+| 결함 | 실측 |
+|---|---|
+| 유령 항목 (번호목록을 항목으로 오인) | **5건**. `1.A.n` `2.A.n` `2.A.t` `3.A.n` `5.A.n`. 예: `3.A.n`은 757자 항목인데 원문은 *"3. An inert powder, most frequently alumina."* 한 줄 |
+| 통째로 사라진 진짜 항목 | **3건**. `3.A.2.d.4` (584자) / `.5` (921자) / `.6` (558자) |
+| 페이지 경계 절단으로 폐기된 본문 | Wassenaar 3,544행·172,620자 / SCOMET 5,093행·278,443자 |
+| 부속서 흡수 | `1.E.2.g` 134자 → 5,092자로 부풀음 |
+| 푸터·각주 혼입 | 푸터 잔재 53건, 각주 본문 흡수 2건 |
+
+논문이 "정화 후 1,797개 항목"이라고 쓰는 한, 그중 5개가 유령이고 3개가 누락이라는 사실은 남습니다. 심사위원이 원문 PDF와 대조하면 나옵니다.
+
+교정 근거와 원문 인용 예시는 [`docs/corpus_parsing_fixes.md`](docs/corpus_parsing_fixes.md)에 16건 있습니다.
+
+### 교체가 수치에 미치는 영향 (측정 완료)
+
+`compare_corpus_versions.py`와 `check_v2_exposure_impact.py`로 실측했습니다.
+
+| 항목 | 결과 |
+|---|---|
+| **검증셋 정답 문서** | **70개 전부 무변경.** 라벨이 전부 eCFR이고 v2에서 eCFR은 바이트 단위 동일(637건·105,567자) |
+| **검증셋 R@10** | **213개 판정 전부 동일** (71질의 × BM25/dense/hybrid). BM25 0.1549 / dense 0.5493 / hybrid 0.5775 — 언어별도 동일 |
+| **노출량@10** | **크게 이동.** full_text 4,043 → **9,730자**(+140%). minimal_text는 1,820 → 1,811로 거의 불변 |
+| **헤드라인 노출 감소율** | **55.0% → 81.4%** (+26.4%p) |
+| top-10 문서 집합 | full_text 색인에서 27/71만 동일, minimal_text 57/71 |
+| 코퍼스 구성 | 1,797 → **1,783** (Wassenaar 585→568, SCOMET 575→578, eCFR 637→637) |
+
+즉 **논문에 유리한 방향입니다.** v1은 본문이 잘려 있어 full_text가 실제로 얼마나 노출하는지를 과소계상했습니다. 성능 손실 0에 노출 감소가 55%가 아니라 81.4%가 됩니다.
+
+### 무엇을 다시 돌려야 하는가
+
+| 다시 돌려야 함 | 이유 |
+|---|---|
+| 합성 질의셋 | 코퍼스 본문에서 파생되므로 교체 즉시 무효 |
+| 합성셋 실험 + ablation (주장 1) | 위와 같음. 값이 이동함 |
+| 검증셋 3모델 통합 실행 | recall은 불변이나 **노출량@10이 크게 이동**하므로 필수 |
+| 통계·그림·claim registry | 위 산출물에 의존 |
+
+| 다시 안 돌려도 됨 | 이유 |
+|---|---|
+| 질의 노출 사다리 (L0~L4) | 질의 재작성물이며 코퍼스와 무관. 단 frontier 실험은 재실행 |
+| 자기참조 게이트 임계값 | 대조군이 코퍼스 텍스트가 아닌 별도 필드 기반 |
+| 등가 라벨 사전 | eCFR 무변경이므로 정답 쪽은 그대로. Wassenaar/SCOMET 대응은 `audit_label_quality.py audit` 재실행 권장 |
+
+---
+
+### 실행 순서
+
+모든 명령 앞에 `PYTHONIOENCODING=utf-8`을 붙이십시오. Windows 기본 콘솔(cp949)에서 한글·en dash 출력이 깨집니다.
+
+```bash
+# PowerShell 이면 먼저
+$env:PYTHONIOENCODING="utf-8"
+```
+
+#### Step 0 — 교체 (팀장, 1회, 즉시)
+
+```bash
+python adopt_corpus_v2.py --check
+```
+
+바뀔 내용을 출력만 하고 파일은 건드리지 않습니다. 확인 후:
+
+```bash
+python adopt_corpus_v2.py
+```
+
+v1은 `data/corpus/combined_v1_superseded.json`으로 보존되고, 양쪽 SHA-256이 `data/corpus/corpus_version_manifest.json`에 기록됩니다. 되돌리려면 `python adopt_corpus_v2.py --revert`.
+
+#### Step 1 — 합성셋 (팀장, 약 15분, 임베딩 없음)
+
+```bash
+python generate_queries.py
+python run_experiments.py
+python experiment_paraphrase_gap.py
+```
+
+주장 1(자기참조 과대평가)이 여기서 나옵니다. 모델 다운로드가 없어 빠릅니다.
+
+#### Step 2 — 검증셋 3모델 (분담, 여기가 무거움)
+
+각자 **모델 하나씩** 맡습니다.
+
+```bash
+python run_model_shard.py <배정모델>
+python validate_shard.py output/shards/shard_<배정모델>.json
+```
+
+검증이 exit 0이면 `output/shards/shard_<배정모델>.json` **이 파일 하나만** 팀장에게 보냅니다.
+
+> `output/shards/`에 예전 샤드가 있으면 **먼저 지우십시오.** v1 기준 샤드와 v2 기준 샤드가 섞이면 `merge_shards.py`가 BM25 벡터 불일치로 병합을 거부합니다(그게 정상 동작입니다).
+
+#### Step 3 — 병합·재집계 (팀장, 수 분)
+
+```bash
+python merge_shards.py
+python report_exposure_decomposition.py
+python experiment_disclosure_frontier.py
+python audit_ladder_selfreference.py
+python experiment_stats.py
+python make_figures.py
+```
+
+`merge_shards.py`는 재인코딩을 하지 않고 샤드의 hit 벡터만 읽습니다.
+
+#### Step 4 — 검증 (팀장)
+
+```bash
+python verify_claims.py
+for t in tests/test_*.py; do python "$t"; done
+```
+
+`verify_claims.py`가 통과할 때까지 **논문에 수치를 옮기지 마십시오.** MISMATCH 목록이 곧 고쳐야 할 논문 수치 목록입니다.
+
+---
+
+### 배정표
+
+| 담당 | `<배정모델>` | 모델 | CPU 예상 | GPU 예상 |
+|---|---|---|---:|---:|
+| (팀원 A) | `bge-m3` | BAAI/bge-m3 (568M) | 약 60분 | 1~2분 |
+| (팀원 B) | `e5-base` | intfloat/multilingual-e5-base (278M) | 약 20분 | 1분 미만 |
+| 팀장 | `MiniLM` | paraphrase-multilingual-MiniLM-L12-v2 (118M) | 약 5분 | 즉시 |
+
+`MiniLM`이 primary model입니다. 노출량@10과 등가성 검정이 primary model의 랭킹을 따르므로 **MiniLM 샤드는 반드시 있어야 합니다.** 나머지 둘은 robustness 주장용이라 하나 빠져도 분석은 돌아가고, 빠진 모델은 `meta.missing_models`에 기록됩니다.
+
+### 팀원에게 보낼 메시지 (복붙용)
+
+> 코퍼스를 교정판으로 갈아서 임베딩 계산을 다시 돌려야 합니다. 판단할 건 없고 결과 파일 1개만 보내주면 됩니다.
+>
+> ```bash
+> git clone -b fix/research-integrity https://github.com/jaepaly/2026sanbo.git
+> cd 2026sanbo
+> python -m venv .venv
+> .venv\Scripts\activate
+> pip install -r requirements.txt
+> ```
+>
+> ```bash
+> python adopt_corpus_v2.py
+> ```
+>
+> ```bash
+> python run_model_shard.py <배정모델>
+> ```
+>
+> ```bash
+> python validate_shard.py output/shards/shard_<배정모델>.json
+> ```
+>
+> 마지막 명령이 "모든 검증 통과"로 끝나면 `output/shards/shard_<배정모델>.json`만 보내주세요.
+> 다른 파일은 건드리지 말고 커밋도 필요 없습니다. 검증이 실패하면 출력을 그대로 알려주세요.
+
+### 자기검증용 기대값
+
+각 단계 후 아래와 맞는지 확인하십시오. 틀리면 뭔가 잘못됐습니다.
+
+| 확인 지점 | 기대값 |
+|---|---|
+| Step 0 후 코퍼스 | 1,783건 (eCFR 637 / SCOMET 578 / Wassenaar 568) |
+| Step 0 후 유령 항목 | `1.A.n` `2.A.n` `2.A.t` `3.A.n` `5.A.n` 이 **없어야** 함 |
+| Step 0 후 복구 항목 | `3.A.2.d.4` `3.A.2.d.5` `3.A.2.d.6` 이 **있어야** 함 |
+| Step 2 각 샤드 | BM25 R@10 = **11/71** (minimal_text). 세 샤드가 전부 같아야 함 |
+| Step 2 각 샤드 | BM25 무신호 질의 = **44/71**, hybrid≡dense = **44/71** |
+| Step 3 후 검증셋 R@10 | BM25 0.1549 / dense 0.5493 / hybrid 0.5775 (MiniLM, minimal_text) — **v1과 동일해야 함** |
+| Step 3 후 한국어 | BM25 0.0000 / hybrid 0.6000, hybrid−dense 승패무 **0/0/45** |
+| Step 3 후 노출량@10 | full_text 약 **9,730자**, minimal_text 약 **1,811자**, 감소율 약 **81.4%** |
+| Step 1 후 합성셋 | **미지.** v1의 0.9968 / 0.9792 / 0.7596 / 0.4407과 달라집니다. 새 값을 그대로 쓰되 ablation이 단조 감소하는지 확인하십시오 |
+
+> Step 3의 검증셋 R@10이 v1 값과 **다르면** 문제가 있습니다. 측정 결과 213개 판정이 전부 동일했으므로, 달라진다면 샤드가 섞였거나 다른 질의셋을 쓴 것입니다.
+
+### 흔한 문제
+
+| 증상 | 대응 |
+|---|---|
+| `merge_shards.py`가 BM25 벡터 불일치를 보고 | v1 기준 샤드가 섞여 있습니다. `output/shards/`를 비우고 Step 2를 다시 하십시오 |
+| `adopt_corpus_v2.py`가 "이미 v2가 활성"이라고 함 | 정상입니다. Step 1로 넘어가십시오 |
+| `verify_claims.py`가 MISMATCH를 많이 보고 | 정상입니다. 논문을 아직 안 고쳤기 때문입니다. 그 목록이 할 일입니다 |
+| 한글이 `?`나 깨진 문자로 출력 | `PYTHONIOENCODING=utf-8`을 설정하지 않았습니다 |
+| 모델 다운로드가 느림 | `pip install hf_xet` |
+| 메모리 부족 | `experiment_validated_suite.py`의 `batch_size=32`를 8로 낮추십시오. 결과는 동일합니다 |
+| 되돌리고 싶음 | `python adopt_corpus_v2.py --revert` 후 Step 1~4를 다시 실행 |
+
+---
+
 ## 팀 협업 가이드 (작업 분담)
 
 이 저장소는 팀 분담으로 진행됩니다. 각 팀원은 저장소를 클론하고, **자신의 AI 에이전트에게 저장소를 읽힌 뒤** 아래 담당 TASK를 수행하고, 산출물을 PR(권장) 또는 파일로 제출합니다.
