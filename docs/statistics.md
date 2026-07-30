@@ -75,22 +75,11 @@
 | `synthetic_route_only_vs_full_text` | `experiment_logs.json` | paired | 0.9968 [0.9885, 0.9996] | 0.0016 [0.0000, 0.0089] | -0.9952 | [-1.0000, -0.9888] | 0/621/3 | 2.3e-187 |
 | `paraphrase_gap_minimal_text_N5_vs_N0` | `paraphrase_gap.json` | paired | 0.9792 [0.9646, 0.9889] | 0.7596 [0.7241, 0.7926] | -0.2196 | [-0.2516, -0.1875] | 1/138/485 | 4.02e-40 |
 | `paraphrase_gap_minimal_text_N10_vs_N0` | `paraphrase_gap.json` | paired | 0.9792 [0.9646, 0.9889] | 0.4407 [0.4013, 0.4807] | -0.5385 | [-0.5769, -0.4984] | 0/336/288 | 1.43e-101 |
-| `synthetic_vocab_gap_N10_dense_vs_bm25` | `retriever_compare.json` | 절대율만 | - | 0.2532 [0.2195, 0.2892] | - | 짝지음 불가 | - | - |
-| `external_candidate_label_hybrid_alpha_0_7_vs_bm25` | `external_retriever.json` | 절대율만 | - | 0.0667 [0.0082, 0.2207] | - | 짝지음 불가 | - | - |
-| `external_candidate_label_hybrid_alpha_0_5_vs_bm25` | `external_retriever.json` | 절대율만 | - | 0.1000 [0.0211, 0.2653] | - | 짝지음 불가 | - | - |
-| `external_candidate_label_hybrid_alpha_0_3_vs_bm25` | `external_retriever.json` | 절대율만 | - | 0.1000 [0.0211, 0.2653] | - | 짝지음 불가 | - | - |
-| `external_candidate_label_dense_vs_bm25` | `external_retriever.json` | 절대율만 | - | 0.0667 [0.0082, 0.2207] | - | 짝지음 불가 | - | - |
-
-> '짝지음 불가' 행은 해당 산출물에 per-query `hit_vectors`가 저장되지 않아
-> paired 검정을 계산할 수 없는 경우다. **이전 판은 여기서 aggregate rate로부터
-> 가짜 hit 벡터를 만들어 CI를 계산했다.** 그 추정은 제거했고, 해당 스크립트를
-> 재실행해 벡터를 저장하는 것이 정상 경로다:
-
-> - `synthetic_vocab_gap_N10_dense_vs_bm25`: hit_vectors 미저장 — experiment_retriever_compare.py 재실행 필요
-> - `external_candidate_label_hybrid_alpha_0_7_vs_bm25`: hit_vectors 미저장 — experiment_external_retriever.py 재실행 필요
-> - `external_candidate_label_hybrid_alpha_0_5_vs_bm25`: hit_vectors 미저장 — experiment_external_retriever.py 재실행 필요
-> - `external_candidate_label_hybrid_alpha_0_3_vs_bm25`: hit_vectors 미저장 — experiment_external_retriever.py 재실행 필요
-> - `external_candidate_label_dense_vs_bm25`: hit_vectors 미저장 — experiment_external_retriever.py 재실행 필요
+| `synthetic_vocab_gap_N10_dense_vs_bm25` | `retriever_compare.json` | paired | 0.4423 [0.4029, 0.4823] | 0.2516 [0.2180, 0.2876] | -0.1907 | [-0.2292, -0.1522] | 28/147/449 | 1.1e-20 |
+| `external_candidate_label_hybrid_alpha_0_7_vs_bm25` | `external_retriever.json` | paired | 0.0000 [0.0000, 0.1157] | 0.0667 [0.0082, 0.2207] | +0.0667 | [0.0000, 0.1667] | 2/0/28 | 0.5 |
+| `external_candidate_label_hybrid_alpha_0_5_vs_bm25` | `external_retriever.json` | paired | 0.0000 [0.0000, 0.1157] | 0.1000 [0.0211, 0.2653] | +0.1000 | [0.0000, 0.2333] | 3/0/27 | 0.25 |
+| `external_candidate_label_hybrid_alpha_0_3_vs_bm25` | `external_retriever.json` | paired | 0.0000 [0.0000, 0.1157] | 0.1000 [0.0211, 0.2653] | +0.1000 | [0.0000, 0.2333] | 3/0/27 | 0.25 |
+| `external_candidate_label_dense_vs_bm25` | `external_retriever.json` | paired | 0.0000 [0.0000, 0.1157] | 0.0667 [0.0082, 0.2207] | +0.0667 | [0.0000, 0.1667] | 2/0/28 | 0.5 |
 
 ## 5. 소표본 bootstrap의 이산 경계 인공물 (n=13 '비유의' 판정의 정체)
 
@@ -174,6 +163,29 @@ P(재표본에 승리 질의가 0개) = ((n-w)/n)^n ≈ exp(-w) 이므로 이 �
 | full_text | 10 | recall@5 | 0.7276 | 0.7260 | -0.0016 |
 
 > 변동 폭은 전부 |Δ| ≤ 0.0064 (624개 중 최대 4개 질의)이며, 동점이 흔한 R@1·R@5에 몰려 있다. 방향이 양쪽으로 섞여 있는 것도 이것이 체계적 편향이 아니라 동점 순서 인공물이었음을 보여준다.
+
+### 6-2. 검색기 비교의 입력 비대칭 정정 (before / after)
+
+- 대상: `experiment_retriever_compare.py`
+- 변경: dense에만 주던 `" ".join(ablated_tokens)`를 폐기하고, 원문에서 대상 토큰만 word-boundary 삭제한 동일 문자열을 BM25와 dense에 똑같이 입력
+- 지표: recall@10 (합성 테스트 질의 624개)
+
+| 어휘격차 N | alpha | before | after | Δ |
+|---:|---:|---:|---:|---:|
+| 0 | 1.0 | 0.9792 | 0.9792 | +0.0000 |
+| 0 | 0.5 | 0.9647 | 0.9728 | +0.0081 |
+| 0 | 0.0 | 0.8654 | 0.8686 | +0.0032 |
+| 3 | 1.0 | 0.8862 | 0.8862 | +0.0000 |
+| 3 | 0.5 | 0.8734 | 0.8718 | -0.0016 |
+| 3 | 0.0 | 0.6731 | 0.6603 | -0.0128 |
+| 5 | 1.0 | 0.7596 | 0.7596 | +0.0000 |
+| 5 | 0.5 | 0.7452 | 0.7356 | -0.0096 |
+| 5 | 0.0 | 0.4904 | 0.4984 | +0.0080 |
+| 10 | 1.0 | 0.4407 | 0.4423 | +0.0016 |
+| 10 | 0.5 | 0.4038 | 0.3990 | -0.0048 |
+| 10 | 0.0 | 0.2532 | 0.2516 | -0.0016 |
+
+> 입력을 대칭으로 맞춘 뒤에도 합성셋에서는 모든 어휘격차 수준에서 BM25(α=1.0)가 dense(α=0.0)를 크게 앞선다. 즉 이 격차는 전처리 비대칭이 만든 것이 아니라 **합성 질의가 정답 문서 본문에서 파생됐다는 자기참조 구조**가 만든 것이다. 따라서 이 셋은 검색기 비교에 부적합하며, 검색기 비교는 검증셋(n=71)으로 해야 한다 — 거기서는 부호가 뒤집혀 dense 성분이 BM25를 크게 앞선다(§2).
 
 ## 7. 해석 가드레일
 

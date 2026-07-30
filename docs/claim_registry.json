@@ -123,7 +123,7 @@
       "desc": "쿼리-정답 평균 Jaccard (논문 0.485)",
       "paper": 0.485,
       "artifact": 0.4845,
-      "status": "MISMATCH",
+      "status": "OK",
       "note": ""
     },
     {
@@ -413,7 +413,7 @@
       "where": "신규 (논문에 없음)",
       "desc": "최적 운용점 노출 감소율 (색인=full, 반환=minimal_no_code)",
       "paper": null,
-      "artifact": 57.2,
+      "artifact": 55.0,
       "status": "NEW",
       "note": ""
     },
@@ -428,8 +428,8 @@
     }
   ],
   "counts": {
-    "OK": 30,
-    "MISMATCH": 13,
+    "OK": 31,
+    "MISMATCH": 12,
     "SKIP": 0,
     "ERROR": 0,
     "NEW": 3

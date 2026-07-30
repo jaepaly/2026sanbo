@@ -108,6 +108,45 @@ RANKING_DETERMINISM_AUDIT = {
                "순서 인공물이었음을 보여준다.",
 }
 
+# --------------------------------------------------------------------------
+# 감사 기록: retriever_compare 입력 비대칭 정정 전/후
+#
+# 정정 전에는 dense에만 `" ".join(tokens)` — 구두점이 사라지고 전부 소문자화된
+# detokenize 문자열 — 을 주고 BM25에는 토큰 형태를 주었다. 두 검색기를 비교하면서
+# 전처리를 다르게 준 것이므로 격차 자체가 인공물일 수 있었다. 정정 후에는 원문에서
+# 대상 토큰만 word-boundary 삭제한 **동일한 문자열**을 양쪽에 준다.
+#
+# 실측 결과: 격차는 거의 그대로다(전 조건 |Δ| ≤ 0.016). 즉 입력 비대칭은 **실재하는
+# 방법론적 결함이었지만 관측된 BM25 우위의 원인은 아니었다.** 원인은 합성 질의가
+# 정답 문서에서 파생되어 어휘 중첩이 인위적으로 높다는 것(자기참조)이다.
+# --------------------------------------------------------------------------
+INPUT_SYMMETRY_AUDIT = {
+    "source_script": "experiment_retriever_compare.py",
+    "change": 'dense에만 주던 `" ".join(ablated_tokens)`를 폐기하고, 원문에서 대상 토큰만 '
+              "word-boundary 삭제한 동일 문자열을 BM25와 dense에 똑같이 입력",
+    "metric": "recall@10 (합성 테스트 질의 624개)",
+    "rows": [
+        {"N": 0, "alpha": 1.0, "before": 0.9792, "after": 0.9792},
+        {"N": 0, "alpha": 0.5, "before": 0.9647, "after": 0.9728},
+        {"N": 0, "alpha": 0.0, "before": 0.8654, "after": 0.8686},
+        {"N": 3, "alpha": 1.0, "before": 0.8862, "after": 0.8862},
+        {"N": 3, "alpha": 0.5, "before": 0.8734, "after": 0.8718},
+        {"N": 3, "alpha": 0.0, "before": 0.6731, "after": 0.6603},
+        {"N": 5, "alpha": 1.0, "before": 0.7596, "after": 0.7596},
+        {"N": 5, "alpha": 0.5, "before": 0.7452, "after": 0.7356},
+        {"N": 5, "alpha": 0.0, "before": 0.4904, "after": 0.4984},
+        {"N": 10, "alpha": 1.0, "before": 0.4407, "after": 0.4423},
+        {"N": 10, "alpha": 0.5, "before": 0.4038, "after": 0.3990},
+        {"N": 10, "alpha": 0.0, "before": 0.2532, "after": 0.2516},
+    ],
+    "max_abs_delta": 0.016,
+    "reading": "입력을 대칭으로 맞춘 뒤에도 합성셋에서는 모든 어휘격차 수준에서 BM25(α=1.0)가 "
+               "dense(α=0.0)를 크게 앞선다. 즉 이 격차는 전처리 비대칭이 만든 것이 아니라 "
+               "**합성 질의가 정답 문서 본문에서 파생됐다는 자기참조 구조**가 만든 것이다. "
+               "따라서 이 셋은 검색기 비교에 부적합하며, 검색기 비교는 검증셋(n=71)으로 해야 "
+               "한다 — 거기서는 부호가 뒤집혀 dense 성분이 BM25를 크게 앞선다(§2).",
+}
+
 
 def load_json(path: Path) -> dict | None:
     if not path.is_file():
@@ -490,6 +529,7 @@ def build_summary() -> dict[str, Any]:
         "validated_holm_within_family": validated_holm,
         "comparisons": comparisons,
         "ranking_determinism_audit": RANKING_DETERMINISM_AUDIT,
+        "input_symmetry_audit": INPUT_SYMMETRY_AUDIT,
         "n13_to_n71_before_after": before_after,
         "small_sample_bootstrap_artifact": {
             "cases": artifacts,
@@ -737,6 +777,23 @@ def markdown(summary: dict[str, Any]) -> str:
         L.append(f"| {c['mode']} | {c['N']} | {c['metric']} | {c['before']:.4f} | "
                  f"{c['after']:.4f} | {c['after'] - c['before']:+.4f} |")
     L += ["", f"> {rda['reading']}", ""]
+
+    # --- 6b. 입력 비대칭 정정 감사
+    isa = summary["input_symmetry_audit"]
+    L += [
+        "### 6-2. 검색기 비교의 입력 비대칭 정정 (before / after)",
+        "",
+        f"- 대상: `{isa['source_script']}`",
+        f"- 변경: {isa['change']}",
+        f"- 지표: {isa['metric']}",
+        "",
+        "| 어휘격차 N | alpha | before | after | Δ |",
+        "|---:|---:|---:|---:|---:|",
+    ]
+    for r in isa["rows"]:
+        L.append(f"| {r['N']} | {r['alpha']:.1f} | {r['before']:.4f} | {r['after']:.4f} | "
+                 f"{r['after'] - r['before']:+.4f} |")
+    L += ["", f"> {isa['reading']}", ""]
 
     # --- 7. 가드레일
     L += [

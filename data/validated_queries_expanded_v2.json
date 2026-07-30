@@ -101,16 +101,16 @@
         ],
         "item_term_coverage": 0.0,
         "item_terms_missing_from_gold_text": [
-          "axi",
+          "axis",
           "center",
           "machining",
-          "simultaneou"
+          "simultaneous"
         ],
         "item_term_check_applicable": true,
         "warn_item_name_absent": true,
         "discriminative_terms_missing_from_gold_text": [
           "machining",
-          "simultaneou"
+          "simultaneous"
         ],
         "warn_discriminative_term_absent": true
       },
@@ -336,17 +336,15 @@
         "gold_is_heading_stub": [
           true
         ],
-        "item_term_coverage": 0.2,
+        "item_term_coverage": 0.25,
         "item_terms_missing_from_gold_text": [
-          "itself",
           "satellite",
           "test",
           "vibration"
         ],
         "item_term_check_applicable": true,
-        "warn_item_name_absent": true,
+        "warn_item_name_absent": false,
         "discriminative_terms_missing_from_gold_text": [
-          "itself",
           "vibration"
         ],
         "warn_discriminative_term_absent": true
@@ -631,13 +629,12 @@
         "gold_is_heading_stub": [
           true
         ],
-        "item_term_coverage": 0.143,
+        "item_term_coverage": 0.167,
         "item_terms_missing_from_gold_text": [
           "angular",
           "lithography",
           "positioning",
           "precision",
-          "requesting",
           "table"
         ],
         "item_term_check_applicable": true,
@@ -646,7 +643,6 @@
           "angular",
           "lithography",
           "precision",
-          "requesting",
           "table"
         ],
         "warn_discriminative_term_absent": true
@@ -1106,21 +1102,17 @@
         "gold_is_heading_stub": [
           true
         ],
-        "item_term_coverage": 0.25,
+        "item_term_coverage": 0.333,
         "item_terms_missing_from_gold_text": [
           "above",
           "advanced",
-          "building",
           "design",
-          "package",
           "processor"
         ],
         "item_term_check_applicable": true,
         "warn_item_name_absent": false,
         "discriminative_terms_missing_from_gold_text": [
           "advanced",
-          "building",
-          "package",
           "processor"
         ],
         "warn_discriminative_term_absent": true
@@ -1292,11 +1284,10 @@
         "gold_is_heading_stub": [
           false
         ],
-        "item_term_coverage": 0.5,
+        "item_term_coverage": 0.6,
         "item_terms_missing_from_gold_text": [
           "capture",
-          "covertly",
-          "interested"
+          "covertly"
         ],
         "item_term_check_applicable": true,
         "warn_item_name_absent": false,
@@ -1368,9 +1359,8 @@
         "gold_is_heading_stub": [
           false
         ],
-        "item_term_coverage": 0.692,
+        "item_term_coverage": 0.75,
         "item_terms_missing_from_gold_text": [
-          "about",
           "asked",
           "platform",
           "sensor"
@@ -1378,7 +1368,6 @@
         "item_term_check_applicable": true,
         "warn_item_name_absent": false,
         "discriminative_terms_missing_from_gold_text": [
-          "about",
           "platform"
         ],
         "warn_discriminative_term_absent": true
@@ -1577,11 +1566,10 @@
         "gold_is_heading_stub": [
           false
         ],
-        "item_term_coverage": 0.444,
+        "item_term_coverage": 0.5,
         "item_terms_missing_from_gold_text": [
           "aerospace",
           "code",
-          "determine",
           "navigation",
           "star"
         ],
@@ -1589,7 +1577,6 @@
         "warn_item_name_absent": false,
         "discriminative_terms_missing_from_gold_text": [
           "aerospace",
-          "determine",
           "star"
         ],
         "warn_discriminative_term_absent": true
@@ -1655,22 +1642,16 @@
           "asked",
           "fall",
           "list",
-          "maintain",
           "military",
           "munition",
           "needed",
           "operate",
-          "outside",
-          "radar",
-          "standard"
+          "radar"
         ],
         "item_term_check_applicable": true,
         "warn_item_name_absent": true,
-        "discriminative_terms_missing_from_gold_text": [
-          "maintain",
-          "outside"
-        ],
-        "warn_discriminative_term_absent": true
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
       },
       "excluded_from_metrics": false
     },
@@ -1731,18 +1712,15 @@
         "gold_is_heading_stub": [
           false
         ],
-        "item_term_coverage": 0.5,
+        "item_term_coverage": 0.667,
         "item_terms_missing_from_gold_text": [
-          "boost",
           "converter",
-          "fit",
           "reach"
         ],
         "item_term_check_applicable": true,
         "warn_item_name_absent": false,
         "discriminative_terms_missing_from_gold_text": [
-          "converter",
-          "fit"
+          "converter"
         ],
         "warn_discriminative_term_absent": true
       },
@@ -2209,12 +2187,11 @@
         "item_term_coverage": 0.0,
         "item_terms_missing_from_gold_text": [
           "carbon",
-          "continuou",
+          "continuous",
           "fiber",
           "impregnated",
           "reinforcement",
           "releasing",
-          "sample",
           "satellite",
           "sheet",
           "structure"
@@ -2225,7 +2202,6 @@
           "fiber",
           "impregnated",
           "reinforcement",
-          "sample",
           "sheet"
         ],
         "warn_discriminative_term_absent": true
@@ -2562,11 +2538,9 @@
           "automation",
           "guided",
           "handling",
-          "hazardou",
+          "hazardous",
           "industrial",
-          "inside",
           "procurement",
-          "sample",
           "sensor",
           "shielded",
           "triage"
@@ -2576,9 +2550,7 @@
         "discriminative_terms_missing_from_gold_text": [
           "automation",
           "guided",
-          "industrial",
-          "inside",
-          "sample"
+          "industrial"
         ],
         "warn_discriminative_term_absent": true
       },
@@ -2608,9 +2580,8 @@
         "gold_is_heading_stub": [
           true
         ],
-        "item_term_coverage": 0.067,
+        "item_term_coverage": 0.071,
         "item_terms_missing_from_gold_text": [
-          "compliance",
           "corrosion",
           "exchanger",
           "glass",
@@ -2628,7 +2599,6 @@
         "item_term_check_applicable": true,
         "warn_item_name_absent": true,
         "discriminative_terms_missing_from_gold_text": [
-          "compliance",
           "corrosion",
           "exchanger",
           "glass",
@@ -2781,14 +2751,13 @@
         "gold_is_heading_stub": [
           false
         ],
-        "item_term_coverage": 0.25,
+        "item_term_coverage": 0.273,
         "item_terms_missing_from_gold_text": [
           "channel",
           "contracting",
           "hydrodynamic",
           "label",
           "propeller",
-          "retrieval",
           "signature",
           "test",
           "testing"
@@ -2799,7 +2768,6 @@
           "channel",
           "hydrodynamic",
           "propeller",
-          "retrieval",
           "signature"
         ],
         "warn_discriminative_term_absent": true
@@ -2836,17 +2804,14 @@
         "gold_is_heading_stub": [
           true
         ],
-        "item_term_coverage": 0.188,
+        "item_term_coverage": 0.231,
         "item_terms_missing_from_gold_text": [
-          "because",
           "block",
           "buoyancy",
           "deep",
           "deployment",
           "glass",
-          "group",
           "housing",
-          "long",
           "material",
           "microsphere",
           "oceanography",
@@ -2855,13 +2820,10 @@
         "item_term_check_applicable": true,
         "warn_item_name_absent": true,
         "discriminative_terms_missing_from_gold_text": [
-          "because",
           "block",
           "deep",
           "glass",
-          "group",
-          "housing",
-          "long"
+          "housing"
         ],
         "warn_discriminative_term_absent": true
       },
@@ -2889,18 +2851,16 @@
         "gold_is_heading_stub": [
           false
         ],
-        "item_term_coverage": 0.375,
+        "item_term_coverage": 0.429,
         "item_terms_missing_from_gold_text": [
           "inspection",
           "pipeline",
-          "program",
           "subsea",
           "survey"
         ],
         "item_term_check_applicable": true,
         "warn_item_name_absent": false,
         "discriminative_terms_missing_from_gold_text": [
-          "program",
           "survey"
         ],
         "warn_discriminative_term_absent": true

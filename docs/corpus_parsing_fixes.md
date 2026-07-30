@@ -351,6 +351,25 @@ v2가 제외한 부속서 전용 코드: **34건**.
 * 중간 버전(ANNEX 차단 전, 5,092자): `... 1.A.4.d. ANNEX LIST - "EXPLOSIVES" 1. ADNBF (aminodinitrobenzofuroxan ...` — 23-24쪽 폭발물 부속서를 통째로 흡수
 * v2 (134자): v1과 동일. `ANNEX` 행에서 누적을 끊었다.
 
+### (15) `3.A.n` — v1 코퍼스에 실재하던 가짜 문서
+
+`combined.json` 에 다음이 정식 통제항목처럼 들어 있다(코드 `3.A.n`, 45쪽, 757자):
+
+> `inert powder, most frequently alumina. The substrate and powder mixture is contained within a retort which is heated to ...`
+
+원문 45쪽의 해당 행은 `3. An inert powder, most frequently alumina.` 로, 2.E.3.f 증착기술
+표의 Technical Note 안에 있는 **번호목록 3번 항목**이다. 통제코드가 아니다.
+`3.A.n` 은 통제코드 문법(`[0-9].[A-E].[a-z]`)을 우연히 만족해 품질 필터를 통과했다.
+v2에서는 항목이 아니라 `2.E.3.f` 본문의 일부로 병합된다.
+
+### (16) `1.C.6` — 페이지 내부에서도 발생한 손실
+
+원문 15쪽의 `3. In a liquid state at 273 K (0°C); and` 를 v1이 코드 `3.I.n` 의 시작으로
+오인해, 항목 `1.C.6` 은 그 직전에서 끊겼다(페이지를 넘지 않았는데도 손실이 발생한 경우).
+
+* v1 (1,050자) 꼬리: `... c. Perfluorocycloalkanes; or d. Perfluoroalkanes; 2. Density at 298 K (25°C) of 1.5 g/ml or more;`
+* v2 (1,226자) 꼬리: `... 2. Density at 298 K (25°C) of 1.5 g/ml or more; 3. In a liquid state at 273 K (0°C); and 4. Containing 60% or more by weight of fluorine. Note 1.C.6.d. does not apply to materials specified and packaged as medical products.`
+
 ---
 
 ## 4. 새 스키마
@@ -393,7 +412,7 @@ v2가 제외한 부속서 전용 코드: **34건**.
    dual-use 정규식과 달라서다. 포함 여부는 설계 결정 사항이다.
 4. **부속서(Sensitive List / Very Sensitive List / ANNEX) 내용은 v2에서 코퍼스에 없다.**
    민감 목록 지정 정보가 필요하면 별도 필드로 다루는 편이 낫다.
-5. **일부 항목이 매우 길다**(`8A301` 36,960자, `2.E.3.f` 22,180자). 원문 구조에 충실한
+5. **일부 항목이 매우 길다**(`8A301` 36,960자, `8E203` 22,640자, `2.E.3.f` 21,576자). 원문 구조에 충실한
    결과지만 검색 단위로는 분할이 필요할 수 있다. `spans_many_pages` 플래그로 표시했다.
 6. **`combined_v2.json` 은 아직 어떤 실험에도 연결하지 않았다.** 교체 시 논문의 모든
    검색 수치(합성셋 R@10 포함)가 바뀐다.

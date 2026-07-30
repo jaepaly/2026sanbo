@@ -494,6 +494,20 @@ def main_v2() -> None:
                 "3.A.2.d.6.A", "1.T.o", "1.I.t", "2.I.t", "2.C.W", "1.C.W", "4.C.W", "2.A.P",
             ],
             "legacy_disposition": "corpus_quality_report.json 이 invalid_code_format 15건으로 드롭 — 본문까지 폐기",
+            "legacy_fake_codes_that_survived_into_combined_json": {
+                code: {
+                    "page": legacy_wass_by_code[code].get("page"),
+                    "text_len": len(legacy_wass_by_code[code]["text"]),
+                    "text_head": legacy_wass_by_code[code]["text"][:80],
+                }
+                for code in LEGACY_FAKE_CODES_IN_CORPUS
+                if code in legacy_wass_by_code
+            },
+            "legacy_fake_codes_that_survived_note": (
+                "코드 문법 검사(^[0-9]\\.[A-E](\\.[a-z])?...)를 통과해 v1 코퍼스에 실제로 "
+                "가짜 문서로 들어가 있던 항목들이다. 리포트의 invalid_code_format 15건 "
+                "바깥에 있었다."
+            ),
             "v2_disposition": (
                 "WASS_ENTRY_V2_RE 가 코드 성분마다 '마침표+공백'을 요구해 번호목록을 애초에 "
                 "항목으로 보지 않는다. 남는 예외는 repair_wassenaar_code() 가 처리한다."
@@ -547,17 +561,22 @@ def main_v2() -> None:
                 "Wassenaar 170-180쪽 Sensitive List / Very Sensitive List 는 본문 항목이 아니라 "
                 "코드 나열 부속서다. v1은 여기서도 항목을 생성했다."
             ),
-            "legacy_annex_only_codes": len(
-                [
-                    c
-                    for c in (
-                        {x["code"] for x in legacy_by_src.get("wassenaar_2025", [])}
-                        - {x["code"] for x in v2_by_src.get("wassenaar_2025", [])}
-                    )
-                    if source_valid_code("wassenaar_2025", c)
-                ]
-            ),
+            "legacy_annex_only_codes": len(lost_annex),
+            "legacy_annex_only_code_list": lost_annex,
             "v2_disposition": "DUAL-USE LIST 러닝 헤더가 있는 페이지에서만 항목을 생성",
+            "annex_note_category1": (
+                "Category 1 의 'ANNEX / LIST - \"EXPLOSIVES\"'(23-24쪽)도 항목 코드가 없어 "
+                "직전 항목 1.E.2.g 에 흡수됐다(134자 -> 5,092자). v2는 ANNEX 행에서 누적을 끊는다."
+            ),
+        },
+        "wassenaar_code_set_delta": {
+            "lost_total": len(lost_codes),
+            "lost_fake_numbered_list": {"n": len(lost_fake), "codes": lost_fake},
+            "lost_annex_only": {"n": len(lost_annex), "codes": lost_annex},
+            "lost_cross_reference_false_positive": {"n": len(lost_other), "codes": lost_other},
+            "gained_total": len(gained_codes),
+            "gained_codes": gained_codes,
+            "identity": f"{len(legacy_wass_by_code)} - {len(lost_codes)} + {len(gained_codes)} = {len(v2_wass_codes)}",
         },
     }
 

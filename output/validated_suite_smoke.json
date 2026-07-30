@@ -33,10 +33,26 @@
       "MiniLM": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
     },
     "primary_model": "MiniLM",
+    "model_revisions": {
+      "MiniLM": "e8f8c211226b894fcb81acc59f3b34ba3efd5f42"
+    },
     "bootstrap_iters": 20000,
     "seed": 20260626,
     "label_nature": "corpus-text-grounded category labels (exact eCFR codes); not legal or expert determinations",
-    "prespecified": "delta, primary alpha, bootstrap settings and the Holm families were fixed in this file before the run; sensitivity deltas are reported as sensitivity only"
+    "prespecified": "delta, primary alpha, bootstrap settings and the Holm families were fixed in this file before the run; sensitivity deltas are reported as sensitivity only",
+    "merged_from_shards": [
+      "shard_MiniLM.json"
+    ],
+    "shard_envs": {
+      "MiniLM": {
+        "numpy": "2.2.6",
+        "python": "3.10.5",
+        "platform": "Windows-10-10.0.26200-SP0",
+        "torch": "2.6.0+cpu",
+        "sentence_transformers": "3.4.1",
+        "seed": 20260626
+      }
+    }
   },
   "env": {
     "numpy": "2.2.6",

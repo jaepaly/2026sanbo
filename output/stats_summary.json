@@ -491,82 +491,232 @@
     {
       "label": "synthetic_vocab_gap_N10_dense_vs_bm25",
       "source": "output/retriever_compare.json",
-      "method": "absolute_rate_only",
+      "method": "paired_per_query_bootstrap+exact_mcnemar",
       "n": 624,
-      "point": {
-        "label": "alpha=0.0",
-        "k_recovered_from_rate": 158,
-        "rate": 0.2532,
-        "ci95_clopper_pearson": [
-          0.2195,
-          0.2892
+      "baseline": {
+        "label": "alpha=1.0",
+        "k": 276,
+        "n": 624,
+        "rate": 0.4423,
+        "ci95": [
+          0.4029,
+          0.4823
         ]
       },
-      "paired_test_unavailable": "hit_vectors 미저장 — experiment_retriever_compare.py 재실행 필요"
+      "treatment": {
+        "label": "alpha=0.0",
+        "k": 157,
+        "n": 624,
+        "rate": 0.2516,
+        "ci95": [
+          0.218,
+          0.2876
+        ]
+      },
+      "effect_size": {
+        "type": "paired_mean_difference_in_recall_at_10",
+        "value": -0.1907,
+        "percentage_points": -19.07
+      },
+      "difference_bootstrap_95_ci": [
+        -0.2292,
+        -0.1522
+      ],
+      "bootstrap_excludes_zero": true,
+      "mcnemar": {
+        "wins": 28,
+        "losses": 147,
+        "ties": 449,
+        "discordant": 175,
+        "p_two_sided_exact": 1.09733e-20,
+        "p_one_sided_exact": 1.0
+      },
+      "primary_test": "exact_mcnemar",
+      "note": "어휘격차 N=10에서 dense가 BM25를 역전하는가"
     },
     {
       "label": "external_candidate_label_hybrid_alpha_0_7_vs_bm25",
       "source": "output/external_retriever.json",
-      "method": "absolute_rate_only",
+      "method": "paired_per_query_bootstrap+exact_mcnemar",
       "n": 30,
-      "point": {
+      "baseline": {
+        "label": "alpha=1.0",
+        "k": 0,
+        "n": 30,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.1157
+        ]
+      },
+      "treatment": {
         "label": "alpha=0.7",
-        "k_recovered_from_rate": 2,
+        "k": 2,
+        "n": 30,
         "rate": 0.0667,
-        "ci95_clopper_pearson": [
+        "ci95": [
           0.0082,
           0.2207
         ]
       },
-      "paired_test_unavailable": "hit_vectors 미저장 — experiment_external_retriever.py 재실행 필요"
+      "effect_size": {
+        "type": "paired_mean_difference_in_recall_at_10",
+        "value": 0.0667,
+        "percentage_points": 6.67
+      },
+      "difference_bootstrap_95_ci": [
+        0.0,
+        0.1667
+      ],
+      "bootstrap_excludes_zero": false,
+      "mcnemar": {
+        "wins": 2,
+        "losses": 0,
+        "ties": 28,
+        "discordant": 2,
+        "p_two_sided_exact": 0.5,
+        "p_one_sided_exact": 0.25
+      },
+      "primary_test": "exact_mcnemar",
+      "note": "외부 모사 후보 라벨 기준(추정 라벨) — 해석 주의"
     },
     {
       "label": "external_candidate_label_hybrid_alpha_0_5_vs_bm25",
       "source": "output/external_retriever.json",
-      "method": "absolute_rate_only",
+      "method": "paired_per_query_bootstrap+exact_mcnemar",
       "n": 30,
-      "point": {
+      "baseline": {
+        "label": "alpha=1.0",
+        "k": 0,
+        "n": 30,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.1157
+        ]
+      },
+      "treatment": {
         "label": "alpha=0.5",
-        "k_recovered_from_rate": 3,
+        "k": 3,
+        "n": 30,
         "rate": 0.1,
-        "ci95_clopper_pearson": [
+        "ci95": [
           0.0211,
           0.2653
         ]
       },
-      "paired_test_unavailable": "hit_vectors 미저장 — experiment_external_retriever.py 재실행 필요"
+      "effect_size": {
+        "type": "paired_mean_difference_in_recall_at_10",
+        "value": 0.1,
+        "percentage_points": 10.0
+      },
+      "difference_bootstrap_95_ci": [
+        0.0,
+        0.2333
+      ],
+      "bootstrap_excludes_zero": false,
+      "mcnemar": {
+        "wins": 3,
+        "losses": 0,
+        "ties": 27,
+        "discordant": 3,
+        "p_two_sided_exact": 0.25,
+        "p_one_sided_exact": 0.125
+      },
+      "primary_test": "exact_mcnemar",
+      "note": "외부 모사 후보 라벨 기준(추정 라벨) — 해석 주의"
     },
     {
       "label": "external_candidate_label_hybrid_alpha_0_3_vs_bm25",
       "source": "output/external_retriever.json",
-      "method": "absolute_rate_only",
+      "method": "paired_per_query_bootstrap+exact_mcnemar",
       "n": 30,
-      "point": {
+      "baseline": {
+        "label": "alpha=1.0",
+        "k": 0,
+        "n": 30,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.1157
+        ]
+      },
+      "treatment": {
         "label": "alpha=0.3",
-        "k_recovered_from_rate": 3,
+        "k": 3,
+        "n": 30,
         "rate": 0.1,
-        "ci95_clopper_pearson": [
+        "ci95": [
           0.0211,
           0.2653
         ]
       },
-      "paired_test_unavailable": "hit_vectors 미저장 — experiment_external_retriever.py 재실행 필요"
+      "effect_size": {
+        "type": "paired_mean_difference_in_recall_at_10",
+        "value": 0.1,
+        "percentage_points": 10.0
+      },
+      "difference_bootstrap_95_ci": [
+        0.0,
+        0.2333
+      ],
+      "bootstrap_excludes_zero": false,
+      "mcnemar": {
+        "wins": 3,
+        "losses": 0,
+        "ties": 27,
+        "discordant": 3,
+        "p_two_sided_exact": 0.25,
+        "p_one_sided_exact": 0.125
+      },
+      "primary_test": "exact_mcnemar",
+      "note": "외부 모사 후보 라벨 기준(추정 라벨) — 해석 주의"
     },
     {
       "label": "external_candidate_label_dense_vs_bm25",
       "source": "output/external_retriever.json",
-      "method": "absolute_rate_only",
+      "method": "paired_per_query_bootstrap+exact_mcnemar",
       "n": 30,
-      "point": {
+      "baseline": {
+        "label": "alpha=1.0",
+        "k": 0,
+        "n": 30,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.1157
+        ]
+      },
+      "treatment": {
         "label": "alpha=0.0",
-        "k_recovered_from_rate": 2,
+        "k": 2,
+        "n": 30,
         "rate": 0.0667,
-        "ci95_clopper_pearson": [
+        "ci95": [
           0.0082,
           0.2207
         ]
       },
-      "paired_test_unavailable": "hit_vectors 미저장 — experiment_external_retriever.py 재실행 필요"
+      "effect_size": {
+        "type": "paired_mean_difference_in_recall_at_10",
+        "value": 0.0667,
+        "percentage_points": 6.67
+      },
+      "difference_bootstrap_95_ci": [
+        0.0,
+        0.1667
+      ],
+      "bootstrap_excludes_zero": false,
+      "mcnemar": {
+        "wins": 2,
+        "losses": 0,
+        "ties": 28,
+        "discordant": 2,
+        "p_two_sided_exact": 0.5,
+        "p_one_sided_exact": 0.25
+      },
+      "primary_test": "exact_mcnemar",
+      "note": "외부 모사 후보 라벨 기준(추정 라벨) — 해석 주의"
     },
     {
       "label": "validated71_hybrid_vs_bm25[overall]",
@@ -1121,6 +1271,87 @@
       }
     ],
     "reading": "변동 폭은 전부 |Δ| ≤ 0.0064 (624개 중 최대 4개 질의)이며, 동점이 흔한 R@1·R@5에 몰려 있다. 방향이 양쪽으로 섞여 있는 것도 이것이 체계적 편향이 아니라 동점 순서 인공물이었음을 보여준다."
+  },
+  "input_symmetry_audit": {
+    "source_script": "experiment_retriever_compare.py",
+    "change": "dense에만 주던 `\" \".join(ablated_tokens)`를 폐기하고, 원문에서 대상 토큰만 word-boundary 삭제한 동일 문자열을 BM25와 dense에 똑같이 입력",
+    "metric": "recall@10 (합성 테스트 질의 624개)",
+    "rows": [
+      {
+        "N": 0,
+        "alpha": 1.0,
+        "before": 0.9792,
+        "after": 0.9792
+      },
+      {
+        "N": 0,
+        "alpha": 0.5,
+        "before": 0.9647,
+        "after": 0.9728
+      },
+      {
+        "N": 0,
+        "alpha": 0.0,
+        "before": 0.8654,
+        "after": 0.8686
+      },
+      {
+        "N": 3,
+        "alpha": 1.0,
+        "before": 0.8862,
+        "after": 0.8862
+      },
+      {
+        "N": 3,
+        "alpha": 0.5,
+        "before": 0.8734,
+        "after": 0.8718
+      },
+      {
+        "N": 3,
+        "alpha": 0.0,
+        "before": 0.6731,
+        "after": 0.6603
+      },
+      {
+        "N": 5,
+        "alpha": 1.0,
+        "before": 0.7596,
+        "after": 0.7596
+      },
+      {
+        "N": 5,
+        "alpha": 0.5,
+        "before": 0.7452,
+        "after": 0.7356
+      },
+      {
+        "N": 5,
+        "alpha": 0.0,
+        "before": 0.4904,
+        "after": 0.4984
+      },
+      {
+        "N": 10,
+        "alpha": 1.0,
+        "before": 0.4407,
+        "after": 0.4423
+      },
+      {
+        "N": 10,
+        "alpha": 0.5,
+        "before": 0.4038,
+        "after": 0.399
+      },
+      {
+        "N": 10,
+        "alpha": 0.0,
+        "before": 0.2532,
+        "after": 0.2516
+      }
+    ],
+    "max_abs_delta": 0.016,
+    "reading": "입력을 대칭으로 맞춘 뒤에도 합성셋에서는 모든 어휘격차 수준에서 BM25(α=1.0)가 dense(α=0.0)를 크게 앞선다. 즉 이 격차는 전처리 비대칭이 만든 것이 아니라 **합성 질의가 정답 문서 본문에서 파생됐다는 자기참조 구조**가 만든 것이다. 따라서 이 셋은 검색기 비교에 부적합하며, 검색기 비교는 검증셋(n=71)으로 해야 한다 — 거기서는 부호가 뒤집혀 dense 성분이 BM25를 크게 앞선다(§2)."
   },
   "n13_to_n71_before_after": [
     {
