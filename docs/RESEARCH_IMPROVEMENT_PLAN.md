@@ -16,14 +16,18 @@
 ## 1. 현재 상태 스냅샷
 
 ### 1.1 구축된 것 (자산)
-- 공개 통제목록 3종 정화 코퍼스 1,797개 (`data/corpus/combined.json`): Wassenaar 2025(585), India SCOMET 2024(575), US eCFR CCL(637)
+- 공개 통제목록 3종 정화 코퍼스 **1,783개** (`data/corpus/combined.json`, v2): eCFR CCL(637), India SCOMET 2024(578), Wassenaar 2025(568)
 - 코드 누출 없는 합성 설명형 쿼리 780개 (`generate_queries.py`, `data/queries.json`)
 - BM25 투명 baseline + 노출량 proxy + 통계검정(paired permutation) (`run_experiments.py`)
 - 4개 노출 조건: `full_text` / `minimal_text` / `minimal_no_code` / `route_only`
 - 상담형 모사 외부 질의셋 30개 + 평가 파이프라인 (`evaluate_external_queries.py`, `output/external_eval.*`)
 - 한국 법제 연계 문서 (`docs/korean_regulatory_framework.md`)
 
-### 1.2 핵심 수치 (현재)
+### 1.2 핵심 수치 (2026-06-26 스냅샷 — 코퍼스 v1 기준, 현행 아님)
+
+> ⚠ 이 절과 아래 TASK별 '진행 상황' 인용값은 **작성 당시(코퍼스 v1, 1,797건) 기록**이다.
+> 현행 수치는 `PAPER.md`와 `python verify_claims.py`(청구↔산출물 자동 대조)를 보라.
+> 코퍼스는 v2(1,783건)로 교체되었고 BM25 무신호 처리·노출량 정의가 정정되었다.
 | 평가셋 | 조건 | R@10 | 비고 |
 |---|---|---:|---|
 | 합성 780 | minimal_text | 0.9792 | **자기참조 재검색 — 과대평가** |

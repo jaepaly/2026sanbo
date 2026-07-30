@@ -132,7 +132,7 @@ def hits_for_level(corpus: list[dict], label_sets: list[set], qtexts: list[str],
                    index_mode: str, model, doc_emb_cache: dict) -> dict[str, list[int]]:
     codes = [e["code"] for e in corpus]
     docs = [rc.index_text(e, index_mode) for e in corpus]
-    # setdefault 은 인자를 먼저 평가하므로 캐시가 있어도 BM25(1797개)를 매번 새로
+    # setdefault 은 인자를 먼저 평가하므로 캐시가 있어도 BM25(코퍼스 전체)를 매번 새로
     # 만든다. level 수 x 색인 모드 수만큼 낭비되므로 명시적으로 확인한다.
     if ("bm25", index_mode) not in doc_emb_cache:
         doc_emb_cache[("bm25", index_mode)] = rc.BM25(docs)
@@ -192,7 +192,7 @@ def manipulation_diagnostics(corpus: list[dict], queries: list[dict],
                              level_texts: dict[int, list[str]]) -> dict:
     """정답 원문 대비 어휘 Jaccard와 LaBSE cos이 level에 따라 실제로 줄었는지.
 
-    코퍼스 전체(1797개)를 LaBSE로 인코딩하지 않는다 — 필요한 것은 각 질의의 정답
+    코퍼스 전체를 LaBSE로 인코딩하지 않는다 — 필요한 것은 각 질의의 정답
     원문(<=71개)뿐이다.
     """
     from sentence_transformers import SentenceTransformer

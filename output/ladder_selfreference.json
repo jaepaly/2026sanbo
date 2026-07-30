@@ -8,11 +8,11 @@
     "seed": 20260626
   },
   "env": {
-    "numpy": "2.2.6",
-    "python": "3.10.5",
-    "platform": "Windows-10-10.0.26200-SP0",
-    "torch": "2.6.0+cpu",
-    "sentence_transformers": "3.4.1",
+    "numpy": "2.4.6",
+    "python": "3.11.15",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "torch": "2.12.1+cpu",
+    "sentence_transformers": "5.6.0",
     "seed": 20260626
   },
   "per_level": {
@@ -21,10 +21,10 @@
       "cos_gold_median": 0.3251,
       "cos_gold_ko": 0.3637,
       "cos_gold_en": 0.2598,
-      "cos_nongold_mean": 0.1609,
-      "margin_mean": 0.1647,
-      "margin_ko": 0.1842,
-      "margin_en": 0.131,
+      "cos_nongold_mean": 0.1622,
+      "margin_mean": 0.1635,
+      "margin_ko": 0.1819,
+      "margin_en": 0.1315,
       "lexical_jaccard_mean": 0.0344,
       "lexical_jaccard_ko": 0.0,
       "mean_sensitive_tokens": 7.352,
@@ -35,10 +35,10 @@
       "cos_gold_median": 0.3078,
       "cos_gold_ko": 0.3551,
       "cos_gold_en": 0.2455,
-      "cos_nongold_mean": 0.1586,
-      "margin_mean": 0.1563,
-      "margin_ko": 0.1768,
-      "margin_en": 0.1209,
+      "cos_nongold_mean": 0.1596,
+      "margin_mean": 0.1554,
+      "margin_ko": 0.1745,
+      "margin_en": 0.1223,
       "lexical_jaccard_mean": 0.032,
       "lexical_jaccard_ko": 0.0,
       "mean_sensitive_tokens": 6.408,
@@ -49,10 +49,10 @@
       "cos_gold_median": 0.297,
       "cos_gold_ko": 0.3524,
       "cos_gold_en": 0.2397,
-      "cos_nongold_mean": 0.1573,
-      "margin_mean": 0.1539,
-      "margin_ko": 0.1729,
-      "margin_en": 0.1209,
+      "cos_nongold_mean": 0.1588,
+      "margin_mean": 0.1524,
+      "margin_ko": 0.1703,
+      "margin_en": 0.1213,
       "lexical_jaccard_mean": 0.0295,
       "lexical_jaccard_ko": 0.0,
       "mean_sensitive_tokens": 5.634,
@@ -63,10 +63,10 @@
       "cos_gold_median": 0.3672,
       "cos_gold_ko": 0.4076,
       "cos_gold_en": 0.3035,
-      "cos_nongold_mean": 0.1882,
-      "margin_mean": 0.1813,
-      "margin_ko": 0.1952,
-      "margin_en": 0.1572,
+      "cos_nongold_mean": 0.1878,
+      "margin_mean": 0.1816,
+      "margin_ko": 0.1951,
+      "margin_en": 0.1584,
       "lexical_jaccard_mean": 0.0254,
       "lexical_jaccard_ko": 0.0,
       "mean_sensitive_tokens": 0.0,
@@ -77,10 +77,10 @@
       "cos_gold_median": 0.3036,
       "cos_gold_ko": 0.3208,
       "cos_gold_en": 0.2798,
-      "cos_nongold_mean": 0.1297,
-      "margin_mean": 0.1761,
-      "margin_ko": 0.182,
-      "margin_en": 0.1659,
+      "cos_nongold_mean": 0.1316,
+      "margin_mean": 0.1742,
+      "margin_ko": 0.1795,
+      "margin_en": 0.165,
       "lexical_jaccard_mean": 0.0185,
       "lexical_jaccard_ko": 0.0,
       "mean_sensitive_tokens": 0.0,
@@ -94,9 +94,9 @@
         -0.0191,
         -0.003
       ],
-      "drifted_toward_gold": 23,
-      "drifted_away": 19,
-      "p_two_sided_exact": 0.643969,
+      "drifted_toward_gold": 19,
+      "drifted_away": 21,
+      "p_two_sided_exact": 0.874629,
       "significant_drift": true
     },
     "L2_vs_L0": {
@@ -105,9 +105,9 @@
         -0.0268,
         -0.0024
       ],
-      "drifted_toward_gold": 23,
+      "drifted_toward_gold": 22,
       "drifted_away": 27,
-      "p_two_sided_exact": 0.671811,
+      "p_two_sided_exact": 0.568172,
       "significant_drift": true
     },
     "L3_vs_L0": {
@@ -146,14 +146,14 @@
       "significant_at_0.05": false,
       "family_size": 4
     },
-    "L1_vs_L0": {
-      "p_raw": 0.643969,
+    "L2_vs_L0": {
+      "p_raw": 0.568172,
       "p_adjusted": 1.0,
       "significant_at_0.05": false,
       "family_size": 4
     },
-    "L2_vs_L0": {
-      "p_raw": 0.671811,
+    "L1_vs_L0": {
+      "p_raw": 0.874629,
       "p_adjusted": 1.0,
       "significant_at_0.05": false,
       "family_size": 4
@@ -194,8 +194,8 @@
     "explanation": "L3 질의가 정답 문서와 유의하게 더 비슷해졌고 비정답 대비 여유(margin)도 커졌다. 즉 R@10 유지는 노출 축소가 무해해서가 아니라 자기참조가 증가한 결과로 보아야 한다. frontier의 'L3까지 안전' 서술을 철회해야 한다.",
     "cos_L0": 0.3256,
     "cos_L3": 0.3694,
-    "margin_L0": 0.1647,
-    "margin_L3": 0.1813
+    "margin_L0": 0.1635,
+    "margin_L3": 0.1816
   },
   "recall_reference": {
     "experiment": "query_side_disclosure_recall_frontier",
@@ -222,11 +222,11 @@
       "note": "3모델 전체 실행은 하지 않았다. dense는 MiniLM 단일이며 모델 간 강건성은 validated_suite 쪽 산출물에서 별도로 다룬다."
     },
     "env": {
-      "numpy": "2.2.6",
-      "python": "3.10.5",
-      "platform": "Windows-10-10.0.26200-SP0",
-      "torch": "2.6.0+cpu",
-      "sentence_transformers": "3.4.1",
+      "numpy": "2.4.6",
+      "python": "3.11.15",
+      "platform": "Windows-10-10.0.19045-SP0",
+      "torch": "2.12.1+cpu",
+      "sentence_transformers": "5.6.0",
       "seed": 20260626,
       "bootstrap_iters": 20000
     },
@@ -237,7 +237,7 @@
         "ko": 45,
         "en": 26
       },
-      "corpus_size": 1797,
+      "corpus_size": 1783,
       "ladder_validation_passed": true
     },
     "exposure_axis": {
@@ -750,25 +750,25 @@
       "L0": {
         "bm25_no_signal_queries": 44,
         "bm25_no_signal_korean": 44,
-        "mean_query_vocab_overlap": 5.901,
+        "mean_query_vocab_overlap": 5.803,
         "hybrid_top10_identical_to_dense": 44
       },
       "L1": {
         "bm25_no_signal_queries": 45,
         "bm25_no_signal_korean": 45,
-        "mean_query_vocab_overlap": 5.479,
+        "mean_query_vocab_overlap": 5.38,
         "hybrid_top10_identical_to_dense": 45
       },
       "L2": {
         "bm25_no_signal_queries": 45,
         "bm25_no_signal_korean": 45,
-        "mean_query_vocab_overlap": 5.577,
+        "mean_query_vocab_overlap": 5.465,
         "hybrid_top10_identical_to_dense": 45
       },
       "L3": {
         "bm25_no_signal_queries": 45,
         "bm25_no_signal_korean": 45,
-        "mean_query_vocab_overlap": 4.732,
+        "mean_query_vocab_overlap": 4.38,
         "hybrid_top10_identical_to_dense": 45
       },
       "L4": {
@@ -3053,55 +3053,85 @@
         ],
         "underpowered": [
           "L2",
-          "L3",
           "L4"
         ],
         "evidence_of_loss": [],
+        "confounded_by_selfreference": [
+          "L3"
+        ],
+        "selfreference_audit": {
+          "levels": [
+            "L3"
+          ],
+          "audited": true,
+          "verdict": "confounded",
+          "gate_model": "sentence-transformers/LaBSE",
+          "note": "정답 문서 쪽으로 유의하게 표류한 등급 — 이 등급의 R@10 유지는 노출 축소의 효과로 귀속할 수 없다."
+        },
         "acceptable_levels": [
           "L1",
           "L2",
-          "L3",
           "L4"
         ],
-        "recommended_level": "L4",
-        "criterion": "A(TOST 통과) 또는 B(유의하락 없음 & |점추정|<delta)에 해당하는 가장 깊은 연속 등급까지 권고. 'p>0.05'만으로 안전을 주장하지 않는다."
+        "recommended_level": "L2",
+        "criterion": "A(TOST 통과) 또는 B(유의하락 없음 & |점추정|<delta)이면서 D(자기참조 표류)가 아닌 가장 깊은 연속 등급까지 권고. 'p>0.05'만으로 안전을 주장하지 않고, 회수율이 유지되어도 그 원인이 노출 축소가 아니면 근거로 쓰지 않는다."
       },
       "dense": {
         "proven_equivalent": [],
         "underpowered": [
           "L1",
-          "L2",
-          "L3"
+          "L2"
         ],
         "evidence_of_loss": [
           "L4"
         ],
-        "acceptable_levels": [
-          "L1",
-          "L2",
+        "confounded_by_selfreference": [
           "L3"
         ],
-        "recommended_level": "L3",
-        "criterion": "A(TOST 통과) 또는 B(유의하락 없음 & |점추정|<delta)에 해당하는 가장 깊은 연속 등급까지 권고. 'p>0.05'만으로 안전을 주장하지 않는다."
+        "selfreference_audit": {
+          "levels": [
+            "L3"
+          ],
+          "audited": true,
+          "verdict": "confounded",
+          "gate_model": "sentence-transformers/LaBSE",
+          "note": "정답 문서 쪽으로 유의하게 표류한 등급 — 이 등급의 R@10 유지는 노출 축소의 효과로 귀속할 수 없다."
+        },
+        "acceptable_levels": [
+          "L1",
+          "L2"
+        ],
+        "recommended_level": "L2",
+        "criterion": "A(TOST 통과) 또는 B(유의하락 없음 & |점추정|<delta)이면서 D(자기참조 표류)가 아닌 가장 깊은 연속 등급까지 권고. 'p>0.05'만으로 안전을 주장하지 않고, 회수율이 유지되어도 그 원인이 노출 축소가 아니면 근거로 쓰지 않는다."
       },
       "hybrid_0.5": {
         "proven_equivalent": [
           "L1"
         ],
         "underpowered": [
-          "L2",
-          "L3"
+          "L2"
         ],
         "evidence_of_loss": [
           "L4"
         ],
-        "acceptable_levels": [
-          "L1",
-          "L2",
+        "confounded_by_selfreference": [
           "L3"
         ],
-        "recommended_level": "L3",
-        "criterion": "A(TOST 통과) 또는 B(유의하락 없음 & |점추정|<delta)에 해당하는 가장 깊은 연속 등급까지 권고. 'p>0.05'만으로 안전을 주장하지 않는다."
+        "selfreference_audit": {
+          "levels": [
+            "L3"
+          ],
+          "audited": true,
+          "verdict": "confounded",
+          "gate_model": "sentence-transformers/LaBSE",
+          "note": "정답 문서 쪽으로 유의하게 표류한 등급 — 이 등급의 R@10 유지는 노출 축소의 효과로 귀속할 수 없다."
+        },
+        "acceptable_levels": [
+          "L1",
+          "L2"
+        ],
+        "recommended_level": "L2",
+        "criterion": "A(TOST 통과) 또는 B(유의하락 없음 & |점추정|<delta)이면서 D(자기참조 표류)가 아닌 가장 깊은 연속 등급까지 권고. 'p>0.05'만으로 안전을 주장하지 않고, 회수율이 유지되어도 그 원인이 노출 축소가 아니면 근거로 쓰지 않는다."
       }
     }
   },

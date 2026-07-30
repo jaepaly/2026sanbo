@@ -148,7 +148,7 @@ python build_corpus_clean.py
 
 - 입력: `data/wassenaar_2025.pdf`, `data/india_scomet_2024_official.pdf`,
   `data/corpus/ecfr_supp1.json`
-- 출력: `data/corpus/combined.json`(1,797건), `data/corpus/corpus_quality_report.json`
+- 출력: `data/corpus/combined.json`(**1,783건**, v2), `data/corpus/corpus_quality_report.json`
 - 소요시간: **PDF 파싱 245.5s (실측)** — `parse_wassenaar` 85.5s(614건),
   `parse_scomet` 160.0s(578건). 나머지 정제·중복제거·직렬화는 초 단위다.
   이 두 raw 카운트(614 / 578)는 `corpus_quality_report.json`의
@@ -196,7 +196,7 @@ SANBO_MODELS=MiniLM python experiment_validated_suite.py
 ```
 
 - 소요시간: **확인 필요.** 3모델 전량 실행은 임베딩 인코딩이 지배적이다
-  (코퍼스 1,797건 × 3모델, CPU). 코드 변경 검증은 반드시 `SANBO_MODELS=MiniLM`
+  (코퍼스 1,783건 × 3모델, CPU). 코드 변경 검증은 반드시 `SANBO_MODELS=MiniLM`
   단일 모델 스모크 경로를 먼저 쓸 것.
 - 관련 환경변수: `SANBO_MODELS`, `SANBO_ABLATION_MODEL`, `SANBO_PAGE_CACHE`
 

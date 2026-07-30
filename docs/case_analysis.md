@@ -1,5 +1,10 @@
 # 외부 모사 질의 평가 사례 분석
 
+> ⚠ **대체됨(superseded).** 이 문서는 코퍼스 v1(1,797건)과 30개 상담형 모사 질의셋
+> (추정 라벨, 13/30 코드충돌)을 분석한 기록이다. 헤드라인 평가셋은
+> `data/validated_queries_expanded.json`(n=71, eCFR full code 정답, 코퍼스 v2)이며
+> 현행 결과는 `output/validated_suite.md`와 `PAPER.md`에 있다. 감사 목적으로 보존한다.
+
 이 문서는 `output/external_eval.json`의 실제 산출만 근거로 작성했다. 수동 보정 표, 생략 부호, 추정 순위는 넣지 않았다.
 
 ## 1. 목적

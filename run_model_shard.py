@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Run ONE dense encoder and write a shard a teammate can hand back.
 
-Encoding 1,797 documents x 3 index modes with bge-m3 takes about an hour on a
+Encoding 1,783 documents x 3 index modes with bge-m3 takes about an hour on a
 CPU and under two minutes on any CUDA GPU, so it is the one part of this study
 worth handing to whoever has the better machine. Nothing here requires judgement:
 the seed is fixed, ranking is deterministic, and `validate_shard.py` verifies a

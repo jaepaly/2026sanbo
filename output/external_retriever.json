@@ -263,5 +263,9 @@
   ],
   "diagnostics": {
     "bm25_no_signal_queries": 14
+  },
+  "meta": {
+    "superseded_by": "output/validated_suite.json (코퍼스 v2, 2모델, Holm 보정)",
+    "stale_corpus_note": "이 산출물은 코퍼스 v1(1,797건)에서 생성됐고 재실행하지 않았다. 현재 활성 코퍼스는 v2(1,783건)이므로 논문은 이 파일을 인용하지 않는다."
   }
 }

@@ -20,7 +20,7 @@ divergent, or subtly wrong across the experiment scripts:
 
 3. **Exposure accounting.** The old `exposure_for_entry` returned the identical
    expression for `minimal_text` and `minimal_no_code`, so the two modes had
-   byte-identical exposure for all 1,797 corpus entries even though the strings
+   byte-identical exposure for every corpus entry even though the strings
    actually returned differ by the control code. Exposure is now *derived* from
    `returned_text`, so the two definitions cannot drift apart again.
 

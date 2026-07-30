@@ -3,7 +3,7 @@
 
 배경
 ----
-코퍼스의 약 35%(637/1797 entries)가 미국 EAR CCL(eCFR 15 CFR Part 774 Supp. No. 1)에서
+코퍼스의 약 36%(637/1783 entries)가 미국 EAR CCL(eCFR 15 CFR Part 774 Supp. No. 1)에서
 나왔지만, 지금까지 저장소에는 파싱 결과물(`data/corpus/ecfr_supp1.json`)만 있고
 **취득·파싱 코드가 없었다.** 즉 코퍼스 3분의 1의 재현 경로가 코드로 남아 있지 않았다.
 이 스크립트가 그 경로를 복원한다.

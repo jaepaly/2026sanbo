@@ -3,7 +3,9 @@
     "description": "Label audit for external consultation-style simulated queries.",
     "note": "Existence check only. Semantic correctness of label-to-query mapping is not asserted here. When has_code_collision is true, the normalized code maps to multiple corpus entries from different control systems, so 'exists' does not guarantee the intended namespace was matched.",
     "corpus_size": 1797,
-    "query_count": 30
+    "query_count": 30,
+    "superseded_by": "docs/label_audit.md (코퍼스 v2 재실행)",
+    "stale_corpus_note": "이 산출물은 코퍼스 v1(1,797건)에서 생성됐고 재실행하지 않았다. 현재 활성 코퍼스는 v2(1,783건)이므로 논문은 이 파일을 인용하지 않는다."
   },
   "audit": [
     {
