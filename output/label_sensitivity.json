@@ -1,0 +1,707 @@
+{
+  "experiment": "label_perturbation_sensitivity",
+  "rationale": "정답 라벨은 전문가 검증을 받지 않았다. 헤드라인은 모두 같은 라벨을 고정 기준점으로 둔 짝지음 비교이므로 라벨의 법적 정확성은 대비에서 상쇄되지만, 라벨 결함이 어떤 질의를 남기느냐를 통해 결론을 흔들 수 있으므로 결함별 부분집합에서 결론 유지 여부를 확인한다.",
+  "method": "validated_suite.json 의 질의별 hit_vectors 를 부분집합으로 마스킹해 정확히 재계산한다(모델 재실행 없음, 근사 아님).",
+  "index_mode": "minimal_text",
+  "models": [
+    "MiniLM",
+    "bge-m3",
+    "e5-base"
+  ],
+  "conclusion": {
+    "dense_beats_bm25_in_every_variant_and_model": true,
+    "hybrid_never_significantly_beats_dense": true
+  },
+  "variants": {
+    "V0_baseline": {
+      "description": "전체 71개 (기준)",
+      "dropped": 0,
+      "n": 71,
+      "n_ko": 45,
+      "n_en": 26,
+      "models": {
+        "MiniLM": {
+          "BM25": {
+            "k": 11,
+            "n": 71,
+            "rate": 0.1549,
+            "ci95": [
+              0.08,
+              0.2603
+            ]
+          },
+          "dense": {
+            "k": 39,
+            "n": 71,
+            "rate": 0.5493,
+            "ci95": [
+              0.4266,
+              0.6677
+            ]
+          },
+          "hybrid_0.5": {
+            "k": 41,
+            "n": 71,
+            "rate": 0.5775,
+            "ci95": [
+              0.4544,
+              0.6939
+            ]
+          },
+          "BM25_ko": 0.0,
+          "dense_ko": 0.6,
+          "dense_vs_bm25": {
+            "mean_diff": 0.3944,
+            "wins": 29,
+            "losses": 1,
+            "p_two_sided_exact": 5.7742e-08,
+            "significant_at_0.05": true
+          },
+          "hybrid_vs_dense": {
+            "mean_diff": 0.0282,
+            "p_two_sided_exact": 0.625,
+            "significant_at_0.05": false
+          }
+        },
+        "bge-m3": {
+          "BM25": {
+            "k": 11,
+            "n": 71,
+            "rate": 0.1549,
+            "ci95": [
+              0.08,
+              0.2603
+            ]
+          },
+          "dense": {
+            "k": 40,
+            "n": 71,
+            "rate": 0.5634,
+            "ci95": [
+              0.4405,
+              0.6809
+            ]
+          },
+          "hybrid_0.5": {
+            "k": 40,
+            "n": 71,
+            "rate": 0.5634,
+            "ci95": [
+              0.4405,
+              0.6809
+            ]
+          },
+          "BM25_ko": 0.0,
+          "dense_ko": 0.6222,
+          "dense_vs_bm25": {
+            "mean_diff": 0.4085,
+            "wins": 30,
+            "losses": 1,
+            "p_two_sided_exact": 2.98023e-08,
+            "significant_at_0.05": true
+          },
+          "hybrid_vs_dense": {
+            "mean_diff": 0.0,
+            "p_two_sided_exact": 1.0,
+            "significant_at_0.05": false
+          }
+        },
+        "e5-base": {
+          "BM25": {
+            "k": 11,
+            "n": 71,
+            "rate": 0.1549,
+            "ci95": [
+              0.08,
+              0.2603
+            ]
+          },
+          "dense": {
+            "k": 33,
+            "n": 71,
+            "rate": 0.4648,
+            "ci95": [
+              0.3455,
+              0.5871
+            ]
+          },
+          "hybrid_0.5": {
+            "k": 35,
+            "n": 71,
+            "rate": 0.493,
+            "ci95": [
+              0.3722,
+              0.6144
+            ]
+          },
+          "BM25_ko": 0.0,
+          "dense_ko": 0.4889,
+          "dense_vs_bm25": {
+            "mean_diff": 0.3099,
+            "wins": 23,
+            "losses": 1,
+            "p_two_sided_exact": 2.98023e-06,
+            "significant_at_0.05": true
+          },
+          "hybrid_vs_dense": {
+            "mean_diff": 0.0282,
+            "p_two_sided_exact": 0.625,
+            "significant_at_0.05": false
+          }
+        }
+      }
+    },
+    "V1_no_stub_gold": {
+      "description": "정답이 전부 표제 스텁인 질의 제거 (D1)",
+      "dropped": 42,
+      "n": 29,
+      "n_ko": 18,
+      "n_en": 11,
+      "models": {
+        "MiniLM": {
+          "BM25": {
+            "k": 8,
+            "n": 29,
+            "rate": 0.2759,
+            "ci95": [
+              0.1273,
+              0.4724
+            ]
+          },
+          "dense": {
+            "k": 20,
+            "n": 29,
+            "rate": 0.6897,
+            "ci95": [
+              0.4917,
+              0.8472
+            ]
+          },
+          "hybrid_0.5": {
+            "k": 21,
+            "n": 29,
+            "rate": 0.7241,
+            "ci95": [
+              0.5276,
+              0.8727
+            ]
+          },
+          "BM25_ko": 0.0,
+          "dense_ko": 0.7222,
+          "dense_vs_bm25": {
+            "mean_diff": 0.4138,
+            "wins": 13,
+            "losses": 1,
+            "p_two_sided_exact": 0.00183105,
+            "significant_at_0.05": true
+          },
+          "hybrid_vs_dense": {
+            "mean_diff": 0.0345,
+            "p_two_sided_exact": 1.0,
+            "significant_at_0.05": false
+          }
+        },
+        "bge-m3": {
+          "BM25": {
+            "k": 8,
+            "n": 29,
+            "rate": 0.2759,
+            "ci95": [
+              0.1273,
+              0.4724
+            ]
+          },
+          "dense": {
+            "k": 21,
+            "n": 29,
+            "rate": 0.7241,
+            "ci95": [
+              0.5276,
+              0.8727
+            ]
+          },
+          "hybrid_0.5": {
+            "k": 22,
+            "n": 29,
+            "rate": 0.7586,
+            "ci95": [
+              0.5646,
+              0.897
+            ]
+          },
+          "BM25_ko": 0.0,
+          "dense_ko": 0.7778,
+          "dense_vs_bm25": {
+            "mean_diff": 0.4483,
+            "wins": 14,
+            "losses": 1,
+            "p_two_sided_exact": 0.000976562,
+            "significant_at_0.05": true
+          },
+          "hybrid_vs_dense": {
+            "mean_diff": 0.0345,
+            "p_two_sided_exact": 1.0,
+            "significant_at_0.05": false
+          }
+        },
+        "e5-base": {
+          "BM25": {
+            "k": 8,
+            "n": 29,
+            "rate": 0.2759,
+            "ci95": [
+              0.1273,
+              0.4724
+            ]
+          },
+          "dense": {
+            "k": 20,
+            "n": 29,
+            "rate": 0.6897,
+            "ci95": [
+              0.4917,
+              0.8472
+            ]
+          },
+          "hybrid_0.5": {
+            "k": 21,
+            "n": 29,
+            "rate": 0.7241,
+            "ci95": [
+              0.5276,
+              0.8727
+            ]
+          },
+          "BM25_ko": 0.0,
+          "dense_ko": 0.7222,
+          "dense_vs_bm25": {
+            "mean_diff": 0.4138,
+            "wins": 13,
+            "losses": 1,
+            "p_two_sided_exact": 0.00183105,
+            "significant_at_0.05": true
+          },
+          "hybrid_vs_dense": {
+            "mean_diff": 0.0345,
+            "p_two_sided_exact": 1.0,
+            "significant_at_0.05": false
+          }
+        }
+      }
+    },
+    "V2_no_label_defect": {
+      "description": "부정확 2차 라벨·규제체계 모순 제거 (D3/D4)",
+      "dropped": 3,
+      "n": 68,
+      "n_ko": 44,
+      "n_en": 24,
+      "models": {
+        "MiniLM": {
+          "BM25": {
+            "k": 11,
+            "n": 68,
+            "rate": 0.1618,
+            "ci95": [
+              0.0836,
+              0.271
+            ]
+          },
+          "dense": {
+            "k": 39,
+            "n": 68,
+            "rate": 0.5735,
+            "ci95": [
+              0.4477,
+              0.6928
+            ]
+          },
+          "hybrid_0.5": {
+            "k": 41,
+            "n": 68,
+            "rate": 0.6029,
+            "ci95": [
+              0.477,
+              0.7197
+            ]
+          },
+          "BM25_ko": 0.0,
+          "dense_ko": 0.6136,
+          "dense_vs_bm25": {
+            "mean_diff": 0.4118,
+            "wins": 29,
+            "losses": 1,
+            "p_two_sided_exact": 5.7742e-08,
+            "significant_at_0.05": true
+          },
+          "hybrid_vs_dense": {
+            "mean_diff": 0.0294,
+            "p_two_sided_exact": 0.625,
+            "significant_at_0.05": false
+          }
+        },
+        "bge-m3": {
+          "BM25": {
+            "k": 11,
+            "n": 68,
+            "rate": 0.1618,
+            "ci95": [
+              0.0836,
+              0.271
+            ]
+          },
+          "dense": {
+            "k": 40,
+            "n": 68,
+            "rate": 0.5882,
+            "ci95": [
+              0.4623,
+              0.7063
+            ]
+          },
+          "hybrid_0.5": {
+            "k": 40,
+            "n": 68,
+            "rate": 0.5882,
+            "ci95": [
+              0.4623,
+              0.7063
+            ]
+          },
+          "BM25_ko": 0.0,
+          "dense_ko": 0.6364,
+          "dense_vs_bm25": {
+            "mean_diff": 0.4265,
+            "wins": 30,
+            "losses": 1,
+            "p_two_sided_exact": 2.98023e-08,
+            "significant_at_0.05": true
+          },
+          "hybrid_vs_dense": {
+            "mean_diff": 0.0,
+            "p_two_sided_exact": 1.0,
+            "significant_at_0.05": false
+          }
+        },
+        "e5-base": {
+          "BM25": {
+            "k": 11,
+            "n": 68,
+            "rate": 0.1618,
+            "ci95": [
+              0.0836,
+              0.271
+            ]
+          },
+          "dense": {
+            "k": 33,
+            "n": 68,
+            "rate": 0.4853,
+            "ci95": [
+              0.3622,
+              0.6097
+            ]
+          },
+          "hybrid_0.5": {
+            "k": 35,
+            "n": 68,
+            "rate": 0.5147,
+            "ci95": [
+              0.3903,
+              0.6378
+            ]
+          },
+          "BM25_ko": 0.0,
+          "dense_ko": 0.5,
+          "dense_vs_bm25": {
+            "mean_diff": 0.3235,
+            "wins": 23,
+            "losses": 1,
+            "p_two_sided_exact": 2.98023e-06,
+            "significant_at_0.05": true
+          },
+          "hybrid_vs_dense": {
+            "mean_diff": 0.0294,
+            "p_two_sided_exact": 0.625,
+            "significant_at_0.05": false
+          }
+        }
+      }
+    },
+    "V3_unique_gold_code": {
+      "description": "정답 코드 재사용 질의 제거 (D5)",
+      "dropped": 3,
+      "n": 68,
+      "n_ko": 43,
+      "n_en": 25,
+      "models": {
+        "MiniLM": {
+          "BM25": {
+            "k": 11,
+            "n": 68,
+            "rate": 0.1618,
+            "ci95": [
+              0.0836,
+              0.271
+            ]
+          },
+          "dense": {
+            "k": 39,
+            "n": 68,
+            "rate": 0.5735,
+            "ci95": [
+              0.4477,
+              0.6928
+            ]
+          },
+          "hybrid_0.5": {
+            "k": 41,
+            "n": 68,
+            "rate": 0.6029,
+            "ci95": [
+              0.477,
+              0.7197
+            ]
+          },
+          "BM25_ko": 0.0,
+          "dense_ko": 0.6279,
+          "dense_vs_bm25": {
+            "mean_diff": 0.4118,
+            "wins": 29,
+            "losses": 1,
+            "p_two_sided_exact": 5.7742e-08,
+            "significant_at_0.05": true
+          },
+          "hybrid_vs_dense": {
+            "mean_diff": 0.0294,
+            "p_two_sided_exact": 0.625,
+            "significant_at_0.05": false
+          }
+        },
+        "bge-m3": {
+          "BM25": {
+            "k": 11,
+            "n": 68,
+            "rate": 0.1618,
+            "ci95": [
+              0.0836,
+              0.271
+            ]
+          },
+          "dense": {
+            "k": 39,
+            "n": 68,
+            "rate": 0.5735,
+            "ci95": [
+              0.4477,
+              0.6928
+            ]
+          },
+          "hybrid_0.5": {
+            "k": 40,
+            "n": 68,
+            "rate": 0.5882,
+            "ci95": [
+              0.4623,
+              0.7063
+            ]
+          },
+          "BM25_ko": 0.0,
+          "dense_ko": 0.6512,
+          "dense_vs_bm25": {
+            "mean_diff": 0.4118,
+            "wins": 29,
+            "losses": 1,
+            "p_two_sided_exact": 5.7742e-08,
+            "significant_at_0.05": true
+          },
+          "hybrid_vs_dense": {
+            "mean_diff": 0.0147,
+            "p_two_sided_exact": 1.0,
+            "significant_at_0.05": false
+          }
+        },
+        "e5-base": {
+          "BM25": {
+            "k": 11,
+            "n": 68,
+            "rate": 0.1618,
+            "ci95": [
+              0.0836,
+              0.271
+            ]
+          },
+          "dense": {
+            "k": 33,
+            "n": 68,
+            "rate": 0.4853,
+            "ci95": [
+              0.3622,
+              0.6097
+            ]
+          },
+          "hybrid_0.5": {
+            "k": 35,
+            "n": 68,
+            "rate": 0.5147,
+            "ci95": [
+              0.3903,
+              0.6378
+            ]
+          },
+          "BM25_ko": 0.0,
+          "dense_ko": 0.5116,
+          "dense_vs_bm25": {
+            "mean_diff": 0.3235,
+            "wins": 23,
+            "losses": 1,
+            "p_two_sided_exact": 2.98023e-06,
+            "significant_at_0.05": true
+          },
+          "hybrid_vs_dense": {
+            "mean_diff": 0.0294,
+            "p_two_sided_exact": 0.625,
+            "significant_at_0.05": false
+          }
+        }
+      }
+    },
+    "V4_strict": {
+      "description": "V1 ∩ V2 ∩ V3 (가장 보수적)",
+      "dropped": 42,
+      "n": 29,
+      "n_ko": 18,
+      "n_en": 11,
+      "models": {
+        "MiniLM": {
+          "BM25": {
+            "k": 8,
+            "n": 29,
+            "rate": 0.2759,
+            "ci95": [
+              0.1273,
+              0.4724
+            ]
+          },
+          "dense": {
+            "k": 20,
+            "n": 29,
+            "rate": 0.6897,
+            "ci95": [
+              0.4917,
+              0.8472
+            ]
+          },
+          "hybrid_0.5": {
+            "k": 21,
+            "n": 29,
+            "rate": 0.7241,
+            "ci95": [
+              0.5276,
+              0.8727
+            ]
+          },
+          "BM25_ko": 0.0,
+          "dense_ko": 0.7222,
+          "dense_vs_bm25": {
+            "mean_diff": 0.4138,
+            "wins": 13,
+            "losses": 1,
+            "p_two_sided_exact": 0.00183105,
+            "significant_at_0.05": true
+          },
+          "hybrid_vs_dense": {
+            "mean_diff": 0.0345,
+            "p_two_sided_exact": 1.0,
+            "significant_at_0.05": false
+          }
+        },
+        "bge-m3": {
+          "BM25": {
+            "k": 8,
+            "n": 29,
+            "rate": 0.2759,
+            "ci95": [
+              0.1273,
+              0.4724
+            ]
+          },
+          "dense": {
+            "k": 21,
+            "n": 29,
+            "rate": 0.7241,
+            "ci95": [
+              0.5276,
+              0.8727
+            ]
+          },
+          "hybrid_0.5": {
+            "k": 22,
+            "n": 29,
+            "rate": 0.7586,
+            "ci95": [
+              0.5646,
+              0.897
+            ]
+          },
+          "BM25_ko": 0.0,
+          "dense_ko": 0.7778,
+          "dense_vs_bm25": {
+            "mean_diff": 0.4483,
+            "wins": 14,
+            "losses": 1,
+            "p_two_sided_exact": 0.000976562,
+            "significant_at_0.05": true
+          },
+          "hybrid_vs_dense": {
+            "mean_diff": 0.0345,
+            "p_two_sided_exact": 1.0,
+            "significant_at_0.05": false
+          }
+        },
+        "e5-base": {
+          "BM25": {
+            "k": 8,
+            "n": 29,
+            "rate": 0.2759,
+            "ci95": [
+              0.1273,
+              0.4724
+            ]
+          },
+          "dense": {
+            "k": 20,
+            "n": 29,
+            "rate": 0.6897,
+            "ci95": [
+              0.4917,
+              0.8472
+            ]
+          },
+          "hybrid_0.5": {
+            "k": 21,
+            "n": 29,
+            "rate": 0.7241,
+            "ci95": [
+              0.5276,
+              0.8727
+            ]
+          },
+          "BM25_ko": 0.0,
+          "dense_ko": 0.7222,
+          "dense_vs_bm25": {
+            "mean_diff": 0.4138,
+            "wins": 13,
+            "losses": 1,
+            "p_two_sided_exact": 0.00183105,
+            "significant_at_0.05": true
+          },
+          "hybrid_vs_dense": {
+            "mean_diff": 0.0345,
+            "p_two_sided_exact": 1.0,
+            "significant_at_0.05": false
+          }
+        }
+      }
+    }
+  }
+}
