@@ -30,25 +30,1114 @@
       0.15
     ],
     "dense_models": {
-      "MiniLM": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
       "e5-base": "intfloat/multilingual-e5-base",
-      "bge-m3": "BAAI/bge-m3"
+      "MiniLM": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
     },
     "primary_model": "MiniLM",
+    "model_revisions": {
+      "e5-base": "d128750597153bb5987e10b1c3493a34e5a4502a",
+      "MiniLM": "e8f8c211226b894fcb81acc59f3b34ba3efd5f42"
+    },
     "bootstrap_iters": 20000,
     "seed": 20260626,
     "label_nature": "corpus-text-grounded category labels (exact eCFR codes); not legal or expert determinations",
-    "prespecified": "delta, primary alpha, bootstrap settings and the Holm families were fixed in this file before the run; sensitivity deltas are reported as sensitivity only"
+    "prespecified": "delta, primary alpha, bootstrap settings and the Holm families were fixed in this file before the run; sensitivity deltas are reported as sensitivity only",
+    "merged_from_shards": [
+      "shard_e5-base.json",
+      "shard_MiniLM.json"
+    ],
+    "shard_envs": {
+      "e5-base": {
+        "numpy": "2.5.0",
+        "python": "3.14.6",
+        "platform": "Windows-11-10.0.22631-SP0",
+        "torch": "2.12.1+cpu",
+        "sentence_transformers": "5.6.0",
+        "seed": 20260626
+      },
+      "MiniLM": {
+        "numpy": "2.2.6",
+        "python": "3.10.5",
+        "platform": "Windows-10-10.0.26200-SP0",
+        "torch": "2.6.0+cpu",
+        "sentence_transformers": "3.4.1",
+        "seed": 20260626
+      }
+    },
+    "missing_models": [
+      "bge-m3"
+    ]
   },
   "env": {
-    "numpy": "2.2.6",
-    "python": "3.10.5",
-    "platform": "Windows-10-10.0.26200-SP0",
-    "torch": "2.6.0+cpu",
-    "sentence_transformers": "3.4.1",
+    "numpy": "2.4.6",
+    "python": "3.11.15",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "torch": "2.12.1+cpu",
+    "sentence_transformers": "5.6.0",
     "seed": 20260626
   },
   "retriever": {
+    "e5-base": {
+      "revision": "d128750597153bb5987e10b1c3493a34e5a4502a",
+      "diagnostics": {
+        "full_text": {
+          "bm25_no_signal_queries": 44,
+          "rank1_ties_at_primary_alpha": 0,
+          "hybrid_top10_identical_to_dense": {
+            "hybrid_0.7": 44,
+            "hybrid_0.5": 44,
+            "hybrid_0.3": 44
+          },
+          "distinct_index_texts": 1783
+        },
+        "minimal_text": {
+          "bm25_no_signal_queries": 44,
+          "rank1_ties_at_primary_alpha": 0,
+          "hybrid_top10_identical_to_dense": {
+            "hybrid_0.7": 44,
+            "hybrid_0.5": 44,
+            "hybrid_0.3": 44
+          },
+          "distinct_index_texts": 1783
+        },
+        "minimal_no_code": {
+          "bm25_no_signal_queries": 44,
+          "rank1_ties_at_primary_alpha": 3,
+          "hybrid_top10_identical_to_dense": {
+            "hybrid_0.7": 44,
+            "hybrid_0.5": 44,
+            "hybrid_0.3": 44
+          },
+          "distinct_index_texts": 1656
+        }
+      },
+      "full_text": {
+        "recall@10": {
+          "BM25": {
+            "overall": {
+              "k": 11,
+              "n": 71,
+              "rate": 0.1549,
+              "ci95": [
+                0.08,
+                0.2603
+              ]
+            },
+            "en": {
+              "k": 11,
+              "n": 26,
+              "rate": 0.4231,
+              "ci95": [
+                0.2335,
+                0.6308
+              ]
+            },
+            "ko": {
+              "k": 0,
+              "n": 45,
+              "rate": 0.0,
+              "ci95": [
+                0.0,
+                0.0787
+              ]
+            }
+          },
+          "hybrid_0.7": {
+            "overall": {
+              "k": 36,
+              "n": 71,
+              "rate": 0.507,
+              "ci95": [
+                0.3856,
+                0.6278
+              ]
+            },
+            "en": {
+              "k": 13,
+              "n": 26,
+              "rate": 0.5,
+              "ci95": [
+                0.2993,
+                0.7007
+              ]
+            },
+            "ko": {
+              "k": 23,
+              "n": 45,
+              "rate": 0.5111,
+              "ci95": [
+                0.3577,
+                0.663
+              ]
+            }
+          },
+          "hybrid_0.5": {
+            "overall": {
+              "k": 36,
+              "n": 71,
+              "rate": 0.507,
+              "ci95": [
+                0.3856,
+                0.6278
+              ]
+            },
+            "en": {
+              "k": 13,
+              "n": 26,
+              "rate": 0.5,
+              "ci95": [
+                0.2993,
+                0.7007
+              ]
+            },
+            "ko": {
+              "k": 23,
+              "n": 45,
+              "rate": 0.5111,
+              "ci95": [
+                0.3577,
+                0.663
+              ]
+            }
+          },
+          "hybrid_0.3": {
+            "overall": {
+              "k": 36,
+              "n": 71,
+              "rate": 0.507,
+              "ci95": [
+                0.3856,
+                0.6278
+              ]
+            },
+            "en": {
+              "k": 13,
+              "n": 26,
+              "rate": 0.5,
+              "ci95": [
+                0.2993,
+                0.7007
+              ]
+            },
+            "ko": {
+              "k": 23,
+              "n": 45,
+              "rate": 0.5111,
+              "ci95": [
+                0.3577,
+                0.663
+              ]
+            }
+          },
+          "dense": {
+            "overall": {
+              "k": 34,
+              "n": 71,
+              "rate": 0.4789,
+              "ci95": [
+                0.3588,
+                0.6008
+              ]
+            },
+            "en": {
+              "k": 11,
+              "n": 26,
+              "rate": 0.4231,
+              "ci95": [
+                0.2335,
+                0.6308
+              ]
+            },
+            "ko": {
+              "k": 23,
+              "n": 45,
+              "rate": 0.5111,
+              "ci95": [
+                0.3577,
+                0.663
+              ]
+            }
+          }
+        },
+        "contrasts": {
+          "hybrid_vs_bm25[overall]": {
+            "comparison": "hybrid_vs_bm25[overall]",
+            "mean_diff": 0.3521,
+            "diff_95_ci": [
+              0.2394,
+              0.4648
+            ],
+            "excludes_zero": true,
+            "wins": 26,
+            "losses": 1,
+            "ties": 44,
+            "discordant": 27,
+            "p_two_sided_exact": 4.17233e-07,
+            "p_one_sided_exact": 2.08616e-07
+          },
+          "dense_vs_bm25[overall]": {
+            "comparison": "dense_vs_bm25[overall]",
+            "mean_diff": 0.3239,
+            "diff_95_ci": [
+              0.1972,
+              0.4507
+            ],
+            "excludes_zero": true,
+            "wins": 25,
+            "losses": 2,
+            "ties": 44,
+            "discordant": 27,
+            "p_two_sided_exact": 5.64754e-06,
+            "p_one_sided_exact": 2.82377e-06
+          },
+          "hybrid_vs_dense[overall]": {
+            "comparison": "hybrid_vs_dense[overall]",
+            "mean_diff": 0.0282,
+            "diff_95_ci": [
+              0.0,
+              0.0704
+            ],
+            "excludes_zero": false,
+            "wins": 2,
+            "losses": 0,
+            "ties": 69,
+            "discordant": 2,
+            "p_two_sided_exact": 0.5,
+            "p_one_sided_exact": 0.25
+          },
+          "hybrid_vs_bm25[en]": {
+            "comparison": "hybrid_vs_bm25[en]",
+            "mean_diff": 0.0769,
+            "diff_95_ci": [
+              -0.0769,
+              0.2308
+            ],
+            "excludes_zero": false,
+            "wins": 3,
+            "losses": 1,
+            "ties": 22,
+            "discordant": 4,
+            "p_two_sided_exact": 0.625,
+            "p_one_sided_exact": 0.3125
+          },
+          "dense_vs_bm25[en]": {
+            "comparison": "dense_vs_bm25[en]",
+            "mean_diff": 0.0,
+            "diff_95_ci": [
+              -0.1538,
+              0.1538
+            ],
+            "excludes_zero": false,
+            "wins": 2,
+            "losses": 2,
+            "ties": 22,
+            "discordant": 4,
+            "p_two_sided_exact": 1.0,
+            "p_one_sided_exact": 0.6875
+          },
+          "hybrid_vs_dense[en]": {
+            "comparison": "hybrid_vs_dense[en]",
+            "mean_diff": 0.0769,
+            "diff_95_ci": [
+              0.0,
+              0.1923
+            ],
+            "excludes_zero": false,
+            "wins": 2,
+            "losses": 0,
+            "ties": 24,
+            "discordant": 2,
+            "p_two_sided_exact": 0.5,
+            "p_one_sided_exact": 0.25
+          },
+          "hybrid_vs_bm25[ko]": {
+            "comparison": "hybrid_vs_bm25[ko]",
+            "mean_diff": 0.5111,
+            "diff_95_ci": [
+              0.3556,
+              0.6444
+            ],
+            "excludes_zero": true,
+            "wins": 23,
+            "losses": 0,
+            "ties": 22,
+            "discordant": 23,
+            "p_two_sided_exact": 2.38419e-07,
+            "p_one_sided_exact": 1.19209e-07
+          },
+          "dense_vs_bm25[ko]": {
+            "comparison": "dense_vs_bm25[ko]",
+            "mean_diff": 0.5111,
+            "diff_95_ci": [
+              0.3556,
+              0.6444
+            ],
+            "excludes_zero": true,
+            "wins": 23,
+            "losses": 0,
+            "ties": 22,
+            "discordant": 23,
+            "p_two_sided_exact": 2.38419e-07,
+            "p_one_sided_exact": 1.19209e-07
+          },
+          "hybrid_vs_dense[ko]": {
+            "comparison": "hybrid_vs_dense[ko]",
+            "mean_diff": 0.0,
+            "diff_95_ci": [
+              0.0,
+              0.0
+            ],
+            "excludes_zero": false,
+            "wins": 0,
+            "losses": 0,
+            "ties": 45,
+            "discordant": 0,
+            "p_two_sided_exact": 1.0,
+            "p_one_sided_exact": 1.0
+          }
+        },
+        "holm_within_index_mode": {
+          "hybrid_vs_bm25[ko]": {
+            "p_raw": 2.384e-07,
+            "p_adjusted": 2.1458e-06,
+            "significant_at_0.05": true,
+            "family_size": 9
+          },
+          "dense_vs_bm25[ko]": {
+            "p_raw": 2.384e-07,
+            "p_adjusted": 2.1458e-06,
+            "significant_at_0.05": true,
+            "family_size": 9
+          },
+          "hybrid_vs_bm25[overall]": {
+            "p_raw": 4.172e-07,
+            "p_adjusted": 2.9206e-06,
+            "significant_at_0.05": true,
+            "family_size": 9
+          },
+          "dense_vs_bm25[overall]": {
+            "p_raw": 5.6475e-06,
+            "p_adjusted": 3.38852e-05,
+            "significant_at_0.05": true,
+            "family_size": 9
+          },
+          "hybrid_vs_dense[overall]": {
+            "p_raw": 0.5,
+            "p_adjusted": 1.0,
+            "significant_at_0.05": false,
+            "family_size": 9
+          },
+          "hybrid_vs_dense[en]": {
+            "p_raw": 0.5,
+            "p_adjusted": 1.0,
+            "significant_at_0.05": false,
+            "family_size": 9
+          },
+          "hybrid_vs_bm25[en]": {
+            "p_raw": 0.625,
+            "p_adjusted": 1.0,
+            "significant_at_0.05": false,
+            "family_size": 9
+          },
+          "dense_vs_bm25[en]": {
+            "p_raw": 1.0,
+            "p_adjusted": 1.0,
+            "significant_at_0.05": false,
+            "family_size": 9
+          },
+          "hybrid_vs_dense[ko]": {
+            "p_raw": 1.0,
+            "p_adjusted": 1.0,
+            "significant_at_0.05": false,
+            "family_size": 9
+          }
+        }
+      },
+      "minimal_text": {
+        "recall@10": {
+          "BM25": {
+            "overall": {
+              "k": 11,
+              "n": 71,
+              "rate": 0.1549,
+              "ci95": [
+                0.08,
+                0.2603
+              ]
+            },
+            "en": {
+              "k": 11,
+              "n": 26,
+              "rate": 0.4231,
+              "ci95": [
+                0.2335,
+                0.6308
+              ]
+            },
+            "ko": {
+              "k": 0,
+              "n": 45,
+              "rate": 0.0,
+              "ci95": [
+                0.0,
+                0.0787
+              ]
+            }
+          },
+          "hybrid_0.7": {
+            "overall": {
+              "k": 34,
+              "n": 71,
+              "rate": 0.4789,
+              "ci95": [
+                0.3588,
+                0.6008
+              ]
+            },
+            "en": {
+              "k": 12,
+              "n": 26,
+              "rate": 0.4615,
+              "ci95": [
+                0.2659,
+                0.6663
+              ]
+            },
+            "ko": {
+              "k": 22,
+              "n": 45,
+              "rate": 0.4889,
+              "ci95": [
+                0.337,
+                0.6423
+              ]
+            }
+          },
+          "hybrid_0.5": {
+            "overall": {
+              "k": 35,
+              "n": 71,
+              "rate": 0.493,
+              "ci95": [
+                0.3722,
+                0.6144
+              ]
+            },
+            "en": {
+              "k": 13,
+              "n": 26,
+              "rate": 0.5,
+              "ci95": [
+                0.2993,
+                0.7007
+              ]
+            },
+            "ko": {
+              "k": 22,
+              "n": 45,
+              "rate": 0.4889,
+              "ci95": [
+                0.337,
+                0.6423
+              ]
+            }
+          },
+          "hybrid_0.3": {
+            "overall": {
+              "k": 36,
+              "n": 71,
+              "rate": 0.507,
+              "ci95": [
+                0.3856,
+                0.6278
+              ]
+            },
+            "en": {
+              "k": 14,
+              "n": 26,
+              "rate": 0.5385,
+              "ci95": [
+                0.3337,
+                0.7341
+              ]
+            },
+            "ko": {
+              "k": 22,
+              "n": 45,
+              "rate": 0.4889,
+              "ci95": [
+                0.337,
+                0.6423
+              ]
+            }
+          },
+          "dense": {
+            "overall": {
+              "k": 33,
+              "n": 71,
+              "rate": 0.4648,
+              "ci95": [
+                0.3455,
+                0.5871
+              ]
+            },
+            "en": {
+              "k": 11,
+              "n": 26,
+              "rate": 0.4231,
+              "ci95": [
+                0.2335,
+                0.6308
+              ]
+            },
+            "ko": {
+              "k": 22,
+              "n": 45,
+              "rate": 0.4889,
+              "ci95": [
+                0.337,
+                0.6423
+              ]
+            }
+          }
+        },
+        "contrasts": {
+          "hybrid_vs_bm25[overall]": {
+            "comparison": "hybrid_vs_bm25[overall]",
+            "mean_diff": 0.338,
+            "diff_95_ci": [
+              0.2254,
+              0.4507
+            ],
+            "excludes_zero": true,
+            "wins": 24,
+            "losses": 0,
+            "ties": 47,
+            "discordant": 24,
+            "p_two_sided_exact": 1.19209e-07,
+            "p_one_sided_exact": 5.96046e-08
+          },
+          "dense_vs_bm25[overall]": {
+            "comparison": "dense_vs_bm25[overall]",
+            "mean_diff": 0.3099,
+            "diff_95_ci": [
+              0.1972,
+              0.4225
+            ],
+            "excludes_zero": true,
+            "wins": 23,
+            "losses": 1,
+            "ties": 47,
+            "discordant": 24,
+            "p_two_sided_exact": 2.98023e-06,
+            "p_one_sided_exact": 1.49012e-06
+          },
+          "hybrid_vs_dense[overall]": {
+            "comparison": "hybrid_vs_dense[overall]",
+            "mean_diff": 0.0282,
+            "diff_95_ci": [
+              -0.0282,
+              0.0845
+            ],
+            "excludes_zero": false,
+            "wins": 3,
+            "losses": 1,
+            "ties": 67,
+            "discordant": 4,
+            "p_two_sided_exact": 0.625,
+            "p_one_sided_exact": 0.3125
+          },
+          "hybrid_vs_bm25[en]": {
+            "comparison": "hybrid_vs_bm25[en]",
+            "mean_diff": 0.0769,
+            "diff_95_ci": [
+              0.0,
+              0.1923
+            ],
+            "excludes_zero": false,
+            "wins": 2,
+            "losses": 0,
+            "ties": 24,
+            "discordant": 2,
+            "p_two_sided_exact": 0.5,
+            "p_one_sided_exact": 0.25
+          },
+          "dense_vs_bm25[en]": {
+            "comparison": "dense_vs_bm25[en]",
+            "mean_diff": 0.0,
+            "diff_95_ci": [
+              -0.1154,
+              0.1154
+            ],
+            "excludes_zero": false,
+            "wins": 1,
+            "losses": 1,
+            "ties": 24,
+            "discordant": 2,
+            "p_two_sided_exact": 1.0,
+            "p_one_sided_exact": 0.75
+          },
+          "hybrid_vs_dense[en]": {
+            "comparison": "hybrid_vs_dense[en]",
+            "mean_diff": 0.0769,
+            "diff_95_ci": [
+              -0.0769,
+              0.2308
+            ],
+            "excludes_zero": false,
+            "wins": 3,
+            "losses": 1,
+            "ties": 22,
+            "discordant": 4,
+            "p_two_sided_exact": 0.625,
+            "p_one_sided_exact": 0.3125
+          },
+          "hybrid_vs_bm25[ko]": {
+            "comparison": "hybrid_vs_bm25[ko]",
+            "mean_diff": 0.4889,
+            "diff_95_ci": [
+              0.3333,
+              0.6444
+            ],
+            "excludes_zero": true,
+            "wins": 22,
+            "losses": 0,
+            "ties": 23,
+            "discordant": 22,
+            "p_two_sided_exact": 4.76837e-07,
+            "p_one_sided_exact": 2.38419e-07
+          },
+          "dense_vs_bm25[ko]": {
+            "comparison": "dense_vs_bm25[ko]",
+            "mean_diff": 0.4889,
+            "diff_95_ci": [
+              0.3333,
+              0.6444
+            ],
+            "excludes_zero": true,
+            "wins": 22,
+            "losses": 0,
+            "ties": 23,
+            "discordant": 22,
+            "p_two_sided_exact": 4.76837e-07,
+            "p_one_sided_exact": 2.38419e-07
+          },
+          "hybrid_vs_dense[ko]": {
+            "comparison": "hybrid_vs_dense[ko]",
+            "mean_diff": 0.0,
+            "diff_95_ci": [
+              0.0,
+              0.0
+            ],
+            "excludes_zero": false,
+            "wins": 0,
+            "losses": 0,
+            "ties": 45,
+            "discordant": 0,
+            "p_two_sided_exact": 1.0,
+            "p_one_sided_exact": 1.0
+          }
+        },
+        "holm_within_index_mode": {
+          "hybrid_vs_bm25[overall]": {
+            "p_raw": 1.192e-07,
+            "p_adjusted": 1.0729e-06,
+            "significant_at_0.05": true,
+            "family_size": 9
+          },
+          "hybrid_vs_bm25[ko]": {
+            "p_raw": 4.768e-07,
+            "p_adjusted": 3.8147e-06,
+            "significant_at_0.05": true,
+            "family_size": 9
+          },
+          "dense_vs_bm25[ko]": {
+            "p_raw": 4.768e-07,
+            "p_adjusted": 3.8147e-06,
+            "significant_at_0.05": true,
+            "family_size": 9
+          },
+          "dense_vs_bm25[overall]": {
+            "p_raw": 2.9802e-06,
+            "p_adjusted": 1.78814e-05,
+            "significant_at_0.05": true,
+            "family_size": 9
+          },
+          "hybrid_vs_bm25[en]": {
+            "p_raw": 0.5,
+            "p_adjusted": 1.0,
+            "significant_at_0.05": false,
+            "family_size": 9
+          },
+          "hybrid_vs_dense[overall]": {
+            "p_raw": 0.625,
+            "p_adjusted": 1.0,
+            "significant_at_0.05": false,
+            "family_size": 9
+          },
+          "hybrid_vs_dense[en]": {
+            "p_raw": 0.625,
+            "p_adjusted": 1.0,
+            "significant_at_0.05": false,
+            "family_size": 9
+          },
+          "dense_vs_bm25[en]": {
+            "p_raw": 1.0,
+            "p_adjusted": 1.0,
+            "significant_at_0.05": false,
+            "family_size": 9
+          },
+          "hybrid_vs_dense[ko]": {
+            "p_raw": 1.0,
+            "p_adjusted": 1.0,
+            "significant_at_0.05": false,
+            "family_size": 9
+          }
+        }
+      },
+      "minimal_no_code": {
+        "recall@10": {
+          "BM25": {
+            "overall": {
+              "k": 11,
+              "n": 71,
+              "rate": 0.1549,
+              "ci95": [
+                0.08,
+                0.2603
+              ]
+            },
+            "en": {
+              "k": 11,
+              "n": 26,
+              "rate": 0.4231,
+              "ci95": [
+                0.2335,
+                0.6308
+              ]
+            },
+            "ko": {
+              "k": 0,
+              "n": 45,
+              "rate": 0.0,
+              "ci95": [
+                0.0,
+                0.0787
+              ]
+            }
+          },
+          "hybrid_0.7": {
+            "overall": {
+              "k": 31,
+              "n": 71,
+              "rate": 0.4366,
+              "ci95": [
+                0.3191,
+                0.5595
+              ]
+            },
+            "en": {
+              "k": 11,
+              "n": 26,
+              "rate": 0.4231,
+              "ci95": [
+                0.2335,
+                0.6308
+              ]
+            },
+            "ko": {
+              "k": 20,
+              "n": 45,
+              "rate": 0.4444,
+              "ci95": [
+                0.2964,
+                0.6
+              ]
+            }
+          },
+          "hybrid_0.5": {
+            "overall": {
+              "k": 33,
+              "n": 71,
+              "rate": 0.4648,
+              "ci95": [
+                0.3455,
+                0.5871
+              ]
+            },
+            "en": {
+              "k": 13,
+              "n": 26,
+              "rate": 0.5,
+              "ci95": [
+                0.2993,
+                0.7007
+              ]
+            },
+            "ko": {
+              "k": 20,
+              "n": 45,
+              "rate": 0.4444,
+              "ci95": [
+                0.2964,
+                0.6
+              ]
+            }
+          },
+          "hybrid_0.3": {
+            "overall": {
+              "k": 34,
+              "n": 71,
+              "rate": 0.4789,
+              "ci95": [
+                0.3588,
+                0.6008
+              ]
+            },
+            "en": {
+              "k": 14,
+              "n": 26,
+              "rate": 0.5385,
+              "ci95": [
+                0.3337,
+                0.7341
+              ]
+            },
+            "ko": {
+              "k": 20,
+              "n": 45,
+              "rate": 0.4444,
+              "ci95": [
+                0.2964,
+                0.6
+              ]
+            }
+          },
+          "dense": {
+            "overall": {
+              "k": 32,
+              "n": 71,
+              "rate": 0.4507,
+              "ci95": [
+                0.3323,
+                0.5734
+              ]
+            },
+            "en": {
+              "k": 12,
+              "n": 26,
+              "rate": 0.4615,
+              "ci95": [
+                0.2659,
+                0.6663
+              ]
+            },
+            "ko": {
+              "k": 20,
+              "n": 45,
+              "rate": 0.4444,
+              "ci95": [
+                0.2964,
+                0.6
+              ]
+            }
+          }
+        },
+        "contrasts": {
+          "hybrid_vs_bm25[overall]": {
+            "comparison": "hybrid_vs_bm25[overall]",
+            "mean_diff": 0.3099,
+            "diff_95_ci": [
+              0.2113,
+              0.4225
+            ],
+            "excludes_zero": true,
+            "wins": 22,
+            "losses": 0,
+            "ties": 49,
+            "discordant": 22,
+            "p_two_sided_exact": 4.76837e-07,
+            "p_one_sided_exact": 2.38419e-07
+          },
+          "dense_vs_bm25[overall]": {
+            "comparison": "dense_vs_bm25[overall]",
+            "mean_diff": 0.2958,
+            "diff_95_ci": [
+              0.1831,
+              0.4085
+            ],
+            "excludes_zero": true,
+            "wins": 22,
+            "losses": 1,
+            "ties": 48,
+            "discordant": 23,
+            "p_two_sided_exact": 5.72205e-06,
+            "p_one_sided_exact": 2.86102e-06
+          },
+          "hybrid_vs_dense[overall]": {
+            "comparison": "hybrid_vs_dense[overall]",
+            "mean_diff": 0.0141,
+            "diff_95_ci": [
+              0.0,
+              0.0423
+            ],
+            "excludes_zero": false,
+            "wins": 1,
+            "losses": 0,
+            "ties": 70,
+            "discordant": 1,
+            "p_two_sided_exact": 1.0,
+            "p_one_sided_exact": 0.5
+          },
+          "hybrid_vs_bm25[en]": {
+            "comparison": "hybrid_vs_bm25[en]",
+            "mean_diff": 0.0769,
+            "diff_95_ci": [
+              0.0,
+              0.1923
+            ],
+            "excludes_zero": false,
+            "wins": 2,
+            "losses": 0,
+            "ties": 24,
+            "discordant": 2,
+            "p_two_sided_exact": 0.5,
+            "p_one_sided_exact": 0.25
+          },
+          "dense_vs_bm25[en]": {
+            "comparison": "dense_vs_bm25[en]",
+            "mean_diff": 0.0385,
+            "diff_95_ci": [
+              -0.0769,
+              0.1538
+            ],
+            "excludes_zero": false,
+            "wins": 2,
+            "losses": 1,
+            "ties": 23,
+            "discordant": 3,
+            "p_two_sided_exact": 1.0,
+            "p_one_sided_exact": 0.5
+          },
+          "hybrid_vs_dense[en]": {
+            "comparison": "hybrid_vs_dense[en]",
+            "mean_diff": 0.0385,
+            "diff_95_ci": [
+              0.0,
+              0.1154
+            ],
+            "excludes_zero": false,
+            "wins": 1,
+            "losses": 0,
+            "ties": 25,
+            "discordant": 1,
+            "p_two_sided_exact": 1.0,
+            "p_one_sided_exact": 0.5
+          },
+          "hybrid_vs_bm25[ko]": {
+            "comparison": "hybrid_vs_bm25[ko]",
+            "mean_diff": 0.4444,
+            "diff_95_ci": [
+              0.3111,
+              0.6
+            ],
+            "excludes_zero": true,
+            "wins": 20,
+            "losses": 0,
+            "ties": 25,
+            "discordant": 20,
+            "p_two_sided_exact": 1.90735e-06,
+            "p_one_sided_exact": 9.53674e-07
+          },
+          "dense_vs_bm25[ko]": {
+            "comparison": "dense_vs_bm25[ko]",
+            "mean_diff": 0.4444,
+            "diff_95_ci": [
+              0.3111,
+              0.6
+            ],
+            "excludes_zero": true,
+            "wins": 20,
+            "losses": 0,
+            "ties": 25,
+            "discordant": 20,
+            "p_two_sided_exact": 1.90735e-06,
+            "p_one_sided_exact": 9.53674e-07
+          },
+          "hybrid_vs_dense[ko]": {
+            "comparison": "hybrid_vs_dense[ko]",
+            "mean_diff": 0.0,
+            "diff_95_ci": [
+              0.0,
+              0.0
+            ],
+            "excludes_zero": false,
+            "wins": 0,
+            "losses": 0,
+            "ties": 45,
+            "discordant": 0,
+            "p_two_sided_exact": 1.0,
+            "p_one_sided_exact": 1.0
+          }
+        },
+        "holm_within_index_mode": {
+          "hybrid_vs_bm25[overall]": {
+            "p_raw": 4.768e-07,
+            "p_adjusted": 4.2915e-06,
+            "significant_at_0.05": true,
+            "family_size": 9
+          },
+          "hybrid_vs_bm25[ko]": {
+            "p_raw": 1.9074e-06,
+            "p_adjusted": 1.52588e-05,
+            "significant_at_0.05": true,
+            "family_size": 9
+          },
+          "dense_vs_bm25[ko]": {
+            "p_raw": 1.9074e-06,
+            "p_adjusted": 1.52588e-05,
+            "significant_at_0.05": true,
+            "family_size": 9
+          },
+          "dense_vs_bm25[overall]": {
+            "p_raw": 5.722e-06,
+            "p_adjusted": 3.43323e-05,
+            "significant_at_0.05": true,
+            "family_size": 9
+          },
+          "hybrid_vs_bm25[en]": {
+            "p_raw": 0.5,
+            "p_adjusted": 1.0,
+            "significant_at_0.05": false,
+            "family_size": 9
+          },
+          "hybrid_vs_dense[overall]": {
+            "p_raw": 1.0,
+            "p_adjusted": 1.0,
+            "significant_at_0.05": false,
+            "family_size": 9
+          },
+          "dense_vs_bm25[en]": {
+            "p_raw": 1.0,
+            "p_adjusted": 1.0,
+            "significant_at_0.05": false,
+            "family_size": 9
+          },
+          "hybrid_vs_dense[en]": {
+            "p_raw": 1.0,
+            "p_adjusted": 1.0,
+            "significant_at_0.05": false,
+            "family_size": 9
+          },
+          "hybrid_vs_dense[ko]": {
+            "p_raw": 1.0,
+            "p_adjusted": 1.0,
+            "significant_at_0.05": false,
+            "family_size": 9
+          }
+        }
+      }
+    },
     "MiniLM": {
       "revision": "e8f8c211226b894fcb81acc59f3b34ba3efd5f42",
       "diagnostics": {
@@ -60,7 +1149,7 @@
             "hybrid_0.5": 44,
             "hybrid_0.3": 44
           },
-          "distinct_index_texts": 1797
+          "distinct_index_texts": 1783
         },
         "minimal_text": {
           "bm25_no_signal_queries": 44,
@@ -70,7 +1159,7 @@
             "hybrid_0.5": 44,
             "hybrid_0.3": 44
           },
-          "distinct_index_texts": 1797
+          "distinct_index_texts": 1783
         },
         "minimal_no_code": {
           "bm25_no_signal_queries": 44,
@@ -80,28 +1169,28 @@
             "hybrid_0.5": 44,
             "hybrid_0.3": 44
           },
-          "distinct_index_texts": 1683
+          "distinct_index_texts": 1656
         }
       },
       "full_text": {
         "recall@10": {
           "BM25": {
             "overall": {
-              "k": 12,
+              "k": 11,
               "n": 71,
-              "rate": 0.169,
+              "rate": 0.1549,
               "ci95": [
-                0.0905,
-                0.2766
+                0.08,
+                0.2603
               ]
             },
             "en": {
-              "k": 12,
+              "k": 11,
               "n": 26,
-              "rate": 0.4615,
+              "rate": 0.4231,
               "ci95": [
-                0.2659,
-                0.6663
+                0.2335,
+                0.6308
               ]
             },
             "ko": {
@@ -234,33 +1323,33 @@
         "contrasts": {
           "hybrid_vs_bm25[overall]": {
             "comparison": "hybrid_vs_bm25[overall]",
-            "mean_diff": 0.4366,
+            "mean_diff": 0.4507,
             "diff_95_ci": [
-              0.3239,
-              0.5493
+              0.338,
+              0.5634
             ],
             "excludes_zero": true,
-            "wins": 31,
+            "wins": 32,
             "losses": 0,
-            "ties": 40,
-            "discordant": 31,
-            "p_two_sided_exact": 9.31323e-10,
-            "p_one_sided_exact": 4.65661e-10
+            "ties": 39,
+            "discordant": 32,
+            "p_two_sided_exact": 4.65661e-10,
+            "p_one_sided_exact": 2.32831e-10
           },
           "dense_vs_bm25[overall]": {
             "comparison": "dense_vs_bm25[overall]",
-            "mean_diff": 0.4225,
+            "mean_diff": 0.4366,
             "diff_95_ci": [
-              0.2958,
-              0.5493
+              0.3099,
+              0.5634
             ],
             "excludes_zero": true,
-            "wins": 31,
+            "wins": 32,
             "losses": 1,
-            "ties": 39,
-            "discordant": 32,
-            "p_two_sided_exact": 1.53668e-08,
-            "p_one_sided_exact": 7.68341e-09
+            "ties": 38,
+            "discordant": 33,
+            "p_two_sided_exact": 7.91624e-09,
+            "p_one_sided_exact": 3.95812e-09
           },
           "hybrid_vs_dense[overall]": {
             "comparison": "hybrid_vs_dense[overall]",
@@ -279,33 +1368,33 @@
           },
           "hybrid_vs_bm25[en]": {
             "comparison": "hybrid_vs_bm25[en]",
-            "mean_diff": 0.0769,
+            "mean_diff": 0.1154,
             "diff_95_ci": [
               0.0,
-              0.1923
+              0.2692
             ],
             "excludes_zero": false,
-            "wins": 2,
+            "wins": 3,
             "losses": 0,
-            "ties": 24,
-            "discordant": 2,
-            "p_two_sided_exact": 0.5,
-            "p_one_sided_exact": 0.25
+            "ties": 23,
+            "discordant": 3,
+            "p_two_sided_exact": 0.25,
+            "p_one_sided_exact": 0.125
           },
           "dense_vs_bm25[en]": {
             "comparison": "dense_vs_bm25[en]",
-            "mean_diff": 0.0385,
+            "mean_diff": 0.0769,
             "diff_95_ci": [
               -0.0769,
-              0.1538
+              0.2308
             ],
             "excludes_zero": false,
-            "wins": 2,
+            "wins": 3,
             "losses": 1,
-            "ties": 23,
-            "discordant": 3,
-            "p_two_sided_exact": 1.0,
-            "p_one_sided_exact": 0.5
+            "ties": 22,
+            "discordant": 4,
+            "p_two_sided_exact": 0.625,
+            "p_one_sided_exact": 0.3125
           },
           "hybrid_vs_dense[en]": {
             "comparison": "hybrid_vs_dense[en]",
@@ -370,8 +1459,8 @@
         },
         "holm_within_index_mode": {
           "hybrid_vs_bm25[overall]": {
-            "p_raw": 9e-10,
-            "p_adjusted": 8.4e-09,
+            "p_raw": 5e-10,
+            "p_adjusted": 4.2e-09,
             "significant_at_0.05": true,
             "family_size": 9
           },
@@ -388,24 +1477,24 @@
             "family_size": 9
           },
           "dense_vs_bm25[overall]": {
-            "p_raw": 1.54e-08,
-            "p_adjusted": 9.22e-08,
+            "p_raw": 7.9e-09,
+            "p_adjusted": 4.75e-08,
             "significant_at_0.05": true,
             "family_size": 9
           },
           "hybrid_vs_bm25[en]": {
-            "p_raw": 0.5,
-            "p_adjusted": 1.0,
-            "significant_at_0.05": false,
-            "family_size": 9
-          },
-          "hybrid_vs_dense[overall]": {
-            "p_raw": 1.0,
+            "p_raw": 0.25,
             "p_adjusted": 1.0,
             "significant_at_0.05": false,
             "family_size": 9
           },
           "dense_vs_bm25[en]": {
+            "p_raw": 0.625,
+            "p_adjusted": 1.0,
+            "significant_at_0.05": false,
+            "family_size": 9
+          },
+          "hybrid_vs_dense[overall]": {
             "p_raw": 1.0,
             "p_adjusted": 1.0,
             "significant_at_0.05": false,
@@ -1109,2204 +2198,82 @@
           }
         }
       }
-    },
-    "e5-base": {
-      "revision": "d128750597153bb5987e10b1c3493a34e5a4502a",
-      "diagnostics": {
-        "full_text": {
-          "bm25_no_signal_queries": 44,
-          "rank1_ties_at_primary_alpha": 0,
-          "hybrid_top10_identical_to_dense": {
-            "hybrid_0.7": 44,
-            "hybrid_0.5": 44,
-            "hybrid_0.3": 44
-          },
-          "distinct_index_texts": 1797
-        },
-        "minimal_text": {
-          "bm25_no_signal_queries": 44,
-          "rank1_ties_at_primary_alpha": 0,
-          "hybrid_top10_identical_to_dense": {
-            "hybrid_0.7": 44,
-            "hybrid_0.5": 44,
-            "hybrid_0.3": 44
-          },
-          "distinct_index_texts": 1797
-        },
-        "minimal_no_code": {
-          "bm25_no_signal_queries": 44,
-          "rank1_ties_at_primary_alpha": 4,
-          "hybrid_top10_identical_to_dense": {
-            "hybrid_0.7": 44,
-            "hybrid_0.5": 44,
-            "hybrid_0.3": 44
-          },
-          "distinct_index_texts": 1683
-        }
-      },
-      "full_text": {
-        "recall@10": {
-          "BM25": {
-            "overall": {
-              "k": 12,
-              "n": 71,
-              "rate": 0.169,
-              "ci95": [
-                0.0905,
-                0.2766
-              ]
-            },
-            "en": {
-              "k": 12,
-              "n": 26,
-              "rate": 0.4615,
-              "ci95": [
-                0.2659,
-                0.6663
-              ]
-            },
-            "ko": {
-              "k": 0,
-              "n": 45,
-              "rate": 0.0,
-              "ci95": [
-                0.0,
-                0.0787
-              ]
-            }
-          },
-          "hybrid_0.7": {
-            "overall": {
-              "k": 37,
-              "n": 71,
-              "rate": 0.5211,
-              "ci95": [
-                0.3992,
-                0.6412
-              ]
-            },
-            "en": {
-              "k": 13,
-              "n": 26,
-              "rate": 0.5,
-              "ci95": [
-                0.2993,
-                0.7007
-              ]
-            },
-            "ko": {
-              "k": 24,
-              "n": 45,
-              "rate": 0.5333,
-              "ci95": [
-                0.3787,
-                0.6834
-              ]
-            }
-          },
-          "hybrid_0.5": {
-            "overall": {
-              "k": 38,
-              "n": 71,
-              "rate": 0.5352,
-              "ci95": [
-                0.4129,
-                0.6545
-              ]
-            },
-            "en": {
-              "k": 14,
-              "n": 26,
-              "rate": 0.5385,
-              "ci95": [
-                0.3337,
-                0.7341
-              ]
-            },
-            "ko": {
-              "k": 24,
-              "n": 45,
-              "rate": 0.5333,
-              "ci95": [
-                0.3787,
-                0.6834
-              ]
-            }
-          },
-          "hybrid_0.3": {
-            "overall": {
-              "k": 38,
-              "n": 71,
-              "rate": 0.5352,
-              "ci95": [
-                0.4129,
-                0.6545
-              ]
-            },
-            "en": {
-              "k": 14,
-              "n": 26,
-              "rate": 0.5385,
-              "ci95": [
-                0.3337,
-                0.7341
-              ]
-            },
-            "ko": {
-              "k": 24,
-              "n": 45,
-              "rate": 0.5333,
-              "ci95": [
-                0.3787,
-                0.6834
-              ]
-            }
-          },
-          "dense": {
-            "overall": {
-              "k": 36,
-              "n": 71,
-              "rate": 0.507,
-              "ci95": [
-                0.3856,
-                0.6278
-              ]
-            },
-            "en": {
-              "k": 12,
-              "n": 26,
-              "rate": 0.4615,
-              "ci95": [
-                0.2659,
-                0.6663
-              ]
-            },
-            "ko": {
-              "k": 24,
-              "n": 45,
-              "rate": 0.5333,
-              "ci95": [
-                0.3787,
-                0.6834
-              ]
-            }
-          }
-        },
-        "contrasts": {
-          "hybrid_vs_bm25[overall]": {
-            "comparison": "hybrid_vs_bm25[overall]",
-            "mean_diff": 0.3662,
-            "diff_95_ci": [
-              0.2535,
-              0.4789
-            ],
-            "excludes_zero": true,
-            "wins": 26,
-            "losses": 0,
-            "ties": 45,
-            "discordant": 26,
-            "p_two_sided_exact": 2.98023e-08,
-            "p_one_sided_exact": 1.49012e-08
-          },
-          "dense_vs_bm25[overall]": {
-            "comparison": "dense_vs_bm25[overall]",
-            "mean_diff": 0.338,
-            "diff_95_ci": [
-              0.2113,
-              0.4648
-            ],
-            "excludes_zero": true,
-            "wins": 26,
-            "losses": 2,
-            "ties": 43,
-            "discordant": 28,
-            "p_two_sided_exact": 3.03239e-06,
-            "p_one_sided_exact": 1.51619e-06
-          },
-          "hybrid_vs_dense[overall]": {
-            "comparison": "hybrid_vs_dense[overall]",
-            "mean_diff": 0.0282,
-            "diff_95_ci": [
-              -0.0282,
-              0.0845
-            ],
-            "excludes_zero": false,
-            "wins": 3,
-            "losses": 1,
-            "ties": 67,
-            "discordant": 4,
-            "p_two_sided_exact": 0.625,
-            "p_one_sided_exact": 0.3125
-          },
-          "hybrid_vs_bm25[en]": {
-            "comparison": "hybrid_vs_bm25[en]",
-            "mean_diff": 0.0769,
-            "diff_95_ci": [
-              0.0,
-              0.1923
-            ],
-            "excludes_zero": false,
-            "wins": 2,
-            "losses": 0,
-            "ties": 24,
-            "discordant": 2,
-            "p_two_sided_exact": 0.5,
-            "p_one_sided_exact": 0.25
-          },
-          "dense_vs_bm25[en]": {
-            "comparison": "dense_vs_bm25[en]",
-            "mean_diff": 0.0,
-            "diff_95_ci": [
-              -0.1538,
-              0.1538
-            ],
-            "excludes_zero": false,
-            "wins": 2,
-            "losses": 2,
-            "ties": 22,
-            "discordant": 4,
-            "p_two_sided_exact": 1.0,
-            "p_one_sided_exact": 0.6875
-          },
-          "hybrid_vs_dense[en]": {
-            "comparison": "hybrid_vs_dense[en]",
-            "mean_diff": 0.0769,
-            "diff_95_ci": [
-              -0.0769,
-              0.2308
-            ],
-            "excludes_zero": false,
-            "wins": 3,
-            "losses": 1,
-            "ties": 22,
-            "discordant": 4,
-            "p_two_sided_exact": 0.625,
-            "p_one_sided_exact": 0.3125
-          },
-          "hybrid_vs_bm25[ko]": {
-            "comparison": "hybrid_vs_bm25[ko]",
-            "mean_diff": 0.5333,
-            "diff_95_ci": [
-              0.3778,
-              0.6889
-            ],
-            "excludes_zero": true,
-            "wins": 24,
-            "losses": 0,
-            "ties": 21,
-            "discordant": 24,
-            "p_two_sided_exact": 1.19209e-07,
-            "p_one_sided_exact": 5.96046e-08
-          },
-          "dense_vs_bm25[ko]": {
-            "comparison": "dense_vs_bm25[ko]",
-            "mean_diff": 0.5333,
-            "diff_95_ci": [
-              0.3778,
-              0.6889
-            ],
-            "excludes_zero": true,
-            "wins": 24,
-            "losses": 0,
-            "ties": 21,
-            "discordant": 24,
-            "p_two_sided_exact": 1.19209e-07,
-            "p_one_sided_exact": 5.96046e-08
-          },
-          "hybrid_vs_dense[ko]": {
-            "comparison": "hybrid_vs_dense[ko]",
-            "mean_diff": 0.0,
-            "diff_95_ci": [
-              0.0,
-              0.0
-            ],
-            "excludes_zero": false,
-            "wins": 0,
-            "losses": 0,
-            "ties": 45,
-            "discordant": 0,
-            "p_two_sided_exact": 1.0,
-            "p_one_sided_exact": 1.0
-          }
-        },
-        "holm_within_index_mode": {
-          "hybrid_vs_bm25[overall]": {
-            "p_raw": 2.98e-08,
-            "p_adjusted": 2.682e-07,
-            "significant_at_0.05": true,
-            "family_size": 9
-          },
-          "hybrid_vs_bm25[ko]": {
-            "p_raw": 1.192e-07,
-            "p_adjusted": 9.537e-07,
-            "significant_at_0.05": true,
-            "family_size": 9
-          },
-          "dense_vs_bm25[ko]": {
-            "p_raw": 1.192e-07,
-            "p_adjusted": 9.537e-07,
-            "significant_at_0.05": true,
-            "family_size": 9
-          },
-          "dense_vs_bm25[overall]": {
-            "p_raw": 3.0324e-06,
-            "p_adjusted": 1.81943e-05,
-            "significant_at_0.05": true,
-            "family_size": 9
-          },
-          "hybrid_vs_bm25[en]": {
-            "p_raw": 0.5,
-            "p_adjusted": 1.0,
-            "significant_at_0.05": false,
-            "family_size": 9
-          },
-          "hybrid_vs_dense[overall]": {
-            "p_raw": 0.625,
-            "p_adjusted": 1.0,
-            "significant_at_0.05": false,
-            "family_size": 9
-          },
-          "hybrid_vs_dense[en]": {
-            "p_raw": 0.625,
-            "p_adjusted": 1.0,
-            "significant_at_0.05": false,
-            "family_size": 9
-          },
-          "dense_vs_bm25[en]": {
-            "p_raw": 1.0,
-            "p_adjusted": 1.0,
-            "significant_at_0.05": false,
-            "family_size": 9
-          },
-          "hybrid_vs_dense[ko]": {
-            "p_raw": 1.0,
-            "p_adjusted": 1.0,
-            "significant_at_0.05": false,
-            "family_size": 9
-          }
-        }
-      },
-      "minimal_text": {
-        "recall@10": {
-          "BM25": {
-            "overall": {
-              "k": 11,
-              "n": 71,
-              "rate": 0.1549,
-              "ci95": [
-                0.08,
-                0.2603
-              ]
-            },
-            "en": {
-              "k": 11,
-              "n": 26,
-              "rate": 0.4231,
-              "ci95": [
-                0.2335,
-                0.6308
-              ]
-            },
-            "ko": {
-              "k": 0,
-              "n": 45,
-              "rate": 0.0,
-              "ci95": [
-                0.0,
-                0.0787
-              ]
-            }
-          },
-          "hybrid_0.7": {
-            "overall": {
-              "k": 35,
-              "n": 71,
-              "rate": 0.493,
-              "ci95": [
-                0.3722,
-                0.6144
-              ]
-            },
-            "en": {
-              "k": 12,
-              "n": 26,
-              "rate": 0.4615,
-              "ci95": [
-                0.2659,
-                0.6663
-              ]
-            },
-            "ko": {
-              "k": 23,
-              "n": 45,
-              "rate": 0.5111,
-              "ci95": [
-                0.3577,
-                0.663
-              ]
-            }
-          },
-          "hybrid_0.5": {
-            "overall": {
-              "k": 36,
-              "n": 71,
-              "rate": 0.507,
-              "ci95": [
-                0.3856,
-                0.6278
-              ]
-            },
-            "en": {
-              "k": 13,
-              "n": 26,
-              "rate": 0.5,
-              "ci95": [
-                0.2993,
-                0.7007
-              ]
-            },
-            "ko": {
-              "k": 23,
-              "n": 45,
-              "rate": 0.5111,
-              "ci95": [
-                0.3577,
-                0.663
-              ]
-            }
-          },
-          "hybrid_0.3": {
-            "overall": {
-              "k": 37,
-              "n": 71,
-              "rate": 0.5211,
-              "ci95": [
-                0.3992,
-                0.6412
-              ]
-            },
-            "en": {
-              "k": 14,
-              "n": 26,
-              "rate": 0.5385,
-              "ci95": [
-                0.3337,
-                0.7341
-              ]
-            },
-            "ko": {
-              "k": 23,
-              "n": 45,
-              "rate": 0.5111,
-              "ci95": [
-                0.3577,
-                0.663
-              ]
-            }
-          },
-          "dense": {
-            "overall": {
-              "k": 34,
-              "n": 71,
-              "rate": 0.4789,
-              "ci95": [
-                0.3588,
-                0.6008
-              ]
-            },
-            "en": {
-              "k": 11,
-              "n": 26,
-              "rate": 0.4231,
-              "ci95": [
-                0.2335,
-                0.6308
-              ]
-            },
-            "ko": {
-              "k": 23,
-              "n": 45,
-              "rate": 0.5111,
-              "ci95": [
-                0.3577,
-                0.663
-              ]
-            }
-          }
-        },
-        "contrasts": {
-          "hybrid_vs_bm25[overall]": {
-            "comparison": "hybrid_vs_bm25[overall]",
-            "mean_diff": 0.3521,
-            "diff_95_ci": [
-              0.2394,
-              0.4648
-            ],
-            "excludes_zero": true,
-            "wins": 25,
-            "losses": 0,
-            "ties": 46,
-            "discordant": 25,
-            "p_two_sided_exact": 5.96046e-08,
-            "p_one_sided_exact": 2.98023e-08
-          },
-          "dense_vs_bm25[overall]": {
-            "comparison": "dense_vs_bm25[overall]",
-            "mean_diff": 0.3239,
-            "diff_95_ci": [
-              0.2113,
-              0.4366
-            ],
-            "excludes_zero": true,
-            "wins": 24,
-            "losses": 1,
-            "ties": 46,
-            "discordant": 25,
-            "p_two_sided_exact": 1.54972e-06,
-            "p_one_sided_exact": 7.7486e-07
-          },
-          "hybrid_vs_dense[overall]": {
-            "comparison": "hybrid_vs_dense[overall]",
-            "mean_diff": 0.0282,
-            "diff_95_ci": [
-              -0.0282,
-              0.0845
-            ],
-            "excludes_zero": false,
-            "wins": 3,
-            "losses": 1,
-            "ties": 67,
-            "discordant": 4,
-            "p_two_sided_exact": 0.625,
-            "p_one_sided_exact": 0.3125
-          },
-          "hybrid_vs_bm25[en]": {
-            "comparison": "hybrid_vs_bm25[en]",
-            "mean_diff": 0.0769,
-            "diff_95_ci": [
-              0.0,
-              0.1923
-            ],
-            "excludes_zero": false,
-            "wins": 2,
-            "losses": 0,
-            "ties": 24,
-            "discordant": 2,
-            "p_two_sided_exact": 0.5,
-            "p_one_sided_exact": 0.25
-          },
-          "dense_vs_bm25[en]": {
-            "comparison": "dense_vs_bm25[en]",
-            "mean_diff": 0.0,
-            "diff_95_ci": [
-              -0.1154,
-              0.1154
-            ],
-            "excludes_zero": false,
-            "wins": 1,
-            "losses": 1,
-            "ties": 24,
-            "discordant": 2,
-            "p_two_sided_exact": 1.0,
-            "p_one_sided_exact": 0.75
-          },
-          "hybrid_vs_dense[en]": {
-            "comparison": "hybrid_vs_dense[en]",
-            "mean_diff": 0.0769,
-            "diff_95_ci": [
-              -0.0769,
-              0.2308
-            ],
-            "excludes_zero": false,
-            "wins": 3,
-            "losses": 1,
-            "ties": 22,
-            "discordant": 4,
-            "p_two_sided_exact": 0.625,
-            "p_one_sided_exact": 0.3125
-          },
-          "hybrid_vs_bm25[ko]": {
-            "comparison": "hybrid_vs_bm25[ko]",
-            "mean_diff": 0.5111,
-            "diff_95_ci": [
-              0.3778,
-              0.6667
-            ],
-            "excludes_zero": true,
-            "wins": 23,
-            "losses": 0,
-            "ties": 22,
-            "discordant": 23,
-            "p_two_sided_exact": 2.38419e-07,
-            "p_one_sided_exact": 1.19209e-07
-          },
-          "dense_vs_bm25[ko]": {
-            "comparison": "dense_vs_bm25[ko]",
-            "mean_diff": 0.5111,
-            "diff_95_ci": [
-              0.3778,
-              0.6667
-            ],
-            "excludes_zero": true,
-            "wins": 23,
-            "losses": 0,
-            "ties": 22,
-            "discordant": 23,
-            "p_two_sided_exact": 2.38419e-07,
-            "p_one_sided_exact": 1.19209e-07
-          },
-          "hybrid_vs_dense[ko]": {
-            "comparison": "hybrid_vs_dense[ko]",
-            "mean_diff": 0.0,
-            "diff_95_ci": [
-              0.0,
-              0.0
-            ],
-            "excludes_zero": false,
-            "wins": 0,
-            "losses": 0,
-            "ties": 45,
-            "discordant": 0,
-            "p_two_sided_exact": 1.0,
-            "p_one_sided_exact": 1.0
-          }
-        },
-        "holm_within_index_mode": {
-          "hybrid_vs_bm25[overall]": {
-            "p_raw": 5.96e-08,
-            "p_adjusted": 5.364e-07,
-            "significant_at_0.05": true,
-            "family_size": 9
-          },
-          "hybrid_vs_bm25[ko]": {
-            "p_raw": 2.384e-07,
-            "p_adjusted": 1.9074e-06,
-            "significant_at_0.05": true,
-            "family_size": 9
-          },
-          "dense_vs_bm25[ko]": {
-            "p_raw": 2.384e-07,
-            "p_adjusted": 1.9074e-06,
-            "significant_at_0.05": true,
-            "family_size": 9
-          },
-          "dense_vs_bm25[overall]": {
-            "p_raw": 1.5497e-06,
-            "p_adjusted": 9.2983e-06,
-            "significant_at_0.05": true,
-            "family_size": 9
-          },
-          "hybrid_vs_bm25[en]": {
-            "p_raw": 0.5,
-            "p_adjusted": 1.0,
-            "significant_at_0.05": false,
-            "family_size": 9
-          },
-          "hybrid_vs_dense[overall]": {
-            "p_raw": 0.625,
-            "p_adjusted": 1.0,
-            "significant_at_0.05": false,
-            "family_size": 9
-          },
-          "hybrid_vs_dense[en]": {
-            "p_raw": 0.625,
-            "p_adjusted": 1.0,
-            "significant_at_0.05": false,
-            "family_size": 9
-          },
-          "dense_vs_bm25[en]": {
-            "p_raw": 1.0,
-            "p_adjusted": 1.0,
-            "significant_at_0.05": false,
-            "family_size": 9
-          },
-          "hybrid_vs_dense[ko]": {
-            "p_raw": 1.0,
-            "p_adjusted": 1.0,
-            "significant_at_0.05": false,
-            "family_size": 9
-          }
-        }
-      },
-      "minimal_no_code": {
-        "recall@10": {
-          "BM25": {
-            "overall": {
-              "k": 11,
-              "n": 71,
-              "rate": 0.1549,
-              "ci95": [
-                0.08,
-                0.2603
-              ]
-            },
-            "en": {
-              "k": 11,
-              "n": 26,
-              "rate": 0.4231,
-              "ci95": [
-                0.2335,
-                0.6308
-              ]
-            },
-            "ko": {
-              "k": 0,
-              "n": 45,
-              "rate": 0.0,
-              "ci95": [
-                0.0,
-                0.0787
-              ]
-            }
-          },
-          "hybrid_0.7": {
-            "overall": {
-              "k": 31,
-              "n": 71,
-              "rate": 0.4366,
-              "ci95": [
-                0.3191,
-                0.5595
-              ]
-            },
-            "en": {
-              "k": 11,
-              "n": 26,
-              "rate": 0.4231,
-              "ci95": [
-                0.2335,
-                0.6308
-              ]
-            },
-            "ko": {
-              "k": 20,
-              "n": 45,
-              "rate": 0.4444,
-              "ci95": [
-                0.2964,
-                0.6
-              ]
-            }
-          },
-          "hybrid_0.5": {
-            "overall": {
-              "k": 33,
-              "n": 71,
-              "rate": 0.4648,
-              "ci95": [
-                0.3455,
-                0.5871
-              ]
-            },
-            "en": {
-              "k": 13,
-              "n": 26,
-              "rate": 0.5,
-              "ci95": [
-                0.2993,
-                0.7007
-              ]
-            },
-            "ko": {
-              "k": 20,
-              "n": 45,
-              "rate": 0.4444,
-              "ci95": [
-                0.2964,
-                0.6
-              ]
-            }
-          },
-          "hybrid_0.3": {
-            "overall": {
-              "k": 35,
-              "n": 71,
-              "rate": 0.493,
-              "ci95": [
-                0.3722,
-                0.6144
-              ]
-            },
-            "en": {
-              "k": 15,
-              "n": 26,
-              "rate": 0.5769,
-              "ci95": [
-                0.3692,
-                0.7665
-              ]
-            },
-            "ko": {
-              "k": 20,
-              "n": 45,
-              "rate": 0.4444,
-              "ci95": [
-                0.2964,
-                0.6
-              ]
-            }
-          },
-          "dense": {
-            "overall": {
-              "k": 31,
-              "n": 71,
-              "rate": 0.4366,
-              "ci95": [
-                0.3191,
-                0.5595
-              ]
-            },
-            "en": {
-              "k": 11,
-              "n": 26,
-              "rate": 0.4231,
-              "ci95": [
-                0.2335,
-                0.6308
-              ]
-            },
-            "ko": {
-              "k": 20,
-              "n": 45,
-              "rate": 0.4444,
-              "ci95": [
-                0.2964,
-                0.6
-              ]
-            }
-          }
-        },
-        "contrasts": {
-          "hybrid_vs_bm25[overall]": {
-            "comparison": "hybrid_vs_bm25[overall]",
-            "mean_diff": 0.3099,
-            "diff_95_ci": [
-              0.2113,
-              0.4225
-            ],
-            "excludes_zero": true,
-            "wins": 22,
-            "losses": 0,
-            "ties": 49,
-            "discordant": 22,
-            "p_two_sided_exact": 4.76837e-07,
-            "p_one_sided_exact": 2.38419e-07
-          },
-          "dense_vs_bm25[overall]": {
-            "comparison": "dense_vs_bm25[overall]",
-            "mean_diff": 0.2817,
-            "diff_95_ci": [
-              0.169,
-              0.3944
-            ],
-            "excludes_zero": true,
-            "wins": 22,
-            "losses": 2,
-            "ties": 47,
-            "discordant": 24,
-            "p_two_sided_exact": 3.5882e-05,
-            "p_one_sided_exact": 1.7941e-05
-          },
-          "hybrid_vs_dense[overall]": {
-            "comparison": "hybrid_vs_dense[overall]",
-            "mean_diff": 0.0282,
-            "diff_95_ci": [
-              0.0,
-              0.0704
-            ],
-            "excludes_zero": false,
-            "wins": 2,
-            "losses": 0,
-            "ties": 69,
-            "discordant": 2,
-            "p_two_sided_exact": 0.5,
-            "p_one_sided_exact": 0.25
-          },
-          "hybrid_vs_bm25[en]": {
-            "comparison": "hybrid_vs_bm25[en]",
-            "mean_diff": 0.0769,
-            "diff_95_ci": [
-              0.0,
-              0.1923
-            ],
-            "excludes_zero": false,
-            "wins": 2,
-            "losses": 0,
-            "ties": 24,
-            "discordant": 2,
-            "p_two_sided_exact": 0.5,
-            "p_one_sided_exact": 0.25
-          },
-          "dense_vs_bm25[en]": {
-            "comparison": "dense_vs_bm25[en]",
-            "mean_diff": 0.0,
-            "diff_95_ci": [
-              -0.1538,
-              0.1538
-            ],
-            "excludes_zero": false,
-            "wins": 2,
-            "losses": 2,
-            "ties": 22,
-            "discordant": 4,
-            "p_two_sided_exact": 1.0,
-            "p_one_sided_exact": 0.6875
-          },
-          "hybrid_vs_dense[en]": {
-            "comparison": "hybrid_vs_dense[en]",
-            "mean_diff": 0.0769,
-            "diff_95_ci": [
-              0.0,
-              0.1923
-            ],
-            "excludes_zero": false,
-            "wins": 2,
-            "losses": 0,
-            "ties": 24,
-            "discordant": 2,
-            "p_two_sided_exact": 0.5,
-            "p_one_sided_exact": 0.25
-          },
-          "hybrid_vs_bm25[ko]": {
-            "comparison": "hybrid_vs_bm25[ko]",
-            "mean_diff": 0.4444,
-            "diff_95_ci": [
-              0.3111,
-              0.6
-            ],
-            "excludes_zero": true,
-            "wins": 20,
-            "losses": 0,
-            "ties": 25,
-            "discordant": 20,
-            "p_two_sided_exact": 1.90735e-06,
-            "p_one_sided_exact": 9.53674e-07
-          },
-          "dense_vs_bm25[ko]": {
-            "comparison": "dense_vs_bm25[ko]",
-            "mean_diff": 0.4444,
-            "diff_95_ci": [
-              0.3111,
-              0.6
-            ],
-            "excludes_zero": true,
-            "wins": 20,
-            "losses": 0,
-            "ties": 25,
-            "discordant": 20,
-            "p_two_sided_exact": 1.90735e-06,
-            "p_one_sided_exact": 9.53674e-07
-          },
-          "hybrid_vs_dense[ko]": {
-            "comparison": "hybrid_vs_dense[ko]",
-            "mean_diff": 0.0,
-            "diff_95_ci": [
-              0.0,
-              0.0
-            ],
-            "excludes_zero": false,
-            "wins": 0,
-            "losses": 0,
-            "ties": 45,
-            "discordant": 0,
-            "p_two_sided_exact": 1.0,
-            "p_one_sided_exact": 1.0
-          }
-        },
-        "holm_within_index_mode": {
-          "hybrid_vs_bm25[overall]": {
-            "p_raw": 4.768e-07,
-            "p_adjusted": 4.2915e-06,
-            "significant_at_0.05": true,
-            "family_size": 9
-          },
-          "hybrid_vs_bm25[ko]": {
-            "p_raw": 1.9074e-06,
-            "p_adjusted": 1.52588e-05,
-            "significant_at_0.05": true,
-            "family_size": 9
-          },
-          "dense_vs_bm25[ko]": {
-            "p_raw": 1.9074e-06,
-            "p_adjusted": 1.52588e-05,
-            "significant_at_0.05": true,
-            "family_size": 9
-          },
-          "dense_vs_bm25[overall]": {
-            "p_raw": 3.5882e-05,
-            "p_adjusted": 0.000215292,
-            "significant_at_0.05": true,
-            "family_size": 9
-          },
-          "hybrid_vs_dense[overall]": {
-            "p_raw": 0.5,
-            "p_adjusted": 1.0,
-            "significant_at_0.05": false,
-            "family_size": 9
-          },
-          "hybrid_vs_bm25[en]": {
-            "p_raw": 0.5,
-            "p_adjusted": 1.0,
-            "significant_at_0.05": false,
-            "family_size": 9
-          },
-          "hybrid_vs_dense[en]": {
-            "p_raw": 0.5,
-            "p_adjusted": 1.0,
-            "significant_at_0.05": false,
-            "family_size": 9
-          },
-          "dense_vs_bm25[en]": {
-            "p_raw": 1.0,
-            "p_adjusted": 1.0,
-            "significant_at_0.05": false,
-            "family_size": 9
-          },
-          "hybrid_vs_dense[ko]": {
-            "p_raw": 1.0,
-            "p_adjusted": 1.0,
-            "significant_at_0.05": false,
-            "family_size": 9
-          }
-        }
-      }
-    },
-    "bge-m3": {
-      "revision": "5617a9f61b028005a4858fdac845db406aefb181",
-      "diagnostics": {
-        "full_text": {
-          "bm25_no_signal_queries": 44,
-          "rank1_ties_at_primary_alpha": 0,
-          "hybrid_top10_identical_to_dense": {
-            "hybrid_0.7": 44,
-            "hybrid_0.5": 44,
-            "hybrid_0.3": 44
-          },
-          "distinct_index_texts": 1797
-        },
-        "minimal_text": {
-          "bm25_no_signal_queries": 44,
-          "rank1_ties_at_primary_alpha": 0,
-          "hybrid_top10_identical_to_dense": {
-            "hybrid_0.7": 44,
-            "hybrid_0.5": 44,
-            "hybrid_0.3": 44
-          },
-          "distinct_index_texts": 1797
-        },
-        "minimal_no_code": {
-          "bm25_no_signal_queries": 44,
-          "rank1_ties_at_primary_alpha": 7,
-          "hybrid_top10_identical_to_dense": {
-            "hybrid_0.7": 44,
-            "hybrid_0.5": 44,
-            "hybrid_0.3": 44
-          },
-          "distinct_index_texts": 1683
-        }
-      },
-      "full_text": {
-        "recall@10": {
-          "BM25": {
-            "overall": {
-              "k": 12,
-              "n": 71,
-              "rate": 0.169,
-              "ci95": [
-                0.0905,
-                0.2766
-              ]
-            },
-            "en": {
-              "k": 12,
-              "n": 26,
-              "rate": 0.4615,
-              "ci95": [
-                0.2659,
-                0.6663
-              ]
-            },
-            "ko": {
-              "k": 0,
-              "n": 45,
-              "rate": 0.0,
-              "ci95": [
-                0.0,
-                0.0787
-              ]
-            }
-          },
-          "hybrid_0.7": {
-            "overall": {
-              "k": 40,
-              "n": 71,
-              "rate": 0.5634,
-              "ci95": [
-                0.4405,
-                0.6809
-              ]
-            },
-            "en": {
-              "k": 13,
-              "n": 26,
-              "rate": 0.5,
-              "ci95": [
-                0.2993,
-                0.7007
-              ]
-            },
-            "ko": {
-              "k": 27,
-              "n": 45,
-              "rate": 0.6,
-              "ci95": [
-                0.4433,
-                0.743
-              ]
-            }
-          },
-          "hybrid_0.5": {
-            "overall": {
-              "k": 41,
-              "n": 71,
-              "rate": 0.5775,
-              "ci95": [
-                0.4544,
-                0.6939
-              ]
-            },
-            "en": {
-              "k": 14,
-              "n": 26,
-              "rate": 0.5385,
-              "ci95": [
-                0.3337,
-                0.7341
-              ]
-            },
-            "ko": {
-              "k": 27,
-              "n": 45,
-              "rate": 0.6,
-              "ci95": [
-                0.4433,
-                0.743
-              ]
-            }
-          },
-          "hybrid_0.3": {
-            "overall": {
-              "k": 42,
-              "n": 71,
-              "rate": 0.5915,
-              "ci95": [
-                0.4684,
-                0.7068
-              ]
-            },
-            "en": {
-              "k": 15,
-              "n": 26,
-              "rate": 0.5769,
-              "ci95": [
-                0.3692,
-                0.7665
-              ]
-            },
-            "ko": {
-              "k": 27,
-              "n": 45,
-              "rate": 0.6,
-              "ci95": [
-                0.4433,
-                0.743
-              ]
-            }
-          },
-          "dense": {
-            "overall": {
-              "k": 40,
-              "n": 71,
-              "rate": 0.5634,
-              "ci95": [
-                0.4405,
-                0.6809
-              ]
-            },
-            "en": {
-              "k": 13,
-              "n": 26,
-              "rate": 0.5,
-              "ci95": [
-                0.2993,
-                0.7007
-              ]
-            },
-            "ko": {
-              "k": 27,
-              "n": 45,
-              "rate": 0.6,
-              "ci95": [
-                0.4433,
-                0.743
-              ]
-            }
-          }
-        },
-        "contrasts": {
-          "hybrid_vs_bm25[overall]": {
-            "comparison": "hybrid_vs_bm25[overall]",
-            "mean_diff": 0.4085,
-            "diff_95_ci": [
-              0.2958,
-              0.5211
-            ],
-            "excludes_zero": true,
-            "wins": 29,
-            "losses": 0,
-            "ties": 42,
-            "discordant": 29,
-            "p_two_sided_exact": 3.72529e-09,
-            "p_one_sided_exact": 1.86265e-09
-          },
-          "dense_vs_bm25[overall]": {
-            "comparison": "dense_vs_bm25[overall]",
-            "mean_diff": 0.3944,
-            "diff_95_ci": [
-              0.2817,
-              0.5211
-            ],
-            "excludes_zero": true,
-            "wins": 29,
-            "losses": 1,
-            "ties": 41,
-            "discordant": 30,
-            "p_two_sided_exact": 5.7742e-08,
-            "p_one_sided_exact": 2.8871e-08
-          },
-          "hybrid_vs_dense[overall]": {
-            "comparison": "hybrid_vs_dense[overall]",
-            "mean_diff": 0.0141,
-            "diff_95_ci": [
-              -0.0282,
-              0.0704
-            ],
-            "excludes_zero": false,
-            "wins": 2,
-            "losses": 1,
-            "ties": 68,
-            "discordant": 3,
-            "p_two_sided_exact": 1.0,
-            "p_one_sided_exact": 0.5
-          },
-          "hybrid_vs_bm25[en]": {
-            "comparison": "hybrid_vs_bm25[en]",
-            "mean_diff": 0.0769,
-            "diff_95_ci": [
-              0.0,
-              0.1923
-            ],
-            "excludes_zero": false,
-            "wins": 2,
-            "losses": 0,
-            "ties": 24,
-            "discordant": 2,
-            "p_two_sided_exact": 0.5,
-            "p_one_sided_exact": 0.25
-          },
-          "dense_vs_bm25[en]": {
-            "comparison": "dense_vs_bm25[en]",
-            "mean_diff": 0.0385,
-            "diff_95_ci": [
-              -0.0769,
-              0.1538
-            ],
-            "excludes_zero": false,
-            "wins": 2,
-            "losses": 1,
-            "ties": 23,
-            "discordant": 3,
-            "p_two_sided_exact": 1.0,
-            "p_one_sided_exact": 0.5
-          },
-          "hybrid_vs_dense[en]": {
-            "comparison": "hybrid_vs_dense[en]",
-            "mean_diff": 0.0385,
-            "diff_95_ci": [
-              -0.0769,
-              0.1538
-            ],
-            "excludes_zero": false,
-            "wins": 2,
-            "losses": 1,
-            "ties": 23,
-            "discordant": 3,
-            "p_two_sided_exact": 1.0,
-            "p_one_sided_exact": 0.5
-          },
-          "hybrid_vs_bm25[ko]": {
-            "comparison": "hybrid_vs_bm25[ko]",
-            "mean_diff": 0.6,
-            "diff_95_ci": [
-              0.4444,
-              0.7333
-            ],
-            "excludes_zero": true,
-            "wins": 27,
-            "losses": 0,
-            "ties": 18,
-            "discordant": 27,
-            "p_two_sided_exact": 1.49012e-08,
-            "p_one_sided_exact": 7.45058e-09
-          },
-          "dense_vs_bm25[ko]": {
-            "comparison": "dense_vs_bm25[ko]",
-            "mean_diff": 0.6,
-            "diff_95_ci": [
-              0.4444,
-              0.7333
-            ],
-            "excludes_zero": true,
-            "wins": 27,
-            "losses": 0,
-            "ties": 18,
-            "discordant": 27,
-            "p_two_sided_exact": 1.49012e-08,
-            "p_one_sided_exact": 7.45058e-09
-          },
-          "hybrid_vs_dense[ko]": {
-            "comparison": "hybrid_vs_dense[ko]",
-            "mean_diff": 0.0,
-            "diff_95_ci": [
-              0.0,
-              0.0
-            ],
-            "excludes_zero": false,
-            "wins": 0,
-            "losses": 0,
-            "ties": 45,
-            "discordant": 0,
-            "p_two_sided_exact": 1.0,
-            "p_one_sided_exact": 1.0
-          }
-        },
-        "holm_within_index_mode": {
-          "hybrid_vs_bm25[overall]": {
-            "p_raw": 3.7e-09,
-            "p_adjusted": 3.35e-08,
-            "significant_at_0.05": true,
-            "family_size": 9
-          },
-          "hybrid_vs_bm25[ko]": {
-            "p_raw": 1.49e-08,
-            "p_adjusted": 1.192e-07,
-            "significant_at_0.05": true,
-            "family_size": 9
-          },
-          "dense_vs_bm25[ko]": {
-            "p_raw": 1.49e-08,
-            "p_adjusted": 1.192e-07,
-            "significant_at_0.05": true,
-            "family_size": 9
-          },
-          "dense_vs_bm25[overall]": {
-            "p_raw": 5.77e-08,
-            "p_adjusted": 3.465e-07,
-            "significant_at_0.05": true,
-            "family_size": 9
-          },
-          "hybrid_vs_bm25[en]": {
-            "p_raw": 0.5,
-            "p_adjusted": 1.0,
-            "significant_at_0.05": false,
-            "family_size": 9
-          },
-          "hybrid_vs_dense[overall]": {
-            "p_raw": 1.0,
-            "p_adjusted": 1.0,
-            "significant_at_0.05": false,
-            "family_size": 9
-          },
-          "dense_vs_bm25[en]": {
-            "p_raw": 1.0,
-            "p_adjusted": 1.0,
-            "significant_at_0.05": false,
-            "family_size": 9
-          },
-          "hybrid_vs_dense[en]": {
-            "p_raw": 1.0,
-            "p_adjusted": 1.0,
-            "significant_at_0.05": false,
-            "family_size": 9
-          },
-          "hybrid_vs_dense[ko]": {
-            "p_raw": 1.0,
-            "p_adjusted": 1.0,
-            "significant_at_0.05": false,
-            "family_size": 9
-          }
-        }
-      },
-      "minimal_text": {
-        "recall@10": {
-          "BM25": {
-            "overall": {
-              "k": 11,
-              "n": 71,
-              "rate": 0.1549,
-              "ci95": [
-                0.08,
-                0.2603
-              ]
-            },
-            "en": {
-              "k": 11,
-              "n": 26,
-              "rate": 0.4231,
-              "ci95": [
-                0.2335,
-                0.6308
-              ]
-            },
-            "ko": {
-              "k": 0,
-              "n": 45,
-              "rate": 0.0,
-              "ci95": [
-                0.0,
-                0.0787
-              ]
-            }
-          },
-          "hybrid_0.7": {
-            "overall": {
-              "k": 40,
-              "n": 71,
-              "rate": 0.5634,
-              "ci95": [
-                0.4405,
-                0.6809
-              ]
-            },
-            "en": {
-              "k": 12,
-              "n": 26,
-              "rate": 0.4615,
-              "ci95": [
-                0.2659,
-                0.6663
-              ]
-            },
-            "ko": {
-              "k": 28,
-              "n": 45,
-              "rate": 0.6222,
-              "ci95": [
-                0.4654,
-                0.7623
-              ]
-            }
-          },
-          "hybrid_0.5": {
-            "overall": {
-              "k": 40,
-              "n": 71,
-              "rate": 0.5634,
-              "ci95": [
-                0.4405,
-                0.6809
-              ]
-            },
-            "en": {
-              "k": 12,
-              "n": 26,
-              "rate": 0.4615,
-              "ci95": [
-                0.2659,
-                0.6663
-              ]
-            },
-            "ko": {
-              "k": 28,
-              "n": 45,
-              "rate": 0.6222,
-              "ci95": [
-                0.4654,
-                0.7623
-              ]
-            }
-          },
-          "hybrid_0.3": {
-            "overall": {
-              "k": 41,
-              "n": 71,
-              "rate": 0.5775,
-              "ci95": [
-                0.4544,
-                0.6939
-              ]
-            },
-            "en": {
-              "k": 13,
-              "n": 26,
-              "rate": 0.5,
-              "ci95": [
-                0.2993,
-                0.7007
-              ]
-            },
-            "ko": {
-              "k": 28,
-              "n": 45,
-              "rate": 0.6222,
-              "ci95": [
-                0.4654,
-                0.7623
-              ]
-            }
-          },
-          "dense": {
-            "overall": {
-              "k": 40,
-              "n": 71,
-              "rate": 0.5634,
-              "ci95": [
-                0.4405,
-                0.6809
-              ]
-            },
-            "en": {
-              "k": 12,
-              "n": 26,
-              "rate": 0.4615,
-              "ci95": [
-                0.2659,
-                0.6663
-              ]
-            },
-            "ko": {
-              "k": 28,
-              "n": 45,
-              "rate": 0.6222,
-              "ci95": [
-                0.4654,
-                0.7623
-              ]
-            }
-          }
-        },
-        "contrasts": {
-          "hybrid_vs_bm25[overall]": {
-            "comparison": "hybrid_vs_bm25[overall]",
-            "mean_diff": 0.4085,
-            "diff_95_ci": [
-              0.2958,
-              0.5211
-            ],
-            "excludes_zero": true,
-            "wins": 29,
-            "losses": 0,
-            "ties": 42,
-            "discordant": 29,
-            "p_two_sided_exact": 3.72529e-09,
-            "p_one_sided_exact": 1.86265e-09
-          },
-          "dense_vs_bm25[overall]": {
-            "comparison": "dense_vs_bm25[overall]",
-            "mean_diff": 0.4085,
-            "diff_95_ci": [
-              0.2817,
-              0.5211
-            ],
-            "excludes_zero": true,
-            "wins": 30,
-            "losses": 1,
-            "ties": 40,
-            "discordant": 31,
-            "p_two_sided_exact": 2.98023e-08,
-            "p_one_sided_exact": 1.49012e-08
-          },
-          "hybrid_vs_dense[overall]": {
-            "comparison": "hybrid_vs_dense[overall]",
-            "mean_diff": 0.0,
-            "diff_95_ci": [
-              -0.0423,
-              0.0423
-            ],
-            "excludes_zero": false,
-            "wins": 1,
-            "losses": 1,
-            "ties": 69,
-            "discordant": 2,
-            "p_two_sided_exact": 1.0,
-            "p_one_sided_exact": 0.75
-          },
-          "hybrid_vs_bm25[en]": {
-            "comparison": "hybrid_vs_bm25[en]",
-            "mean_diff": 0.0385,
-            "diff_95_ci": [
-              0.0,
-              0.1154
-            ],
-            "excludes_zero": false,
-            "wins": 1,
-            "losses": 0,
-            "ties": 25,
-            "discordant": 1,
-            "p_two_sided_exact": 1.0,
-            "p_one_sided_exact": 0.5
-          },
-          "dense_vs_bm25[en]": {
-            "comparison": "dense_vs_bm25[en]",
-            "mean_diff": 0.0385,
-            "diff_95_ci": [
-              -0.0769,
-              0.1538
-            ],
-            "excludes_zero": false,
-            "wins": 2,
-            "losses": 1,
-            "ties": 23,
-            "discordant": 3,
-            "p_two_sided_exact": 1.0,
-            "p_one_sided_exact": 0.5
-          },
-          "hybrid_vs_dense[en]": {
-            "comparison": "hybrid_vs_dense[en]",
-            "mean_diff": 0.0,
-            "diff_95_ci": [
-              -0.1154,
-              0.1154
-            ],
-            "excludes_zero": false,
-            "wins": 1,
-            "losses": 1,
-            "ties": 24,
-            "discordant": 2,
-            "p_two_sided_exact": 1.0,
-            "p_one_sided_exact": 0.75
-          },
-          "hybrid_vs_bm25[ko]": {
-            "comparison": "hybrid_vs_bm25[ko]",
-            "mean_diff": 0.6222,
-            "diff_95_ci": [
-              0.4889,
-              0.7556
-            ],
-            "excludes_zero": true,
-            "wins": 28,
-            "losses": 0,
-            "ties": 17,
-            "discordant": 28,
-            "p_two_sided_exact": 7.45058e-09,
-            "p_one_sided_exact": 3.72529e-09
-          },
-          "dense_vs_bm25[ko]": {
-            "comparison": "dense_vs_bm25[ko]",
-            "mean_diff": 0.6222,
-            "diff_95_ci": [
-              0.4889,
-              0.7556
-            ],
-            "excludes_zero": true,
-            "wins": 28,
-            "losses": 0,
-            "ties": 17,
-            "discordant": 28,
-            "p_two_sided_exact": 7.45058e-09,
-            "p_one_sided_exact": 3.72529e-09
-          },
-          "hybrid_vs_dense[ko]": {
-            "comparison": "hybrid_vs_dense[ko]",
-            "mean_diff": 0.0,
-            "diff_95_ci": [
-              0.0,
-              0.0
-            ],
-            "excludes_zero": false,
-            "wins": 0,
-            "losses": 0,
-            "ties": 45,
-            "discordant": 0,
-            "p_two_sided_exact": 1.0,
-            "p_one_sided_exact": 1.0
-          }
-        },
-        "holm_within_index_mode": {
-          "hybrid_vs_bm25[overall]": {
-            "p_raw": 3.7e-09,
-            "p_adjusted": 3.35e-08,
-            "significant_at_0.05": true,
-            "family_size": 9
-          },
-          "hybrid_vs_bm25[ko]": {
-            "p_raw": 7.5e-09,
-            "p_adjusted": 5.96e-08,
-            "significant_at_0.05": true,
-            "family_size": 9
-          },
-          "dense_vs_bm25[ko]": {
-            "p_raw": 7.5e-09,
-            "p_adjusted": 5.96e-08,
-            "significant_at_0.05": true,
-            "family_size": 9
-          },
-          "dense_vs_bm25[overall]": {
-            "p_raw": 2.98e-08,
-            "p_adjusted": 1.788e-07,
-            "significant_at_0.05": true,
-            "family_size": 9
-          },
-          "hybrid_vs_dense[overall]": {
-            "p_raw": 1.0,
-            "p_adjusted": 1.0,
-            "significant_at_0.05": false,
-            "family_size": 9
-          },
-          "hybrid_vs_bm25[en]": {
-            "p_raw": 1.0,
-            "p_adjusted": 1.0,
-            "significant_at_0.05": false,
-            "family_size": 9
-          },
-          "dense_vs_bm25[en]": {
-            "p_raw": 1.0,
-            "p_adjusted": 1.0,
-            "significant_at_0.05": false,
-            "family_size": 9
-          },
-          "hybrid_vs_dense[en]": {
-            "p_raw": 1.0,
-            "p_adjusted": 1.0,
-            "significant_at_0.05": false,
-            "family_size": 9
-          },
-          "hybrid_vs_dense[ko]": {
-            "p_raw": 1.0,
-            "p_adjusted": 1.0,
-            "significant_at_0.05": false,
-            "family_size": 9
-          }
-        }
-      },
-      "minimal_no_code": {
-        "recall@10": {
-          "BM25": {
-            "overall": {
-              "k": 11,
-              "n": 71,
-              "rate": 0.1549,
-              "ci95": [
-                0.08,
-                0.2603
-              ]
-            },
-            "en": {
-              "k": 11,
-              "n": 26,
-              "rate": 0.4231,
-              "ci95": [
-                0.2335,
-                0.6308
-              ]
-            },
-            "ko": {
-              "k": 0,
-              "n": 45,
-              "rate": 0.0,
-              "ci95": [
-                0.0,
-                0.0787
-              ]
-            }
-          },
-          "hybrid_0.7": {
-            "overall": {
-              "k": 37,
-              "n": 71,
-              "rate": 0.5211,
-              "ci95": [
-                0.3992,
-                0.6412
-              ]
-            },
-            "en": {
-              "k": 11,
-              "n": 26,
-              "rate": 0.4231,
-              "ci95": [
-                0.2335,
-                0.6308
-              ]
-            },
-            "ko": {
-              "k": 26,
-              "n": 45,
-              "rate": 0.5778,
-              "ci95": [
-                0.4215,
-                0.7234
-              ]
-            }
-          },
-          "hybrid_0.5": {
-            "overall": {
-              "k": 37,
-              "n": 71,
-              "rate": 0.5211,
-              "ci95": [
-                0.3992,
-                0.6412
-              ]
-            },
-            "en": {
-              "k": 11,
-              "n": 26,
-              "rate": 0.4231,
-              "ci95": [
-                0.2335,
-                0.6308
-              ]
-            },
-            "ko": {
-              "k": 26,
-              "n": 45,
-              "rate": 0.5778,
-              "ci95": [
-                0.4215,
-                0.7234
-              ]
-            }
-          },
-          "hybrid_0.3": {
-            "overall": {
-              "k": 37,
-              "n": 71,
-              "rate": 0.5211,
-              "ci95": [
-                0.3992,
-                0.6412
-              ]
-            },
-            "en": {
-              "k": 11,
-              "n": 26,
-              "rate": 0.4231,
-              "ci95": [
-                0.2335,
-                0.6308
-              ]
-            },
-            "ko": {
-              "k": 26,
-              "n": 45,
-              "rate": 0.5778,
-              "ci95": [
-                0.4215,
-                0.7234
-              ]
-            }
-          },
-          "dense": {
-            "overall": {
-              "k": 37,
-              "n": 71,
-              "rate": 0.5211,
-              "ci95": [
-                0.3992,
-                0.6412
-              ]
-            },
-            "en": {
-              "k": 11,
-              "n": 26,
-              "rate": 0.4231,
-              "ci95": [
-                0.2335,
-                0.6308
-              ]
-            },
-            "ko": {
-              "k": 26,
-              "n": 45,
-              "rate": 0.5778,
-              "ci95": [
-                0.4215,
-                0.7234
-              ]
-            }
-          }
-        },
-        "contrasts": {
-          "hybrid_vs_bm25[overall]": {
-            "comparison": "hybrid_vs_bm25[overall]",
-            "mean_diff": 0.3662,
-            "diff_95_ci": [
-              0.2535,
-              0.4789
-            ],
-            "excludes_zero": true,
-            "wins": 26,
-            "losses": 0,
-            "ties": 45,
-            "discordant": 26,
-            "p_two_sided_exact": 2.98023e-08,
-            "p_one_sided_exact": 1.49012e-08
-          },
-          "dense_vs_bm25[overall]": {
-            "comparison": "dense_vs_bm25[overall]",
-            "mean_diff": 0.3662,
-            "diff_95_ci": [
-              0.2535,
-              0.4789
-            ],
-            "excludes_zero": true,
-            "wins": 26,
-            "losses": 0,
-            "ties": 45,
-            "discordant": 26,
-            "p_two_sided_exact": 2.98023e-08,
-            "p_one_sided_exact": 1.49012e-08
-          },
-          "hybrid_vs_dense[overall]": {
-            "comparison": "hybrid_vs_dense[overall]",
-            "mean_diff": 0.0,
-            "diff_95_ci": [
-              0.0,
-              0.0
-            ],
-            "excludes_zero": false,
-            "wins": 0,
-            "losses": 0,
-            "ties": 71,
-            "discordant": 0,
-            "p_two_sided_exact": 1.0,
-            "p_one_sided_exact": 1.0
-          },
-          "hybrid_vs_bm25[en]": {
-            "comparison": "hybrid_vs_bm25[en]",
-            "mean_diff": 0.0,
-            "diff_95_ci": [
-              0.0,
-              0.0
-            ],
-            "excludes_zero": false,
-            "wins": 0,
-            "losses": 0,
-            "ties": 26,
-            "discordant": 0,
-            "p_two_sided_exact": 1.0,
-            "p_one_sided_exact": 1.0
-          },
-          "dense_vs_bm25[en]": {
-            "comparison": "dense_vs_bm25[en]",
-            "mean_diff": 0.0,
-            "diff_95_ci": [
-              0.0,
-              0.0
-            ],
-            "excludes_zero": false,
-            "wins": 0,
-            "losses": 0,
-            "ties": 26,
-            "discordant": 0,
-            "p_two_sided_exact": 1.0,
-            "p_one_sided_exact": 1.0
-          },
-          "hybrid_vs_dense[en]": {
-            "comparison": "hybrid_vs_dense[en]",
-            "mean_diff": 0.0,
-            "diff_95_ci": [
-              0.0,
-              0.0
-            ],
-            "excludes_zero": false,
-            "wins": 0,
-            "losses": 0,
-            "ties": 26,
-            "discordant": 0,
-            "p_two_sided_exact": 1.0,
-            "p_one_sided_exact": 1.0
-          },
-          "hybrid_vs_bm25[ko]": {
-            "comparison": "hybrid_vs_bm25[ko]",
-            "mean_diff": 0.5778,
-            "diff_95_ci": [
-              0.4444,
-              0.7111
-            ],
-            "excludes_zero": true,
-            "wins": 26,
-            "losses": 0,
-            "ties": 19,
-            "discordant": 26,
-            "p_two_sided_exact": 2.98023e-08,
-            "p_one_sided_exact": 1.49012e-08
-          },
-          "dense_vs_bm25[ko]": {
-            "comparison": "dense_vs_bm25[ko]",
-            "mean_diff": 0.5778,
-            "diff_95_ci": [
-              0.4444,
-              0.7111
-            ],
-            "excludes_zero": true,
-            "wins": 26,
-            "losses": 0,
-            "ties": 19,
-            "discordant": 26,
-            "p_two_sided_exact": 2.98023e-08,
-            "p_one_sided_exact": 1.49012e-08
-          },
-          "hybrid_vs_dense[ko]": {
-            "comparison": "hybrid_vs_dense[ko]",
-            "mean_diff": 0.0,
-            "diff_95_ci": [
-              0.0,
-              0.0
-            ],
-            "excludes_zero": false,
-            "wins": 0,
-            "losses": 0,
-            "ties": 45,
-            "discordant": 0,
-            "p_two_sided_exact": 1.0,
-            "p_one_sided_exact": 1.0
-          }
-        },
-        "holm_within_index_mode": {
-          "hybrid_vs_bm25[overall]": {
-            "p_raw": 2.98e-08,
-            "p_adjusted": 2.682e-07,
-            "significant_at_0.05": true,
-            "family_size": 9
-          },
-          "dense_vs_bm25[overall]": {
-            "p_raw": 2.98e-08,
-            "p_adjusted": 2.682e-07,
-            "significant_at_0.05": true,
-            "family_size": 9
-          },
-          "hybrid_vs_bm25[ko]": {
-            "p_raw": 2.98e-08,
-            "p_adjusted": 2.682e-07,
-            "significant_at_0.05": true,
-            "family_size": 9
-          },
-          "dense_vs_bm25[ko]": {
-            "p_raw": 2.98e-08,
-            "p_adjusted": 2.682e-07,
-            "significant_at_0.05": true,
-            "family_size": 9
-          },
-          "hybrid_vs_dense[overall]": {
-            "p_raw": 1.0,
-            "p_adjusted": 1.0,
-            "significant_at_0.05": false,
-            "family_size": 9
-          },
-          "hybrid_vs_bm25[en]": {
-            "p_raw": 1.0,
-            "p_adjusted": 1.0,
-            "significant_at_0.05": false,
-            "family_size": 9
-          },
-          "dense_vs_bm25[en]": {
-            "p_raw": 1.0,
-            "p_adjusted": 1.0,
-            "significant_at_0.05": false,
-            "family_size": 9
-          },
-          "hybrid_vs_dense[en]": {
-            "p_raw": 1.0,
-            "p_adjusted": 1.0,
-            "significant_at_0.05": false,
-            "family_size": 9
-          },
-          "hybrid_vs_dense[ko]": {
-            "p_raw": 1.0,
-            "p_adjusted": 1.0,
-            "significant_at_0.05": false,
-            "family_size": 9
-          }
-        }
-      }
     }
   },
   "exposure_per_doc": {
     "full_text|full_text": {
       "index_mode": "full_text",
       "return_mode": "full_text",
-      "mean_returned_chars_per_doc": 317.49,
+      "mean_returned_chars_per_doc": 586.65,
       "hybrid_recall@10": 0.6056
     },
     "full_text|minimal_text": {
       "index_mode": "full_text",
       "return_mode": "minimal_text",
-      "mean_returned_chars_per_doc": 137.5,
+      "mean_returned_chars_per_doc": 138.77,
       "hybrid_recall@10": 0.6056
     },
     "full_text|minimal_no_code": {
       "index_mode": "full_text",
       "return_mode": "minimal_no_code",
-      "mean_returned_chars_per_doc": 129.05,
+      "mean_returned_chars_per_doc": 130.33,
       "hybrid_recall@10": 0.6056
     },
     "minimal_text|full_text": {
       "index_mode": "minimal_text",
       "return_mode": "full_text",
-      "mean_returned_chars_per_doc": 317.49,
+      "mean_returned_chars_per_doc": 586.65,
       "hybrid_recall@10": 0.5775
     },
     "minimal_text|minimal_text": {
       "index_mode": "minimal_text",
       "return_mode": "minimal_text",
-      "mean_returned_chars_per_doc": 137.5,
+      "mean_returned_chars_per_doc": 138.77,
       "hybrid_recall@10": 0.5775
     },
     "minimal_text|minimal_no_code": {
       "index_mode": "minimal_text",
       "return_mode": "minimal_no_code",
-      "mean_returned_chars_per_doc": 129.05,
+      "mean_returned_chars_per_doc": 130.33,
       "hybrid_recall@10": 0.5775
     },
     "minimal_no_code|full_text": {
       "index_mode": "minimal_no_code",
       "return_mode": "full_text",
-      "mean_returned_chars_per_doc": 317.49,
+      "mean_returned_chars_per_doc": 586.65,
       "hybrid_recall@10": 0.5211
     },
     "minimal_no_code|minimal_text": {
       "index_mode": "minimal_no_code",
       "return_mode": "minimal_text",
-      "mean_returned_chars_per_doc": 137.5,
+      "mean_returned_chars_per_doc": 138.77,
       "hybrid_recall@10": 0.5211
     },
     "minimal_no_code|minimal_no_code": {
       "index_mode": "minimal_no_code",
       "return_mode": "minimal_no_code",
-      "mean_returned_chars_per_doc": 129.05,
+      "mean_returned_chars_per_doc": 130.33,
       "hybrid_recall@10": 0.5211
     }
   },
   "exposure_at10": {
     "full_text": {
-      "return=full_text": 4043.3,
-      "return=minimal_text": 1820.3,
-      "return=minimal_no_code": 1728.9,
-      "legacy_definition": 3952.0
+      "return=full_text": 9729.9,
+      "return=minimal_text": 1810.9,
+      "return=minimal_no_code": 1720.8,
+      "legacy_definition": 9639.8
     },
     "minimal_text": {
-      "return=full_text": 3667.1,
-      "return=minimal_text": 1845.1,
-      "return=minimal_no_code": 1753.6,
-      "legacy_definition": 1753.6
+      "return=full_text": 6149.2,
+      "return=minimal_text": 1856.7,
+      "return=minimal_no_code": 1765.2,
+      "legacy_definition": 1765.2
     },
     "minimal_no_code": {
-      "return=full_text": 3577.0,
-      "return=minimal_text": 1752.2,
-      "return=minimal_no_code": 1662.5,
-      "legacy_definition": 1662.5
+      "return=full_text": 6277.1,
+      "return=minimal_text": 1764.3,
+      "return=minimal_no_code": 1674.2,
+      "legacy_definition": 1674.2
     }
   },
   "equivalence": {
@@ -3516,105 +2483,105 @@
     },
     "minimal_text_vs_full_text[BM25]": {
       "paired_bootstrap": {
-        "mean": -0.0141,
+        "mean": 0.0,
         "ci": [
-          -0.0704,
-          0.0282
+          -0.0563,
+          0.0563
         ],
         "n": 71,
         "iters": 20000,
         "seed": 20260626,
-        "boot_se": 0.0244
+        "boot_se": 0.0282
       },
       "mcnemar": {
-        "wins": 1,
+        "wins": 2,
         "losses": 2,
-        "ties": 68,
-        "discordant": 3,
+        "ties": 67,
+        "discordant": 4,
         "p_two_sided_exact": 1.0,
-        "p_one_sided_exact": 0.875
+        "p_one_sided_exact": 0.6875
       },
       "tost": {
         "delta=0.03": {
           "delta": 0.03,
           "n": 71,
-          "mean_diff": -0.0141,
-          "se": 0.0245,
-          "p_lower": 0.258065,
-          "p_upper": 0.036044,
-          "p_max": 0.258065,
+          "mean_diff": 0.0,
+          "se": 0.0284,
+          "p_lower": 0.145148,
+          "p_upper": 0.145148,
+          "p_max": 0.145148,
           "equivalent_at_0.05": false,
           "ci90_bootstrap": [
-            -0.0563,
-            0.0282
+            -0.0423,
+            0.0423
           ],
           "ci90_within_margin": false
         },
         "delta=0.05": {
           "delta": 0.05,
           "n": 71,
-          "mean_diff": -0.0141,
-          "se": 0.0245,
-          "p_lower": 0.071422,
-          "p_upper": 0.00446761,
-          "p_max": 0.071422,
-          "equivalent_at_0.05": false,
+          "mean_diff": 0.0,
+          "se": 0.0284,
+          "p_lower": 0.0389962,
+          "p_upper": 0.0389962,
+          "p_max": 0.0389962,
+          "equivalent_at_0.05": true,
           "ci90_bootstrap": [
-            -0.0563,
-            0.0282
+            -0.0423,
+            0.0423
           ],
-          "ci90_within_margin": false
+          "ci90_within_margin": true
         },
         "delta=0.075": {
           "delta": 0.075,
           "n": 71,
-          "mean_diff": -0.0141,
-          "se": 0.0245,
-          "p_lower": 0.00647332,
-          "p_upper": 0.000139274,
-          "p_max": 0.00647332,
+          "mean_diff": 0.0,
+          "se": 0.0284,
+          "p_lower": 0.00410046,
+          "p_upper": 0.00410046,
+          "p_max": 0.00410046,
           "equivalent_at_0.05": true,
           "ci90_bootstrap": [
-            -0.0563,
-            0.0282
+            -0.0423,
+            0.0423
           ],
           "ci90_within_margin": true
         },
         "delta=0.1": {
           "delta": 0.1,
           "n": 71,
-          "mean_diff": -0.0141,
-          "se": 0.0245,
-          "p_lower": 0.000228145,
-          "p_upper": 1.62442e-06,
-          "p_max": 0.000228145,
+          "mean_diff": 0.0,
+          "se": 0.0284,
+          "p_lower": 0.000211812,
+          "p_upper": 0.000211812,
+          "p_max": 0.000211812,
           "equivalent_at_0.05": true,
           "ci90_bootstrap": [
-            -0.0563,
-            0.0282
+            -0.0423,
+            0.0423
           ],
           "ci90_within_margin": true
         },
         "delta=0.15": {
           "delta": 0.15,
           "n": 71,
-          "mean_diff": -0.0141,
-          "se": 0.0245,
-          "p_lower": 1.46904e-08,
-          "p_upper": 1.08332e-11,
-          "p_max": 1.46904e-08,
+          "mean_diff": 0.0,
+          "se": 0.0284,
+          "p_lower": 6.20448e-08,
+          "p_upper": 6.20448e-08,
+          "p_max": 6.20448e-08,
           "equivalent_at_0.05": true,
           "ci90_bootstrap": [
-            -0.0563,
-            0.0282
+            -0.0423,
+            0.0423
           ],
           "ci90_within_margin": true
         }
       },
       "primary_delta": 0.05,
-      "equivalent_at_primary_delta": false,
-      "n_required_for_primary_delta": 205,
-      "n_required_for_delta_0.03": 1042
+      "equivalent_at_primary_delta": true,
+      "n_required_for_primary_delta": 142,
+      "n_required_for_delta_0.03": 393
     },
     "minimal_no_code_vs_full_text[hybrid_0.5]": {
       "paired_bootstrap": {
@@ -3822,105 +2789,105 @@
     },
     "minimal_no_code_vs_full_text[BM25]": {
       "paired_bootstrap": {
-        "mean": -0.0141,
+        "mean": 0.0,
         "ci": [
-          -0.0704,
-          0.0282
+          -0.0563,
+          0.0563
         ],
         "n": 71,
         "iters": 20000,
         "seed": 20260626,
-        "boot_se": 0.0244
+        "boot_se": 0.0282
       },
       "mcnemar": {
-        "wins": 1,
+        "wins": 2,
         "losses": 2,
-        "ties": 68,
-        "discordant": 3,
+        "ties": 67,
+        "discordant": 4,
         "p_two_sided_exact": 1.0,
-        "p_one_sided_exact": 0.875
+        "p_one_sided_exact": 0.6875
       },
       "tost": {
         "delta=0.03": {
           "delta": 0.03,
           "n": 71,
-          "mean_diff": -0.0141,
-          "se": 0.0245,
-          "p_lower": 0.258065,
-          "p_upper": 0.036044,
-          "p_max": 0.258065,
+          "mean_diff": 0.0,
+          "se": 0.0284,
+          "p_lower": 0.145148,
+          "p_upper": 0.145148,
+          "p_max": 0.145148,
           "equivalent_at_0.05": false,
           "ci90_bootstrap": [
-            -0.0563,
-            0.0282
+            -0.0423,
+            0.0423
           ],
           "ci90_within_margin": false
         },
         "delta=0.05": {
           "delta": 0.05,
           "n": 71,
-          "mean_diff": -0.0141,
-          "se": 0.0245,
-          "p_lower": 0.071422,
-          "p_upper": 0.00446761,
-          "p_max": 0.071422,
-          "equivalent_at_0.05": false,
+          "mean_diff": 0.0,
+          "se": 0.0284,
+          "p_lower": 0.0389962,
+          "p_upper": 0.0389962,
+          "p_max": 0.0389962,
+          "equivalent_at_0.05": true,
           "ci90_bootstrap": [
-            -0.0563,
-            0.0282
+            -0.0423,
+            0.0423
           ],
-          "ci90_within_margin": false
+          "ci90_within_margin": true
         },
         "delta=0.075": {
           "delta": 0.075,
           "n": 71,
-          "mean_diff": -0.0141,
-          "se": 0.0245,
-          "p_lower": 0.00647332,
-          "p_upper": 0.000139274,
-          "p_max": 0.00647332,
+          "mean_diff": 0.0,
+          "se": 0.0284,
+          "p_lower": 0.00410046,
+          "p_upper": 0.00410046,
+          "p_max": 0.00410046,
           "equivalent_at_0.05": true,
           "ci90_bootstrap": [
-            -0.0563,
-            0.0282
+            -0.0423,
+            0.0423
           ],
           "ci90_within_margin": true
         },
         "delta=0.1": {
           "delta": 0.1,
           "n": 71,
-          "mean_diff": -0.0141,
-          "se": 0.0245,
-          "p_lower": 0.000228145,
-          "p_upper": 1.62442e-06,
-          "p_max": 0.000228145,
+          "mean_diff": 0.0,
+          "se": 0.0284,
+          "p_lower": 0.000211812,
+          "p_upper": 0.000211812,
+          "p_max": 0.000211812,
           "equivalent_at_0.05": true,
           "ci90_bootstrap": [
-            -0.0563,
-            0.0282
+            -0.0423,
+            0.0423
           ],
           "ci90_within_margin": true
         },
         "delta=0.15": {
           "delta": 0.15,
           "n": 71,
-          "mean_diff": -0.0141,
-          "se": 0.0245,
-          "p_lower": 1.46904e-08,
-          "p_upper": 1.08332e-11,
-          "p_max": 1.46904e-08,
+          "mean_diff": 0.0,
+          "se": 0.0284,
+          "p_lower": 6.20448e-08,
+          "p_upper": 6.20448e-08,
+          "p_max": 6.20448e-08,
           "equivalent_at_0.05": true,
           "ci90_bootstrap": [
-            -0.0563,
-            0.0282
+            -0.0423,
+            0.0423
           ],
           "ci90_within_margin": true
         }
       },
       "primary_delta": 0.05,
-      "equivalent_at_primary_delta": false,
-      "n_required_for_primary_delta": 205,
-      "n_required_for_delta_0.03": 1042
+      "equivalent_at_primary_delta": true,
+      "n_required_for_primary_delta": 142,
+      "n_required_for_delta_0.03": 393
     }
   },
   "equivalence_holm": {
@@ -3962,1109 +2929,6 @@
     }
   },
   "hit_vectors": {
-    "MiniLM": {
-      "full_text": {
-        "BM25": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          1,
-          0
-        ],
-        "hybrid_0.7": [
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          0,
-          1,
-          1,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          1,
-          0,
-          0,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1
-        ],
-        "hybrid_0.5": [
-          1,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          0,
-          1,
-          1,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          1,
-          0,
-          0,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1
-        ],
-        "hybrid_0.3": [
-          1,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          0,
-          1,
-          1,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          1,
-          0,
-          0,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1
-        ],
-        "dense": [
-          1,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          0,
-          1,
-          1,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          1,
-          0,
-          0,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1
-        ]
-      },
-      "minimal_text": {
-        "BM25": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          1,
-          1
-        ],
-        "hybrid_0.7": [
-          1,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          0,
-          0,
-          1,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          1,
-          0,
-          0,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1
-        ],
-        "hybrid_0.5": [
-          1,
-          1,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          0,
-          0,
-          1,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          1,
-          0,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1
-        ],
-        "hybrid_0.3": [
-          1,
-          1,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          0,
-          0,
-          1,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          1,
-          0,
-          0,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1
-        ],
-        "dense": [
-          1,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          0,
-          0,
-          1,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          1,
-          0,
-          0,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1
-        ]
-      },
-      "minimal_no_code": {
-        "BM25": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          1,
-          1
-        ],
-        "hybrid_0.7": [
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          0,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          1,
-          1,
-          1,
-          1
-        ],
-        "hybrid_0.5": [
-          1,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          0,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          1
-        ],
-        "hybrid_0.3": [
-          1,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          1
-        ],
-        "dense": [
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          1,
-          1,
-          1,
-          1
-        ]
-      }
-    },
     "e5-base": {
       "full_text": {
         "BM25": [
@@ -5137,7 +3001,7 @@
           0,
           0,
           1,
-          1,
+          0,
           0
         ],
         "hybrid_0.7": [
@@ -5161,7 +3025,7 @@
           0,
           1,
           1,
-          1,
+          0,
           1,
           1,
           1,
@@ -5232,9 +3096,9 @@
           1,
           0,
           0,
+          0,
           1,
-          1,
-          1,
+          0,
           1,
           1,
           1,
@@ -5307,7 +3171,7 @@
           0,
           0,
           1,
-          1,
+          0,
           1,
           1,
           1,
@@ -5351,7 +3215,7 @@
           1,
           0,
           0,
-          1,
+          0,
           0,
           0,
           0,
@@ -5380,7 +3244,7 @@
           0,
           0,
           1,
-          1,
+          0,
           1,
           1,
           1,
@@ -5424,7 +3288,7 @@
           1,
           0,
           0,
-          1,
+          0,
           0,
           0,
           0,
@@ -5555,7 +3419,7 @@
           1,
           0,
           0,
-          1,
+          0,
           1,
           0,
           0,
@@ -5628,7 +3492,7 @@
           1,
           0,
           0,
-          1,
+          0,
           1,
           0,
           0,
@@ -5701,7 +3565,7 @@
           1,
           0,
           0,
-          1,
+          0,
           1,
           0,
           0,
@@ -5774,7 +3638,7 @@
           1,
           0,
           0,
-          1,
+          0,
           1,
           0,
           0,
@@ -6026,7 +3890,7 @@
           0,
           0,
           0,
-          1,
+          0,
           1,
           0,
           0,
@@ -6125,7 +3989,7 @@
           0,
           0,
           1,
-          0,
+          1,
           0,
           1,
           1,
@@ -6168,7 +4032,7 @@
         ]
       }
     },
-    "bge-m3": {
+    "MiniLM": {
       "full_text": {
         "BM25": [
           0,
@@ -6240,62 +4104,15 @@
           0,
           0,
           1,
-          1,
+          0,
           0
         ],
         "hybrid_0.7": [
-          0,
-          0,
-          0,
-          0,
+          1,
           0,
           0,
           0,
           0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          0,
-          1,
-          1,
           0,
           0,
           0,
@@ -6306,67 +4123,64 @@
           0,
           1,
           1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
           0,
           0,
           0,
           0,
           0,
           1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
           1,
           1,
           1
         ],
         "hybrid_0.5": [
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          0,
           1,
           1,
           0,
@@ -6377,69 +4191,69 @@
           0,
           0,
           0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
           1,
           1,
           0,
           0,
           0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
           0,
           0,
           1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
           1,
           1,
           1
         ],
         "hybrid_0.3": [
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          0,
           1,
           1,
           0,
@@ -6450,20 +4264,71 @@
           0,
           0,
           0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
           1,
           1,
           0,
           0,
           0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
           0,
           0,
           1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
           1,
           1,
           1
         ],
         "dense": [
-          0,
+          1,
+          1,
           0,
           0,
           0,
@@ -6479,12 +4344,6 @@
           1,
           1,
           1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          0,
           1,
           0,
           1,
@@ -6502,35 +4361,40 @@
           1,
           1,
           1,
-          0,
           1,
           1,
           1,
           1,
           1,
-          1,
-          1,
-          1,
-          0,
           0,
           1,
           1,
+          1,
           0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
+          1,
+          1,
           0,
           1,
           1,
           0,
           0,
           0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
           0,
           0,
           1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
           1,
           1,
           1
@@ -6631,26 +4495,20 @@
           1,
           0,
           1,
-          0,
-          1,
-          1,
-          0,
-          0,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
           1,
           1,
           1,
           1,
           0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
           1,
           1,
           1,
@@ -6665,6 +4523,14 @@
           1,
           0,
           0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
           0,
           0,
           0,
@@ -6672,13 +4538,11 @@
           1,
           0,
           1,
-          1,
-          0,
-          0,
-          0,
           0,
           0,
           1,
+          1,
+          0,
           1,
           1,
           1
@@ -6689,35 +4553,14 @@
           0,
           0,
           0,
+          1,
+          0,
+          0,
           0,
           0,
           0,
           0,
           0,
-          0,
-          0,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          0,
-          1,
-          1,
-          0,
-          0,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
           1,
           1,
           1,
@@ -6736,6 +4579,29 @@
           0,
           1,
           1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
           0,
           0,
           0,
@@ -6745,13 +4611,11 @@
           1,
           0,
           1,
-          1,
-          0,
-          0,
-          0,
-          0,
           0,
           1,
+          1,
+          1,
+          0,
           1,
           1,
           1
@@ -6762,31 +4626,20 @@
           0,
           0,
           0,
+          1,
+          0,
+          0,
           0,
           0,
           0,
           0,
           0,
-          0,
-          0,
-          1,
           1,
           1,
           1,
           1,
           1,
           0,
-          1,
-          0,
-          1,
-          1,
-          0,
-          0,
-          1,
-          1,
-          1,
-          0,
-          1,
           1,
           1,
           1,
@@ -6802,6 +4655,11 @@
           1,
           1,
           1,
+          1,
+          1,
+          1,
+          1,
+          1,
           0,
           1,
           1,
@@ -6811,6 +4669,14 @@
           1,
           0,
           0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
           0,
           0,
           0,
@@ -6818,13 +4684,11 @@
           1,
           0,
           1,
-          1,
-          0,
-          0,
-          0,
           0,
           0,
           1,
+          1,
+          0,
           1,
           1,
           1
@@ -6842,19 +4706,9 @@
           0,
           0,
           0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
           0,
           1,
-          0,
-          0,
           1,
-          0,
-          0,
           1,
           1,
           1,
@@ -6868,8 +4722,12 @@
           1,
           1,
           1,
-          1,
           0,
+          0,
+          1,
+          1,
+          1,
+          1,
           1,
           1,
           1,
@@ -6884,6 +4742,14 @@
           1,
           0,
           0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
           0,
           0,
           0,
@@ -6891,13 +4757,11 @@
           1,
           0,
           1,
-          1,
-          0,
-          0,
-          0,
           0,
           0,
           1,
+          1,
+          0,
           1,
           1,
           1
@@ -6978,7 +4842,7 @@
           1
         ],
         "hybrid_0.7": [
-          0,
+          1,
           0,
           0,
           0,
@@ -6997,12 +4861,8 @@
           1,
           1,
           0,
-          1,
           0,
           1,
-          1,
-          0,
-          0,
           1,
           1,
           1,
@@ -7016,8 +4876,6 @@
           1,
           1,
           1,
-          1,
-          0,
           1,
           1,
           1,
@@ -7033,13 +4891,19 @@
           0,
           0,
           0,
-          0,
-          0,
-          0,
+          1,
           0,
           0,
           1,
-          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
           0,
           0,
           0,
@@ -7051,8 +4915,8 @@
           1
         ],
         "hybrid_0.5": [
-          0,
-          0,
+          1,
+          1,
           0,
           0,
           0,
@@ -7070,12 +4934,8 @@
           1,
           1,
           0,
-          1,
           0,
           1,
-          1,
-          0,
-          0,
           1,
           1,
           1,
@@ -7089,8 +4949,6 @@
           1,
           1,
           1,
-          1,
-          0,
           1,
           1,
           1,
@@ -7106,16 +4964,22 @@
           0,
           0,
           0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
           0,
           0,
           0,
           0,
           0,
           1,
-          1,
-          0,
-          0,
-          0,
           1,
           0,
           1,
@@ -7124,8 +4988,8 @@
           1
         ],
         "hybrid_0.3": [
-          0,
-          0,
+          1,
+          1,
           0,
           0,
           0,
@@ -7143,16 +5007,12 @@
           1,
           1,
           0,
-          1,
-          0,
-          1,
-          1,
-          0,
           0,
           1,
           1,
           1,
-          0,
+          1,
+          1,
           1,
           1,
           1,
@@ -7162,8 +5022,6 @@
           1,
           1,
           1,
-          1,
-          0,
           1,
           1,
           1,
@@ -7179,16 +5037,22 @@
           0,
           0,
           0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
           0,
           0,
           0,
           0,
           0,
           1,
-          1,
-          0,
-          0,
-          0,
           1,
           0,
           1,
@@ -7197,7 +5061,7 @@
           1
         ],
         "dense": [
-          0,
+          1,
           0,
           0,
           0,
@@ -7216,16 +5080,12 @@
           1,
           1,
           0,
-          1,
-          0,
-          1,
-          1,
-          0,
           0,
           1,
           1,
           1,
-          0,
+          1,
+          1,
           1,
           1,
           1,
@@ -7235,8 +5095,6 @@
           1,
           1,
           1,
-          1,
-          0,
           1,
           1,
           1,
@@ -7252,13 +5110,19 @@
           0,
           0,
           0,
-          0,
-          0,
-          0,
+          1,
           0,
           0,
           1,
-          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
           0,
           0,
           0,
