@@ -17,6 +17,26 @@
 
 ## 2. R@10 (95% CI = Clopper-Pearson)
 
+### bge-m3 (revision `5617a9f61b028005a4858fdac845db406aefb181`)
+
+| 색인 | retriever | 전체 R@10 | 95% CI | 영어 | 한국어 |
+|---|---|---:|---|---:|---:|
+| full_text | BM25 | 0.1549 | [0.080, 0.260] | 0.4231 | 0.0000 |
+| full_text | hybrid_0.7 | 0.5634 | [0.441, 0.681] | 0.5000 | 0.6000 |
+| full_text | hybrid_0.5 | 0.5634 | [0.441, 0.681] | 0.5000 | 0.6000 |
+| full_text | hybrid_0.3 | 0.5915 | [0.468, 0.707] | 0.5769 | 0.6000 |
+| full_text | dense | 0.5634 | [0.441, 0.681] | 0.5000 | 0.6000 |
+| minimal_text | BM25 | 0.1549 | [0.080, 0.260] | 0.4231 | 0.0000 |
+| minimal_text | hybrid_0.7 | 0.5634 | [0.441, 0.681] | 0.4615 | 0.6222 |
+| minimal_text | hybrid_0.5 | 0.5634 | [0.441, 0.681] | 0.4615 | 0.6222 |
+| minimal_text | hybrid_0.3 | 0.5775 | [0.454, 0.694] | 0.5000 | 0.6222 |
+| minimal_text | dense | 0.5634 | [0.441, 0.681] | 0.4615 | 0.6222 |
+| minimal_no_code | BM25 | 0.1549 | [0.080, 0.260] | 0.4231 | 0.0000 |
+| minimal_no_code | hybrid_0.7 | 0.5211 | [0.399, 0.641] | 0.4231 | 0.5778 |
+| minimal_no_code | hybrid_0.5 | 0.5211 | [0.399, 0.641] | 0.4231 | 0.5778 |
+| minimal_no_code | hybrid_0.3 | 0.5211 | [0.399, 0.641] | 0.4231 | 0.5778 |
+| minimal_no_code | dense | 0.5211 | [0.399, 0.641] | 0.4231 | 0.5778 |
+
 ### e5-base (revision `d128750597153bb5987e10b1c3493a34e5a4502a`)
 
 | 색인 | retriever | 전체 R@10 | 95% CI | 영어 | 한국어 |
@@ -61,6 +81,33 @@
 
 | 모델 | 색인 | 비교 | 평균차 | 95% CI | 승/패/무 | exact p | Holm p |
 |---|---|---|---:|---|---:|---:|---:|
+| bge-m3 | full_text | hybrid_vs_bm25[overall] | +0.4085 | [0.2958, 0.5211] | 29/0/42 | 3.73e-09 | 3.35e-08 |
+| bge-m3 | full_text | dense_vs_bm25[overall] | +0.4085 | [0.2817, 0.5352] | 30/1/40 | 2.98e-08 | 1.79e-07 |
+| bge-m3 | full_text | hybrid_vs_dense[overall] | +0.0000 | [-0.0423, 0.0423] | 1/1/69 | 1 | 1 |
+| bge-m3 | full_text | hybrid_vs_bm25[en] | +0.0769 | [0.0000, 0.1923] | 2/0/24 | 0.5 | 1 |
+| bge-m3 | full_text | dense_vs_bm25[en] | +0.0769 | [-0.0769, 0.2308] | 3/1/22 | 0.625 | 1 |
+| bge-m3 | full_text | hybrid_vs_dense[en] | +0.0000 | [-0.1154, 0.1154] | 1/1/24 | 1 | 1 |
+| bge-m3 | full_text | hybrid_vs_bm25[ko] | +0.6000 | [0.4444, 0.7333] | 27/0/18 | 1.49e-08 | 1.19e-07 |
+| bge-m3 | full_text | dense_vs_bm25[ko] | +0.6000 | [0.4444, 0.7333] | 27/0/18 | 1.49e-08 | 1.19e-07 |
+| bge-m3 | full_text | hybrid_vs_dense[ko] | +0.0000 | [0.0000, 0.0000] | 0/0/45 | 1 | 1 |
+| bge-m3 | minimal_text | hybrid_vs_bm25[overall] | +0.4085 | [0.2958, 0.5211] | 29/0/42 | 3.73e-09 | 3.35e-08 |
+| bge-m3 | minimal_text | dense_vs_bm25[overall] | +0.4085 | [0.2817, 0.5211] | 30/1/40 | 2.98e-08 | 1.79e-07 |
+| bge-m3 | minimal_text | hybrid_vs_dense[overall] | +0.0000 | [-0.0423, 0.0423] | 1/1/69 | 1 | 1 |
+| bge-m3 | minimal_text | hybrid_vs_bm25[en] | +0.0385 | [0.0000, 0.1154] | 1/0/25 | 1 | 1 |
+| bge-m3 | minimal_text | dense_vs_bm25[en] | +0.0385 | [-0.0769, 0.1538] | 2/1/23 | 1 | 1 |
+| bge-m3 | minimal_text | hybrid_vs_dense[en] | +0.0000 | [-0.1154, 0.1154] | 1/1/24 | 1 | 1 |
+| bge-m3 | minimal_text | hybrid_vs_bm25[ko] | +0.6222 | [0.4889, 0.7556] | 28/0/17 | 7.45e-09 | 5.96e-08 |
+| bge-m3 | minimal_text | dense_vs_bm25[ko] | +0.6222 | [0.4889, 0.7556] | 28/0/17 | 7.45e-09 | 5.96e-08 |
+| bge-m3 | minimal_text | hybrid_vs_dense[ko] | +0.0000 | [0.0000, 0.0000] | 0/0/45 | 1 | 1 |
+| bge-m3 | minimal_no_code | hybrid_vs_bm25[overall] | +0.3662 | [0.2535, 0.4789] | 26/0/45 | 2.98e-08 | 2.68e-07 |
+| bge-m3 | minimal_no_code | dense_vs_bm25[overall] | +0.3662 | [0.2535, 0.4789] | 26/0/45 | 2.98e-08 | 2.68e-07 |
+| bge-m3 | minimal_no_code | hybrid_vs_dense[overall] | +0.0000 | [0.0000, 0.0000] | 0/0/71 | 1 | 1 |
+| bge-m3 | minimal_no_code | hybrid_vs_bm25[en] | +0.0000 | [0.0000, 0.0000] | 0/0/26 | 1 | 1 |
+| bge-m3 | minimal_no_code | dense_vs_bm25[en] | +0.0000 | [0.0000, 0.0000] | 0/0/26 | 1 | 1 |
+| bge-m3 | minimal_no_code | hybrid_vs_dense[en] | +0.0000 | [0.0000, 0.0000] | 0/0/26 | 1 | 1 |
+| bge-m3 | minimal_no_code | hybrid_vs_bm25[ko] | +0.5778 | [0.4444, 0.7111] | 26/0/19 | 2.98e-08 | 2.68e-07 |
+| bge-m3 | minimal_no_code | dense_vs_bm25[ko] | +0.5778 | [0.4444, 0.7111] | 26/0/19 | 2.98e-08 | 2.68e-07 |
+| bge-m3 | minimal_no_code | hybrid_vs_dense[ko] | +0.0000 | [0.0000, 0.0000] | 0/0/45 | 1 | 1 |
 | e5-base | full_text | hybrid_vs_bm25[overall] | +0.3521 | [0.2394, 0.4648] | 26/1/44 | 4.17e-07 | 2.92e-06 |
 | e5-base | full_text | dense_vs_bm25[overall] | +0.3239 | [0.1972, 0.4507] | 25/2/44 | 5.65e-06 | 3.39e-05 |
 | e5-base | full_text | hybrid_vs_dense[overall] | +0.0282 | [0.0000, 0.0704] | 2/0/69 | 0.5 | 1 |

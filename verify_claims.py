@@ -284,6 +284,30 @@ def build_checks() -> list[Check]:
                                "minimal_text_vs_full_text[hybrid_0.5]",
                                "n_required_for_primary_delta"), tol=0))
 
+    # ---- 4.6 모델 robustness: 3개 인코더 전부에서 결론이 유지되는가 ----
+    C.append(Check("robust.models", "PAPER 4.6", "포함된 dense 인코더 수 (3)", 3,
+                   lambda: len(dig(suite, "meta", "dense_models") or {}), tol=0))
+    for model, dense_r, hyb_r, ko_r in [("MiniLM", 0.5493, 0.5775, 0.6000),
+                                        ("e5-base", 0.4648, 0.4930, 0.4889),
+                                        ("bge-m3", 0.5634, 0.5634, 0.6222)]:
+        C.append(Check(f"robust.{model}.dense", "PAPER 4.6", f"{model} dense R@10", dense_r,
+                       lambda m=model: suite_rate("minimal_text", "dense", model=m)))
+        C.append(Check(f"robust.{model}.hybrid", "PAPER 4.6", f"{model} hybrid R@10", hyb_r,
+                       lambda m=model: suite_rate("minimal_text", "hybrid_0.5", model=m)))
+        C.append(Check(f"robust.{model}.ko", "PAPER 4.6", f"{model} hybrid 한국어 R@10", ko_r,
+                       lambda m=model: suite_rate("minimal_text", "hybrid_0.5", "ko", model=m)))
+        # dense-BM25는 유의, hybrid-dense는 비유의 — 세 모델 모두에서 성립해야 한다
+        C.append(Check(f"robust.{model}.dense_beats_bm25", "PAPER 4.6",
+                       f"{model} dense−BM25가 Holm 보정 후 유의한가", True,
+                       lambda m=model: dig(suite, "retriever", m, "minimal_text",
+                                           "holm_within_index_mode",
+                                           "dense_vs_bm25[overall]", "significant_at_0.05")))
+        C.append(Check(f"robust.{model}.hybrid_not_better", "PAPER 4.6",
+                       f"{model} hybrid−dense가 유의한가 (아니오)", False,
+                       lambda m=model: dig(suite, "retriever", m, "minimal_text",
+                                           "holm_within_index_mode",
+                                           "hybrid_vs_dense[overall]", "significant_at_0.05")))
+
     # ---- claim 4 (핵심): 질의 측 disclosure-recall frontier ----
     ladder = load(OUT / "disclosure_frontier.json")
 

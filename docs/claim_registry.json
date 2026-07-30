@@ -454,6 +454,150 @@
       "note": ""
     },
     {
+      "id": "robust.models",
+      "where": "PAPER 4.6",
+      "desc": "포함된 dense 인코더 수 (3)",
+      "paper": 3,
+      "artifact": 3,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "robust.MiniLM.dense",
+      "where": "PAPER 4.6",
+      "desc": "MiniLM dense R@10",
+      "paper": 0.5493,
+      "artifact": 0.5493,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "robust.MiniLM.hybrid",
+      "where": "PAPER 4.6",
+      "desc": "MiniLM hybrid R@10",
+      "paper": 0.5775,
+      "artifact": 0.5775,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "robust.MiniLM.ko",
+      "where": "PAPER 4.6",
+      "desc": "MiniLM hybrid 한국어 R@10",
+      "paper": 0.6,
+      "artifact": 0.6,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "robust.MiniLM.dense_beats_bm25",
+      "where": "PAPER 4.6",
+      "desc": "MiniLM dense−BM25가 Holm 보정 후 유의한가",
+      "paper": true,
+      "artifact": true,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "robust.MiniLM.hybrid_not_better",
+      "where": "PAPER 4.6",
+      "desc": "MiniLM hybrid−dense가 유의한가 (아니오)",
+      "paper": false,
+      "artifact": false,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "robust.e5-base.dense",
+      "where": "PAPER 4.6",
+      "desc": "e5-base dense R@10",
+      "paper": 0.4648,
+      "artifact": 0.4648,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "robust.e5-base.hybrid",
+      "where": "PAPER 4.6",
+      "desc": "e5-base hybrid R@10",
+      "paper": 0.493,
+      "artifact": 0.493,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "robust.e5-base.ko",
+      "where": "PAPER 4.6",
+      "desc": "e5-base hybrid 한국어 R@10",
+      "paper": 0.4889,
+      "artifact": 0.4889,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "robust.e5-base.dense_beats_bm25",
+      "where": "PAPER 4.6",
+      "desc": "e5-base dense−BM25가 Holm 보정 후 유의한가",
+      "paper": true,
+      "artifact": true,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "robust.e5-base.hybrid_not_better",
+      "where": "PAPER 4.6",
+      "desc": "e5-base hybrid−dense가 유의한가 (아니오)",
+      "paper": false,
+      "artifact": false,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "robust.bge-m3.dense",
+      "where": "PAPER 4.6",
+      "desc": "bge-m3 dense R@10",
+      "paper": 0.5634,
+      "artifact": 0.5634,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "robust.bge-m3.hybrid",
+      "where": "PAPER 4.6",
+      "desc": "bge-m3 hybrid R@10",
+      "paper": 0.5634,
+      "artifact": 0.5634,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "robust.bge-m3.ko",
+      "where": "PAPER 4.6",
+      "desc": "bge-m3 hybrid 한국어 R@10",
+      "paper": 0.6222,
+      "artifact": 0.6222,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "robust.bge-m3.dense_beats_bm25",
+      "where": "PAPER 4.6",
+      "desc": "bge-m3 dense−BM25가 Holm 보정 후 유의한가",
+      "paper": true,
+      "artifact": true,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "robust.bge-m3.hybrid_not_better",
+      "where": "PAPER 4.6",
+      "desc": "bge-m3 hybrid−dense가 유의한가 (아니오)",
+      "paper": false,
+      "artifact": false,
+      "status": "OK",
+      "note": ""
+    },
+    {
       "id": "ladder.hybrid.L0",
       "where": "PAPER 4.5",
       "desc": "사다리 L0 hybrid R@10",
@@ -684,7 +828,7 @@
     }
   ],
   "counts": {
-    "OK": 74,
+    "OK": 90,
     "MISMATCH": 0,
     "SKIP": 0,
     "ERROR": 0,

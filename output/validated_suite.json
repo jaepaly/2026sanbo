@@ -30,11 +30,13 @@
       0.15
     ],
     "dense_models": {
+      "bge-m3": "BAAI/bge-m3",
       "e5-base": "intfloat/multilingual-e5-base",
       "MiniLM": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
     },
     "primary_model": "MiniLM",
     "model_revisions": {
+      "bge-m3": "5617a9f61b028005a4858fdac845db406aefb181",
       "e5-base": "d128750597153bb5987e10b1c3493a34e5a4502a",
       "MiniLM": "e8f8c211226b894fcb81acc59f3b34ba3efd5f42"
     },
@@ -43,10 +45,19 @@
     "label_nature": "corpus-text-grounded category labels (exact eCFR codes); not legal or expert determinations",
     "prespecified": "delta, primary alpha, bootstrap settings and the Holm families were fixed in this file before the run; sensitivity deltas are reported as sensitivity only",
     "merged_from_shards": [
+      "shard_bge-m3.json",
       "shard_e5-base.json",
       "shard_MiniLM.json"
     ],
     "shard_envs": {
+      "bge-m3": {
+        "numpy": "2.2.6",
+        "python": "3.12.10",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "torch": "2.6.0+cpu",
+        "sentence_transformers": "3.4.1",
+        "seed": 20260626
+      },
       "e5-base": {
         "numpy": "2.5.0",
         "python": "3.14.6",
@@ -63,10 +74,7 @@
         "sentence_transformers": "3.4.1",
         "seed": 20260626
       }
-    },
-    "missing_models": [
-      "bge-m3"
-    ]
+    }
   },
   "env": {
     "numpy": "2.4.6",
@@ -77,6 +85,1067 @@
     "seed": 20260626
   },
   "retriever": {
+    "bge-m3": {
+      "revision": "5617a9f61b028005a4858fdac845db406aefb181",
+      "diagnostics": {
+        "full_text": {
+          "bm25_no_signal_queries": 44,
+          "rank1_ties_at_primary_alpha": 0,
+          "hybrid_top10_identical_to_dense": {
+            "hybrid_0.7": 44,
+            "hybrid_0.5": 44,
+            "hybrid_0.3": 44
+          },
+          "distinct_index_texts": 1783
+        },
+        "minimal_text": {
+          "bm25_no_signal_queries": 44,
+          "rank1_ties_at_primary_alpha": 0,
+          "hybrid_top10_identical_to_dense": {
+            "hybrid_0.7": 44,
+            "hybrid_0.5": 44,
+            "hybrid_0.3": 44
+          },
+          "distinct_index_texts": 1783
+        },
+        "minimal_no_code": {
+          "bm25_no_signal_queries": 44,
+          "rank1_ties_at_primary_alpha": 8,
+          "hybrid_top10_identical_to_dense": {
+            "hybrid_0.7": 44,
+            "hybrid_0.5": 44,
+            "hybrid_0.3": 44
+          },
+          "distinct_index_texts": 1656
+        }
+      },
+      "full_text": {
+        "recall@10": {
+          "BM25": {
+            "overall": {
+              "k": 11,
+              "n": 71,
+              "rate": 0.1549,
+              "ci95": [
+                0.08,
+                0.2603
+              ]
+            },
+            "en": {
+              "k": 11,
+              "n": 26,
+              "rate": 0.4231,
+              "ci95": [
+                0.2335,
+                0.6308
+              ]
+            },
+            "ko": {
+              "k": 0,
+              "n": 45,
+              "rate": 0.0,
+              "ci95": [
+                0.0,
+                0.0787
+              ]
+            }
+          },
+          "hybrid_0.7": {
+            "overall": {
+              "k": 40,
+              "n": 71,
+              "rate": 0.5634,
+              "ci95": [
+                0.4405,
+                0.6809
+              ]
+            },
+            "en": {
+              "k": 13,
+              "n": 26,
+              "rate": 0.5,
+              "ci95": [
+                0.2993,
+                0.7007
+              ]
+            },
+            "ko": {
+              "k": 27,
+              "n": 45,
+              "rate": 0.6,
+              "ci95": [
+                0.4433,
+                0.743
+              ]
+            }
+          },
+          "hybrid_0.5": {
+            "overall": {
+              "k": 40,
+              "n": 71,
+              "rate": 0.5634,
+              "ci95": [
+                0.4405,
+                0.6809
+              ]
+            },
+            "en": {
+              "k": 13,
+              "n": 26,
+              "rate": 0.5,
+              "ci95": [
+                0.2993,
+                0.7007
+              ]
+            },
+            "ko": {
+              "k": 27,
+              "n": 45,
+              "rate": 0.6,
+              "ci95": [
+                0.4433,
+                0.743
+              ]
+            }
+          },
+          "hybrid_0.3": {
+            "overall": {
+              "k": 42,
+              "n": 71,
+              "rate": 0.5915,
+              "ci95": [
+                0.4684,
+                0.7068
+              ]
+            },
+            "en": {
+              "k": 15,
+              "n": 26,
+              "rate": 0.5769,
+              "ci95": [
+                0.3692,
+                0.7665
+              ]
+            },
+            "ko": {
+              "k": 27,
+              "n": 45,
+              "rate": 0.6,
+              "ci95": [
+                0.4433,
+                0.743
+              ]
+            }
+          },
+          "dense": {
+            "overall": {
+              "k": 40,
+              "n": 71,
+              "rate": 0.5634,
+              "ci95": [
+                0.4405,
+                0.6809
+              ]
+            },
+            "en": {
+              "k": 13,
+              "n": 26,
+              "rate": 0.5,
+              "ci95": [
+                0.2993,
+                0.7007
+              ]
+            },
+            "ko": {
+              "k": 27,
+              "n": 45,
+              "rate": 0.6,
+              "ci95": [
+                0.4433,
+                0.743
+              ]
+            }
+          }
+        },
+        "contrasts": {
+          "hybrid_vs_bm25[overall]": {
+            "comparison": "hybrid_vs_bm25[overall]",
+            "mean_diff": 0.4085,
+            "diff_95_ci": [
+              0.2958,
+              0.5211
+            ],
+            "excludes_zero": true,
+            "wins": 29,
+            "losses": 0,
+            "ties": 42,
+            "discordant": 29,
+            "p_two_sided_exact": 3.72529e-09,
+            "p_one_sided_exact": 1.86265e-09
+          },
+          "dense_vs_bm25[overall]": {
+            "comparison": "dense_vs_bm25[overall]",
+            "mean_diff": 0.4085,
+            "diff_95_ci": [
+              0.2817,
+              0.5352
+            ],
+            "excludes_zero": true,
+            "wins": 30,
+            "losses": 1,
+            "ties": 40,
+            "discordant": 31,
+            "p_two_sided_exact": 2.98023e-08,
+            "p_one_sided_exact": 1.49012e-08
+          },
+          "hybrid_vs_dense[overall]": {
+            "comparison": "hybrid_vs_dense[overall]",
+            "mean_diff": 0.0,
+            "diff_95_ci": [
+              -0.0423,
+              0.0423
+            ],
+            "excludes_zero": false,
+            "wins": 1,
+            "losses": 1,
+            "ties": 69,
+            "discordant": 2,
+            "p_two_sided_exact": 1.0,
+            "p_one_sided_exact": 0.75
+          },
+          "hybrid_vs_bm25[en]": {
+            "comparison": "hybrid_vs_bm25[en]",
+            "mean_diff": 0.0769,
+            "diff_95_ci": [
+              0.0,
+              0.1923
+            ],
+            "excludes_zero": false,
+            "wins": 2,
+            "losses": 0,
+            "ties": 24,
+            "discordant": 2,
+            "p_two_sided_exact": 0.5,
+            "p_one_sided_exact": 0.25
+          },
+          "dense_vs_bm25[en]": {
+            "comparison": "dense_vs_bm25[en]",
+            "mean_diff": 0.0769,
+            "diff_95_ci": [
+              -0.0769,
+              0.2308
+            ],
+            "excludes_zero": false,
+            "wins": 3,
+            "losses": 1,
+            "ties": 22,
+            "discordant": 4,
+            "p_two_sided_exact": 0.625,
+            "p_one_sided_exact": 0.3125
+          },
+          "hybrid_vs_dense[en]": {
+            "comparison": "hybrid_vs_dense[en]",
+            "mean_diff": 0.0,
+            "diff_95_ci": [
+              -0.1154,
+              0.1154
+            ],
+            "excludes_zero": false,
+            "wins": 1,
+            "losses": 1,
+            "ties": 24,
+            "discordant": 2,
+            "p_two_sided_exact": 1.0,
+            "p_one_sided_exact": 0.75
+          },
+          "hybrid_vs_bm25[ko]": {
+            "comparison": "hybrid_vs_bm25[ko]",
+            "mean_diff": 0.6,
+            "diff_95_ci": [
+              0.4444,
+              0.7333
+            ],
+            "excludes_zero": true,
+            "wins": 27,
+            "losses": 0,
+            "ties": 18,
+            "discordant": 27,
+            "p_two_sided_exact": 1.49012e-08,
+            "p_one_sided_exact": 7.45058e-09
+          },
+          "dense_vs_bm25[ko]": {
+            "comparison": "dense_vs_bm25[ko]",
+            "mean_diff": 0.6,
+            "diff_95_ci": [
+              0.4444,
+              0.7333
+            ],
+            "excludes_zero": true,
+            "wins": 27,
+            "losses": 0,
+            "ties": 18,
+            "discordant": 27,
+            "p_two_sided_exact": 1.49012e-08,
+            "p_one_sided_exact": 7.45058e-09
+          },
+          "hybrid_vs_dense[ko]": {
+            "comparison": "hybrid_vs_dense[ko]",
+            "mean_diff": 0.0,
+            "diff_95_ci": [
+              0.0,
+              0.0
+            ],
+            "excludes_zero": false,
+            "wins": 0,
+            "losses": 0,
+            "ties": 45,
+            "discordant": 0,
+            "p_two_sided_exact": 1.0,
+            "p_one_sided_exact": 1.0
+          }
+        },
+        "holm_within_index_mode": {
+          "hybrid_vs_bm25[overall]": {
+            "p_raw": 3.7e-09,
+            "p_adjusted": 3.35e-08,
+            "significant_at_0.05": true,
+            "family_size": 9
+          },
+          "hybrid_vs_bm25[ko]": {
+            "p_raw": 1.49e-08,
+            "p_adjusted": 1.192e-07,
+            "significant_at_0.05": true,
+            "family_size": 9
+          },
+          "dense_vs_bm25[ko]": {
+            "p_raw": 1.49e-08,
+            "p_adjusted": 1.192e-07,
+            "significant_at_0.05": true,
+            "family_size": 9
+          },
+          "dense_vs_bm25[overall]": {
+            "p_raw": 2.98e-08,
+            "p_adjusted": 1.788e-07,
+            "significant_at_0.05": true,
+            "family_size": 9
+          },
+          "hybrid_vs_bm25[en]": {
+            "p_raw": 0.5,
+            "p_adjusted": 1.0,
+            "significant_at_0.05": false,
+            "family_size": 9
+          },
+          "dense_vs_bm25[en]": {
+            "p_raw": 0.625,
+            "p_adjusted": 1.0,
+            "significant_at_0.05": false,
+            "family_size": 9
+          },
+          "hybrid_vs_dense[overall]": {
+            "p_raw": 1.0,
+            "p_adjusted": 1.0,
+            "significant_at_0.05": false,
+            "family_size": 9
+          },
+          "hybrid_vs_dense[en]": {
+            "p_raw": 1.0,
+            "p_adjusted": 1.0,
+            "significant_at_0.05": false,
+            "family_size": 9
+          },
+          "hybrid_vs_dense[ko]": {
+            "p_raw": 1.0,
+            "p_adjusted": 1.0,
+            "significant_at_0.05": false,
+            "family_size": 9
+          }
+        }
+      },
+      "minimal_text": {
+        "recall@10": {
+          "BM25": {
+            "overall": {
+              "k": 11,
+              "n": 71,
+              "rate": 0.1549,
+              "ci95": [
+                0.08,
+                0.2603
+              ]
+            },
+            "en": {
+              "k": 11,
+              "n": 26,
+              "rate": 0.4231,
+              "ci95": [
+                0.2335,
+                0.6308
+              ]
+            },
+            "ko": {
+              "k": 0,
+              "n": 45,
+              "rate": 0.0,
+              "ci95": [
+                0.0,
+                0.0787
+              ]
+            }
+          },
+          "hybrid_0.7": {
+            "overall": {
+              "k": 40,
+              "n": 71,
+              "rate": 0.5634,
+              "ci95": [
+                0.4405,
+                0.6809
+              ]
+            },
+            "en": {
+              "k": 12,
+              "n": 26,
+              "rate": 0.4615,
+              "ci95": [
+                0.2659,
+                0.6663
+              ]
+            },
+            "ko": {
+              "k": 28,
+              "n": 45,
+              "rate": 0.6222,
+              "ci95": [
+                0.4654,
+                0.7623
+              ]
+            }
+          },
+          "hybrid_0.5": {
+            "overall": {
+              "k": 40,
+              "n": 71,
+              "rate": 0.5634,
+              "ci95": [
+                0.4405,
+                0.6809
+              ]
+            },
+            "en": {
+              "k": 12,
+              "n": 26,
+              "rate": 0.4615,
+              "ci95": [
+                0.2659,
+                0.6663
+              ]
+            },
+            "ko": {
+              "k": 28,
+              "n": 45,
+              "rate": 0.6222,
+              "ci95": [
+                0.4654,
+                0.7623
+              ]
+            }
+          },
+          "hybrid_0.3": {
+            "overall": {
+              "k": 41,
+              "n": 71,
+              "rate": 0.5775,
+              "ci95": [
+                0.4544,
+                0.6939
+              ]
+            },
+            "en": {
+              "k": 13,
+              "n": 26,
+              "rate": 0.5,
+              "ci95": [
+                0.2993,
+                0.7007
+              ]
+            },
+            "ko": {
+              "k": 28,
+              "n": 45,
+              "rate": 0.6222,
+              "ci95": [
+                0.4654,
+                0.7623
+              ]
+            }
+          },
+          "dense": {
+            "overall": {
+              "k": 40,
+              "n": 71,
+              "rate": 0.5634,
+              "ci95": [
+                0.4405,
+                0.6809
+              ]
+            },
+            "en": {
+              "k": 12,
+              "n": 26,
+              "rate": 0.4615,
+              "ci95": [
+                0.2659,
+                0.6663
+              ]
+            },
+            "ko": {
+              "k": 28,
+              "n": 45,
+              "rate": 0.6222,
+              "ci95": [
+                0.4654,
+                0.7623
+              ]
+            }
+          }
+        },
+        "contrasts": {
+          "hybrid_vs_bm25[overall]": {
+            "comparison": "hybrid_vs_bm25[overall]",
+            "mean_diff": 0.4085,
+            "diff_95_ci": [
+              0.2958,
+              0.5211
+            ],
+            "excludes_zero": true,
+            "wins": 29,
+            "losses": 0,
+            "ties": 42,
+            "discordant": 29,
+            "p_two_sided_exact": 3.72529e-09,
+            "p_one_sided_exact": 1.86265e-09
+          },
+          "dense_vs_bm25[overall]": {
+            "comparison": "dense_vs_bm25[overall]",
+            "mean_diff": 0.4085,
+            "diff_95_ci": [
+              0.2817,
+              0.5211
+            ],
+            "excludes_zero": true,
+            "wins": 30,
+            "losses": 1,
+            "ties": 40,
+            "discordant": 31,
+            "p_two_sided_exact": 2.98023e-08,
+            "p_one_sided_exact": 1.49012e-08
+          },
+          "hybrid_vs_dense[overall]": {
+            "comparison": "hybrid_vs_dense[overall]",
+            "mean_diff": 0.0,
+            "diff_95_ci": [
+              -0.0423,
+              0.0423
+            ],
+            "excludes_zero": false,
+            "wins": 1,
+            "losses": 1,
+            "ties": 69,
+            "discordant": 2,
+            "p_two_sided_exact": 1.0,
+            "p_one_sided_exact": 0.75
+          },
+          "hybrid_vs_bm25[en]": {
+            "comparison": "hybrid_vs_bm25[en]",
+            "mean_diff": 0.0385,
+            "diff_95_ci": [
+              0.0,
+              0.1154
+            ],
+            "excludes_zero": false,
+            "wins": 1,
+            "losses": 0,
+            "ties": 25,
+            "discordant": 1,
+            "p_two_sided_exact": 1.0,
+            "p_one_sided_exact": 0.5
+          },
+          "dense_vs_bm25[en]": {
+            "comparison": "dense_vs_bm25[en]",
+            "mean_diff": 0.0385,
+            "diff_95_ci": [
+              -0.0769,
+              0.1538
+            ],
+            "excludes_zero": false,
+            "wins": 2,
+            "losses": 1,
+            "ties": 23,
+            "discordant": 3,
+            "p_two_sided_exact": 1.0,
+            "p_one_sided_exact": 0.5
+          },
+          "hybrid_vs_dense[en]": {
+            "comparison": "hybrid_vs_dense[en]",
+            "mean_diff": 0.0,
+            "diff_95_ci": [
+              -0.1154,
+              0.1154
+            ],
+            "excludes_zero": false,
+            "wins": 1,
+            "losses": 1,
+            "ties": 24,
+            "discordant": 2,
+            "p_two_sided_exact": 1.0,
+            "p_one_sided_exact": 0.75
+          },
+          "hybrid_vs_bm25[ko]": {
+            "comparison": "hybrid_vs_bm25[ko]",
+            "mean_diff": 0.6222,
+            "diff_95_ci": [
+              0.4889,
+              0.7556
+            ],
+            "excludes_zero": true,
+            "wins": 28,
+            "losses": 0,
+            "ties": 17,
+            "discordant": 28,
+            "p_two_sided_exact": 7.45058e-09,
+            "p_one_sided_exact": 3.72529e-09
+          },
+          "dense_vs_bm25[ko]": {
+            "comparison": "dense_vs_bm25[ko]",
+            "mean_diff": 0.6222,
+            "diff_95_ci": [
+              0.4889,
+              0.7556
+            ],
+            "excludes_zero": true,
+            "wins": 28,
+            "losses": 0,
+            "ties": 17,
+            "discordant": 28,
+            "p_two_sided_exact": 7.45058e-09,
+            "p_one_sided_exact": 3.72529e-09
+          },
+          "hybrid_vs_dense[ko]": {
+            "comparison": "hybrid_vs_dense[ko]",
+            "mean_diff": 0.0,
+            "diff_95_ci": [
+              0.0,
+              0.0
+            ],
+            "excludes_zero": false,
+            "wins": 0,
+            "losses": 0,
+            "ties": 45,
+            "discordant": 0,
+            "p_two_sided_exact": 1.0,
+            "p_one_sided_exact": 1.0
+          }
+        },
+        "holm_within_index_mode": {
+          "hybrid_vs_bm25[overall]": {
+            "p_raw": 3.7e-09,
+            "p_adjusted": 3.35e-08,
+            "significant_at_0.05": true,
+            "family_size": 9
+          },
+          "hybrid_vs_bm25[ko]": {
+            "p_raw": 7.5e-09,
+            "p_adjusted": 5.96e-08,
+            "significant_at_0.05": true,
+            "family_size": 9
+          },
+          "dense_vs_bm25[ko]": {
+            "p_raw": 7.5e-09,
+            "p_adjusted": 5.96e-08,
+            "significant_at_0.05": true,
+            "family_size": 9
+          },
+          "dense_vs_bm25[overall]": {
+            "p_raw": 2.98e-08,
+            "p_adjusted": 1.788e-07,
+            "significant_at_0.05": true,
+            "family_size": 9
+          },
+          "hybrid_vs_dense[overall]": {
+            "p_raw": 1.0,
+            "p_adjusted": 1.0,
+            "significant_at_0.05": false,
+            "family_size": 9
+          },
+          "hybrid_vs_bm25[en]": {
+            "p_raw": 1.0,
+            "p_adjusted": 1.0,
+            "significant_at_0.05": false,
+            "family_size": 9
+          },
+          "dense_vs_bm25[en]": {
+            "p_raw": 1.0,
+            "p_adjusted": 1.0,
+            "significant_at_0.05": false,
+            "family_size": 9
+          },
+          "hybrid_vs_dense[en]": {
+            "p_raw": 1.0,
+            "p_adjusted": 1.0,
+            "significant_at_0.05": false,
+            "family_size": 9
+          },
+          "hybrid_vs_dense[ko]": {
+            "p_raw": 1.0,
+            "p_adjusted": 1.0,
+            "significant_at_0.05": false,
+            "family_size": 9
+          }
+        }
+      },
+      "minimal_no_code": {
+        "recall@10": {
+          "BM25": {
+            "overall": {
+              "k": 11,
+              "n": 71,
+              "rate": 0.1549,
+              "ci95": [
+                0.08,
+                0.2603
+              ]
+            },
+            "en": {
+              "k": 11,
+              "n": 26,
+              "rate": 0.4231,
+              "ci95": [
+                0.2335,
+                0.6308
+              ]
+            },
+            "ko": {
+              "k": 0,
+              "n": 45,
+              "rate": 0.0,
+              "ci95": [
+                0.0,
+                0.0787
+              ]
+            }
+          },
+          "hybrid_0.7": {
+            "overall": {
+              "k": 37,
+              "n": 71,
+              "rate": 0.5211,
+              "ci95": [
+                0.3992,
+                0.6412
+              ]
+            },
+            "en": {
+              "k": 11,
+              "n": 26,
+              "rate": 0.4231,
+              "ci95": [
+                0.2335,
+                0.6308
+              ]
+            },
+            "ko": {
+              "k": 26,
+              "n": 45,
+              "rate": 0.5778,
+              "ci95": [
+                0.4215,
+                0.7234
+              ]
+            }
+          },
+          "hybrid_0.5": {
+            "overall": {
+              "k": 37,
+              "n": 71,
+              "rate": 0.5211,
+              "ci95": [
+                0.3992,
+                0.6412
+              ]
+            },
+            "en": {
+              "k": 11,
+              "n": 26,
+              "rate": 0.4231,
+              "ci95": [
+                0.2335,
+                0.6308
+              ]
+            },
+            "ko": {
+              "k": 26,
+              "n": 45,
+              "rate": 0.5778,
+              "ci95": [
+                0.4215,
+                0.7234
+              ]
+            }
+          },
+          "hybrid_0.3": {
+            "overall": {
+              "k": 37,
+              "n": 71,
+              "rate": 0.5211,
+              "ci95": [
+                0.3992,
+                0.6412
+              ]
+            },
+            "en": {
+              "k": 11,
+              "n": 26,
+              "rate": 0.4231,
+              "ci95": [
+                0.2335,
+                0.6308
+              ]
+            },
+            "ko": {
+              "k": 26,
+              "n": 45,
+              "rate": 0.5778,
+              "ci95": [
+                0.4215,
+                0.7234
+              ]
+            }
+          },
+          "dense": {
+            "overall": {
+              "k": 37,
+              "n": 71,
+              "rate": 0.5211,
+              "ci95": [
+                0.3992,
+                0.6412
+              ]
+            },
+            "en": {
+              "k": 11,
+              "n": 26,
+              "rate": 0.4231,
+              "ci95": [
+                0.2335,
+                0.6308
+              ]
+            },
+            "ko": {
+              "k": 26,
+              "n": 45,
+              "rate": 0.5778,
+              "ci95": [
+                0.4215,
+                0.7234
+              ]
+            }
+          }
+        },
+        "contrasts": {
+          "hybrid_vs_bm25[overall]": {
+            "comparison": "hybrid_vs_bm25[overall]",
+            "mean_diff": 0.3662,
+            "diff_95_ci": [
+              0.2535,
+              0.4789
+            ],
+            "excludes_zero": true,
+            "wins": 26,
+            "losses": 0,
+            "ties": 45,
+            "discordant": 26,
+            "p_two_sided_exact": 2.98023e-08,
+            "p_one_sided_exact": 1.49012e-08
+          },
+          "dense_vs_bm25[overall]": {
+            "comparison": "dense_vs_bm25[overall]",
+            "mean_diff": 0.3662,
+            "diff_95_ci": [
+              0.2535,
+              0.4789
+            ],
+            "excludes_zero": true,
+            "wins": 26,
+            "losses": 0,
+            "ties": 45,
+            "discordant": 26,
+            "p_two_sided_exact": 2.98023e-08,
+            "p_one_sided_exact": 1.49012e-08
+          },
+          "hybrid_vs_dense[overall]": {
+            "comparison": "hybrid_vs_dense[overall]",
+            "mean_diff": 0.0,
+            "diff_95_ci": [
+              0.0,
+              0.0
+            ],
+            "excludes_zero": false,
+            "wins": 0,
+            "losses": 0,
+            "ties": 71,
+            "discordant": 0,
+            "p_two_sided_exact": 1.0,
+            "p_one_sided_exact": 1.0
+          },
+          "hybrid_vs_bm25[en]": {
+            "comparison": "hybrid_vs_bm25[en]",
+            "mean_diff": 0.0,
+            "diff_95_ci": [
+              0.0,
+              0.0
+            ],
+            "excludes_zero": false,
+            "wins": 0,
+            "losses": 0,
+            "ties": 26,
+            "discordant": 0,
+            "p_two_sided_exact": 1.0,
+            "p_one_sided_exact": 1.0
+          },
+          "dense_vs_bm25[en]": {
+            "comparison": "dense_vs_bm25[en]",
+            "mean_diff": 0.0,
+            "diff_95_ci": [
+              0.0,
+              0.0
+            ],
+            "excludes_zero": false,
+            "wins": 0,
+            "losses": 0,
+            "ties": 26,
+            "discordant": 0,
+            "p_two_sided_exact": 1.0,
+            "p_one_sided_exact": 1.0
+          },
+          "hybrid_vs_dense[en]": {
+            "comparison": "hybrid_vs_dense[en]",
+            "mean_diff": 0.0,
+            "diff_95_ci": [
+              0.0,
+              0.0
+            ],
+            "excludes_zero": false,
+            "wins": 0,
+            "losses": 0,
+            "ties": 26,
+            "discordant": 0,
+            "p_two_sided_exact": 1.0,
+            "p_one_sided_exact": 1.0
+          },
+          "hybrid_vs_bm25[ko]": {
+            "comparison": "hybrid_vs_bm25[ko]",
+            "mean_diff": 0.5778,
+            "diff_95_ci": [
+              0.4444,
+              0.7111
+            ],
+            "excludes_zero": true,
+            "wins": 26,
+            "losses": 0,
+            "ties": 19,
+            "discordant": 26,
+            "p_two_sided_exact": 2.98023e-08,
+            "p_one_sided_exact": 1.49012e-08
+          },
+          "dense_vs_bm25[ko]": {
+            "comparison": "dense_vs_bm25[ko]",
+            "mean_diff": 0.5778,
+            "diff_95_ci": [
+              0.4444,
+              0.7111
+            ],
+            "excludes_zero": true,
+            "wins": 26,
+            "losses": 0,
+            "ties": 19,
+            "discordant": 26,
+            "p_two_sided_exact": 2.98023e-08,
+            "p_one_sided_exact": 1.49012e-08
+          },
+          "hybrid_vs_dense[ko]": {
+            "comparison": "hybrid_vs_dense[ko]",
+            "mean_diff": 0.0,
+            "diff_95_ci": [
+              0.0,
+              0.0
+            ],
+            "excludes_zero": false,
+            "wins": 0,
+            "losses": 0,
+            "ties": 45,
+            "discordant": 0,
+            "p_two_sided_exact": 1.0,
+            "p_one_sided_exact": 1.0
+          }
+        },
+        "holm_within_index_mode": {
+          "hybrid_vs_bm25[overall]": {
+            "p_raw": 2.98e-08,
+            "p_adjusted": 2.682e-07,
+            "significant_at_0.05": true,
+            "family_size": 9
+          },
+          "dense_vs_bm25[overall]": {
+            "p_raw": 2.98e-08,
+            "p_adjusted": 2.682e-07,
+            "significant_at_0.05": true,
+            "family_size": 9
+          },
+          "hybrid_vs_bm25[ko]": {
+            "p_raw": 2.98e-08,
+            "p_adjusted": 2.682e-07,
+            "significant_at_0.05": true,
+            "family_size": 9
+          },
+          "dense_vs_bm25[ko]": {
+            "p_raw": 2.98e-08,
+            "p_adjusted": 2.682e-07,
+            "significant_at_0.05": true,
+            "family_size": 9
+          },
+          "hybrid_vs_dense[overall]": {
+            "p_raw": 1.0,
+            "p_adjusted": 1.0,
+            "significant_at_0.05": false,
+            "family_size": 9
+          },
+          "hybrid_vs_bm25[en]": {
+            "p_raw": 1.0,
+            "p_adjusted": 1.0,
+            "significant_at_0.05": false,
+            "family_size": 9
+          },
+          "dense_vs_bm25[en]": {
+            "p_raw": 1.0,
+            "p_adjusted": 1.0,
+            "significant_at_0.05": false,
+            "family_size": 9
+          },
+          "hybrid_vs_dense[en]": {
+            "p_raw": 1.0,
+            "p_adjusted": 1.0,
+            "significant_at_0.05": false,
+            "family_size": 9
+          },
+          "hybrid_vs_dense[ko]": {
+            "p_raw": 1.0,
+            "p_adjusted": 1.0,
+            "significant_at_0.05": false,
+            "family_size": 9
+          }
+        }
+      }
+    },
     "e5-base": {
       "revision": "d128750597153bb5987e10b1c3493a34e5a4502a",
       "diagnostics": {
@@ -2929,6 +3998,1109 @@
     }
   },
   "hit_vectors": {
+    "bge-m3": {
+      "full_text": {
+        "BM25": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "hybrid_0.7": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        "hybrid_0.5": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        "hybrid_0.3": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        "dense": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "minimal_text": {
+        "BM25": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1
+        ],
+        "hybrid_0.7": [
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        "hybrid_0.5": [
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        "hybrid_0.3": [
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        "dense": [
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "minimal_no_code": {
+        "BM25": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1
+        ],
+        "hybrid_0.7": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        "hybrid_0.5": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        "hybrid_0.3": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        "dense": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    },
     "e5-base": {
       "full_text": {
         "BM25": [
