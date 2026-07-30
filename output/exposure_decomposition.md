@@ -16,15 +16,15 @@
 
 | 색인 모드 | 반환 모드 | 노출량@10 | 노출 감소 | R@10 | R@10 변화 | 실사용 가능 |
 |---|---|---:|---:|---:|---:|---|
-| full_text | full_text | 4043 | +0.0% | 0.6056 | +0.0000 | 예 |
-| full_text | minimal_text | 1820 | +55.0% | 0.6056 | +0.0000 | 예 |
-| full_text | minimal_no_code | 1729 | +57.2% | 0.6056 | +0.0000 | **아니오** |
-| minimal_text | full_text | 3667 | -98.7% | 0.5775 | +0.0000 | 예 |
-| minimal_text | minimal_text | 1845 | +0.0% | 0.5775 | +0.0000 | 예 |
-| minimal_text | minimal_no_code | 1754 | +5.0% | 0.5775 | +0.0000 | **아니오** |
-| minimal_no_code | full_text | 3577 | -115.2% | 0.5211 | +0.0000 | 예 |
-| minimal_no_code | minimal_text | 1752 | -5.4% | 0.5211 | +0.0000 | 예 |
-| minimal_no_code | minimal_no_code | 1662 | +0.0% | 0.5211 | +0.0000 | **아니오** |
+| full_text | full_text | 9730 | +0.0% | 0.6056 | +0.0000 | 예 |
+| full_text | minimal_text | 1811 | +81.4% | 0.6056 | +0.0000 | 예 |
+| full_text | minimal_no_code | 1721 | +82.3% | 0.6056 | +0.0000 | **아니오** |
+| minimal_text | full_text | 6149 | -231.2% | 0.5775 | +0.0000 | 예 |
+| minimal_text | minimal_text | 1857 | +0.0% | 0.5775 | +0.0000 | 예 |
+| minimal_text | minimal_no_code | 1765 | +4.9% | 0.5775 | +0.0000 | **아니오** |
+| minimal_no_code | full_text | 6277 | -274.9% | 0.5211 | +0.0000 | 예 |
+| minimal_no_code | minimal_text | 1764 | -5.4% | 0.5211 | +0.0000 | 예 |
+| minimal_no_code | minimal_no_code | 1674 | +0.0% | 0.5211 | +0.0000 | **아니오** |
 
 > 즉 **'서비스가 돌려주는 공개 통제목록 텍스트를 줄이는 것'은 성능을 전혀 해치지 않는다.**
 > 정정 전 설계는 이 조건을 표현할 수 없었기 때문에 유리한 운용점을 스스로 버리고 있었다.
@@ -51,21 +51,21 @@
 
 | 색인 | 반환 | 노출량@10 | R@10 | 95% CI |
 |---|---|---:|---:|---|
-| minimal_no_code | minimal_text | 1752 | 0.5211 | [0.399, 0.641] |
-| full_text | minimal_text | 1820 | 0.6056 | [0.482, 0.720] |
+| minimal_no_code | minimal_text | 1764 | 0.5211 | [0.399, 0.641] |
+| full_text | minimal_text | 1811 | 0.6056 | [0.482, 0.720] |
 
 ### 참고: 통제번호를 지운 반환 모드를 포함한 frontier
 
 | 색인 | 반환 | 노출량@10 | R@10 | 실사용 가능 |
 |---|---|---:|---:|---|
-| minimal_no_code | minimal_no_code | 1662 | 0.5211 | **아니오** |
-| full_text | minimal_no_code | 1729 | 0.6056 | **아니오** |
+| minimal_no_code | minimal_no_code | 1674 | 0.5211 | **아니오** |
+| full_text | minimal_no_code | 1721 | 0.6056 | **아니오** |
 
 ## 최적 운용점 (실사용 가능 조건 하)
 
 **색인=full_text / 반환=minimal_text**
 
-- 노출량@10: 4043 → 1820 (**55.0% 감소**)
+- 노출량@10: 9730 → 1811 (**81.4% 감소**)
 - R@10: 0.6056 → 0.6056 (**변화 +0.0000**)
 
 통제번호를 유지한 채 성능 손실 없이 반환 정보량을 줄일 수 있다. 이것이 '정보최소화가

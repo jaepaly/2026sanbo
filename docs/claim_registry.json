@@ -4,8 +4,8 @@
       "id": "corpus.total",
       "where": "PAPER 3.1",
       "desc": "코퍼스 항목 수",
-      "paper": 1797,
-      "artifact": 1797,
+      "paper": 1783,
+      "artifact": 1783,
       "status": "OK",
       "note": ""
     },
@@ -13,8 +13,8 @@
       "id": "corpus.wassenaar",
       "where": "PAPER 3.1",
       "desc": "Wassenaar 항목 수",
-      "paper": 585,
-      "artifact": 585,
+      "paper": 568,
+      "artifact": 568,
       "status": "OK",
       "note": ""
     },
@@ -22,8 +22,8 @@
       "id": "corpus.scomet",
       "where": "PAPER 3.1",
       "desc": "SCOMET 항목 수",
-      "paper": 575,
-      "artifact": 575,
+      "paper": 578,
+      "artifact": 578,
       "status": "OK",
       "note": ""
     },
@@ -67,8 +67,8 @@
       "id": "synth.full_text.r10",
       "where": "PAPER 4.1",
       "desc": "합성 full_text R@10",
-      "paper": 0.9968,
-      "artifact": 0.9968,
+      "paper": 0.992,
+      "artifact": 0.992,
       "status": "OK",
       "note": ""
     },
@@ -76,8 +76,8 @@
       "id": "synth.minimal_text.r10",
       "where": "PAPER 4.1",
       "desc": "합성 minimal_text R@10",
-      "paper": 0.9792,
-      "artifact": 0.9792,
+      "paper": 0.984,
+      "artifact": 0.984,
       "status": "OK",
       "note": ""
     },
@@ -85,8 +85,8 @@
       "id": "synth.minimal_no_code.r10",
       "where": "PAPER 4.1",
       "desc": "합성 minimal_no_code R@10",
-      "paper": 0.9808,
-      "artifact": 0.9808,
+      "paper": 0.9856,
+      "artifact": 0.9856,
       "status": "OK",
       "note": ""
     },
@@ -94,8 +94,17 @@
       "id": "synth.ablation.n0",
       "where": "PAPER 4.1",
       "desc": "변별어 0개 제거 R@10",
-      "paper": 0.9792,
-      "artifact": 0.9792,
+      "paper": 0.984,
+      "artifact": 0.984,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "synth.ablation.n3",
+      "where": "PAPER 4.1",
+      "desc": "변별어 3개 제거 R@10",
+      "paper": 0.899,
+      "artifact": 0.899,
       "status": "OK",
       "note": ""
     },
@@ -103,8 +112,8 @@
       "id": "synth.ablation.n5",
       "where": "PAPER 4.1",
       "desc": "변별어 5개 제거 R@10",
-      "paper": 0.7596,
-      "artifact": 0.7596,
+      "paper": 0.7756,
+      "artifact": 0.7756,
       "status": "OK",
       "note": ""
     },
@@ -112,45 +121,45 @@
       "id": "synth.ablation.n10",
       "where": "PAPER 4.1",
       "desc": "변별어 10개 제거 R@10",
-      "paper": 0.4407,
-      "artifact": 0.4407,
+      "paper": 0.4535,
+      "artifact": 0.4535,
       "status": "OK",
       "note": ""
     },
     {
       "id": "synth.ablation.jaccard",
       "where": "PAPER 4.1",
-      "desc": "쿼리-정답 평균 Jaccard (논문 0.485)",
-      "paper": 0.485,
-      "artifact": 0.4845,
+      "desc": "쿼리-정답 평균 Jaccard",
+      "paper": 0.4871,
+      "artifact": 0.4871,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "synth.route_only.r10",
+      "where": "PAPER 4.1",
+      "desc": "route_only R@10 (퇴화 조건)",
+      "paper": 0.0016,
+      "artifact": 0.0016,
       "status": "OK",
       "note": ""
     },
     {
       "id": "synth.exposure.full",
       "where": "PAPER 4.1",
-      "desc": "합성 full_text 노출량@10 (구정의 4834)",
-      "paper": 4834.0,
-      "artifact": 4916.61,
-      "status": "MISMATCH",
+      "desc": "합성 full_text 노출량@10",
+      "paper": 15639.36,
+      "artifact": 15639.36,
+      "status": "OK",
       "note": ""
     },
     {
       "id": "synth.exposure.minimal",
       "where": "PAPER 4.1",
-      "desc": "합성 minimal_text 노출량@10 (구정의 1623)",
-      "paper": 1623.0,
-      "artifact": 1707.84,
-      "status": "MISMATCH",
-      "note": ""
-    },
-    {
-      "id": "synth.exposure.cut_pct",
-      "where": "PAPER 4.1/초록",
-      "desc": "합성 노출 감소율 (논문 66.4%)",
-      "paper": 66.4,
-      "artifact": 65.3,
-      "status": "MISMATCH",
+      "desc": "합성 minimal_text 노출량@10",
+      "paper": 1725.33,
+      "artifact": 1725.33,
+      "status": "OK",
       "note": ""
     },
     {
@@ -183,17 +192,17 @@
     {
       "id": "valid.bm25.r10",
       "where": "PAPER 4.3",
-      "desc": "BM25 R@10 (논문 0.169)",
-      "paper": 0.169,
+      "desc": "BM25 R@10",
+      "paper": 0.1549,
       "artifact": 0.1549,
-      "status": "MISMATCH",
+      "status": "OK",
       "note": ""
     },
     {
       "id": "valid.bm25.en",
       "where": "PAPER 4.3",
-      "desc": "BM25 영어 R@10 (논문 0.423)",
-      "paper": 0.423,
+      "desc": "BM25 영어 R@10",
+      "paper": 0.4231,
       "artifact": 0.4231,
       "status": "OK",
       "note": ""
@@ -201,10 +210,10 @@
     {
       "id": "valid.bm25.ko",
       "where": "PAPER 4.3",
-      "desc": "BM25 한국어 R@10 (논문 0.022)",
-      "paper": 0.022,
+      "desc": "BM25 한국어 R@10 (구조적 0)",
+      "paper": 0.0,
       "artifact": 0.0,
-      "status": "MISMATCH",
+      "status": "OK",
       "note": ""
     },
     {
@@ -246,34 +255,34 @@
     {
       "id": "valid.hyb_vs_bm25.diff",
       "where": "PAPER 4.3/초록",
-      "desc": "hybrid−BM25 평균차 (논문 +0.409)",
-      "paper": 0.409,
+      "desc": "hybrid−BM25 평균차",
+      "paper": 0.4225,
       "artifact": 0.4225,
-      "status": "MISMATCH",
+      "status": "OK",
       "note": ""
     },
     {
       "id": "valid.hyb_vs_bm25.ci",
       "where": "PAPER 4.3/초록",
-      "desc": "hybrid−BM25 95% CI (논문 [0.296, 0.521])",
+      "desc": "hybrid−BM25 95% CI",
       "paper": [
-        0.296,
-        0.521
+        0.3099,
+        0.5352
       ],
       "artifact": [
         0.3099,
         0.5352
       ],
-      "status": "MISMATCH",
+      "status": "OK",
       "note": ""
     },
     {
       "id": "valid.hyb_vs_bm25.wins",
       "where": "PAPER 4.3/초록",
-      "desc": "hybrid−BM25 승 (논문 29승 0패)",
-      "paper": 29,
+      "desc": "hybrid−BM25 승 (30승 0패)",
+      "paper": 30,
       "artifact": 30,
-      "status": "MISMATCH",
+      "status": "OK",
       "note": ""
     },
     {
@@ -288,82 +297,136 @@
     {
       "id": "valid.dense_vs_bm25.diff",
       "where": "PAPER 4.3",
-      "desc": "dense−BM25 평균차 (논문 +0.380)",
-      "paper": 0.38,
+      "desc": "dense−BM25 평균차",
+      "paper": 0.3944,
       "artifact": 0.3944,
-      "status": "MISMATCH",
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "valid.hyb_vs_dense.diff",
+      "where": "PAPER 4.3/초록",
+      "desc": "hybrid−dense 평균차 (비유의)",
+      "paper": 0.0282,
+      "artifact": 0.0282,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "valid.hyb_vs_dense.ko_wins",
+      "where": "PAPER 4.3",
+      "desc": "hybrid−dense 한국어 승 (수학적 동일이므로 0)",
+      "paper": 0,
+      "artifact": 0,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "valid.bm25_no_signal",
+      "where": "PAPER 4.3",
+      "desc": "BM25 무신호 질의 수 (44/71)",
+      "paper": 44,
+      "artifact": 44,
+      "status": "OK",
       "note": ""
     },
     {
       "id": "front.full.exposure",
-      "where": "PAPER 4.5",
-      "desc": "full_text 노출량@10 (논문 3952)",
-      "paper": 3952.0,
-      "artifact": 4043.3,
-      "status": "MISMATCH",
+      "where": "PAPER 4.4",
+      "desc": "색인=full/반환=full 노출량@10",
+      "paper": 9729.9,
+      "artifact": 9729.9,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "front.full_return_min.exposure",
+      "where": "PAPER 4.4",
+      "desc": "색인=full/반환=minimal_text 노출량@10 (운용점)",
+      "paper": 1810.9,
+      "artifact": 1810.9,
+      "status": "OK",
       "note": ""
     },
     {
       "id": "front.minimal.exposure",
-      "where": "PAPER 4.5",
-      "desc": "minimal_text 노출량@10 (논문 1754)",
-      "paper": 1754.0,
-      "artifact": 1845.1,
-      "status": "MISMATCH",
+      "where": "PAPER 4.4",
+      "desc": "색인=minimal/반환=minimal 노출량@10",
+      "paper": 1856.7,
+      "artifact": 1856.7,
+      "status": "OK",
       "note": ""
     },
     {
       "id": "front.nocode.exposure",
-      "where": "PAPER 4.5",
-      "desc": "minimal_no_code 노출량@10 (논문 1663)",
-      "paper": 1663.0,
-      "artifact": 1662.5,
+      "where": "PAPER 4.4",
+      "desc": "색인=minimal_no_code/반환=동일 노출량@10",
+      "paper": 1674.2,
+      "artifact": 1674.2,
       "status": "OK",
       "note": ""
     },
     {
       "id": "front.full.hybrid",
-      "where": "PAPER 4.5",
-      "desc": "full_text hybrid R@10 (논문 0.606)",
-      "paper": 0.606,
+      "where": "PAPER 4.4",
+      "desc": "색인 full_text hybrid R@10",
+      "paper": 0.6056,
       "artifact": 0.6056,
       "status": "OK",
       "note": ""
     },
     {
       "id": "front.nocode.hybrid",
-      "where": "PAPER 4.5",
-      "desc": "minimal_no_code hybrid R@10 (논문 0.521)",
-      "paper": 0.521,
+      "where": "PAPER 4.4",
+      "desc": "색인 minimal_no_code hybrid R@10",
+      "paper": 0.5211,
       "artifact": 0.5211,
       "status": "OK",
       "note": ""
     },
     {
-      "id": "front.cut_pct",
-      "where": "PAPER 4.5/초록/결론",
-      "desc": "노출 감소율 (논문 55.6%)",
-      "paper": 55.6,
-      "artifact": 54.4,
-      "status": "MISMATCH",
+      "id": "front.return_only.cut_pct",
+      "where": "PAPER 4.4/초록/결론",
+      "desc": "반환만 축소 시 노출 감소율 (81.4%)",
+      "paper": 81.4,
+      "artifact": 81.4,
+      "status": "OK",
       "note": ""
     },
     {
-      "id": "front.diff",
-      "where": "PAPER 4.5/초록",
-      "desc": "minimal−full hybrid 평균차 (논문 −0.028)",
-      "paper": -0.028,
+      "id": "front.return_only.recall_delta",
+      "where": "PAPER 4.4/초록",
+      "desc": "반환만 축소 시 R@10 변화 (구조적으로 0)",
+      "paper": 0.0,
+      "artifact": 0.0,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "front.return_only.actionable",
+      "where": "PAPER 4.4",
+      "desc": "운용점이 통제번호를 유지하는가",
+      "paper": true,
+      "artifact": true,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "front.index_cut.diff",
+      "where": "PAPER 4.4",
+      "desc": "색인 minimal−full hybrid 평균차",
+      "paper": -0.0282,
       "artifact": -0.0282,
       "status": "OK",
       "note": ""
     },
     {
-      "id": "front.diff_ci",
-      "where": "PAPER 4.5/초록",
-      "desc": "minimal−full 95% CI (논문 [−0.113, +0.042])",
+      "id": "front.index_cut.ci",
+      "where": "PAPER 4.4",
+      "desc": "색인 minimal−full 95% CI",
       "paper": [
-        -0.113,
-        0.042
+        -0.1127,
+        0.0423
       ],
       "artifact": [
         -0.1127,
@@ -373,74 +436,258 @@
       "note": ""
     },
     {
-      "id": "new.hyb_vs_dense.diff",
-      "where": "신규 (논문에 없음)",
-      "desc": "hybrid−dense 평균차 — 논문은 이 비교를 한 적이 없다",
-      "paper": null,
-      "artifact": 0.0282,
-      "status": "NEW",
-      "note": ""
-    },
-    {
-      "id": "new.hyb_vs_dense.ko_wins",
-      "where": "신규 (논문에 없음)",
-      "desc": "hybrid−dense 한국어 승 (0이어야 함: 수학적 동일)",
-      "paper": 0,
-      "artifact": 0,
-      "status": "OK",
-      "note": ""
-    },
-    {
-      "id": "new.bm25_no_signal",
-      "where": "신규 (논문에 없음)",
-      "desc": "BM25 무신호 질의 수 / 71",
-      "paper": null,
-      "artifact": 44,
-      "status": "NEW",
-      "note": ""
-    },
-    {
-      "id": "new.equivalence_delta05",
-      "where": "신규 (논문에 없음)",
-      "desc": "δ=0.05에서 등가성 성립? (False가 실제)",
+      "id": "front.index_cut.not_equivalent",
+      "where": "PAPER 4.4",
+      "desc": "색인 축소가 δ=0.05에서 등가인가 (아니오)",
       "paper": false,
       "artifact": false,
       "status": "OK",
       "note": ""
     },
     {
-      "id": "new.best_point.cut",
-      "where": "신규 (논문에 없음)",
-      "desc": "최적 운용점 노출 감소율 (색인=full_text, 반환=minimal_text — 통제번호 유지, 실사용 가능한 칸)",
-      "paper": null,
-      "artifact": 55.0,
-      "status": "NEW",
+      "id": "front.index_cut.n_required",
+      "where": "PAPER 4.4",
+      "desc": "색인 축소 등가 입증에 필요한 n",
+      "paper": 1473,
+      "artifact": 1473,
+      "status": "OK",
       "note": ""
     },
     {
-      "id": "new.best_point.cell",
-      "where": "신규 (논문에 없음)",
-      "desc": "최적 운용점이 통제번호를 유지하는가",
+      "id": "ladder.hybrid.L0",
+      "where": "PAPER 4.5",
+      "desc": "사다리 L0 hybrid R@10",
+      "paper": 0.5775,
+      "artifact": 0.5775,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "ladder.hybrid.L1",
+      "where": "PAPER 4.5",
+      "desc": "사다리 L1 hybrid R@10",
+      "paper": 0.5775,
+      "artifact": 0.5775,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "ladder.hybrid.L2",
+      "where": "PAPER 4.5",
+      "desc": "사다리 L2 hybrid R@10",
+      "paper": 0.5493,
+      "artifact": 0.5493,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "ladder.hybrid.L3",
+      "where": "PAPER 4.5",
+      "desc": "사다리 L3 hybrid R@10",
+      "paper": 0.5775,
+      "artifact": 0.5775,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "ladder.hybrid.L4",
+      "where": "PAPER 4.5",
+      "desc": "사다리 L4 hybrid R@10",
+      "paper": 0.4507,
+      "artifact": 0.4507,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "ladder.bm25.L0.ko",
+      "where": "PAPER 4.5",
+      "desc": "사다리 BM25 한국어 R@10 (전 등급 0)",
+      "paper": 0.0,
+      "artifact": 0.0,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "ladder.L1.tost_pmax",
+      "where": "PAPER 4.5/초록",
+      "desc": "L1 TOST p_max",
+      "paper": 0.0063,
+      "artifact": 0.00634257,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "ladder.L1.equivalent",
+      "where": "PAPER 4.5/초록",
+      "desc": "L1이 δ=0.05에서 등가 입증되는가 (예)",
       "paper": true,
       "artifact": true,
       "status": "OK",
       "note": ""
     },
     {
-      "id": "new.best_point.recall_delta",
-      "where": "신규 (논문에 없음)",
-      "desc": "최적 운용점 R@10 변화 (0이어야 함)",
+      "id": "ladder.L2.not_equivalent",
+      "where": "PAPER 4.5",
+      "desc": "L2가 δ=0.05에서 등가 입증되는가 (아니오)",
+      "paper": false,
+      "artifact": false,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "ladder.L2.n_required",
+      "where": "PAPER 4.5",
+      "desc": "L2 등가 입증에 필요한 n",
+      "paper": 1102,
+      "artifact": 1102,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "ladder.L4.diff",
+      "where": "PAPER 4.5",
+      "desc": "L4 평균차 (마진 초과 = 손실 징후)",
+      "paper": -0.1268,
+      "artifact": -0.1268,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "ladder.recommended",
+      "where": "PAPER 4.5/초록/결론",
+      "desc": "운용 권고 등급",
+      "paper": "L2",
+      "artifact": "L2",
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "ladder.L3.confounded",
+      "where": "PAPER 4.5/초록",
+      "desc": "L3가 자기참조 교란으로 판정되는가",
+      "paper": [
+        "L3"
+      ],
+      "artifact": [
+        "L3"
+      ],
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "ladder.sens_tokens.L0",
+      "where": "PAPER 3.5",
+      "desc": "L0 평균 민감토큰",
+      "paper": 7.35,
+      "artifact": 7.352,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "ladder.sens_tokens.L2",
+      "where": "PAPER 3.5",
+      "desc": "L2 평균 민감토큰",
+      "paper": 5.63,
+      "artifact": 5.634,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "abl.dense_vs_bm25.L0",
+      "where": "PAPER 4.6",
+      "desc": "압력 level0 dense−BM25 평균차",
+      "paper": 0.4225,
+      "artifact": 0.4225,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "abl.dense_vs_bm25.L3",
+      "where": "PAPER 4.6",
+      "desc": "압력 level3 dense−BM25 평균차 (유의 유지)",
+      "paper": 0.2113,
+      "artifact": 0.2113,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "abl.BM25.L0",
+      "where": "PAPER 4.6",
+      "desc": "압력 level0 BM25 R@10",
+      "paper": 0.169,
+      "artifact": 0.169,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "abl.BM25.L3",
+      "where": "PAPER 4.6",
+      "desc": "압력 level3 BM25 R@10",
+      "paper": 0.0282,
+      "artifact": 0.0282,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "abl.dense.L0",
+      "where": "PAPER 4.6",
+      "desc": "압력 level0 dense R@10",
+      "paper": 0.5915,
+      "artifact": 0.5915,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "abl.dense.L3",
+      "where": "PAPER 4.6",
+      "desc": "압력 level3 dense R@10",
+      "paper": 0.2394,
+      "artifact": 0.2394,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "abl.hybrid_0.5.L0",
+      "where": "PAPER 4.6",
+      "desc": "압력 level0 hybrid_0.5 R@10",
+      "paper": 0.6056,
+      "artifact": 0.6056,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "abl.hybrid_0.5.L3",
+      "where": "PAPER 4.6",
+      "desc": "압력 level3 hybrid_0.5 R@10",
+      "paper": 0.2254,
+      "artifact": 0.2254,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "abl.ko.bm25.L3",
+      "where": "PAPER 4.6",
+      "desc": "압력 level3 BM25 한국어 R@10 (전 level 0)",
       "paper": 0.0,
       "artifact": 0.0,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "abl.ko.dense.L3",
+      "where": "PAPER 4.6",
+      "desc": "압력 level3 dense 한국어 R@10",
+      "paper": 0.3111,
+      "artifact": 0.3111,
       "status": "OK",
       "note": ""
     }
   ],
   "counts": {
-    "OK": 32,
-    "MISMATCH": 12,
+    "OK": 74,
+    "MISMATCH": 0,
     "SKIP": 0,
     "ERROR": 0,
-    "NEW": 3
+    "NEW": 0
   }
 }
