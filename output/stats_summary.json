@@ -7,14 +7,14 @@
     "primary_index_mode": "minimal_text",
     "primary_retriever": "hybrid_0.5",
     "primary_dense_model": "MiniLM",
-    "validated_source": "output/validated_suite_smoke.json",
-    "validated_source_is_smoke": true,
+    "validated_source": "output/validated_suite.json",
+    "validated_source_is_smoke": false,
     "source_files": [
       "output/experiment_logs.json",
       "output/paraphrase_gap.json",
       "output/retriever_compare.json",
       "output/external_retriever.json",
-      "output/validated_suite_smoke.json",
+      "output/validated_suite.json",
       "output/validated_eval.json (n=13, superseded — 감사 보존용)"
     ],
     "corrections": [
@@ -50,7 +50,7 @@
     "superseded_validated_n13": 13
   },
   "validated_recall_at_10": {
-    "source": "output/validated_suite_smoke.json",
+    "source": "output/validated_suite.json",
     "index_mode": "minimal_text",
     "dense_model": "MiniLM",
     "rates": {
@@ -720,7 +720,7 @@
     },
     {
       "label": "validated71_hybrid_vs_bm25[overall]",
-      "source": "output/validated_suite_smoke.json",
+      "source": "output/validated_suite.json",
       "method": "paired_per_query_bootstrap+exact_mcnemar",
       "n": 71,
       "baseline": {
@@ -766,7 +766,7 @@
     },
     {
       "label": "validated71_dense_vs_bm25[overall]",
-      "source": "output/validated_suite_smoke.json",
+      "source": "output/validated_suite.json",
       "method": "paired_per_query_bootstrap+exact_mcnemar",
       "n": 71,
       "baseline": {
@@ -812,7 +812,7 @@
     },
     {
       "label": "validated71_hybrid_vs_dense[overall]",
-      "source": "output/validated_suite_smoke.json",
+      "source": "output/validated_suite.json",
       "method": "paired_per_query_bootstrap+exact_mcnemar",
       "n": 71,
       "baseline": {
@@ -858,7 +858,7 @@
     },
     {
       "label": "validated71_hybrid_vs_bm25[en]",
-      "source": "output/validated_suite_smoke.json",
+      "source": "output/validated_suite.json",
       "method": "paired_per_query_bootstrap+exact_mcnemar",
       "n": 26,
       "baseline": {
@@ -904,7 +904,7 @@
     },
     {
       "label": "validated71_dense_vs_bm25[en]",
-      "source": "output/validated_suite_smoke.json",
+      "source": "output/validated_suite.json",
       "method": "paired_per_query_bootstrap+exact_mcnemar",
       "n": 26,
       "baseline": {
@@ -950,7 +950,7 @@
     },
     {
       "label": "validated71_hybrid_vs_dense[en]",
-      "source": "output/validated_suite_smoke.json",
+      "source": "output/validated_suite.json",
       "method": "paired_per_query_bootstrap+exact_mcnemar",
       "n": 26,
       "baseline": {
@@ -996,7 +996,7 @@
     },
     {
       "label": "validated71_hybrid_vs_bm25[ko]",
-      "source": "output/validated_suite_smoke.json",
+      "source": "output/validated_suite.json",
       "method": "paired_per_query_bootstrap+exact_mcnemar",
       "n": 45,
       "baseline": {
@@ -1042,7 +1042,7 @@
     },
     {
       "label": "validated71_dense_vs_bm25[ko]",
-      "source": "output/validated_suite_smoke.json",
+      "source": "output/validated_suite.json",
       "method": "paired_per_query_bootstrap+exact_mcnemar",
       "n": 45,
       "baseline": {
@@ -1088,7 +1088,7 @@
     },
     {
       "label": "validated71_hybrid_vs_dense[ko]",
-      "source": "output/validated_suite_smoke.json",
+      "source": "output/validated_suite.json",
       "method": "paired_per_query_bootstrap+exact_mcnemar",
       "n": 45,
       "baseline": {
@@ -1375,7 +1375,7 @@
         ]
       },
       "after": {
-        "source": "output/validated_suite_smoke.json",
+        "source": "output/validated_suite.json",
         "n": 71,
         "treatment_rate": 0.5775,
         "baseline_rate": 0.1549,
@@ -1414,7 +1414,7 @@
         ]
       },
       "after": {
-        "source": "output/validated_suite_smoke.json",
+        "source": "output/validated_suite.json",
         "n": 71,
         "treatment_rate": 0.5493,
         "baseline_rate": 0.1549,

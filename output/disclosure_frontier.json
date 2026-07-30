@@ -2854,55 +2854,85 @@
       ],
       "underpowered": [
         "L2",
-        "L3",
         "L4"
       ],
       "evidence_of_loss": [],
+      "confounded_by_selfreference": [
+        "L3"
+      ],
+      "selfreference_audit": {
+        "levels": [
+          "L3"
+        ],
+        "audited": true,
+        "verdict": "confounded",
+        "gate_model": "sentence-transformers/LaBSE",
+        "note": "정답 문서 쪽으로 유의하게 표류한 등급 — 이 등급의 R@10 유지는 노출 축소의 효과로 귀속할 수 없다."
+      },
       "acceptable_levels": [
         "L1",
         "L2",
-        "L3",
         "L4"
       ],
-      "recommended_level": "L4",
-      "criterion": "A(TOST 통과) 또는 B(유의하락 없음 & |점추정|<delta)에 해당하는 가장 깊은 연속 등급까지 권고. 'p>0.05'만으로 안전을 주장하지 않는다."
+      "recommended_level": "L2",
+      "criterion": "A(TOST 통과) 또는 B(유의하락 없음 & |점추정|<delta)이면서 D(자기참조 표류)가 아닌 가장 깊은 연속 등급까지 권고. 'p>0.05'만으로 안전을 주장하지 않고, 회수율이 유지되어도 그 원인이 노출 축소가 아니면 근거로 쓰지 않는다."
     },
     "dense": {
       "proven_equivalent": [],
       "underpowered": [
         "L1",
-        "L2",
-        "L3"
+        "L2"
       ],
       "evidence_of_loss": [
         "L4"
       ],
-      "acceptable_levels": [
-        "L1",
-        "L2",
+      "confounded_by_selfreference": [
         "L3"
       ],
-      "recommended_level": "L3",
-      "criterion": "A(TOST 통과) 또는 B(유의하락 없음 & |점추정|<delta)에 해당하는 가장 깊은 연속 등급까지 권고. 'p>0.05'만으로 안전을 주장하지 않는다."
+      "selfreference_audit": {
+        "levels": [
+          "L3"
+        ],
+        "audited": true,
+        "verdict": "confounded",
+        "gate_model": "sentence-transformers/LaBSE",
+        "note": "정답 문서 쪽으로 유의하게 표류한 등급 — 이 등급의 R@10 유지는 노출 축소의 효과로 귀속할 수 없다."
+      },
+      "acceptable_levels": [
+        "L1",
+        "L2"
+      ],
+      "recommended_level": "L2",
+      "criterion": "A(TOST 통과) 또는 B(유의하락 없음 & |점추정|<delta)이면서 D(자기참조 표류)가 아닌 가장 깊은 연속 등급까지 권고. 'p>0.05'만으로 안전을 주장하지 않고, 회수율이 유지되어도 그 원인이 노출 축소가 아니면 근거로 쓰지 않는다."
     },
     "hybrid_0.5": {
       "proven_equivalent": [
         "L1"
       ],
       "underpowered": [
-        "L2",
-        "L3"
+        "L2"
       ],
       "evidence_of_loss": [
         "L4"
       ],
-      "acceptable_levels": [
-        "L1",
-        "L2",
+      "confounded_by_selfreference": [
         "L3"
       ],
-      "recommended_level": "L3",
-      "criterion": "A(TOST 통과) 또는 B(유의하락 없음 & |점추정|<delta)에 해당하는 가장 깊은 연속 등급까지 권고. 'p>0.05'만으로 안전을 주장하지 않는다."
+      "selfreference_audit": {
+        "levels": [
+          "L3"
+        ],
+        "audited": true,
+        "verdict": "confounded",
+        "gate_model": "sentence-transformers/LaBSE",
+        "note": "정답 문서 쪽으로 유의하게 표류한 등급 — 이 등급의 R@10 유지는 노출 축소의 효과로 귀속할 수 없다."
+      },
+      "acceptable_levels": [
+        "L1",
+        "L2"
+      ],
+      "recommended_level": "L2",
+      "criterion": "A(TOST 통과) 또는 B(유의하락 없음 & |점추정|<delta)이면서 D(자기참조 표류)가 아닌 가장 깊은 연속 등급까지 권고. 'p>0.05'만으로 안전을 주장하지 않고, 회수율이 유지되어도 그 원인이 노출 축소가 아니면 근거로 쓰지 않는다."
     }
   }
 }

@@ -299,43 +299,81 @@ def fmt_ci(ci: list[float]) -> str:
     return f"[{ci[0]:.3f}, {ci[1]:.3f}]"
 
 
+SELFREF_AUDIT_PATH = OUT_DIR / "ladder_selfreference.json"
+
+
+def confounded_levels() -> dict:
+    """자기참조 감사에서 정답 쪽으로 유의하게 표류한 등급.
+
+    R@10이 유지되었다는 사실만으로는 '노출을 줄여도 성능이 유지된다'를 말할 수 없다.
+    상위 등급의 재작성은 질의를 기능 서술만 남기는데, 그것이 바로 통제목록 원문의
+    문체다. 질의가 정답 문서 쪽으로 옮겨갔다면 성능 유지는 노출 축소가 무해해서가
+    아니라 자기참조가 늘어난 결과이므로, 그 등급의 회수율은 운용 근거가 될 수 없다.
+
+    `audit_ladder_selfreference.py`가 평가에 쓰지 않는 제3 인코더로 측정한다.
+    감사 산출물이 없으면 등급을 교란으로 표시하지 않되, 미검증임을 함께 반환한다.
+    """
+    if not SELFREF_AUDIT_PATH.exists():
+        return {"levels": [], "audited": False,
+                "note": "output/ladder_selfreference.json 없음 — "
+                        "audit_ladder_selfreference.py 를 먼저 실행할 것. 자기참조 미검증."}
+    a = json.loads(SELFREF_AUDIT_PATH.read_text(encoding="utf-8"))
+    bad = [lv for lv in LEVELS[1:]
+           if (c := a.get("vs_L0", {}).get(f"{lv}_vs_L0"))
+           and c.get("significant_drift") and c.get("mean_cos_shift", 0) > 0]
+    return {"levels": bad, "audited": True, "verdict": a.get("verdict", {}).get("label"),
+            "gate_model": a.get("method", {}).get("gate_model"),
+            "note": "정답 문서 쪽으로 유의하게 표류한 등급 — 이 등급의 R@10 유지는 "
+                    "노출 축소의 효과로 귀속할 수 없다."}
+
+
 def evidence_tiers(p: dict, retriever: str) -> dict:
-    """등급별 증거 수준을 A/B/C로 분류한다.
+    """등급별 증거 수준을 A/B/C/D로 분류한다.
 
     "Holm 보정 후 유의하지 않음"을 안전의 근거로 삼는 것은 귀무가설 채택이며,
-    이 저장소가 고치고 있는 M3 결함 그 자체다. 따라서 권고는 다음 셋으로 나눈다.
+    이 저장소가 고치고 있는 M3 결함 그 자체다. 따라서 권고는 다음 넷으로 나눈다.
       A 등가 입증        : 사전지정 마진에서 TOST 통과
       B 하락 미검출      : 유의하락 없음 + 점추정이 마진 안, 그러나 TOST 미통과(검정력 부족)
       C 손실 징후        : 점추정 차이가 마진을 넘음(유의 여부와 무관)
-    운용 권고는 A 또는 B에 해당하는 가장 깊은 등급까지로 한다.
+      D 자기참조 교란    : 질의가 정답 문서 쪽으로 유의하게 표류 — 성능 유지의 원인이
+                          노출 축소가 아니므로 회수율을 운용 근거로 쓸 수 없다
+    운용 권고는 A 또는 B이면서 D가 아닌 가장 깊은 연속 등급까지로 한다.
     """
-    proven, under, loss = [], [], []
+    conf = confounded_levels()
+    proven, under, loss, confounded = [], [], [], []
     for lv in LEVELS[1:]:
         key = f"{lv}_vs_L0"
         diff = p["contrasts_vs_L0"][retriever][key]["mean_diff"]
         eq = p["equivalence_vs_L0"][retriever][key]["primary"].get("equivalent_at_0.05", False)
         sig_drop = (p["holm_vs_L0"][retriever][key]["significant_at_0.05"] and diff < 0)
-        if diff <= -PRIMARY_DELTA or sig_drop:
+        if lv in conf["levels"]:
+            confounded.append(lv)
+        elif diff <= -PRIMARY_DELTA or sig_drop:
             loss.append(lv)
         elif eq:
             proven.append(lv)
         else:
             under.append(lv)
-    acceptable = [lv for lv in LEVELS[1:] if lv not in loss]
-    # 손실 징후가 처음 나타나는 등급 직전까지만 권고한다(그 뒤 등급은 추천하지 않는다).
+    blocked = set(loss) | set(confounded)
+    acceptable = [lv for lv in LEVELS[1:] if lv not in blocked]
+    # 손실 징후나 자기참조 교란이 처음 나타나는 등급 직전까지만 권고한다.
     recommended = "L0"
     for lv in LEVELS[1:]:
-        if lv in loss:
+        if lv in blocked:
             break
         recommended = lv
     return {
         "proven_equivalent": proven,
         "underpowered": under,
         "evidence_of_loss": loss,
+        "confounded_by_selfreference": confounded,
+        "selfreference_audit": conf,
         "acceptable_levels": acceptable,
         "recommended_level": recommended,
-        "criterion": "A(TOST 통과) 또는 B(유의하락 없음 & |점추정|<delta)에 해당하는 "
-                     "가장 깊은 연속 등급까지 권고. 'p>0.05'만으로 안전을 주장하지 않는다.",
+        "criterion": "A(TOST 통과) 또는 B(유의하락 없음 & |점추정|<delta)이면서 "
+                     "D(자기참조 표류)가 아닌 가장 깊은 연속 등급까지 권고. "
+                     "'p>0.05'만으로 안전을 주장하지 않고, 회수율이 유지되어도 "
+                     "그 원인이 노출 축소가 아니면 근거로 쓰지 않는다.",
     }
 
 
@@ -475,8 +513,10 @@ def markdown(p: dict) -> str:
         f"1차 검색기(hybrid α=0.5, 색인 `{INDEX_MODE}`) 기준으로 읽는다.",
         "",
         "**\"유의하락 없음\"은 안전의 증명이 아니다.** 귀무가설을 기각하지 못한 것과",
-        "등가를 입증한 것은 다르다(이 저장소의 M3 결함이 바로 그 혼동이었다). 따라서",
-        "권고는 증거 등급을 셋으로 나눠 제시한다.",
+        "등가를 입증한 것은 다르다(이 저장소의 M3 결함이 바로 그 혼동이었다).",
+        "**회수율이 유지되었다는 사실도 그 자체로는 근거가 아니다.** 상위 등급의 재작성은",
+        "질의를 기능 서술만 남기는데 그것이 통제목록 원문의 문체이므로, 질의가 정답 문서",
+        "쪽으로 옮겨가 회수율이 유지되었을 수 있다. 따라서 증거 등급을 넷으로 나눈다.",
         "",
         "| 증거 등급 | 판단 근거 | 해당 등급 |",
         "|---|---|---|",
@@ -486,8 +526,23 @@ def markdown(p: dict) -> str:
         f"그러나 TOST 미통과 | {', '.join(tiers['underpowered']) or '없음'} |",
         f"| **C. 손실 징후** | 점추정 차이 ≤ −δ (유의 여부와 무관) | "
         f"{', '.join(tiers['evidence_of_loss']) or '없음'} |",
+        f"| **D. 자기참조 교란** | 질의가 정답 문서 쪽으로 유의하게 표류 — 회수율 유지를 "
+        f"노출 축소로 귀속할 수 없음 | {', '.join(tiers['confounded_by_selfreference']) or '없음'} |",
         "",
     ]
+    conf = tiers["selfreference_audit"]
+    if conf["levels"]:
+        lines += [
+            f"> **D 등급 판정 근거.** `{conf.get('gate_model')}`(평가에 쓰지 않는 제3 인코더)로 "
+            f"측정한 결과 {', '.join(conf['levels'])} 질의가 정답 문서와 유의하게 더 비슷해졌다"
+            f"(감사 판정 `{conf.get('verdict')}`). 상세는 `output/ladder_selfreference.md`. "
+            "이 등급에서 R@10이 유지된 것은 노출 축소가 무해해서가 아니라 자기참조가 "
+            "늘었기 때문일 수 있으므로 운용 근거로 쓰지 않는다.",
+            "",
+        ]
+    elif not conf["audited"]:
+        lines += [f"> ⚠ 자기참조 미검증: {conf['note']}", ""]
+
     rec = tiers["recommended_level"]
     lines += [
         f"- **운용 권고: {rec}까지 지운 질의를 외부 AI에 보낸다.** {rec} 시점의 평균 민감토큰은 "
@@ -496,10 +551,15 @@ def markdown(p: dict) -> str:
         f"평균 노출필드는 {ex[rec]['mean_sensitive_field_count']:.2f}개, "
         f"R@10은 {p['recall@10'][prim][rec]['overall']['rate']:.4f}"
         f"(L0 {p['recall@10'][prim]['L0']['overall']['rate']:.4f})다.",
-        "- 즉 **정량 사양치·제품명/공정명·최종사용자·목적지·용도·자사 정체성·거래 형태를 "
-        "전부 지워도**(L3) 후보검색 성능이 L0과 같았다. 보호법익 관점에서 실제로 지켜야 할 "
-        "정보는 전부 지울 수 있고, 남겨야 하는 것은 기능·물리적 원리 서술뿐이다.",
     ]
+    if tiers["confounded_by_selfreference"]:
+        blocked = tiers["confounded_by_selfreference"][0]
+        lines.append(
+            f"- **{blocked} 이하로는 권고하지 않는다.** {blocked}에서 민감정보를 더 지우면 "
+            f"R@10은 유지되지만(L0과 동일), 그 유지가 자기참조 증가로 설명되므로 "
+            f"\"{blocked}까지 지워도 안전하다\"고 말할 수 없다. 이 판정은 초판 자동 생성문의 "
+            "결론을 뒤집은 것이다."
+        )
     if tiers["evidence_of_loss"]:
         worst = tiers["evidence_of_loss"][0]
         d = p["contrasts_vs_L0"][prim][f"{worst}_vs_L0"]

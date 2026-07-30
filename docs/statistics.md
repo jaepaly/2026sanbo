@@ -3,7 +3,7 @@
 > **정정 이력.** 이 문서의 이전 판은 검증셋 표본을 **13개**로 적고 hybrid 우위를
 > "경향으로 보고"했다. 그 판단의 근거였던 95% CI [0.0000, 0.4615]는 아래 §5에서
 > 보이는 것처럼 **소표본 bootstrap의 이산 경계 인공물**이었다. 헤드라인 표본은
-> `output/validated_suite_smoke.json`의 **n=71**
+> `output/validated_suite.json`의 **n=71**
 > (영어 26 / 한국어 45)로 교체했다.
 > n=13 판 수치는 삭제하지 않고 `docs/statistics_n13_superseded.md`에 보존했다.
 
@@ -18,13 +18,9 @@
 - 합성 테스트 쿼리 624개 / 외부 모사 질의 30개
 - 라벨은 코퍼스 텍스트 근거 카테고리 라벨이며 법적 판정·전문가 검증이 아니다.
 
-> ⚠ **확인 필요**: 현재 `output/validated_suite.json`(3모델 본실행)이 아직 없어
-> 단일 모델 smoke 산출물 `output/validated_suite_smoke.json`을 읽었다. 본실행이
-> 끝나면 `python experiment_stats.py`를 다시 실행해 이 문서를 갱신해야 한다.
-
 ## 1. 검증셋 R@10 (95% CI = Clopper-Pearson 정확 이항구간)
 
-- source: `output/validated_suite_smoke.json` / 색인 `minimal_text`
+- source: `output/validated_suite.json` / 색인 `minimal_text`
 
 | retriever | 전체 R@10 | 95% CI | 영어 R@10 | 한국어 R@10 |
 |---|---:|---|---:|---:|
@@ -64,7 +60,7 @@
 | `dense_vs_bm25` (before) | 13 | 0.1538 | 0.0000 | +0.1538 | [0.0000, 0.3846] | 2/0/11 | 0.5 |
 | `dense_vs_bm25` (after) | 71 | 0.5493 | 0.1549 | +0.3944 | [0.2676, 0.5070] | 29/1/41 | 5.77e-08 |
 
-> before 행은 `output/validated_eval.json`(n=13), after 행은 `output/validated_suite_smoke.json`(n=71)이다.
+> before 행은 `output/validated_eval.json`(n=13), after 행은 `output/validated_suite.json`(n=71)이다.
 
 ## 4. 그 밖의 비교
 

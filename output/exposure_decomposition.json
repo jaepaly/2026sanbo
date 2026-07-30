@@ -1,6 +1,6 @@
 {
   "meta": {
-    "source": "validated_suite_smoke.json",
+    "source": "validated_suite.json",
     "primary_model": "MiniLM",
     "primary_retriever": "hybrid_0.5",
     "n": 71,

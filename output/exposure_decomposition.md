@@ -1,6 +1,6 @@
 # 정보최소화의 두 채널 분해 (반환 축소 vs 색인 축소)
 
-출처 `validated_suite_smoke.json` / 검색기 hybrid_0.5 / 임베딩 MiniLM / n=71
+출처 `validated_suite.json` / 검색기 hybrid_0.5 / 임베딩 MiniLM / n=71
 
 ## 왜 분해가 필요한가
 

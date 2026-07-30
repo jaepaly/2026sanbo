@@ -262,9 +262,13 @@ def build_checks() -> list[Check]:
                                "minimal_text_vs_full_text[hybrid_0.5]",
                                "equivalent_at_primary_delta")))
     C.append(Check("new.best_point.cut", "신규 (논문에 없음)",
-                   "최적 운용점 노출 감소율 (색인=full, 반환=minimal_no_code)", None,
+                   "최적 운용점 노출 감소율 (색인=full_text, 반환=minimal_text — "
+                   "통제번호 유지, 실사용 가능한 칸)", None,
                    lambda: dig(decomp, "best_operating_point",
                                "exposure_cut_vs_baseline_pct"), tol=TOL_PCT))
+    C.append(Check("new.best_point.cell", "신규 (논문에 없음)",
+                   "최적 운용점이 통제번호를 유지하는가", True,
+                   lambda: dig(decomp, "best_operating_point", "cell", "actionable")))
     C.append(Check("new.best_point.recall_delta", "신규 (논문에 없음)",
                    "최적 운용점 R@10 변화 (0이어야 함)", 0.0,
                    lambda: dig(decomp, "best_operating_point", "recall_delta_vs_baseline")))

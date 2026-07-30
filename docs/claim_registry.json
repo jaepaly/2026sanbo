@@ -411,10 +411,19 @@
     {
       "id": "new.best_point.cut",
       "where": "신규 (논문에 없음)",
-      "desc": "최적 운용점 노출 감소율 (색인=full, 반환=minimal_no_code)",
+      "desc": "최적 운용점 노출 감소율 (색인=full_text, 반환=minimal_text — 통제번호 유지, 실사용 가능한 칸)",
       "paper": null,
       "artifact": 55.0,
       "status": "NEW",
+      "note": ""
+    },
+    {
+      "id": "new.best_point.cell",
+      "where": "신규 (논문에 없음)",
+      "desc": "최적 운용점이 통제번호를 유지하는가",
+      "paper": true,
+      "artifact": true,
+      "status": "OK",
       "note": ""
     },
     {
@@ -428,7 +437,7 @@
     }
   ],
   "counts": {
-    "OK": 31,
+    "OK": 32,
     "MISMATCH": 12,
     "SKIP": 0,
     "ERROR": 0,
