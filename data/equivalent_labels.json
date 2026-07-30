@@ -32,6 +32,13 @@
       "total_pairs": 81,
       "pairs_relation_equivalent": 75,
       "pairs_relation_broader": 6
+    },
+    "equivalent_label_integrity": {
+      "active_corpus_entries": 1783,
+      "total_equivalents": 81,
+      "dangling": 1,
+      "restored_this_run": 0,
+      "policy": "존재하지 않는 등가 코드는 명시적으로 표시하고 R@10_equiv에서 제외한다. 자동 대체는 하지 않는다(라벨 매핑을 발명하는 것이므로)."
     }
   },
   "mappings": [
@@ -604,7 +611,14 @@
             "counterpart_quote": "\"Software\", other than that specified in 2.D.2., specially designed for the \"development\" or \"production\" of equipment as follows: a. Specified in 2.B.1.a., 2.B.1.b.1., or 2.B.1.b.2., and having a \"unidirectional positioning repeatability\" equal to or less (better) than 0.9 µm along one or more linear axis; b. Specified in2.B.1.b.3., 2.B.1.d., 2.B.1.f. or 2.B.3."
           },
           "note": "제외참조까지 대응한다: 2D001↔2D002, 2.D.1↔2.D.2, 8D201↔8D202.",
-          "verified_by": "human read of both source texts"
+          "verified_by": "human read of both source texts",
+          "absent_from_active_corpus": true,
+          "absent_note": "활성 코퍼스에 존재하지 않는 코드다. 코퍼스 파서 교정으로 코드가 병합·개칭되었을 수 있다. R@10_equiv 계산에서 제외되며, 후보를 사람이 확인해 교체할 때까지 자동 대체하지 않는다.",
+          "successor_candidates": [
+            "2.D",
+            "2.D.2",
+            "2.D.3"
+          ]
         },
         {
           "code": "8D201",

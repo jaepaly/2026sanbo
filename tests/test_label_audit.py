@@ -89,9 +89,16 @@ def test_audits_reproduce() -> None:
           d5["reused_codes"])
     check("1질의 1항목 미충족", d5["one_query_one_item_satisfied"] is False)
 
+    # 라벨공간은 eCFR full code 로만 한정되므로, 코퍼스 크기와 무관하게
+    # non-eCFR 항목 전부가 원리상 정답이 될 수 없다. 절대 건수는 코퍼스 버전에
+    # 따라 바뀌므로(v1 1160/1797, v2 1146/1783) 항등식으로 검증한다.
     d6 = alq.audit_label_space(CORPUS)
-    check("도달 불가 문서 1160/1797",
-          d6["unreachable_entries"] == 1160 and d6["corpus_size"] == 1797, d6)
+    non_ecfr = d6["corpus_size"] - d6["labelable_entries"]
+    check("도달 불가 문서 == 비-eCFR 항목수 (라벨공간이 eCFR 한정)",
+          d6["unreachable_entries"] == non_ecfr, d6)
+    check("도달 불가 비율이 과반", d6["unreachable_share"] > 0.5, d6["unreachable_share"])
+    check("labelable == eCFR 항목수",
+          d6["labelable_entries"] == d6["per_source"].get("ecfr_part774"), d6["per_source"])
 
     d1 = alq.audit_stub_text(CORPUS, QUERIES_V1)
     check("정답 코드 과반이 표제 스텁",
@@ -137,7 +144,11 @@ def test_equivalent_labels_file() -> None:
     check("env_meta 기록", "numpy" in doc["meta"]["env"])
     check("seed 기록", doc["meta"]["seed"] == alq.SEED)
 
-    bad_missing, bad_source, bad_self = [], [], []
+    # 코퍼스 파서 교정으로 등가 코드가 병합·개칭될 수 있다. "전부 존재해야 한다"로
+    # 단정하면 정당한 코퍼스 교체에서 깨지고, 조용히 빠뜨리면 R@10_equiv 가 소리 없이
+    # 줄어든다. 그래서 요구사항은 "없는 코드는 반드시 명시적으로 표시되어 있어야 한다"다
+    # (repair_equivalent_labels.py 가 표시한다).
+    bad_missing, bad_source, bad_self, unflagged = [], [], [], []
     for m in doc["mappings"]:
         check_eccn = BY_CODE.get(m["eccn"])
         if check_eccn is None or check_eccn.get("source") != "ecfr_part774":
@@ -146,9 +157,17 @@ def test_equivalent_labels_file() -> None:
             entry = BY_CODE.get(e["code"])
             if entry is None:
                 bad_missing.append(e["code"])
+                if not e.get("absent_from_active_corpus"):
+                    unflagged.append(e["code"])
             elif entry.get("source") == "ecfr_part774":
                 bad_source.append(e["code"])
-    check("모든 등가 코드가 코퍼스에 존재", not bad_missing, bad_missing[:5])
+            elif e.get("absent_from_active_corpus"):
+                unflagged.append(f"{e['code']}(존재하는데 부재로 표시됨)")
+    check("코퍼스에 없는 등가 코드는 전부 명시적으로 표시되어 있다",
+          not unflagged, str(unflagged[:5]))
+    if bad_missing:
+        print(f"       (부재 등가 코드 {len(bad_missing)}개, 전부 표시됨: "
+              f"{', '.join(bad_missing[:5])} — repair_equivalent_labels.py 참조)")
     check("등가 코드는 전부 non-eCFR", not bad_source, bad_source[:5])
     check("매핑 키는 전부 eCFR 정답 코드", not bad_self, bad_self[:5])
 

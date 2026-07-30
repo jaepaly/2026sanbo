@@ -1,0 +1,53 @@
+{
+  "active": "v2",
+  "note": "adopt_corpus_v2.py 로 교체. 되돌리려면 --revert.",
+  "v1_superseded": {
+    "path": "combined_v1_superseded.json",
+    "sha256": "b2bc0a729016c00ae7ea26794c1e50d274650e14471cc0fe28f5f17433f00841",
+    "total": 1797,
+    "by_source": {
+      "ecfr_part774": {
+        "n": 637,
+        "chars": 105567
+      },
+      "india_scomet_2024": {
+        "n": 575,
+        "chars": 195452
+      },
+      "wassenaar_2025": {
+        "n": 585,
+        "chars": 254332
+      }
+    }
+  },
+  "v2_active": {
+    "path": "combined_v2.json",
+    "sha256": "55ce79178d78081d8bd3647800059f55a91ed6ca5487b3f180d0569f7e78652c",
+    "total": 1783,
+    "by_source": {
+      "ecfr_part774": {
+        "n": 637,
+        "chars": 105567
+      },
+      "india_scomet_2024": {
+        "n": 578,
+        "chars": 574007
+      },
+      "wassenaar_2025": {
+        "n": 568,
+        "chars": 351380
+      }
+    }
+  },
+  "regeneration_required": [
+    "python generate_queries.py",
+    "python run_experiments.py",
+    "python experiment_paraphrase_gap.py",
+    "python run_model_shard.py <MiniLM|e5-base|bge-m3>  (모델별, 분담 가능)",
+    "python merge_shards.py",
+    "python report_exposure_decomposition.py",
+    "python experiment_stats.py",
+    "python make_figures.py",
+    "python verify_claims.py"
+  ]
+}

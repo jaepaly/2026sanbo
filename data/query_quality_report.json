@@ -16,7 +16,7 @@
     "en": 390
   },
   "reject_count_by_reason": {
-    "description_too_short_after_code_removal": 492
+    "description_too_short_after_code_removal": 467
   },
   "reject_examples": [
     {

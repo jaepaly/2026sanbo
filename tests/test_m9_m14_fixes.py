@@ -286,16 +286,31 @@ def test_regenerated_artifacts() -> None:
                 if abs(rate - by_n[int(key)]["recall@10"]) > 1e-9:
                     ok = False
             check("hit_vectors 평균 == 보고된 R@10", ok)
-        # 주장 1의 헤드라인 수치는 불변이어야 한다
-        headline = {0: 0.9792, 5: 0.7596, 10: 0.4407}
+        # 주장 1은 **구조**로 검증한다. 절대값을 고정하면 코퍼스 교체 같은 정당한
+        # 변경에서 테스트가 깨지고, 그러면 진짜 회귀와 구분되지 않는다. v1에서
+        # 0.9792/0.7596/0.4407, v2에서 0.9840/0.7756/0.4535로 값은 이동하지만
+        # 주장(자기참조가 sparse retrieval을 과대평가한다)은 아래 성질로 표현된다.
         by_n = {r["n_removed_high_idf_shared_terms"]: r["recall@10"] for r in res["summary"]}
-        for k, v in headline.items():
-            check(f"주장1 불변: minimal_text N={k} R@10 == {v}",
-                  abs(by_n[k] - v) < 1e-9, f"{by_n[k]}")
+        jac = {r["n_removed_high_idf_shared_terms"]: r["mean_jaccard_vs_answer"]
+               for r in res["summary"]}
+        ns = sorted(by_n)
+        check("주장1 구조: 변별어를 지울수록 R@10이 단조 감소",
+              all(by_n[a] >= by_n[b] for a, b in zip(ns, ns[1:])),
+              str([round(by_n[n], 4) for n in ns]))
+        check("주장1 구조: N=0에서 R@10 > 0.90 (자기참조 상태)",
+              by_n[ns[0]] > 0.90, f"{by_n[ns[0]]:.4f}")
+        check("주장1 구조: 최대 N에서 R@10이 절반 이하로 붕괴",
+              by_n[ns[-1]] < by_n[ns[0]] / 2, f"{by_n[ns[0]]:.4f} -> {by_n[ns[-1]]:.4f}")
+        check("주장1 구조: N=0의 질의-정답 Jaccard > 0.40 (near-duplicate)",
+              jac[ns[0]] > 0.40, f"{jac[ns[0]]:.4f}")
+        check("주장1 구조: Jaccard도 단조 감소",
+              all(jac[a] >= jac[b] for a, b in zip(ns, ns[1:])),
+              str([round(jac[n], 4) for n in ns]))
         full = {r["n_removed_high_idf_shared_terms"]: r["recall@10"]
                 for r in pg["results"]["full_text"]["summary"]}
-        check("주장1 불변: full_text N=0 R@10 == 0.9968", abs(full[0] - 0.9968) < 1e-9,
-              f"{full[0]}")
+        check("주장1 구조: full_text N=0 R@10 > 0.98", full[0] > 0.98, f"{full[0]:.4f}")
+        check("주장1 구조: full_text >= minimal_text at N=0",
+              full[0] >= by_n[ns[0]] - 1e-9, f"{full[0]:.4f} vs {by_n[ns[0]]:.4f}")
     else:
         check("paraphrase_gap.json 존재", False, "미생성")
 

@@ -12,6 +12,7 @@ B. **산출물 검증** — ``data/corpus/combined_v2.json`` 이 있으면 실�
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import sys
@@ -288,8 +289,13 @@ def test_v2_corpus(corpus: list[dict]) -> None:
     check("WA-LIST 푸터 혼입 없음", not walist, str(walist[:5]))
 
     print("[비교: v1 대비 미완 비율 감소]")
-    if V1_PATH.exists():
-        v1 = json.loads(V1_PATH.read_text(encoding="utf-8"))
+    # v2를 채택하면 V1_PATH(활성 코퍼스)가 곧 v2이므로 자기 자신과 비교하게 된다.
+    # 그때는 보존된 백업을 v1 기준으로 써야 한다.
+    _backup = V1_PATH.parent / "combined_v1_superseded.json"
+    v1_ref = _backup if _backup.exists() else V1_PATH
+    if v1_ref.exists() and v1_ref.resolve() != V2_PATH.resolve() and _backup.exists():
+        v1 = json.loads(v1_ref.read_text(encoding="utf-8"))
+        print(f"       (v1 기준: {v1_ref.name}, {len(v1)}건)")
         for src in ("wassenaar_2025", "india_scomet_2024"):
             a = [e for e in v1 if e["source"] == src]
             b = [e for e in corpus if e["source"] == src]
@@ -299,9 +305,38 @@ def test_v2_corpus(corpus: list[dict]) -> None:
             ca = sum(len(e["text"]) for e in a)
             cb = sum(len(e["text"]) for e in b)
             check(f"{src} 본문 총량 증가 ({ca} -> {cb})", cb > ca)
-        check("combined.json 은 v1 그대로(1797건)", len(v1) == 1797, f"len={len(v1)}")
     else:
         skip("v1 대비 비교", "combined.json 없음")
+
+    # 활성 코퍼스가 v1인지 v2인지는 adopt_corpus_v2.py 가 결정한다. 테스트는
+    # "v1 그대로여야 한다"를 단정하지 않는다 — 그러면 정당한 교체에서 깨지고
+    # 진짜 회귀와 구분되지 않는다. 대신 manifest 와 실제 파일의 일치를 검증한다.
+    print("[활성 코퍼스 버전 일관성]")
+    manifest = V1_PATH.parent / "corpus_version_manifest.json"
+    backup = V1_PATH.parent / "combined_v1_superseded.json"
+    active = json.loads(V1_PATH.read_text(encoding="utf-8")) if V1_PATH.exists() else None
+    if not manifest.exists():
+        skip("버전 manifest", "미교체 상태(v1) — adopt_corpus_v2.py 미실행")
+        if active is not None:
+            check("교체 전 활성 코퍼스는 1797건", len(active) == 1797, f"len={len(active)}")
+    else:
+        m = json.loads(manifest.read_text(encoding="utf-8"))
+        which = m.get("active")
+        check("manifest 의 active 가 v1 또는 v2", which in ("v1", "v2"), str(which))
+        expected_sha = (m.get("v2_active") or {}).get("sha256") if which == "v2" \
+            else (m.get("v1") or {}).get("sha256")
+        if expected_sha and V1_PATH.exists():
+            actual = hashlib.sha256(V1_PATH.read_bytes()).hexdigest()
+            check(f"활성 코퍼스 sha256 == manifest({which})", actual == expected_sha,
+                  f"{actual[:16]}... vs {expected_sha[:16]}...")
+        if which == "v2":
+            check("v1 백업이 보존되어 있다", backup.exists(), str(backup.name))
+            if backup.exists():
+                v1b = json.loads(backup.read_text(encoding="utf-8"))
+                check("백업된 v1 은 1797건", len(v1b) == 1797, f"len={len(v1b)}")
+            check("활성 코퍼스가 v2 항목수(1783)와 일치",
+                  active is not None and len(active) == 1783,
+                  f"len={len(active) if active else None}")
 
 
 def main() -> int:

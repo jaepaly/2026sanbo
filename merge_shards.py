@@ -22,8 +22,20 @@ import sys
 from pathlib import Path
 
 import experiment_validated_suite as suite
+import retrieval_core as rc
 
 SHARD_DIR = suite.OUT_DIR / "shards"
+VERSION_MANIFEST = suite.DATA_DIR / "corpus" / "corpus_version_manifest.json" \
+    if hasattr(suite, "DATA_DIR") else Path("data/corpus/corpus_version_manifest.json")
+
+
+def ROOT_MANIFEST() -> str | None:
+    """Which corpus version is active, for the error message after a swap."""
+    try:
+        m = json.loads(Path(VERSION_MANIFEST).read_text(encoding="utf-8"))
+        return f"{m.get('active')} (sha {m.get('v2_active', m.get('v1', {})).get('sha256', '')[:16]}...)"
+    except Exception:
+        return None
 
 
 def main() -> int:
@@ -51,29 +63,49 @@ def main() -> int:
         per_model[key] = s
         print(f"loaded {p.name:<28} {key:<10} revision {s.get('revision')}")
 
-    # BM25 is encoder-independent: every shard must agree exactly.
+    corpus = json.loads(suite.CORPUS_PATH.read_text(encoding="utf-8"))
+    queries = json.loads(suite.QUERIES_PATH.read_text(encoding="utf-8"))["queries"]
+
+    # BM25 is encoder-independent, so it is the integrity anchor. Cross-checking
+    # shards against each other is not enough: a single stale shard has nothing
+    # to disagree with and would merge silently against a corpus it was never
+    # computed from -- exactly the situation right after a corpus swap. So every
+    # shard is checked against BM25 recomputed from the corpus on disk, which
+    # needs no encoder and takes seconds.
     keys = list(per_model)
-    ref_key = keys[0]
     mismatches = []
+    local_bm25 = {}
     for imode in suite.INDEX_MODES:
-        ref = per_model[ref_key]["hits"][imode]["BM25"]
-        for k in keys[1:]:
-            other = per_model[k]["hits"][imode]["BM25"]
-            if other != ref:
-                n = sum(1 for x, y in zip(other, ref) if x != y)
-                mismatches.append(f"{imode}: {k} vs {ref_key} — {n}개 질의 불일치")
+        docs = [rc.index_text(e, imode) for e in corpus]
+        codes = [e["code"] for e in corpus]
+        index = rc.BM25(docs)
+        expect = []
+        for q in queries:
+            top10 = rc.retrieve(index.scores(q["query"]), 10)
+            labels = set(q["validated_labels"])
+            expect.append(int(any(codes[i] in labels for i in top10)))
+        local_bm25[imode] = expect
+        for k in keys:
+            got = per_model[k]["hits"][imode]["BM25"]
+            if got != expect:
+                n = sum(1 for x, y in zip(got, expect) if x != y)
+                mismatches.append(
+                    f"{imode}: {k} 샤드가 현재 코퍼스에서 재계산한 BM25와 {n}개 질의 불일치 "
+                    f"(샤드 적중 {sum(got)}, 재계산 {sum(expect)}) — 다른 코퍼스/질의셋에서 "
+                    f"계산된 샤드입니다")
     if mismatches:
         print("\nBM25 벡터 불일치 (인코더와 무관하므로 같아야 함):", file=sys.stderr)
         for m in mismatches:
             print("  -", m, file=sys.stderr)
+        vm = ROOT_MANIFEST()
+        if vm:
+            print(f"\n현재 활성 코퍼스: {vm}", file=sys.stderr)
+        print("\n병합을 중단합니다. 코퍼스를 교체했다면 output/shards/ 를 비우고 "
+              "run_model_shard.py 를 다시 돌려야 합니다.", file=sys.stderr)
         if not args.allow_bm25_mismatch:
-            print("\n병합을 중단합니다. 샤드가 서로 다른 코퍼스/질의셋/랭킹 규칙에서 나왔습니다.",
-                  file=sys.stderr)
             return 1
         print("\n--allow-bm25-mismatch 지정됨 — 강행합니다.", file=sys.stderr)
 
-    corpus = json.loads(suite.CORPUS_PATH.read_text(encoding="utf-8"))
-    queries = json.loads(suite.QUERIES_PATH.read_text(encoding="utf-8"))["queries"]
     for k, s in per_model.items():
         if s.get("query_ids") != [q["id"] for q in queries]:
             print(f"error: {k} 샤드의 query_ids 가 현재 질의셋과 다릅니다", file=sys.stderr)
