@@ -1,0 +1,446 @@
+{
+  "checks": [
+    {
+      "id": "corpus.total",
+      "where": "PAPER 3.1",
+      "desc": "코퍼스 항목 수",
+      "paper": 1797,
+      "artifact": 1797,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "corpus.wassenaar",
+      "where": "PAPER 3.1",
+      "desc": "Wassenaar 항목 수",
+      "paper": 585,
+      "artifact": 585,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "corpus.scomet",
+      "where": "PAPER 3.1",
+      "desc": "SCOMET 항목 수",
+      "paper": 575,
+      "artifact": 575,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "corpus.ecfr",
+      "where": "PAPER 3.1",
+      "desc": "eCFR 항목 수",
+      "paper": 637,
+      "artifact": 637,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "corpus.korean_entries",
+      "where": "PAPER 3.1",
+      "desc": "한글 포함 항목 수 (0이어야 함)",
+      "paper": 0,
+      "artifact": 0,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "synth.total",
+      "where": "PAPER 3.4",
+      "desc": "합성 쿼리 총수",
+      "paper": 780,
+      "artifact": 780,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "synth.test",
+      "where": "PAPER 3.4",
+      "desc": "합성 test split",
+      "paper": 624,
+      "artifact": 624,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "synth.full_text.r10",
+      "where": "PAPER 4.1",
+      "desc": "합성 full_text R@10",
+      "paper": 0.9968,
+      "artifact": 0.9968,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "synth.minimal_text.r10",
+      "where": "PAPER 4.1",
+      "desc": "합성 minimal_text R@10",
+      "paper": 0.9792,
+      "artifact": 0.9792,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "synth.minimal_no_code.r10",
+      "where": "PAPER 4.1",
+      "desc": "합성 minimal_no_code R@10",
+      "paper": 0.9808,
+      "artifact": 0.9808,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "synth.ablation.n0",
+      "where": "PAPER 4.1",
+      "desc": "변별어 0개 제거 R@10",
+      "paper": 0.9792,
+      "artifact": 0.9792,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "synth.ablation.n5",
+      "where": "PAPER 4.1",
+      "desc": "변별어 5개 제거 R@10",
+      "paper": 0.7596,
+      "artifact": 0.7596,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "synth.ablation.n10",
+      "where": "PAPER 4.1",
+      "desc": "변별어 10개 제거 R@10",
+      "paper": 0.4407,
+      "artifact": 0.4407,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "synth.ablation.jaccard",
+      "where": "PAPER 4.1",
+      "desc": "쿼리-정답 평균 Jaccard (논문 0.485)",
+      "paper": 0.485,
+      "artifact": 0.4845,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "synth.exposure.full",
+      "where": "PAPER 4.1",
+      "desc": "합성 full_text 노출량@10 (구정의 4834)",
+      "paper": 4834.0,
+      "artifact": 4916.61,
+      "status": "MISMATCH",
+      "note": ""
+    },
+    {
+      "id": "synth.exposure.minimal",
+      "where": "PAPER 4.1",
+      "desc": "합성 minimal_text 노출량@10 (구정의 1623)",
+      "paper": 1623.0,
+      "artifact": 1707.84,
+      "status": "MISMATCH",
+      "note": ""
+    },
+    {
+      "id": "synth.exposure.cut_pct",
+      "where": "PAPER 4.1/초록",
+      "desc": "합성 노출 감소율 (논문 66.4%)",
+      "paper": 66.4,
+      "artifact": 65.3,
+      "status": "MISMATCH",
+      "note": ""
+    },
+    {
+      "id": "valid.n",
+      "where": "PAPER 4.3",
+      "desc": "검증셋 n",
+      "paper": 71,
+      "artifact": 71,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "valid.n_en",
+      "where": "PAPER 4.3",
+      "desc": "검증셋 영어",
+      "paper": 26,
+      "artifact": 26,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "valid.n_ko",
+      "where": "PAPER 4.3",
+      "desc": "검증셋 한국어",
+      "paper": 45,
+      "artifact": 45,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "valid.bm25.r10",
+      "where": "PAPER 4.3",
+      "desc": "BM25 R@10 (논문 0.169)",
+      "paper": 0.169,
+      "artifact": 0.1549,
+      "status": "MISMATCH",
+      "note": ""
+    },
+    {
+      "id": "valid.bm25.en",
+      "where": "PAPER 4.3",
+      "desc": "BM25 영어 R@10 (논문 0.423)",
+      "paper": 0.423,
+      "artifact": 0.4231,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "valid.bm25.ko",
+      "where": "PAPER 4.3",
+      "desc": "BM25 한국어 R@10 (논문 0.022)",
+      "paper": 0.022,
+      "artifact": 0.0,
+      "status": "MISMATCH",
+      "note": ""
+    },
+    {
+      "id": "valid.hybrid.r10",
+      "where": "PAPER 4.3",
+      "desc": "hybrid R@10 (논문 0.578)",
+      "paper": 0.578,
+      "artifact": 0.5775,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "valid.hybrid.en",
+      "where": "PAPER 4.3",
+      "desc": "hybrid 영어 R@10 (논문 0.538)",
+      "paper": 0.538,
+      "artifact": 0.5385,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "valid.hybrid.ko",
+      "where": "PAPER 4.3",
+      "desc": "hybrid 한국어 R@10 (논문 0.600)",
+      "paper": 0.6,
+      "artifact": 0.6,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "valid.dense.r10",
+      "where": "PAPER 4.3",
+      "desc": "dense R@10 (논문 0.549)",
+      "paper": 0.549,
+      "artifact": 0.5493,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "valid.hyb_vs_bm25.diff",
+      "where": "PAPER 4.3/초록",
+      "desc": "hybrid−BM25 평균차 (논문 +0.409)",
+      "paper": 0.409,
+      "artifact": 0.4225,
+      "status": "MISMATCH",
+      "note": ""
+    },
+    {
+      "id": "valid.hyb_vs_bm25.ci",
+      "where": "PAPER 4.3/초록",
+      "desc": "hybrid−BM25 95% CI (논문 [0.296, 0.521])",
+      "paper": [
+        0.296,
+        0.521
+      ],
+      "artifact": [
+        0.3099,
+        0.5352
+      ],
+      "status": "MISMATCH",
+      "note": ""
+    },
+    {
+      "id": "valid.hyb_vs_bm25.wins",
+      "where": "PAPER 4.3/초록",
+      "desc": "hybrid−BM25 승 (논문 29승 0패)",
+      "paper": 29,
+      "artifact": 30,
+      "status": "MISMATCH",
+      "note": ""
+    },
+    {
+      "id": "valid.hyb_vs_bm25.losses",
+      "where": "PAPER 4.3/초록",
+      "desc": "hybrid−BM25 패",
+      "paper": 0,
+      "artifact": 0,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "valid.dense_vs_bm25.diff",
+      "where": "PAPER 4.3",
+      "desc": "dense−BM25 평균차 (논문 +0.380)",
+      "paper": 0.38,
+      "artifact": 0.3944,
+      "status": "MISMATCH",
+      "note": ""
+    },
+    {
+      "id": "front.full.exposure",
+      "where": "PAPER 4.5",
+      "desc": "full_text 노출량@10 (논문 3952)",
+      "paper": 3952.0,
+      "artifact": 4043.3,
+      "status": "MISMATCH",
+      "note": ""
+    },
+    {
+      "id": "front.minimal.exposure",
+      "where": "PAPER 4.5",
+      "desc": "minimal_text 노출량@10 (논문 1754)",
+      "paper": 1754.0,
+      "artifact": 1845.1,
+      "status": "MISMATCH",
+      "note": ""
+    },
+    {
+      "id": "front.nocode.exposure",
+      "where": "PAPER 4.5",
+      "desc": "minimal_no_code 노출량@10 (논문 1663)",
+      "paper": 1663.0,
+      "artifact": 1662.5,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "front.full.hybrid",
+      "where": "PAPER 4.5",
+      "desc": "full_text hybrid R@10 (논문 0.606)",
+      "paper": 0.606,
+      "artifact": 0.6056,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "front.nocode.hybrid",
+      "where": "PAPER 4.5",
+      "desc": "minimal_no_code hybrid R@10 (논문 0.521)",
+      "paper": 0.521,
+      "artifact": 0.5211,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "front.cut_pct",
+      "where": "PAPER 4.5/초록/결론",
+      "desc": "노출 감소율 (논문 55.6%)",
+      "paper": 55.6,
+      "artifact": 54.4,
+      "status": "MISMATCH",
+      "note": ""
+    },
+    {
+      "id": "front.diff",
+      "where": "PAPER 4.5/초록",
+      "desc": "minimal−full hybrid 평균차 (논문 −0.028)",
+      "paper": -0.028,
+      "artifact": -0.0282,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "front.diff_ci",
+      "where": "PAPER 4.5/초록",
+      "desc": "minimal−full 95% CI (논문 [−0.113, +0.042])",
+      "paper": [
+        -0.113,
+        0.042
+      ],
+      "artifact": [
+        -0.1127,
+        0.0423
+      ],
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "new.hyb_vs_dense.diff",
+      "where": "신규 (논문에 없음)",
+      "desc": "hybrid−dense 평균차 — 논문은 이 비교를 한 적이 없다",
+      "paper": null,
+      "artifact": 0.0282,
+      "status": "NEW",
+      "note": ""
+    },
+    {
+      "id": "new.hyb_vs_dense.ko_wins",
+      "where": "신규 (논문에 없음)",
+      "desc": "hybrid−dense 한국어 승 (0이어야 함: 수학적 동일)",
+      "paper": 0,
+      "artifact": 0,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "new.bm25_no_signal",
+      "where": "신규 (논문에 없음)",
+      "desc": "BM25 무신호 질의 수 / 71",
+      "paper": null,
+      "artifact": 44,
+      "status": "NEW",
+      "note": ""
+    },
+    {
+      "id": "new.equivalence_delta05",
+      "where": "신규 (논문에 없음)",
+      "desc": "δ=0.05에서 등가성 성립? (False가 실제)",
+      "paper": false,
+      "artifact": false,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "new.best_point.cut",
+      "where": "신규 (논문에 없음)",
+      "desc": "최적 운용점 노출 감소율 (색인=full_text, 반환=minimal_text — 통제번호 유지, 실사용 가능한 칸)",
+      "paper": null,
+      "artifact": 55.0,
+      "status": "NEW",
+      "note": ""
+    },
+    {
+      "id": "new.best_point.cell",
+      "where": "신규 (논문에 없음)",
+      "desc": "최적 운용점이 통제번호를 유지하는가",
+      "paper": true,
+      "artifact": true,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "new.best_point.recall_delta",
+      "where": "신규 (논문에 없음)",
+      "desc": "최적 운용점 R@10 변화 (0이어야 함)",
+      "paper": 0.0,
+      "artifact": 0.0,
+      "status": "OK",
+      "note": ""
+    }
+  ],
+  "counts": {
+    "OK": 32,
+    "MISMATCH": 12,
+    "SKIP": 0,
+    "ERROR": 0,
+    "NEW": 3
+  }
+}

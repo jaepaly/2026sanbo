@@ -1,0 +1,968 @@
+{
+  "question": "코퍼스 v2 채택이 recall 말고 노출량 수치를 움직이는가",
+  "env": {
+    "numpy": "2.2.6",
+    "python": "3.10.5",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "torch": "2.6.0+cpu",
+    "sentence_transformers": "3.4.1",
+    "seed": 20260626,
+    "dense_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+  },
+  "per_index_mode": {
+    "full_text": {
+      "top10_sequence_identical": "23/71",
+      "top10_set_identical": "27/71",
+      "queries_with_set_change": [
+        {
+          "query_id": "ext-002",
+          "only_v1": [
+            "2.B.5"
+          ],
+          "only_v2": [
+            "ECCN-7B611"
+          ]
+        },
+        {
+          "query_id": "ext-003",
+          "only_v1": [
+            "5A205"
+          ],
+          "only_v2": [
+            "2.B.1"
+          ]
+        },
+        {
+          "query_id": "ext-005",
+          "only_v1": [
+            "6A008",
+            "7.D.4.a"
+          ],
+          "only_v2": [
+            "5.D.2.c",
+            "ECCN-7D004"
+          ]
+        },
+        {
+          "query_id": "ext-006",
+          "only_v1": [
+            "ECCN-7B103"
+          ],
+          "only_v2": [
+            "8A910"
+          ]
+        },
+        {
+          "query_id": "ext-007",
+          "only_v1": [
+            "6.A.1.c"
+          ],
+          "only_v2": [
+            "8A802"
+          ]
+        },
+        {
+          "query_id": "ext-013",
+          "only_v1": [
+            "8A405",
+            "8A705"
+          ],
+          "only_v2": [
+            "5A303",
+            "9.D.5"
+          ]
+        },
+        {
+          "query_id": "ext-015",
+          "only_v1": [
+            "3.A.1.b.4",
+            "3.A.1.b.4.b",
+            "5.E.1.d.1"
+          ],
+          "only_v2": [
+            "3.A.1.b.1.a",
+            "3.A.1.b.2",
+            "3.A.1.c"
+          ]
+        },
+        {
+          "query_id": "ext-016",
+          "only_v1": [
+            "9.D.4.a",
+            "ECCN-1C117"
+          ],
+          "only_v2": [
+            "3B020",
+            "8A201"
+          ]
+        },
+        {
+          "query_id": "ext-017",
+          "only_v1": [
+            "3.A.1.b.2",
+            "8A603",
+            "ECCN-6A611"
+          ],
+          "only_v2": [
+            "5C010",
+            "6.A.8",
+            "6.A.8.l"
+          ]
+        },
+        {
+          "query_id": "ext-023",
+          "only_v1": [
+            "6A008",
+            "8.E.2.a",
+            "8E302",
+            "9.E.3.a.1",
+            "ECCN-4A611"
+          ],
+          "only_v2": [
+            "5.A.2",
+            "5.E.1.e",
+            "8E603",
+            "ECCN-0E521",
+            "ECCN-2D984"
+          ]
+        },
+        {
+          "query_id": "ext-029",
+          "only_v1": [
+            "2.B.6.c",
+            "2.E.3.f",
+            "8B205",
+            "ECCN-1B234",
+            "ECCN-6C992"
+          ],
+          "only_v2": [
+            "2.B.5",
+            "4A002",
+            "4A022",
+            "4B008",
+            "8B301"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-002",
+          "only_v1": [
+            "ECCN-2A290"
+          ],
+          "only_v2": [
+            "0B008"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-003",
+          "only_v1": [
+            "4A016"
+          ],
+          "only_v2": [
+            "3.A.1.e"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-004",
+          "only_v1": [
+            "3.A.1.g"
+          ],
+          "only_v2": [
+            "0B001"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-005",
+          "only_v1": [
+            "6.A.6.a.1",
+            "8A108",
+            "9.E.3.a.3.a"
+          ],
+          "only_v2": [
+            "2.B.5.b",
+            "3.B",
+            "3D012"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-006",
+          "only_v1": [
+            "5.B.2",
+            "8B502",
+            "ECCN-0E521"
+          ],
+          "only_v2": [
+            "3D003",
+            "5.A.3.b",
+            "8A502"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-008",
+          "only_v1": [
+            "ECCN-4A004"
+          ],
+          "only_v2": [
+            "6.A.2.a.2.c"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-009",
+          "only_v1": [
+            "3.C.1",
+            "8C301"
+          ],
+          "only_v2": [
+            "8B301",
+            "8C305"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-010",
+          "only_v1": [
+            "ECCN-3D991"
+          ],
+          "only_v2": [
+            "8E302"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-012",
+          "only_v1": [
+            "5.A",
+            "8A901",
+            "ECCN-7D103"
+          ],
+          "only_v2": [
+            "3.A.1.a.14",
+            "3.E.1",
+            "4.E.1"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-013",
+          "only_v1": [
+            "3.A.1.b.3"
+          ],
+          "only_v2": [
+            "8E603"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-014",
+          "only_v1": [
+            "9.A.4.g"
+          ],
+          "only_v2": [
+            "6A010"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-015",
+          "only_v1": [
+            "3.D.2"
+          ],
+          "only_v2": [
+            "2.D"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-017",
+          "only_v1": [
+            "5.A.3.b"
+          ],
+          "only_v2": [
+            "4.A.3.a"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-020",
+          "only_v1": [
+            "4A031"
+          ],
+          "only_v2": [
+            "8A401"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-021",
+          "only_v1": [
+            "8B607"
+          ],
+          "only_v2": [
+            "6.D.3.g"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-023",
+          "only_v1": [
+            "5.A.3.b",
+            "ECCN-5C991"
+          ],
+          "only_v2": [
+            "6.A.1.a.2.a.1",
+            "8E603"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-024",
+          "only_v1": [
+            "8E603"
+          ],
+          "only_v2": [
+            "8D703"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-026",
+          "only_v1": [
+            "8A703"
+          ],
+          "only_v2": [
+            "8A705"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-028",
+          "only_v1": [
+            "ECCN-0A521",
+            "ECCN-0B521"
+          ],
+          "only_v2": [
+            "6.A.1.a.1.e",
+            "8A601"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-030",
+          "only_v1": [
+            "ECCN-0E521"
+          ],
+          "only_v2": [
+            "4.A.3.a"
+          ]
+        },
+        {
+          "query_id": "g-yechan-004",
+          "only_v1": [
+            "ECCN-0A617"
+          ],
+          "only_v2": [
+            "6A017"
+          ]
+        },
+        {
+          "query_id": "g-yechan-008",
+          "only_v1": [
+            "6A006",
+            "ECCN-6A006"
+          ],
+          "only_v2": [
+            "5A303",
+            "6A017"
+          ]
+        },
+        {
+          "query_id": "g-yechan-009",
+          "only_v1": [
+            "6.A.8",
+            "6A004"
+          ],
+          "only_v2": [
+            "ECCN-1C101",
+            "ECCN-9D105"
+          ]
+        },
+        {
+          "query_id": "g-yechan-012",
+          "only_v1": [
+            "6A018",
+            "8A910"
+          ],
+          "only_v2": [
+            "8B910",
+            "ECCN-9A111"
+          ]
+        },
+        {
+          "query_id": "g-yechan-013",
+          "only_v1": [
+            "1.C.10.c",
+            "3A117",
+            "3A201",
+            "ECCN-1C102"
+          ],
+          "only_v2": [
+            "1.A.2",
+            "1.B.1.e",
+            "8B101",
+            "8C110"
+          ]
+        },
+        {
+          "query_id": "g-yechan-014",
+          "only_v1": [
+            "ECCN-0D521",
+            "ECCN-9A007"
+          ],
+          "only_v2": [
+            "8A908",
+            "9.A.8"
+          ]
+        },
+        {
+          "query_id": "g-yechan-016",
+          "only_v1": [
+            "ECCN-1A290"
+          ],
+          "only_v2": [
+            "8C112"
+          ]
+        },
+        {
+          "query_id": "g-yechan-023",
+          "only_v1": [
+            "3B019",
+            "7.E.4.a.6",
+            "8B205",
+            "ECCN-0A521",
+            "ECCN-0B521",
+            "ECCN-3A069"
+          ],
+          "only_v2": [
+            "2.B.4",
+            "3D003",
+            "4A005",
+            "6.A.3.b.4",
+            "8A603",
+            "8B204"
+          ]
+        },
+        {
+          "query_id": "g-yechan-024",
+          "only_v1": [
+            "1.A.7",
+            "ECCN-1C298",
+            "ECCN-1E355"
+          ],
+          "only_v2": [
+            "0B005",
+            "2.E.3.f",
+            "8E203"
+          ]
+        },
+        {
+          "query_id": "g-yechan-025",
+          "only_v1": [
+            "8.A.1.c.1"
+          ],
+          "only_v2": [
+            "ECCN-9A004"
+          ]
+        },
+        {
+          "query_id": "g-yechan-028",
+          "only_v1": [
+            "3A501"
+          ],
+          "only_v2": [
+            "8D904"
+          ]
+        },
+        {
+          "query_id": "g-yechan-029",
+          "only_v1": [
+            "5.A.n"
+          ],
+          "only_v2": [
+            "6.A.1.a.2.b"
+          ]
+        },
+        {
+          "query_id": "g-yechan-030",
+          "only_v1": [
+            "6A004",
+            "8A405",
+            "ECCN-2D002"
+          ],
+          "only_v2": [
+            "5A303",
+            "8.A.2.b",
+            "9.D.3"
+          ]
+        }
+      ],
+      "exposure_at10_v1": {
+        "full_text": 4043.3,
+        "minimal_text": 1820.3,
+        "minimal_no_code": 1728.9
+      },
+      "exposure_at10_v2": {
+        "full_text": 9729.9,
+        "minimal_text": 1810.9,
+        "minimal_no_code": 1720.8
+      },
+      "exposure_delta": {
+        "full_text": 5686.6,
+        "minimal_text": -9.4,
+        "minimal_no_code": -8.1
+      },
+      "exposure_delta_pct": {
+        "full_text": 140.64,
+        "minimal_text": -0.52,
+        "minimal_no_code": -0.47
+      }
+    },
+    "minimal_text": {
+      "top10_sequence_identical": "52/71",
+      "top10_set_identical": "57/71",
+      "queries_with_set_change": [
+        {
+          "query_id": "ext-005",
+          "only_v1": [
+            "6A008",
+            "7.D.4.a"
+          ],
+          "only_v2": [
+            "7.D.3.b",
+            "7.D.5"
+          ]
+        },
+        {
+          "query_id": "ext-015",
+          "only_v1": [
+            "8.E.2.a"
+          ],
+          "only_v2": [
+            "ECCN-6A203"
+          ]
+        },
+        {
+          "query_id": "ext-016",
+          "only_v1": [
+            "9.D.4.a"
+          ],
+          "only_v2": [
+            "3B020"
+          ]
+        },
+        {
+          "query_id": "ext-017",
+          "only_v1": [
+            "6.A.8.d",
+            "6.A.8.h"
+          ],
+          "only_v2": [
+            "6.A.8.j",
+            "6.C.8"
+          ]
+        },
+        {
+          "query_id": "ext-023",
+          "only_v1": [
+            "8.E.2.a",
+            "9.E.3.a.1"
+          ],
+          "only_v2": [
+            "ECCN-2E984",
+            "ECCN-9E102"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-005",
+          "only_v1": [
+            "6.A.6.a.1",
+            "9.E.3.a.3.a"
+          ],
+          "only_v2": [
+            "1.B",
+            "3.B"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-009",
+          "only_v1": [
+            "ECCN-2B001"
+          ],
+          "only_v2": [
+            "8C305"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-012",
+          "only_v1": [
+            "4.A",
+            "5.A"
+          ],
+          "only_v2": [
+            "3.A.1.a.5.b",
+            "ECCN-3D006"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-020",
+          "only_v1": [
+            "4.A.1.a.2"
+          ],
+          "only_v2": [
+            "ECCN-6A103"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-022",
+          "only_v1": [
+            "6A009"
+          ],
+          "only_v2": [
+            "8A601"
+          ]
+        },
+        {
+          "query_id": "g-yechan-008",
+          "only_v1": [
+            "6A004"
+          ],
+          "only_v2": [
+            "6A018"
+          ]
+        },
+        {
+          "query_id": "g-yechan-012",
+          "only_v1": [
+            "8A910"
+          ],
+          "only_v2": [
+            "8B910"
+          ]
+        },
+        {
+          "query_id": "g-yechan-023",
+          "only_v1": [
+            "6A008"
+          ],
+          "only_v2": [
+            "ECCN-0A521"
+          ]
+        },
+        {
+          "query_id": "g-yechan-025",
+          "only_v1": [
+            "8.A.1.c.1"
+          ],
+          "only_v2": [
+            "8A801"
+          ]
+        }
+      ],
+      "exposure_at10_v1": {
+        "full_text": 3667.1,
+        "minimal_text": 1845.1,
+        "minimal_no_code": 1753.6
+      },
+      "exposure_at10_v2": {
+        "full_text": 6149.2,
+        "minimal_text": 1856.7,
+        "minimal_no_code": 1765.2
+      },
+      "exposure_delta": {
+        "full_text": 2482.1,
+        "minimal_text": 11.6,
+        "minimal_no_code": 11.6
+      },
+      "exposure_delta_pct": {
+        "full_text": 67.69,
+        "minimal_text": 0.63,
+        "minimal_no_code": 0.66
+      }
+    },
+    "minimal_no_code": {
+      "top10_sequence_identical": "41/71",
+      "top10_set_identical": "45/71",
+      "queries_with_set_change": [
+        {
+          "query_id": "ext-003",
+          "only_v1": [
+            "ECCN-5A611"
+          ],
+          "only_v2": [
+            "2.B.1.a"
+          ]
+        },
+        {
+          "query_id": "ext-005",
+          "only_v1": [
+            "6A008",
+            "7.D.4.a"
+          ],
+          "only_v2": [
+            "7.D.3.b",
+            "7.D.5"
+          ]
+        },
+        {
+          "query_id": "ext-006",
+          "only_v1": [
+            "9.E.3.a.3.a"
+          ],
+          "only_v2": [
+            "ECCN-3A233"
+          ]
+        },
+        {
+          "query_id": "ext-015",
+          "only_v1": [
+            "8.E.2.a"
+          ],
+          "only_v2": [
+            "3.A.2.d.6"
+          ]
+        },
+        {
+          "query_id": "ext-016",
+          "only_v1": [
+            "9.D.4.a"
+          ],
+          "only_v2": [
+            "3B020"
+          ]
+        },
+        {
+          "query_id": "ext-017",
+          "only_v1": [
+            "6.A.8.d",
+            "6.A.8.h"
+          ],
+          "only_v2": [
+            "6.E.3.h",
+            "ECCN-6A998"
+          ]
+        },
+        {
+          "query_id": "ext-023",
+          "only_v1": [
+            "8.E.2.a",
+            "9.E.3.a.1"
+          ],
+          "only_v2": [
+            "5.A.2.b",
+            "7.E.4.b.8"
+          ]
+        },
+        {
+          "query_id": "ext-029",
+          "only_v1": [
+            "7.A.1"
+          ],
+          "only_v2": [
+            "ECCN-3A231"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-003",
+          "only_v1": [
+            "ECCN-3A225"
+          ],
+          "only_v2": [
+            "ECCN-0C521"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-004",
+          "only_v1": [
+            "3.A.1.g"
+          ],
+          "only_v2": [
+            "0B001"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-005",
+          "only_v1": [
+            "6.A.6.a.1"
+          ],
+          "only_v2": [
+            "7.B"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-009",
+          "only_v1": [
+            "2.B.9"
+          ],
+          "only_v2": [
+            "8C305"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-012",
+          "only_v1": [
+            "1.D.2",
+            "4.A",
+            "5.A"
+          ],
+          "only_v2": [
+            "3.A.1.a.5.b",
+            "ECCN-3D006",
+            "ECCN-7D103"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-013",
+          "only_v1": [
+            "4.A.1.a.2"
+          ],
+          "only_v2": [
+            "ECCN-3E201"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-014",
+          "only_v1": [
+            "5C024"
+          ],
+          "only_v2": [
+            "7.A.5.a"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-017",
+          "only_v1": [
+            "5.A.1.h.1"
+          ],
+          "only_v2": [
+            "ECCN-6A005"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-020",
+          "only_v1": [
+            "4.A.1.a.2"
+          ],
+          "only_v2": [
+            "ECCN-6A103"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-022",
+          "only_v1": [
+            "6A009"
+          ],
+          "only_v2": [
+            "8A601"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-029",
+          "only_v1": [
+            "5C021"
+          ],
+          "only_v2": [
+            "8C608"
+          ]
+        },
+        {
+          "query_id": "g-seungwoo-030",
+          "only_v1": [
+            "3.A.1.b.11"
+          ],
+          "only_v2": [
+            "3.A.2.d"
+          ]
+        },
+        {
+          "query_id": "g-yechan-008",
+          "only_v1": [
+            "8.A.1.c.1"
+          ],
+          "only_v2": [
+            "ECCN-0A981"
+          ]
+        },
+        {
+          "query_id": "g-yechan-018",
+          "only_v1": [
+            "ECCN-6A002"
+          ],
+          "only_v2": [
+            "8C601"
+          ]
+        },
+        {
+          "query_id": "g-yechan-023",
+          "only_v1": [
+            "6A008"
+          ],
+          "only_v2": [
+            "ECCN-0D521"
+          ]
+        },
+        {
+          "query_id": "g-yechan-024",
+          "only_v1": [
+            "0B006"
+          ],
+          "only_v2": [
+            "ECCN-2A291"
+          ]
+        },
+        {
+          "query_id": "g-yechan-025",
+          "only_v1": [
+            "8.A.1.c.1"
+          ],
+          "only_v2": [
+            "ECCN-8D999"
+          ]
+        },
+        {
+          "query_id": "g-yechan-030",
+          "only_v1": [
+            "8D202"
+          ],
+          "only_v2": [
+            "ECCN-4D004"
+          ]
+        }
+      ],
+      "exposure_at10_v1": {
+        "full_text": 3577.0,
+        "minimal_text": 1752.2,
+        "minimal_no_code": 1662.5
+      },
+      "exposure_at10_v2": {
+        "full_text": 6277.1,
+        "minimal_text": 1764.3,
+        "minimal_no_code": 1674.2
+      },
+      "exposure_delta": {
+        "full_text": 2700.1,
+        "minimal_text": 12.1,
+        "minimal_no_code": 11.7
+      },
+      "exposure_delta_pct": {
+        "full_text": 75.49,
+        "minimal_text": 0.69,
+        "minimal_no_code": 0.7
+      }
+    }
+  },
+  "headline_exposure_cut": {
+    "definition": "색인=full_text 고정, 반환 full_text -> minimal_text 노출 감소율 (실사용 가능한 최적 운용점)",
+    "v1_pct": 55.0,
+    "v2_pct": 81.4,
+    "v1_chars": [
+      4043.3,
+      1820.3
+    ],
+    "v2_chars": [
+      9729.9,
+      1810.9
+    ]
+  },
+  "conclusion": {
+    "label": "must_update",
+    "text": "헤드라인 노출 감소율이 55.0% -> 81.4% (26.4%p) 바뀐다. 4.5 표와 초록·결론의 감소율을 반드시 갱신해야 하고, 검증셋 통합 실행(3모델)도 다시 돌려야 한다.",
+    "queries_with_top10_set_change": 84,
+    "max_exposure_delta_chars": 5686.6,
+    "headline_cut_shift_pp": 26.4
+  }
+}

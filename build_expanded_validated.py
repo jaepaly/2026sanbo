@@ -11,6 +11,15 @@ CIs for the headline comparisons (hybrid α=0.5 vs BM25, Dense vs BM25). The
 point of the larger n is to see whether the hybrid>BM25 / Korean-recovery
 effects, whose CIs included 0 at n=13, become statistically separable.
 
+**대체 공지 (M9-B).** 평가 부분은 `experiment_validated_suite.py`(n=71, 3모델,
+색인×반환 2차원 노출표, TOST, Holm)로 대체되었다. 이 스크립트의 존속 이유는
+`data/validated_queries_expanded.json` **병합**이다. 평가 결과
+(`output/validated_expanded_eval.json`)를 헤드라인으로 인용하지 마라.
+
+정정 (M14-D4): `np.argsort(-...)` → `retrieval_core.rank_indices`, BM25 점수가 전부
+0인 질의는 α=1.0에서 검색 실패로 집계, per-query `hit_vectors` 저장, primary 검정을
+exact McNemar로 변경(percentile bootstrap은 보조).
+
 Outputs:
   data/validated_queries_expanded.json
   output/validated_expanded_eval.json
@@ -25,7 +34,8 @@ from pathlib import Path
 
 import numpy as np
 
-from run_experiments import BM25, build_doc_text
+import retrieval_core as rc
+from retrieval_core import BM25, index_text as build_doc_text
 
 ROOT = Path(__file__).resolve().parent
 DATA_DIR = ROOT / "data"
@@ -45,19 +55,7 @@ BOOTSTRAP_ITERS = 20000
 SEED = 20260626
 
 
-def minmax(x: np.ndarray) -> np.ndarray:
-    lo, hi = float(x.min()), float(x.max())
-    if hi - lo < 1e-12:
-        return np.zeros_like(x)
-    return (x - lo) / (hi - lo)
-
-
-def paired_diff_ci(diffs: list[float], rng: np.random.Generator) -> list[float]:
-    arr = np.asarray(diffs, dtype=float)
-    n = len(arr)
-    idx = rng.integers(0, n, size=(BOOTSTRAP_ITERS, n))
-    draws = arr[idx].mean(axis=1)
-    return [round(float(np.quantile(draws, 0.025)), 4), round(float(np.quantile(draws, 0.975)), 4)]
+minmax = rc.minmax
 
 
 def merge_queries() -> list[dict]:
@@ -112,13 +110,21 @@ def main() -> None:
 
     hits = {a: [] for a in ALPHAS}   # per-query hit@10
     langs = [q["lang"] for q in queries]
+    no_signal = 0
     for qi, q in enumerate(queries):
         labels = set(q["validated_labels"])
-        bm = minmax(index.scores(q["query"]))
+        raw_bm = index.scores(q["query"])
+        signal = rc.has_signal(raw_bm)
+        if not signal:
+            no_signal += 1
+        bm = minmax(raw_bm)
         dn = minmax(doc_emb @ q_emb[qi])
         for a in ALPHAS:
-            ranked = np.argsort(-(a * bm + (1 - a) * dn))
-            top10 = [codes[i] for i in ranked[:10]]
+            if a == 1.0 and not signal:
+                top10: list[str] = []
+            else:
+                ranked = rc.rank_indices(rc.blend(bm, dn, a))
+                top10 = [codes[i] for i in ranked[:10]]
             hits[a].append(int(any(c in labels for c in top10)))
 
     def rate(vec, mask=None):
@@ -129,32 +135,44 @@ def main() -> None:
     for a in ALPHAS:
         summary[f"alpha={a}"] = {
             "recall@10": rate(hits[a]),
+            "recall@10_ci95": rc.rate_with_ci(hits[a])["ci95"],
             "en_recall@10": rate(hits[a], "en"),
             "ko_recall@10": rate(hits[a], "ko"),
         }
 
-    rng = np.random.default_rng(SEED)
     bm25 = hits[1.0]
     comparisons = {}
     for a, name in [(0.5, "hybrid_0.5_vs_bm25"), (0.0, "dense_vs_bm25"), (0.7, "hybrid_0.7_vs_bm25")]:
         diffs = [t - b for t, b in zip(hits[a], bm25)]
+        boot = rc.paired_bootstrap_ci(diffs, iters=BOOTSTRAP_ITERS, seed=SEED)
+        mc = rc.exact_mcnemar(hits[a], bm25)
         comparisons[name] = {
-            "mean_diff": round(sum(diffs) / len(diffs), 4),
-            "diff_95_ci": paired_diff_ci(diffs, rng),
-            "wins": sum(d > 0 for d in diffs), "losses": sum(d < 0 for d in diffs),
+            "mean_diff": boot["mean"],
+            "diff_95_ci": boot["ci"],
+            "exact_mcnemar": mc,
+            "primary_test": "exact_mcnemar",
+            "wins": mc["wins"], "losses": mc["losses"], "ties": mc["ties"],
         }
 
     n_en = langs.count("en"); n_ko = langs.count("ko")
     out = {
         "meta": {"mode": MODE, "dense_model": DENSE_MODEL, "n": len(queries),
                  "n_en": n_en, "n_ko": n_ko, "bootstrap_iters": BOOTSTRAP_ITERS, "seed": SEED,
+                 "bm25_no_signal_queries": no_signal,
+                 "superseded_by": "output/validated_suite.json (experiment_validated_suite.py). "
+                                  "이 파일의 평가 결과는 헤드라인으로 인용하지 않는다.",
                  "label_nature": "corpus-text-grounded category labels; not legal/expert determinations"},
+        "env": rc.env_meta({"seed": SEED}),
         "summary": summary, "comparisons": comparisons,
+        "hit_vectors": {f"alpha={a}": hits[a] for a in ALPHAS}, "langs": langs,
     }
     EVAL_JSON.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
 
     lines = [
-        "# 확장 검증셋 평가 (TASK I)", "",
+        "# [SUPERSEDED] 확장 검증셋 평가 (TASK I)", "",
+        "> ⚠ 평가 결과는 `output/validated_suite.json`(experiment_validated_suite.py)으로",
+        "> 대체되었다. 이 스크립트의 존속 이유는 `data/validated_queries_expanded.json` 병합이다.",
+        "",
         f"- 표본: **n={len(queries)}** (영어 {n_en}, 한국어 {n_ko}) — 원본 검증 13 + TASK G 슬라이스 병합",
         f"- 매칭: exact full eCFR code (충돌 0) / 노출 {MODE} / Dense {DENSE_MODEL}",
         "- 라벨: 코퍼스 텍스트 근거 카테고리 라벨(법적·전문가 판정 아님).", "",
@@ -165,12 +183,16 @@ def main() -> None:
         r = summary[f"alpha={a}"]
         nm = {1.0: "BM25 (1.0)", 0.0: "Dense (0.0)"}.get(a, f"hybrid ({a})")
         lines.append(f"| {nm} | {r['recall@10']:.4f} | {r['en_recall@10']:.4f} | {r['ko_recall@10']:.4f} |")
-    lines += ["", "## 핵심 비교 (paired bootstrap 95% CI)", "",
-              "| 비교 | 평균차 | 95% CI | wins/losses | 0 포함? |", "|---|---:|---|---:|---|"]
+    lines += ["", "## 핵심 비교 (exact McNemar primary + paired bootstrap 보조)", "",
+              "| 비교 | 평균차 | bootstrap 95% CI | 승/패/무 | exact p (양측) |",
+              "|---|---:|---|---:|---:|"]
     for name, c in comparisons.items():
         ci = c["diff_95_ci"]
-        zero = "예(유의X)" if ci[0] <= 0 <= ci[1] else "**아니오(유의)**"
-        lines.append(f"| {name} | {c['mean_diff']:+.4f} | [{ci[0]:.4f}, {ci[1]:.4f}] | {c['wins']}/{c['losses']} | {zero} |")
+        lines.append(f"| {name} | {c['mean_diff']:+.4f} | [{ci[0]:.4f}, {ci[1]:.4f}] | "
+                     f"{c['wins']}/{c['losses']}/{c['ties']} | "
+                     f"{c['exact_mcnemar']['p_two_sided_exact']:.3g} |")
+    lines += ["", "> 소표본에서 percentile bootstrap CI가 0을 포함하는 것은 이산 경계 인공물일 수",
+              "> 있으므로 primary는 exact McNemar다(`docs/statistics.md` §5)."]
     lines += ["", "## 해석", "",
               f"- n=13 → n={len(queries)}로 확대. 핵심 질문: hybrid>BM25 / 한국어 회복의 95% CI가 0을 벗어났는가.",
               "- 라벨은 코퍼스 텍스트 근거 카테고리 라벨이며 법적·전문가 판정이 아니다.", ""]

@@ -1,0 +1,58 @@
+MIT License
+
+Copyright (c) 2026 2026sanbo contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+================================================================================
+SCOPE OF THIS LICENSE / 이 라이선스의 적용 범위
+================================================================================
+
+This MIT License applies to the SOURCE CODE and DOCUMENTATION in this
+repository only -- the .py files, .md documents, and configuration files
+authored by this project.
+
+It does NOT apply to third-party data under `data/`, which is governed by the
+rights of its respective holders. See `NOTICE` and `data/SOURCES.md`.
+
+이 MIT 라이선스는 이 저장소의 **코드와 문서**(이 프로젝트가 직접 작성한 .py,
+.md, 설정 파일)에만 적용된다. `data/` 아래 제3자 자료에는 적용되지 않으며,
+그 자료의 권리와 이용 조건은 `NOTICE`와 `data/SOURCES.md`를 따른다.
+
+--------------------------------------------------------------------------------
+왜 MIT인가 (선택 근거)
+--------------------------------------------------------------------------------
+
+Apache-2.0과 비교해 MIT를 골랐다.
+
+- 이 저장소는 알고리즘 특허를 주장할 여지가 없는 연구용 평가 코드다.
+  Apache-2.0의 핵심 차별점인 명시적 특허 실시권 부여(§3)와 특허 보복 조항이
+  주는 실익이 작다.
+- 텍스트가 짧아 전문을 정확히 담을 수 있고, 학술 재현 저장소에서 가장 흔해
+  이용자가 조건을 오해할 여지가 적다.
+- 데이터 귀속 문제는 라이선스 본문이 아니라 별도 `NOTICE` 파일과
+  `data/SOURCES.md`로 분리해 처리한다. Apache-2.0의 NOTICE 메커니즘 없이도
+  같은 효과를 낼 수 있다.
+
+Trade-off (기록해 둔다): 특허 실시권을 명시적으로 확보해야 하는 사용자가 있다면
+Apache-2.0이 더 안전하다. 그런 요구가 생기면 전환을 재검토하라.
+
+확인 필요: 위 저작권자 표기("2026sanbo contributors")를 실제 저자·소속 표기로
+교체해야 한다. 소속 기관의 지식재산 규정에 따라 라이선스 선택 자체가
+제약될 수 있다.

@@ -1,0 +1,393 @@
+{
+  "meta": {
+    "source": "validated_suite.json",
+    "primary_model": "MiniLM",
+    "primary_retriever": "hybrid_0.5",
+    "n": 71,
+    "note": "recall@10 is a function of index_mode only; exposure_at10 is a function of both. The original design tied them together."
+  },
+  "env": {
+    "numpy": "2.2.6",
+    "python": "3.10.5",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "torch": "2.6.0+cpu",
+    "sentence_transformers": "3.4.1",
+    "seed": 20260626
+  },
+  "cells": [
+    {
+      "index_mode": "full_text",
+      "return_mode": "full_text",
+      "exposure_at10": 4043.3,
+      "recall@10": 0.6056,
+      "recall@10_ci95": [
+        0.4825,
+        0.7197
+      ],
+      "k": 43,
+      "n": 71,
+      "actionable": true
+    },
+    {
+      "index_mode": "full_text",
+      "return_mode": "minimal_text",
+      "exposure_at10": 1820.3,
+      "recall@10": 0.6056,
+      "recall@10_ci95": [
+        0.4825,
+        0.7197
+      ],
+      "k": 43,
+      "n": 71,
+      "actionable": true
+    },
+    {
+      "index_mode": "full_text",
+      "return_mode": "minimal_no_code",
+      "exposure_at10": 1728.9,
+      "recall@10": 0.6056,
+      "recall@10_ci95": [
+        0.4825,
+        0.7197
+      ],
+      "k": 43,
+      "n": 71,
+      "actionable": false
+    },
+    {
+      "index_mode": "minimal_text",
+      "return_mode": "full_text",
+      "exposure_at10": 3667.1,
+      "recall@10": 0.5775,
+      "recall@10_ci95": [
+        0.4544,
+        0.6939
+      ],
+      "k": 41,
+      "n": 71,
+      "actionable": true
+    },
+    {
+      "index_mode": "minimal_text",
+      "return_mode": "minimal_text",
+      "exposure_at10": 1845.1,
+      "recall@10": 0.5775,
+      "recall@10_ci95": [
+        0.4544,
+        0.6939
+      ],
+      "k": 41,
+      "n": 71,
+      "actionable": true
+    },
+    {
+      "index_mode": "minimal_text",
+      "return_mode": "minimal_no_code",
+      "exposure_at10": 1753.6,
+      "recall@10": 0.5775,
+      "recall@10_ci95": [
+        0.4544,
+        0.6939
+      ],
+      "k": 41,
+      "n": 71,
+      "actionable": false
+    },
+    {
+      "index_mode": "minimal_no_code",
+      "return_mode": "full_text",
+      "exposure_at10": 3577.0,
+      "recall@10": 0.5211,
+      "recall@10_ci95": [
+        0.3992,
+        0.6412
+      ],
+      "k": 37,
+      "n": 71,
+      "actionable": true
+    },
+    {
+      "index_mode": "minimal_no_code",
+      "return_mode": "minimal_text",
+      "exposure_at10": 1752.2,
+      "recall@10": 0.5211,
+      "recall@10_ci95": [
+        0.3992,
+        0.6412
+      ],
+      "k": 37,
+      "n": 71,
+      "actionable": true
+    },
+    {
+      "index_mode": "minimal_no_code",
+      "return_mode": "minimal_no_code",
+      "exposure_at10": 1662.5,
+      "recall@10": 0.5211,
+      "recall@10_ci95": [
+        0.3992,
+        0.6412
+      ],
+      "k": 37,
+      "n": 71,
+      "actionable": false
+    }
+  ],
+  "baseline_cell": {
+    "index_mode": "full_text",
+    "return_mode": "full_text",
+    "exposure_at10": 4043.3,
+    "recall@10": 0.6056,
+    "recall@10_ci95": [
+      0.4825,
+      0.7197
+    ],
+    "k": 43,
+    "n": 71,
+    "actionable": true
+  },
+  "return_side_channel": {
+    "full_text": {
+      "ranking_invariant": true,
+      "reason": "return_text never enters the index, so top-10 is bit-identical across return modes for a fixed index mode",
+      "rows": [
+        {
+          "return_mode": "full_text",
+          "actionable": true,
+          "exposure_at10": 4043.3,
+          "exposure_cut_pct_vs_same_mode": 0.0,
+          "recall@10": 0.6056,
+          "recall_delta": 0.0
+        },
+        {
+          "return_mode": "minimal_text",
+          "actionable": true,
+          "exposure_at10": 1820.3,
+          "exposure_cut_pct_vs_same_mode": 55.0,
+          "recall@10": 0.6056,
+          "recall_delta": 0.0
+        },
+        {
+          "return_mode": "minimal_no_code",
+          "actionable": false,
+          "exposure_at10": 1728.9,
+          "exposure_cut_pct_vs_same_mode": 57.2,
+          "recall@10": 0.6056,
+          "recall_delta": 0.0
+        }
+      ]
+    },
+    "minimal_text": {
+      "ranking_invariant": true,
+      "reason": "return_text never enters the index, so top-10 is bit-identical across return modes for a fixed index mode",
+      "rows": [
+        {
+          "return_mode": "full_text",
+          "actionable": true,
+          "exposure_at10": 3667.1,
+          "exposure_cut_pct_vs_same_mode": -98.7,
+          "recall@10": 0.5775,
+          "recall_delta": 0.0
+        },
+        {
+          "return_mode": "minimal_text",
+          "actionable": true,
+          "exposure_at10": 1845.1,
+          "exposure_cut_pct_vs_same_mode": 0.0,
+          "recall@10": 0.5775,
+          "recall_delta": 0.0
+        },
+        {
+          "return_mode": "minimal_no_code",
+          "actionable": false,
+          "exposure_at10": 1753.6,
+          "exposure_cut_pct_vs_same_mode": 5.0,
+          "recall@10": 0.5775,
+          "recall_delta": 0.0
+        }
+      ]
+    },
+    "minimal_no_code": {
+      "ranking_invariant": true,
+      "reason": "return_text never enters the index, so top-10 is bit-identical across return modes for a fixed index mode",
+      "rows": [
+        {
+          "return_mode": "full_text",
+          "actionable": true,
+          "exposure_at10": 3577.0,
+          "exposure_cut_pct_vs_same_mode": -115.2,
+          "recall@10": 0.5211,
+          "recall_delta": 0.0
+        },
+        {
+          "return_mode": "minimal_text",
+          "actionable": true,
+          "exposure_at10": 1752.2,
+          "exposure_cut_pct_vs_same_mode": -5.4,
+          "recall@10": 0.5211,
+          "recall_delta": 0.0
+        },
+        {
+          "return_mode": "minimal_no_code",
+          "actionable": false,
+          "exposure_at10": 1662.5,
+          "exposure_cut_pct_vs_same_mode": 0.0,
+          "recall@10": 0.5211,
+          "recall_delta": 0.0
+        }
+      ]
+    }
+  },
+  "index_side_channel": {
+    "minimal_text": {
+      "paired_bootstrap": {
+        "mean": -0.0282,
+        "ci": [
+          -0.1127,
+          0.0423
+        ],
+        "n": 71,
+        "iters": 20000,
+        "seed": 20260626,
+        "boot_se": 0.0396
+      },
+      "mcnemar": {
+        "wins": 3,
+        "losses": 5,
+        "ties": 63,
+        "discordant": 8,
+        "p_two_sided_exact": 0.726562,
+        "p_one_sided_exact": 0.855469
+      },
+      "tost_primary_delta": {
+        "delta": 0.05,
+        "n": 71,
+        "mean_diff": -0.0282,
+        "se": 0.04,
+        "p_lower": 0.292512,
+        "p_upper": 0.0252767,
+        "p_max": 0.292512,
+        "equivalent_at_0.05": false,
+        "ci90_bootstrap": [
+          -0.0986,
+          0.0423
+        ],
+        "ci90_within_margin": false
+      },
+      "equivalent_at_primary_delta": false,
+      "n_required_for_primary_delta": 1473
+    },
+    "minimal_no_code": {
+      "paired_bootstrap": {
+        "mean": -0.0845,
+        "ci": [
+          -0.1831,
+          0.0
+        ],
+        "n": 71,
+        "iters": 20000,
+        "seed": 20260626,
+        "boot_se": 0.0475
+      },
+      "mcnemar": {
+        "wins": 3,
+        "losses": 9,
+        "ties": 59,
+        "discordant": 12,
+        "p_two_sided_exact": 0.145996,
+        "p_one_sided_exact": 0.980713
+      },
+      "tost_primary_delta": {
+        "delta": 0.05,
+        "n": 71,
+        "mean_diff": -0.0845,
+        "se": 0.0481,
+        "p_lower": 0.763492,
+        "p_upper": 0.00257821,
+        "p_max": 0.763492,
+        "equivalent_at_0.05": false,
+        "ci90_bootstrap": [
+          -0.169,
+          -0.0141
+        ],
+        "ci90_within_margin": false
+      },
+      "equivalent_at_primary_delta": false,
+      "n_required_for_primary_delta": null
+    }
+  },
+  "pareto_frontier_all_cells": [
+    {
+      "index_mode": "minimal_no_code",
+      "return_mode": "minimal_no_code",
+      "exposure_at10": 1662.5,
+      "recall@10": 0.5211,
+      "recall@10_ci95": [
+        0.3992,
+        0.6412
+      ],
+      "k": 37,
+      "n": 71,
+      "actionable": false
+    },
+    {
+      "index_mode": "full_text",
+      "return_mode": "minimal_no_code",
+      "exposure_at10": 1728.9,
+      "recall@10": 0.6056,
+      "recall@10_ci95": [
+        0.4825,
+        0.7197
+      ],
+      "k": 43,
+      "n": 71,
+      "actionable": false
+    }
+  ],
+  "pareto_frontier_actionable_only": [
+    {
+      "index_mode": "minimal_no_code",
+      "return_mode": "minimal_text",
+      "exposure_at10": 1752.2,
+      "recall@10": 0.5211,
+      "recall@10_ci95": [
+        0.3992,
+        0.6412
+      ],
+      "k": 37,
+      "n": 71,
+      "actionable": true
+    },
+    {
+      "index_mode": "full_text",
+      "return_mode": "minimal_text",
+      "exposure_at10": 1820.3,
+      "recall@10": 0.6056,
+      "recall@10_ci95": [
+        0.4825,
+        0.7197
+      ],
+      "k": 43,
+      "n": 71,
+      "actionable": true
+    }
+  ],
+  "actionability_note": "return_mode=minimal_no_code strips the control number from the returned text. recall@10 is scored against corpus metadata, so it does not fall, but the caller receives no identifier and cannot act on the result. Such cells are excluded from the operating-point search.",
+  "best_operating_point": {
+    "cell": {
+      "index_mode": "full_text",
+      "return_mode": "minimal_text",
+      "exposure_at10": 1820.3,
+      "recall@10": 0.6056,
+      "recall@10_ci95": [
+        0.4825,
+        0.7197
+      ],
+      "k": 43,
+      "n": 71,
+      "actionable": true
+    },
+    "exposure_cut_vs_baseline_pct": 55.0,
+    "recall_delta_vs_baseline": 0.0
+  }
+}

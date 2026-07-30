@@ -1,0 +1,2871 @@
+{
+  "meta": {
+    "version": 2,
+    "supersedes": "data/validated_queries_expanded.json",
+    "generated_by": "audit_label_quality.py emit",
+    "seed": 20260626,
+    "env": {
+      "numpy": "2.2.6",
+      "python": "3.10.5",
+      "platform": "Windows-10-10.0.26200-SP0",
+      "torch": "2.6.0+cpu",
+      "sentence_transformers": "3.4.1"
+    },
+    "n": 71,
+    "n_excluded_from_metrics": 1,
+    "n_evaluable": 70,
+    "label_nature": "corpus-text-grounded category labels (exact eCFR codes); not legal or expert determinations",
+    "changes_vs_v1": [
+      "context / label_confidence / label_basis_corpus_text 복원 (v1 병합에서 누락되어 스키마 검증이 71건 전부 실패했다)",
+      "ext-005 의 ECCN-5D991, ext-023 의 ECCN-5A991 을 부정확한 2차 라벨로 제거 (제거 전 값은 validated_labels_v1 에 보존)",
+      "ext-028 은 질의('군용입니다')와 라벨(민군겸용 6A001)의 규제체계가 모순되어 excluded_from_metrics=true. 원문은 query_original, 교정문은 query_corrected.",
+      "primary_label 로 단일 정답을 지정 ('1질의 1항목' 원칙)",
+      "equivalent_labels / equivalent_labels_strict 추가 (data/equivalent_labels.json 유래)",
+      "text_completeness, label_issues, duplicate_with 추가"
+    ],
+    "scoring_note": "R@10 은 validated_labels 로, R@10_equiv 는 validated_labels ∪ equivalent_labels 로 채점한다. 두 값을 반드시 함께 보고할 것."
+  },
+  "queries": [
+    {
+      "id": "ext-002",
+      "lang": "ko",
+      "query": "반도체 식각 공정용 플라즈마 발생장비를 베트남 업체에 공급 예정입니다. 해당 장비의 통제 분류를 알고 싶습니다.",
+      "context": "반도체 제조 장비, 베트남 행",
+      "validated_labels": [
+        "ECCN-3B001"
+      ],
+      "primary_label": "ECCN-3B001",
+      "origin": "validated_base",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3B001 = semiconductor manufacturing equipment; matches plasma etching equipment.",
+      "equivalent_labels": [
+        "3.B.1",
+        "8B301"
+      ],
+      "equivalent_labels_strict": [
+        "3.B.1",
+        "8B301"
+      ],
+      "label_issues": [
+        "duplicate_gold_code",
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          198
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false,
+      "duplicate_with": [
+        "ext-029"
+      ]
+    },
+    {
+      "id": "ext-003",
+      "lang": "en",
+      "query": "We are exporting a CNC machining center with 5-axis simultaneous control capability. Which ECCN categories might apply?",
+      "context": "5-axis CNC, high-precision machining",
+      "validated_labels": [
+        "ECCN-2B001"
+      ],
+      "primary_label": "ECCN-2B001",
+      "origin": "validated_base",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 2B001 = machine tools for cutting metals; matches 5-axis CNC machining center.",
+      "equivalent_labels": [
+        "2.B.1",
+        "8B201"
+      ],
+      "equivalent_labels_strict": [
+        "2.B.1",
+        "8B201"
+      ],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          275
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": 0.0,
+        "item_terms_missing_from_gold_text": [
+          "axis",
+          "center",
+          "machining",
+          "simultaneous"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": true,
+        "discriminative_terms_missing_from_gold_text": [
+          "machining",
+          "simultaneous"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "ext-004",
+      "lang": "ko",
+      "query": "드론용 고정밀 자이로스코프 모듈을 해외 대학에 샘플로 제공할 예정입니다. 군용 가능성이 있는지 확인 필요합니다.",
+      "context": "드론 부품, 자이로스코프, 대학 샘플",
+      "validated_labels": [
+        "ECCN-7A002"
+      ],
+      "primary_label": "ECCN-7A002",
+      "origin": "validated_base",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 7A002 = gyros / angular rate sensors; matches drone gyroscope module.",
+      "equivalent_labels": [
+        "7.A.2",
+        "8A702"
+      ],
+      "equivalent_labels_strict": [
+        "7.A.2",
+        "8A702"
+      ],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          107
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "ext-005",
+      "lang": "en",
+      "query": "Cryptographic software source code will be transferred to a foreign subsidiary for internal development. Does export control apply?",
+      "context": "암호화 소프트웨어 소스코드 해외 이전",
+      "validated_labels": [
+        "ECCN-5D002"
+      ],
+      "primary_label": "ECCN-5D002",
+      "origin": "validated_base",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 5D002 = encryption software; matches cryptographic source code.",
+      "equivalent_labels": [
+        "5.D.2",
+        "8D502"
+      ],
+      "equivalent_labels_strict": [
+        "5.D.2",
+        "8D502"
+      ],
+      "label_issues": [
+        "imprecise_secondary_label",
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          53
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": 0.286,
+        "item_terms_missing_from_gold_text": [
+          "code",
+          "cryptographic",
+          "source",
+          "subsidiary",
+          "transferred"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [
+          "cryptographic"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false,
+      "validated_labels_v1": [
+        "ECCN-5D002",
+        "ECCN-5D991"
+      ],
+      "removed_labels": [
+        {
+          "code": "ECCN-5D991",
+          "issue": "imprecise_secondary_label",
+          "reason": "질의는 암호 소프트웨어 소스코드다. 5D991 본문은 '5A991·5B991 장비용 소프트웨어 및 dynamic adaptive routing software' 로 암호와 무관하다. any-label 적중 채점에서 난이도를 인위적으로 낮춘다."
+        }
+      ]
+    },
+    {
+      "id": "ext-006",
+      "lang": "ko",
+      "query": "항공기용 타이타늄 합금 판재를 독일 항공부품사에 수출하려 합니다. 재료 등급이 높아 관심 대상일 수 있다고 들었습니다.",
+      "context": "항공우주 재료, 타이타늄 합금, 독일",
+      "validated_labels": [
+        "ECCN-1C002"
+      ],
+      "primary_label": "ECCN-1C002",
+      "origin": "validated_base",
+      "label_confidence": "medium",
+      "label_basis_corpus_text": "eCFR 1C002 = metal alloys (incl. titanium aluminides); plausible for titanium alloy plate.",
+      "equivalent_labels": [
+        "1.C.2",
+        "8C102"
+      ],
+      "equivalent_labels_strict": [
+        "1.C.2",
+        "8C102"
+      ],
+      "label_issues": [
+        "duplicate_gold_code",
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          98
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false,
+      "duplicate_with": [
+        "ext-016"
+      ]
+    },
+    {
+      "id": "ext-007",
+      "lang": "en",
+      "query": "We are shipping test equipment for underwater acoustic communication systems. This could be used for submarine applications. Please advise.",
+      "context": "수중 음향 통신 테스트 장비",
+      "validated_labels": [
+        "ECCN-6A001"
+      ],
+      "primary_label": "ECCN-6A001",
+      "origin": "validated_base",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 6A001 = acoustic systems; matches underwater acoustic test equipment.",
+      "equivalent_labels": [
+        "6.A.1",
+        "8A601"
+      ],
+      "equivalent_labels_strict": [
+        "6.A.1",
+        "8A601"
+      ],
+      "label_issues": [
+        "duplicate_gold_code",
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          88
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": 0.167,
+        "item_terms_missing_from_gold_text": [
+          "application",
+          "communication",
+          "submarine",
+          "test",
+          "underwater"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": true,
+        "discriminative_terms_missing_from_gold_text": [
+          "submarine"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false,
+      "duplicate_with": [
+        "ext-028"
+      ]
+    },
+    {
+      "id": "ext-013",
+      "lang": "en",
+      "query": "We are exporting software that controls vibration test equipment for satellite components. Is the software itself controlled?",
+      "context": "진동 테스트 장비 제어 소프트웨어, 위성 부품",
+      "validated_labels": [
+        "ECCN-2D001"
+      ],
+      "primary_label": "ECCN-2D001",
+      "origin": "validated_base",
+      "label_confidence": "medium",
+      "label_basis_corpus_text": "eCFR 2D001 = software for 2B test/production equipment; plausible for vibration-test control software.",
+      "equivalent_labels": [
+        "2.D.1",
+        "8D201"
+      ],
+      "equivalent_labels_strict": [
+        "2.D.1",
+        "8D201"
+      ],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          91
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": 0.25,
+        "item_terms_missing_from_gold_text": [
+          "satellite",
+          "test",
+          "vibration"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [
+          "vibration"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "ext-015",
+      "lang": "en",
+      "query": "A research institute in Singapore wants to buy our high-speed oscilloscope with bandwidth over 1 GHz. Which controls may apply?",
+      "context": "고속 오실로스코프, 1GHz 이상, 싱가포르 연구기관",
+      "validated_labels": [
+        "ECCN-3A002"
+      ],
+      "primary_label": "ECCN-3A002",
+      "origin": "validated_base",
+      "label_confidence": "medium",
+      "label_basis_corpus_text": "eCFR 3A002 = general purpose electronic test/measurement equipment; plausible for >1GHz oscilloscope.",
+      "equivalent_labels": [
+        "3.A.2",
+        "8A302"
+      ],
+      "equivalent_labels_strict": [
+        "3.A.2",
+        "8A302"
+      ],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          106
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": 0.0,
+        "item_terms_missing_from_gold_text": [
+          "bandwidth",
+          "oscilloscope",
+          "over",
+          "speed"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": true,
+        "discriminative_terms_missing_from_gold_text": [
+          "oscilloscope"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "ext-016",
+      "lang": "ko",
+      "query": "3D 프린터용 특수 금분소재를 프랑스에 공급합니다. 군용 부품 제조 가능성이 있다고 합니다.",
+      "context": "3D 프린팅 분말, 프랑스, 군용 가능성",
+      "validated_labels": [
+        "ECCN-1C002"
+      ],
+      "primary_label": "ECCN-1C002",
+      "origin": "validated_base",
+      "label_confidence": "medium",
+      "label_basis_corpus_text": "eCFR 1C002 = metal alloy powder; plausible for 3D-printing metal powder.",
+      "equivalent_labels": [
+        "1.C.2",
+        "8C102"
+      ],
+      "equivalent_labels_strict": [
+        "1.C.2",
+        "8C102"
+      ],
+      "label_issues": [
+        "duplicate_gold_code",
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          98
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": 0.0,
+        "item_terms_missing_from_gold_text": [
+          "3d"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": true,
+        "discriminative_terms_missing_from_gold_text": [
+          "3d"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false,
+      "duplicate_with": [
+        "ext-006"
+      ]
+    },
+    {
+      "id": "ext-017",
+      "lang": "en",
+      "query": "We are shipping radar components with GaAs MMIC technology to a NATO partner country. What should we check first?",
+      "context": "레이다 부품, GaAs MMIC, NATO 동맹국",
+      "validated_labels": [
+        "ECCN-3A001"
+      ],
+      "primary_label": "ECCN-3A001",
+      "origin": "validated_base",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3A001 = electronic items (incl. MMICs at 3A001.b.2); matches GaAs MMIC radar components.",
+      "equivalent_labels": [
+        "3.A.1",
+        "8A301"
+      ],
+      "equivalent_labels_strict": [
+        "3.A.1",
+        "8A301"
+      ],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          59
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": 0.0,
+        "item_terms_missing_from_gold_text": [
+          "gaa",
+          "mmic",
+          "radar",
+          "technology"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": true,
+        "discriminative_terms_missing_from_gold_text": [
+          "gaa",
+          "mmic"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "ext-023",
+      "lang": "en",
+      "query": "An overseas university requested encryption chips for a research collaboration. We need to understand if any licenses are required.",
+      "context": "암호화 칩, 해외 대학, 연구 협력",
+      "validated_labels": [
+        "ECCN-5A002"
+      ],
+      "primary_label": "ECCN-5A002",
+      "origin": "validated_base",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 5A002 = information security systems/components; matches encryption chips.",
+      "equivalent_labels": [
+        "5.A.2",
+        "8A502"
+      ],
+      "equivalent_labels_strict": [
+        "5.A.2",
+        "8A502"
+      ],
+      "label_issues": [
+        "imprecise_secondary_label",
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          102
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": 0.0,
+        "item_terms_missing_from_gold_text": [
+          "chip",
+          "collaboration",
+          "encryption"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": true,
+        "discriminative_terms_missing_from_gold_text": [
+          "chip",
+          "encryption"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false,
+      "validated_labels_v1": [
+        "ECCN-5A002",
+        "ECCN-5A991"
+      ],
+      "removed_labels": [
+        {
+          "code": "ECCN-5A991",
+          "issue": "imprecise_secondary_label",
+          "reason": "질의는 암호 칩이다. 5A991 본문은 'Telecommunication equipment, not controlled by 5A001' 로 암호기능과 무관하다."
+        }
+      ]
+    },
+    {
+      "id": "ext-028",
+      "lang": "ko",
+      "query": "어뢰 유도제어 부품(소나/음향 신호 처리)을 NATO 회원국에 수출하려 합니다. 군용입니다.",
+      "context": "어뢰 유도제어 부품, NATO 회원국, 군용",
+      "validated_labels": [
+        "ECCN-6A001"
+      ],
+      "primary_label": "ECCN-6A001",
+      "origin": "validated_base",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 6A001 = acoustic systems; matches torpedo sonar / acoustic signal processing.",
+      "equivalent_labels": [
+        "6.A.1",
+        "8A601"
+      ],
+      "equivalent_labels_strict": [
+        "6.A.1",
+        "8A601"
+      ],
+      "label_issues": [
+        "regime_contradiction_military_vs_dual_use",
+        "duplicate_gold_code",
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          88
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": 0.0,
+        "item_terms_missing_from_gold_text": [
+          "nato"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": true,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": true,
+      "duplicate_with": [
+        "ext-007"
+      ],
+      "query_original": "어뢰 유도제어 부품(소나/음향 신호 처리)을 NATO 회원국에 수출하려 합니다. 군용입니다.",
+      "query_corrected": "어뢰 유도제어 부품(소나/음향 신호 처리)을 NATO 회원국에 수출하려 합니다.",
+      "exclusion_reason": "질의가 '군용입니다'라고 명시하는데 정답 ECCN-6A001 은 민군겸용 CCL 음향 항목이다. 군용 어뢰 유도제어 부품은 USML/600 시리즈 소관이므로 질의와 라벨의 규제체계가 어긋난다."
+    },
+    {
+      "id": "ext-029",
+      "lang": "en",
+      "query": "We have a customer in Israel requesting a high-precision angular positioning table used in semiconductor lithography. Is this an ECCN-controlled item?",
+      "context": "반도체 노광용 고정밀 각도 위치결정 테이블, 이스라엘 고객",
+      "validated_labels": [
+        "ECCN-3B001"
+      ],
+      "primary_label": "ECCN-3B001",
+      "origin": "validated_base",
+      "label_confidence": "medium",
+      "label_basis_corpus_text": "eCFR 3B001 = semiconductor manufacturing equipment; plausible for lithography positioning table.",
+      "equivalent_labels": [
+        "3.B.1",
+        "8B301"
+      ],
+      "equivalent_labels_strict": [
+        "3.B.1",
+        "8B301"
+      ],
+      "label_issues": [
+        "duplicate_gold_code",
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          198
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": 0.167,
+        "item_terms_missing_from_gold_text": [
+          "angular",
+          "lithography",
+          "positioning",
+          "precision",
+          "table"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": true,
+        "discriminative_terms_missing_from_gold_text": [
+          "angular",
+          "lithography",
+          "precision",
+          "table"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false,
+      "duplicate_with": [
+        "ext-002"
+      ]
+    },
+    {
+      "id": "g-seungwoo-001",
+      "lang": "ko",
+      "query": "밀폐 용기 안에서 절연성 액체를 전자 부품에 직접 뿌려 작동 온도를 유지시키는 냉각 장치를 베트남 데이터센터에 납품하려 합니다. 수출 통제 대상인지 확인이 필요합니다.",
+      "context": "베트남 / 전자장비 분사식 냉각 시스템",
+      "validated_labels": [
+        "ECCN-3A003"
+      ],
+      "primary_label": "ECCN-3A003",
+      "origin": "slice_seungwoo",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3A003: 밀폐 용기 내 유전성 유체 분사 방식 전자부품 냉각 시스템",
+      "equivalent_labels": [
+        "3.A.3",
+        "8A303"
+      ],
+      "equivalent_labels_strict": [
+        "3.A.3",
+        "8A303"
+      ],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          379
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-seungwoo-002",
+      "lang": "ko",
+      "query": "모터 구동용으로 쓰이는 가변 주파수 변환 장치를 인도 제조사에 공급할 예정입니다. 원자력 규제 대상은 아닌데 일반 수출 통제에 걸리는지 궁금합니다.",
+      "context": "인도 / 가변주파수 모터 드라이브 변환기",
+      "validated_labels": [
+        "ECCN-3A225"
+      ],
+      "primary_label": "ECCN-3A225",
+      "origin": "slice_seungwoo",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3A225: 가변/고정 주파수 모터 드라이브로 쓰이는 주파수 변환기",
+      "equivalent_labels": [
+        "4A011"
+      ],
+      "equivalent_labels_strict": [
+        "4A011"
+      ],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          345
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-seungwoo-003",
+      "lang": "en",
+      "query": "We are exporting a high-current DC power feed unit to a research lab in Taiwan. It is not under nuclear regulatory scope. Could you tell me the classification?",
+      "context": "Taiwan / high-power DC power supply",
+      "validated_labels": [
+        "ECCN-3A226"
+      ],
+      "primary_label": "ECCN-3A226",
+      "origin": "slice_seungwoo",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3A226: high-power direct current power supplies",
+      "equivalent_labels": [
+        "4A015"
+      ],
+      "equivalent_labels_strict": [
+        "4A015"
+      ],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          245
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": 0.667,
+        "item_terms_missing_from_gold_text": [
+          "feed",
+          "scope"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [
+          "feed"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-seungwoo-004",
+      "lang": "ko",
+      "query": "높은 전압을 공급하는 직류 전원 장치를 독일 연구소에 보내려 합니다. 원자력 관련 품목은 아니라고 들었는데 통제 분류를 알고 싶습니다.",
+      "context": "독일 / 고전압 직류 전원공급장치",
+      "validated_labels": [
+        "ECCN-3A227"
+      ],
+      "primary_label": "ECCN-3A227",
+      "origin": "slice_seungwoo",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3A227: high-voltage direct current power supplies",
+      "equivalent_labels": [
+        "4A016"
+      ],
+      "equivalent_labels_strict": [
+        "4A016"
+      ],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          248
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-seungwoo-005",
+      "lang": "ko",
+      "query": "무거운 분자 이온까지 측정할 수 있고 분해능이 매우 높은 질량 분석 장비를 일본 대학에 수출하려 합니다. 통제 품목인지 검토 부탁드립니다.",
+      "context": "일본 / 고분해능 질량분석기",
+      "validated_labels": [
+        "ECCN-3A233"
+      ],
+      "primary_label": "ECCN-3A233",
+      "origin": "slice_seungwoo",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3A233: 230u 이상 이온 측정 가능 고분해능 질량분석기",
+      "equivalent_labels": [
+        "4A024"
+      ],
+      "equivalent_labels_strict": [
+        "4A024"
+      ],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          274
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-seungwoo-006",
+      "lang": "en",
+      "query": "Our company makes lie-detection instruments and stress-analysis devices for security screening. We want to ship them to a client in Brazil. What is the export category?",
+      "context": "Brazil / polygraph and psychological stress analysis equipment",
+      "validated_labels": [
+        "ECCN-3A981"
+      ],
+      "primary_label": "ECCN-3A981",
+      "origin": "slice_seungwoo",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3A981: polygraphs, psychological stress analysis equipment",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          411
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.4,
+        "item_terms_missing_from_gold_text": [
+          "detection",
+          "screening",
+          "security"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [
+          "security"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-seungwoo-007",
+      "lang": "ko",
+      "query": "완성 단계의 반도체 소자를 검사하고 시험하기 위해 특별히 만든 장비를 말레이시아 공장에 공급하려 합니다. 분류 확인이 필요합니다.",
+      "context": "말레이시아 / 반도체 소자 검사·시험 장비",
+      "validated_labels": [
+        "ECCN-3B002"
+      ],
+      "primary_label": "ECCN-3B002",
+      "origin": "slice_seungwoo",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3B002: 반도체 소자 시험·검사 전용 장비",
+      "equivalent_labels": [
+        "3.B.2",
+        "8B302"
+      ],
+      "equivalent_labels_strict": [
+        "3.B.2",
+        "8B302"
+      ],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          228
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-seungwoo-008",
+      "lang": "ko",
+      "query": "최첨단 미세공정 집적회로 생산을 가능하게 하는 반도체 제조 장비를 중국 협력사에 보내려 합니다. 통제 대상인지 매우 궁금합니다.",
+      "context": "중국 / 첨단 노드 반도체 제조 장비",
+      "validated_labels": [
+        "ECCN-3B994"
+      ],
+      "primary_label": "ECCN-3B994",
+      "origin": "slice_seungwoo",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3B994: advanced-node 집적회로 생산 가능 반도체 제조 장비",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          204
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-seungwoo-009",
+      "lang": "en",
+      "query": "We supply wafer substrates layered with gallium nitride and silicon carbide films for power electronics. A customer in Singapore requested them. Which control code applies?",
+      "context": "Singapore / SiC/GaN epitaxial substrate materials",
+      "validated_labels": [
+        "ECCN-3C006"
+      ],
+      "primary_label": "ECCN-3C006",
+      "origin": "slice_seungwoo",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3C006: SiC, GaN 등 에피택셜 층 기판 소재",
+      "equivalent_labels": [
+        "3.C.6",
+        "8C306"
+      ],
+      "equivalent_labels_strict": [
+        "3.C.6",
+        "8C306"
+      ],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          260
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.455,
+        "item_terms_missing_from_gold_text": [
+          "code",
+          "electronic",
+          "film",
+          "layered",
+          "power",
+          "wafer"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [
+          "film",
+          "wafer"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-seungwoo-010",
+      "lang": "ko",
+      "query": "전자기 펄스나 정전기 충격이 발생해도 마이크로컴퓨터가 1밀리초 안에 정상 동작을 회복하게 만드는 소프트웨어를 해외 방산업체에 제공하려 합니다. 통제 여부를 알고 싶습니다.",
+      "context": "해외 방산업체 / EMP·ESD 복구 소프트웨어",
+      "validated_labels": [
+        "ECCN-3D005"
+      ],
+      "primary_label": "ECCN-3D005",
+      "origin": "slice_seungwoo",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3D005: EMP/ESD 후 1ms 내 정상복구 소프트웨어",
+      "equivalent_labels": [
+        "3.D.5",
+        "8D305"
+      ],
+      "equivalent_labels_strict": [
+        "3.D.5",
+        "8D305"
+      ],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          278
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-seungwoo-011",
+      "lang": "ko",
+      "query": "게이트올어라운드 트랜지스터 구조의 집적회로를 설계하기 위한 전자 설계 자동화 소프트웨어를 대만 팹리스에 공급하려 합니다. 분류 검토가 필요합니다.",
+      "context": "대만 / GAAFET 설계용 ECAD 소프트웨어",
+      "validated_labels": [
+        "ECCN-3D006"
+      ],
+      "primary_label": "ECCN-3D006",
+      "origin": "slice_seungwoo",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3D006: GAAFET 구조 IC 개발용 ECAD 소프트웨어",
+      "equivalent_labels": [
+        "3.D.6",
+        "8D306"
+      ],
+      "equivalent_labels_strict": [
+        "3.D.6",
+        "8D306"
+      ],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          272
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-seungwoo-012",
+      "lang": "en",
+      "query": "We license design know-how for building 32-bit-and-above processor cores with advanced arithmetic units. A firm in India wants the package. What classification is this?",
+      "context": "India / processor core development technology",
+      "validated_labels": [
+        "ECCN-3E002"
+      ],
+      "primary_label": "ECCN-3E002",
+      "origin": "slice_seungwoo",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3E002: 32비트 이상 마이크로프로세서 코어 개발 기술",
+      "equivalent_labels": [
+        "3.E.2",
+        "8E302"
+      ],
+      "equivalent_labels_strict": [
+        "3.E.2",
+        "8E302"
+      ],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          399
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": 0.333,
+        "item_terms_missing_from_gold_text": [
+          "above",
+          "advanced",
+          "design",
+          "processor"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [
+          "advanced",
+          "processor"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-seungwoo-013",
+      "lang": "ko",
+      "query": "300밀리미터 실리콘 웨이퍼를 매우 평탄하게 절삭하고 연마하는 데 필요한 공정 기술을 외국 파운드리에 이전하려 합니다. 통제 대상인지 확인 부탁드립니다.",
+      "context": "외국 파운드리 / 300mm 웨이퍼 가공 기술",
+      "validated_labels": [
+        "ECCN-3E004"
+      ],
+      "primary_label": "ECCN-3E004",
+      "origin": "slice_seungwoo",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3E004: 300mm 실리콘 웨이퍼 평탄 가공 기술 (SFQR 20nm 이하)",
+      "equivalent_labels": [
+        "3.E.4",
+        "8E304"
+      ],
+      "equivalent_labels_strict": [
+        "3.E.4",
+        "8E304"
+      ],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          292
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-seungwoo-014",
+      "lang": "en",
+      "query": "We have analog and digital computing units modified for use in missile platforms. A defense partner abroad requested them. Could you confirm the export control code?",
+      "context": "overseas defense / computers modified for missiles",
+      "validated_labels": [
+        "ECCN-4A101"
+      ],
+      "primary_label": "ECCN-4A101",
+      "origin": "slice_seungwoo",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 4A101: 미사일용으로 개조된 아날로그/디지털 컴퓨터",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          213
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": 0.5,
+        "item_terms_missing_from_gold_text": [
+          "code",
+          "computing",
+          "defense",
+          "platform"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [
+          "computing",
+          "defense",
+          "platform"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-seungwoo-015",
+      "lang": "ko",
+      "query": "실시간 처리 장비를 위해 소스 코드를 자동으로 생성해 주는 운영체제 소프트웨어를 해외 업체에 납품할 예정입니다. 통제 분류를 알고 싶습니다.",
+      "context": "해외 업체 / 실시간 처리용 소스코드 자동생성 소프트웨어",
+      "validated_labels": [
+        "ECCN-4D993"
+      ],
+      "primary_label": "ECCN-4D993",
+      "origin": "slice_seungwoo",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 4D993: 실시간 처리 장비용 소스코드 자동생성 소프트웨어",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          237
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-seungwoo-016",
+      "lang": "ko",
+      "query": "사거리 300킬로미터 이상 무인 비행체에 쓰도록 설계된 원격 측정 및 원격 제어 장비를 외국 항공우주 기관에 보내려 합니다. 분류 확인이 필요합니다.",
+      "context": "외국 항공우주 기관 / 장거리 UAV 원격측정·제어 장비",
+      "validated_labels": [
+        "ECCN-5A101"
+      ],
+      "primary_label": "ECCN-5A101",
+      "origin": "slice_seungwoo",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 5A101: 300km 이상 UAV/로켓용 텔레메트리·텔레컨트롤 장비",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          342
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-seungwoo-017",
+      "lang": "en",
+      "query": "We make devices that can covertly capture wire and electronic communications. A buyer in the Middle East is interested. What is the proper export classification?",
+      "context": "Middle East / covert communication interception devices",
+      "validated_labels": [
+        "ECCN-5A980"
+      ],
+      "primary_label": "ECCN-5A980",
+      "origin": "slice_seungwoo",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 5A980: 통신 비밀 가로채기용 장치",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          203
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.6,
+        "item_terms_missing_from_gold_text": [
+          "capture",
+          "covertly"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-seungwoo-019",
+      "lang": "ko",
+      "query": "물속에서 전기장을 감지하는 센서와 자기장 측정 장비를 외국 해양연구소에 수출하려 합니다. 군용 가능성도 있어 분류 확인이 필요합니다.",
+      "context": "외국 해양연구소 / 수중 전기장·자기 센서",
+      "validated_labels": [
+        "ECCN-6A006"
+      ],
+      "primary_label": "ECCN-6A006",
+      "origin": "slice_seungwoo",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 6A006: 자력계, 수중 전기장 센서 등",
+      "equivalent_labels": [
+        "6.A.6",
+        "8A606"
+      ],
+      "equivalent_labels_strict": [
+        "6.A.6",
+        "8A606"
+      ],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          226
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-seungwoo-020",
+      "lang": "en",
+      "query": "Our product is a sensor hardened against nuclear radiation effects, usable on missile platforms, rated for very high total dose. A foreign client asked about it. Which ECCN?",
+      "context": "foreign client / radiation-hardened missile-capable detector",
+      "validated_labels": [
+        "ECCN-6A102"
+      ],
+      "primary_label": "ECCN-6A102",
+      "origin": "slice_seungwoo",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 6A102: 핵 효과 방호용 방사선 경화 검출기 (미사일용)",
+      "equivalent_labels": [
+        "5C012"
+      ],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          368
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.75,
+        "item_terms_missing_from_gold_text": [
+          "asked",
+          "platform",
+          "sensor"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [
+          "platform"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-seungwoo-021",
+      "lang": "ko",
+      "query": "공중이나 해상에서 중력 값을 정밀하게 측정하는 장비를 외국 측량 회사에 공급하려 합니다. 통제 대상인지 알고 싶습니다.",
+      "context": "외국 측량회사 / 항공·해상용 중력계",
+      "validated_labels": [
+        "ECCN-6A107"
+      ],
+      "primary_label": "ECCN-6A107",
+      "origin": "slice_seungwoo",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 6A107: 항공/해상용 중력계·중력 경사계",
+      "equivalent_labels": [
+        "6.A.7",
+        "8A607"
+      ],
+      "equivalent_labels_strict": [],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          243
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-seungwoo-022",
+      "lang": "ko",
+      "query": "물속 물체를 탐지하고 위치를 파악하는 해양 음향 장비를 동남아 조선소에 납품할 예정입니다. 분류 검토가 필요합니다.",
+      "context": "동남아 조선소 / 수중 탐지 음향 장비",
+      "validated_labels": [
+        "ECCN-6A991"
+      ],
+      "primary_label": "ECCN-6A991",
+      "origin": "slice_seungwoo",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 6A991: 수중 물체 탐지·측위용 해양 음향 장비",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          226
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-seungwoo-023",
+      "lang": "en",
+      "query": "We sell optical sensing fiber that is structurally modified to have a very short beat length for high birefringence. A customer in Europe wants it. What classification applies?",
+      "context": "Europe / high-birefringence optical sensing fiber",
+      "validated_labels": [
+        "ECCN-6C992"
+      ],
+      "primary_label": "ECCN-6C992",
+      "origin": "slice_seungwoo",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 6C992: beat length 500mm 미만 고복굴절 광센싱 파이버",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          275
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.889,
+        "item_terms_missing_from_gold_text": [
+          "short"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-seungwoo-024",
+      "lang": "ko",
+      "query": "고속 카메라와 영상 장치의 성능을 끌어올리거나 제한을 풀어주는 소프트웨어를 해외 연구기관에 제공하려 합니다. 통제 여부를 확인하고 싶습니다.",
+      "context": "해외 연구기관 / 고속 카메라 성능 향상 소프트웨어",
+      "validated_labels": [
+        "ECCN-6D201"
+      ],
+      "primary_label": "ECCN-6D201",
+      "origin": "slice_seungwoo",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 6D201: 고속 카메라·이미징 장치 성능 향상 소프트웨어",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          241
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-seungwoo-025",
+      "lang": "ko",
+      "query": "도플러 속도계를 방위 기준과 결합해 이동 거리 대비 오차가 매우 작은 수중 음향 항법 시스템을 외국 해군 협력사에 수출하려 합니다. 분류 확인 부탁드립니다.",
+      "context": "외국 해군 협력사 / 수중 소나 항법 시스템",
+      "validated_labels": [
+        "ECCN-7A008"
+      ],
+      "primary_label": "ECCN-7A008",
+      "origin": "slice_seungwoo",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 7A008: 도플러 속도 기반 수중 소나 항법 시스템",
+      "equivalent_labels": [
+        "7.A.8",
+        "8A708"
+      ],
+      "equivalent_labels_strict": [
+        "7.A.8",
+        "8A708"
+      ],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          296
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-seungwoo-026",
+      "lang": "en",
+      "query": "Our device determines orientation by automatically tracking stars or satellites, used for navigation. A foreign aerospace firm requested a sample. Which control code?",
+      "context": "foreign aerospace / celestial-tracking orientation device",
+      "validated_labels": [
+        "ECCN-7A104"
+      ],
+      "primary_label": "ECCN-7A104",
+      "origin": "slice_seungwoo",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 7A104: 천체/위성 추적 방위 결정 장치 (자이로-아스트로 컴퍼스)",
+      "equivalent_labels": [
+        "5C003"
+      ],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          240
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.5,
+        "item_terms_missing_from_gold_text": [
+          "aerospace",
+          "code",
+          "navigation",
+          "star"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [
+          "aerospace",
+          "star"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-seungwoo-027",
+      "lang": "ko",
+      "query": "특정 전자기 발생원의 방위를 알아내는 수동형 방향 탐지 센서를 외국 업체에 보내려 합니다. 미사일 용도 가능성이 있어 분류 확인이 필요합니다.",
+      "context": "외국 업체 / 미사일용 수동 방향탐지 센서",
+      "validated_labels": [
+        "ECCN-7A115"
+      ],
+      "primary_label": "ECCN-7A115",
+      "origin": "slice_seungwoo",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 7A115: 미사일용 수동형 방향탐지(전자기원 방위) 센서",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          252
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-seungwoo-028",
+      "lang": "en",
+      "query": "We provide know-how needed to operate and maintain military acoustic and radar gear that falls outside standard munitions lists. A partner abroad asked. What ECCN is this?",
+      "context": "overseas partner / military acoustic-radar support technology",
+      "validated_labels": [
+        "ECCN-6E619"
+      ],
+      "primary_label": "ECCN-6E619",
+      "origin": "slice_seungwoo",
+      "label_confidence": "medium",
+      "label_basis_corpus_text": "eCFR 6E619: 6B619 장비 운용·정비 기술",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          201
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.0,
+        "item_terms_missing_from_gold_text": [
+          "acoustic",
+          "asked",
+          "fall",
+          "list",
+          "military",
+          "munition",
+          "needed",
+          "operate",
+          "radar"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": true,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-seungwoo-029",
+      "lang": "ko",
+      "query": "로켓이나 무인기의 레이더 반사 면적을 측정하기 위해 특별히 만든 시스템을 외국 항공 회사에 공급하려 합니다. 사거리가 긴 비행체용이라 통제 여부가 궁금합니다.",
+      "context": "외국 항공회사 / 장거리 비행체 RCS 측정 시스템",
+      "validated_labels": [
+        "ECCN-6B108"
+      ],
+      "primary_label": "ECCN-6B108",
+      "origin": "slice_seungwoo",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 6B108: 300km 이상 로켓/미사일/UAV용 레이더 반사면적 측정 시스템",
+      "equivalent_labels": [
+        "5A218"
+      ],
+      "equivalent_labels_strict": [
+        "5A218"
+      ],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          246
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-seungwoo-030",
+      "lang": "en",
+      "query": "Our software boosts the performance of frequency converters and generators to reach a specified high level. A buyer overseas requested it. Which export classification fits?",
+      "context": "overseas buyer / frequency changer performance software",
+      "validated_labels": [
+        "ECCN-3D202"
+      ],
+      "primary_label": "ECCN-3D202",
+      "origin": "slice_seungwoo",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 3D202: 주파수 변환기/발전기 성능 향상 소프트웨어 (3A225 수준)",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          209
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.667,
+        "item_terms_missing_from_gold_text": [
+          "converter",
+          "reach"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [
+          "converter"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-yechan-001",
+      "lang": "ko",
+      "query": "국내 총기 액세서리 업체가 사냥용 조준경 모듈과 교체용 렌즈 하우징을 캐나다 유통사에 보내려 합니다. 군용 장비는 아니라고 하나 공개 통제목록 후보를 사전에 확인하고 싶습니다.",
+      "context": "캐나다 수출 / 총기용 광학 조준 보조장치",
+      "validated_labels": [
+        "ECCN-0A504"
+      ],
+      "primary_label": "ECCN-0A504",
+      "origin": "slice_yechan",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 총기용 광학 조준 관련 장치와 부속 요소를 다룬다.",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          139
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-yechan-002",
+      "lang": "ko",
+      "query": "시위 대응 장비 제조사가 차량 탑재형 고압 살수 장비를 중동 지역 공공기관에 납품하려고 합니다. 군사 장비가 아니라는 설명만으로 충분한지 후보 항목 검토가 필요합니다.",
+      "context": "중동 공공기관 납품 / 군중 통제용 고압 살수 장비",
+      "validated_labels": [
+        "ECCN-0A977"
+      ],
+      "primary_label": "ECCN-0A977",
+      "origin": "slice_yechan",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 군중 통제 목적으로 쓰이는 고압 분사 시스템과 관련 부품을 포괄한다.",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          107
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-yechan-003",
+      "lang": "ko",
+      "query": "방호장비 회사가 경찰용 헬멧과 투명 보호판을 남미 조달청 입찰에 공급하려 합니다. 일반 안전장비와 구분되는 통제목록 후보가 있는지 사전 확인이 필요합니다.",
+      "context": "남미 조달 입찰 / 경찰 방호구",
+      "validated_labels": [
+        "ECCN-0A979"
+      ],
+      "primary_label": "ECCN-0A979",
+      "origin": "slice_yechan",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 경찰용 머리 보호구와 방패 및 관련 요소를 대상으로 한다.",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          73
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-yechan-004",
+      "lang": "ko",
+      "query": "교정시설 장비 납품사가 해외 교도소에 전자식 구속 벨트와 다중 고정 의자 부품을 공급하려 합니다. 인권 민감 품목이라 수출 전 후보 분류를 확인하고 싶습니다.",
+      "context": "해외 교정시설 납품 / 구속 및 고정 장비",
+      "validated_labels": [
+        "ECCN-0A982"
+      ],
+      "primary_label": "ECCN-0A982",
+      "origin": "slice_yechan",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 법집행·구금 환경에서 쓰이는 구속 장치와 관련 부속품을 다룬다.",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          266
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-yechan-005",
+      "lang": "ko",
+      "query": "항공 부품사가 탄소섬유 적층 패널을 프랑스 위성 구조물 업체에 샘플로 보내려 합니다. 단순 복합재인지 통제목록 후보가 될 수 있는지 검토 요청입니다.",
+      "context": "프랑스 샘플 수출 / 항공우주용 복합재 패널",
+      "validated_labels": [
+        "ECCN-1A002"
+      ],
+      "primary_label": "ECCN-1A002",
+      "origin": "slice_yechan",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 복합재 구조물과 적층 형태의 재료를 대상으로 한다.",
+      "equivalent_labels": [
+        "1.A.2",
+        "8A102"
+      ],
+      "equivalent_labels_strict": [
+        "1.A.2",
+        "8A102"
+      ],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          79
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-yechan-006",
+      "lang": "ko",
+      "query": "연구소가 화학 누출 현장 대응용 휴대형 탐지기와 보호 장구 세트를 싱가포르 파트너에게 이전하려 합니다. 비군사용 안전 장비지만 후보 항목 확인이 필요합니다.",
+      "context": "싱가포르 이전 / 화학 탐지 및 보호 장비",
+      "validated_labels": [
+        "ECCN-1A004"
+      ],
+      "primary_label": "ECCN-1A004",
+      "origin": "slice_yechan",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 비군사용 보호·탐지 장비와 그 구성요소를 다룬다.",
+      "equivalent_labels": [
+        "1.A.4",
+        "8A104"
+      ],
+      "equivalent_labels_strict": [
+        "1.A.4",
+        "8A104"
+      ],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          138
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-yechan-007",
+      "lang": "ko",
+      "query": "방탄복 제조사가 경호업체용 경량 방호 조끼와 세라믹 삽입판을 아랍에미리트에 판매하려 합니다. 개인 보호용이라고 하지만 사전 후보검색이 필요합니다.",
+      "context": "아랍에미리트 판매 / 개인 방호복과 삽입판",
+      "validated_labels": [
+        "ECCN-1A005"
+      ],
+      "primary_label": "ECCN-1A005",
+      "origin": "slice_yechan",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 신체 방호 장비와 그 전용 구성요소를 포함한다.",
+      "equivalent_labels": [
+        "1.A.5",
+        "8A105"
+      ],
+      "equivalent_labels_strict": [
+        "1.A.5",
+        "8A105"
+      ],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          101
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-yechan-008",
+      "lang": "ko",
+      "query": "로봇 장비 업체가 의심 물체 제거용 원격 작업 플랫폼을 우크라이나 민간 복구 프로젝트에 기증하려 합니다. 폭발물 처리 가능성이 있어 후보 항목을 확인하고 싶습니다.",
+      "context": "우크라이나 복구 프로젝트 / 폭발물 처리용 원격 장비",
+      "validated_labels": [
+        "ECCN-1A006"
+      ],
+      "primary_label": "ECCN-1A006",
+      "origin": "slice_yechan",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 급조 폭발물 처리에 맞춘 장비와 관련 부속 요소를 다룬다.",
+      "equivalent_labels": [
+        "1.A.6",
+        "8A106"
+      ],
+      "equivalent_labels_strict": [
+        "1.A.6",
+        "8A106"
+      ],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          209
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-yechan-009",
+      "lang": "ko",
+      "query": "드론 개발사가 레이더와 열 신호를 낮추는 외장 코팅 시제품을 터키 협력사에 테스트용으로 보내려 합니다. 항공 플랫폼 적용 가능성이 있어 통제목록 후보를 봐야 합니다.",
+      "context": "터키 테스트 이전 / 무인기용 저피탐 코팅",
+      "validated_labels": [
+        "ECCN-1A101"
+      ],
+      "primary_label": "ECCN-1A101",
+      "origin": "slice_yechan",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 로켓·미사일·무인항공기에 적용 가능한 신호 저감 장치를 다룬다.",
+      "equivalent_labels": [
+        "3A501"
+      ],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          283
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-yechan-010",
+      "lang": "ko",
+      "query": "복합재 설비 회사가 항공기용 적층 부품 생산라인의 자동 검사 장비를 이탈리아 공장에 설치하려 합니다. 제작 장비 자체가 통제목록 후보인지 문의합니다.",
+      "context": "이탈리아 공장 설치 / 복합재 생산·검사 설비",
+      "validated_labels": [
+        "ECCN-1B001"
+      ],
+      "primary_label": "ECCN-1B001",
+      "origin": "slice_yechan",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 복합재 구조물 또는 섬유계 재료의 생산·검사 장비를 대상으로 한다.",
+      "equivalent_labels": [
+        "1.B.1",
+        "8B101"
+      ],
+      "equivalent_labels_strict": [
+        "1.B.1",
+        "8B101"
+      ],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          269
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-yechan-011",
+      "lang": "ko",
+      "query": "금속 소재 업체가 초내열 합금 분말 제조용 분무 설비를 인도 합작법인에 이전하려 합니다. 일반 분말 장비인지 통제목록 후보인지 사전 확인을 요청합니다.",
+      "context": "인도 합작법인 이전 / 합금 분말 제조 설비",
+      "validated_labels": [
+        "ECCN-1B002"
+      ],
+      "primary_label": "ECCN-1B002",
+      "origin": "slice_yechan",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 금속 합금 분말 또는 입자 재료 생산 장비를 다룬다.",
+      "equivalent_labels": [
+        "1.B.2",
+        "8B102"
+      ],
+      "equivalent_labels_strict": [
+        "1.B.2",
+        "8B102"
+      ],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          137
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-yechan-012",
+      "lang": "ko",
+      "query": "화학 장비 회사가 고점도 추진제 원료를 균질하게 섞는 산업용 혼합기를 브라질 로켓 연구기관에 납품하려 합니다. 연구용 장비라며 후보검색을 요청했습니다.",
+      "context": "브라질 연구기관 납품 / 추진제 원료 혼합 장비",
+      "validated_labels": [
+        "ECCN-1B117"
+      ],
+      "primary_label": "ECCN-1B117",
+      "origin": "slice_yechan",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 추진제 계열 물질 제조에 쓰이는 배치형 혼합 장비를 다룬다.",
+      "equivalent_labels": [
+        "3B014"
+      ],
+      "equivalent_labels_strict": [],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          132
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-yechan-013",
+      "lang": "en",
+      "query": "A carbon fiber producer is quoting continuous reinforcement tow and pre-impregnated sheets for a satellite structure vendor in Spain. The export team wants candidate categories before releasing samples.",
+      "context": "Spain satellite vendor / carbon fiber tow and prepreg sheets",
+      "validated_labels": [
+        "ECCN-1C010"
+      ],
+      "primary_label": "ECCN-1C010",
+      "origin": "slice_yechan",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 첨단 복합재에 쓰이는 섬유상 강화 재료를 다룬다.",
+      "equivalent_labels": [
+        "1.C.10",
+        "8C110"
+      ],
+      "equivalent_labels_strict": [
+        "1.C.10",
+        "8C110"
+      ],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          77
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": 0.0,
+        "item_terms_missing_from_gold_text": [
+          "carbon",
+          "continuous",
+          "fiber",
+          "impregnated",
+          "reinforcement",
+          "releasing",
+          "satellite",
+          "sheet",
+          "structure"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": true,
+        "discriminative_terms_missing_from_gold_text": [
+          "fiber",
+          "impregnated",
+          "reinforcement",
+          "sheet"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-yechan-014",
+      "lang": "en",
+      "query": "A chemical distributor plans to send solid rocket ingredient chemicals to a university propulsion lab in the United Kingdom. The customer says it is for academic testing, but the supplier needs a candidate-code review.",
+      "context": "United Kingdom university lab / propulsion ingredient chemicals",
+      "validated_labels": [
+        "ECCN-1C111"
+      ],
+      "primary_label": "ECCN-1C111",
+      "origin": "slice_yechan",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 추진제 성분으로 쓰일 수 있는 화학 재료를 다룬다.",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          134
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": 0.1,
+        "item_terms_missing_from_gold_text": [
+          "academic",
+          "code",
+          "ingredient",
+          "propulsion",
+          "review",
+          "rocket",
+          "say",
+          "solid",
+          "testing"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": true,
+        "discriminative_terms_missing_from_gold_text": [
+          "ingredient"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-yechan-015",
+      "lang": "ko",
+      "query": "정밀 베어링 업체가 고속 스핀들용 베어링 조립품을 독일 공작기계 제조사에 공급하려 합니다. 일반 산업재로만 보기 어려워 수출 전 후보 항목 확인을 요청했습니다.",
+      "context": "독일 공작기계 제조사 / 고속 스핀들 베어링",
+      "validated_labels": [
+        "ECCN-2A001"
+      ],
+      "primary_label": "ECCN-2A001",
+      "origin": "slice_yechan",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 고정밀 베어링 시스템과 관련 구성품을 다룬다.",
+      "equivalent_labels": [
+        "2.A.1",
+        "8A201"
+      ],
+      "equivalent_labels_strict": [
+        "2.A.1",
+        "8A201"
+      ],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          101
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-yechan-016",
+      "lang": "ko",
+      "query": "세라믹 부품 회사가 방사성 금속 용융 실험에 쓰는 특수 도가니를 캐나다 원자력 연구기관에 보내려 합니다. 실험 소모품이지만 후보검색이 필요합니다.",
+      "context": "캐나다 원자력 연구기관 / 방사성 금속용 도가니",
+      "validated_labels": [
+        "ECCN-2A225"
+      ],
+      "primary_label": "ECCN-2A225",
+      "origin": "slice_yechan",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 액체 상태의 방사성 금속에 견디는 도가니류를 다룬다.",
+      "equivalent_labels": [
+        "4A008"
+      ],
+      "equivalent_labels_strict": [
+        "4A008"
+      ],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          95
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-yechan-017",
+      "lang": "ko",
+      "query": "밸브 제조사가 고부식성 핵연료 공정 라인에 들어가는 소형 차단 밸브를 일본 플랜트 업체에 납품하려 합니다. 재질과 용도 때문에 사전 검토가 필요합니다.",
+      "context": "일본 플랜트 업체 / 핵연료 공정용 밸브",
+      "validated_labels": [
+        "ECCN-2A226"
+      ],
+      "primary_label": "ECCN-2A226",
+      "origin": "slice_yechan",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 특정 핵 관련 공정에 쓰일 수 있는 밸브류를 다룬다.",
+      "equivalent_labels": [
+        "4A013"
+      ],
+      "equivalent_labels_strict": [
+        "4A013"
+      ],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          82
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-yechan-018",
+      "lang": "ko",
+      "query": "보안검색 장비 업체가 원거리에서 의복 안 물체를 확인하는 밀리미터파 스캐너를 공항 운영사에 판매하려 합니다. 감시 장비 성격이 있어 후보 항목을 확인합니다.",
+      "context": "공항 운영사 판매 / 원거리 은닉물 탐지 장비",
+      "validated_labels": [
+        "ECCN-2A984"
+      ],
+      "primary_label": "ECCN-2A984",
+      "origin": "slice_yechan",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 특정 주파수 대역을 이용한 원거리 은닉물 탐지 장비를 다룬다.",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          253
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-yechan-019",
+      "lang": "ko",
+      "query": "발전기 업체가 이동식 전원 장치를 아프리카 광산 현장에 공급하려 합니다. 민수 장비지만 야외 작전 지원에 전용될 수 있어 사전 후보검색을 요청합니다.",
+      "context": "아프리카 광산 현장 / 이동식 발전 장치",
+      "validated_labels": [
+        "ECCN-2A994"
+      ],
+      "primary_label": "ECCN-2A994",
+      "origin": "slice_yechan",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 이동 가능한 발전 장치와 그 관련 구성요소를 다룬다.",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          79
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-yechan-021",
+      "lang": "ko",
+      "query": "소재 공정 장비사가 고온·고압으로 항공용 분말 부품을 치밀화하는 프레스를 스웨덴 연구소에 납품하려 합니다. 장비 사양이 민감해 후보 항목 확인이 필요합니다.",
+      "context": "스웨덴 연구소 / 고온 고압 치밀화 프레스",
+      "validated_labels": [
+        "ECCN-2B004"
+      ],
+      "primary_label": "ECCN-2B004",
+      "origin": "slice_yechan",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 고온에서 등방압 처리를 수행하는 프레스 장비를 다룬다.",
+      "equivalent_labels": [
+        "2.B.4",
+        "8B204"
+      ],
+      "equivalent_labels_strict": [
+        "2.B.4",
+        "8B204"
+      ],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          166
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-yechan-022",
+      "lang": "ko",
+      "query": "정밀측정 장비 회사가 항공기 엔진 부품 검사에 쓰는 3차원 좌표 측정 시스템을 이탈리아 고객에게 공급하려 합니다. 위치 피드백 정밀도가 높아 사전 검토가 필요합니다.",
+      "context": "이탈리아 고객 / 정밀 치수 측정 시스템",
+      "validated_labels": [
+        "ECCN-2B006"
+      ],
+      "primary_label": "ECCN-2B006",
+      "origin": "slice_yechan",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 고정밀 치수 측정·위치 피드백 관련 장비를 다룬다.",
+      "equivalent_labels": [
+        "2.B.6",
+        "8B206"
+      ],
+      "equivalent_labels_strict": [
+        "2.B.6",
+        "8B206"
+      ],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          151
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-yechan-023",
+      "lang": "en",
+      "query": "An automation integrator will export a sensor-guided industrial arm for handling hazardous samples inside a shielded laboratory in Finland. The buyer asks for a pre-triage category before procurement.",
+      "context": "Finland shielded laboratory / sensor-guided industrial arm",
+      "validated_labels": [
+        "ECCN-2B007"
+      ],
+      "primary_label": "ECCN-2B007",
+      "origin": "slice_yechan",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 특정 성능 조건을 갖춘 로봇 장치와 제어·작업 말단부를 다룬다.",
+      "equivalent_labels": [
+        "2.B.7",
+        "8B207"
+      ],
+      "equivalent_labels_strict": [
+        "2.B.7",
+        "8B207"
+      ],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          161
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.0,
+        "item_terms_missing_from_gold_text": [
+          "ask",
+          "automation",
+          "guided",
+          "handling",
+          "hazardous",
+          "industrial",
+          "procurement",
+          "sensor",
+          "shielded",
+          "triage"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": true,
+        "discriminative_terms_missing_from_gold_text": [
+          "automation",
+          "guided",
+          "industrial"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-yechan-024",
+      "lang": "en",
+      "query": "A chemical plant builder is quoting glass-lined reactors, corrosion-resistant heat exchangers, and process skid modules for a pesticide precursor facility in Malaysia. Compliance needs a controlled-list candidate before sending the proposal.",
+      "context": "Malaysia chemical facility / corrosion-resistant process equipment",
+      "validated_labels": [
+        "ECCN-2B350"
+      ],
+      "primary_label": "ECCN-2B350",
+      "origin": "slice_yechan",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 화학 제조 시설에 쓰이는 내식성 공정 장비군을 다룬다.",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          126
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": 0.071,
+        "item_terms_missing_from_gold_text": [
+          "corrosion",
+          "exchanger",
+          "glass",
+          "heat",
+          "lined",
+          "malaysia",
+          "pesticide",
+          "precursor",
+          "process",
+          "proposal",
+          "reactor",
+          "resistant",
+          "skid"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": true,
+        "discriminative_terms_missing_from_gold_text": [
+          "corrosion",
+          "exchanger",
+          "glass",
+          "heat",
+          "lined",
+          "precursor",
+          "reactor",
+          "resistant"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-yechan-025",
+      "lang": "ko",
+      "query": "해양로봇 업체가 심해 케이블 점검용 무인 잠수 조사정과 해상 회수용 소형 선박을 노르웨이 에너지 회사에 판매하려 합니다. 해양 장비 후보 항목을 확인해야 합니다.",
+      "context": "노르웨이 에너지 회사 / 무인 잠수 조사정과 지원 선박",
+      "validated_labels": [
+        "ECCN-8A001"
+      ],
+      "primary_label": "ECCN-8A001",
+      "origin": "slice_yechan",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 수중 운용 플랫폼과 수상 운용 선박을 다룬다.",
+      "equivalent_labels": [
+        "8.A.1",
+        "8A801"
+      ],
+      "equivalent_labels_strict": [
+        "8.A.1",
+        "8A801"
+      ],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          84
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-yechan-026",
+      "lang": "ko",
+      "query": "선박 장비 회사가 수중 위치추적 모듈과 저소음 추진 부품을 싱가포르 해양 연구기관에 공급하려 합니다. 해저 조사용이지만 공개 목록 후보 확인이 필요합니다.",
+      "context": "싱가포르 해양 연구기관 / 수중 위치추적 및 추진 장비",
+      "validated_labels": [
+        "ECCN-8A002"
+      ],
+      "primary_label": "ECCN-8A002",
+      "origin": "slice_yechan",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 해양 시스템과 관련 장비·부품을 대상으로 한다.",
+      "equivalent_labels": [
+        "8.A.2",
+        "8A802"
+      ],
+      "equivalent_labels_strict": [
+        "8.A.2",
+        "8A802"
+      ],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          95
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-yechan-027",
+      "lang": "ko",
+      "query": "조선소가 해저 관측용 소형 잠수정을 호주 대학 컨소시엄에 인도하려 합니다. 민간 연구 목적이지만 잠수 선박 계열 후보 항목을 먼저 확인하려 합니다.",
+      "context": "호주 대학 컨소시엄 / 해저 관측용 잠수정",
+      "validated_labels": [
+        "ECCN-8A620"
+      ],
+      "primary_label": "ECCN-8A620",
+      "origin": "slice_yechan",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 잠수 선박과 해양 관측 관련 물품을 다룬다.",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          93
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-yechan-028",
+      "lang": "en",
+      "query": "A ship model testing facility plans to export a low-noise hydrodynamic test channel for measuring propeller signatures to a university in Denmark. The team wants a retrieval label before contracting.",
+      "context": "Denmark university / low-noise hydrodynamic test channel",
+      "validated_labels": [
+        "ECCN-8B001"
+      ],
+      "primary_label": "ECCN-8B001",
+      "origin": "slice_yechan",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 선박 모형의 음향 특성 측정에 쓰이는 저소음 유동 시험 설비를 다룬다.",
+      "equivalent_labels": [
+        "8.B.1",
+        "8B801"
+      ],
+      "equivalent_labels_strict": [
+        "8.B.1",
+        "8B801"
+      ],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          265
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.273,
+        "item_terms_missing_from_gold_text": [
+          "channel",
+          "contracting",
+          "hydrodynamic",
+          "label",
+          "propeller",
+          "signature",
+          "test",
+          "testing"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [
+          "channel",
+          "hydrodynamic",
+          "propeller",
+          "signature"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-yechan-029",
+      "lang": "en",
+      "query": "A buoyancy material supplier is sending glass-microsphere foam blocks for deep-sea instrument housings to a Chilean oceanography project. The export group needs pre-triage because the blocks are designed for long underwater deployment.",
+      "context": "Chile oceanography project / deep-sea buoyancy foam blocks",
+      "validated_labels": [
+        "ECCN-8C001"
+      ],
+      "primary_label": "ECCN-8C001",
+      "origin": "slice_yechan",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 수중 사용을 위해 설계된 부력성 복합 발포 재료를 다룬다.",
+      "equivalent_labels": [
+        "8.C.1",
+        "8C801"
+      ],
+      "equivalent_labels_strict": [
+        "8.C.1",
+        "8C801"
+      ],
+      "label_issues": [
+        "gold_text_is_heading_stub"
+      ],
+      "text_completeness": {
+        "gold_text_chars": [
+          108
+        ],
+        "gold_is_heading_stub": [
+          true
+        ],
+        "item_term_coverage": 0.231,
+        "item_terms_missing_from_gold_text": [
+          "block",
+          "buoyancy",
+          "deep",
+          "deployment",
+          "glass",
+          "housing",
+          "material",
+          "microsphere",
+          "oceanography",
+          "triage"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": true,
+        "discriminative_terms_missing_from_gold_text": [
+          "block",
+          "deep",
+          "glass",
+          "housing"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "g-yechan-030",
+      "lang": "en",
+      "query": "An offshore software vendor will provide a control program for an unmanned subsea inspection vehicle used in petroleum pipeline surveys in Qatar. The company wants a category candidate before delivery.",
+      "context": "Qatar offshore survey / subsea inspection vehicle control program",
+      "validated_labels": [
+        "ECCN-8D999"
+      ],
+      "primary_label": "ECCN-8D999",
+      "origin": "slice_yechan",
+      "label_confidence": "high",
+      "label_basis_corpus_text": "eCFR 항목이 석유·가스 산업용 무인 수중 장비 운용 프로그램을 다룬다.",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          116
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.429,
+        "item_terms_missing_from_gold_text": [
+          "inspection",
+          "pipeline",
+          "subsea",
+          "survey"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [
+          "survey"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    }
+  ]
+}

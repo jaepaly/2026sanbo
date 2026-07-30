@@ -1,0 +1,504 @@
+{
+  "generated_by": "build_corpus_clean.py --v2",
+  "schema_version": 2,
+  "seed": 20260730,
+  "deterministic": true,
+  "env": {
+    "numpy": "2.2.6",
+    "python": "3.10.5",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "torch": "2.6.0+cpu",
+    "sentence_transformers": "3.4.1",
+    "corpus_build_seed": 20260730
+  },
+  "source_files": {
+    "wassenaar_2025.pdf": {
+      "path": "data\\wassenaar_2025.pdf",
+      "sha256": "1a92a954dc51211f6f39a8780525248d0338bc116a23f80164e2aa6541be43fb"
+    },
+    "india_scomet_2024_official.pdf": {
+      "path": "data\\india_scomet_2024_official.pdf",
+      "sha256": "4e26322b3f05bea962b7451e66db967dc1ad8ed8816254e663dde80cc410681f"
+    },
+    "ecfr_supp1.json": {
+      "path": "data\\corpus\\ecfr_supp1.json",
+      "sha256": "e3df05c369a9431a5b9755f75e1528a9b65cc67254f50d5992f5c182560f29f9"
+    }
+  },
+  "source_sha256_vs_v1_report": {
+    "wassenaar_2025.pdf": {
+      "recorded_in_v1_report": "1a92a954dc51211f6f39a8780525248d0338bc116a23f80164e2aa6541be43fb",
+      "actual_now": "1a92a954dc51211f6f39a8780525248d0338bc116a23f80164e2aa6541be43fb",
+      "match": true
+    },
+    "india_scomet_2024_official.pdf": {
+      "recorded_in_v1_report": "4e26322b3f05bea962b7451e66db967dc1ad8ed8816254e663dde80cc410681f",
+      "actual_now": "4e26322b3f05bea962b7451e66db967dc1ad8ed8816254e663dde80cc410681f",
+      "match": true
+    },
+    "ecfr_supp1.json": {
+      "recorded_in_v1_report": "c15d80cd131e7f0e0ee23fc8af3f729e5683b17b908c3bd927a7392aa7c43f04",
+      "actual_now": "e3df05c369a9431a5b9755f75e1528a9b65cc67254f50d5992f5c182560f29f9",
+      "match": false
+    }
+  },
+  "outputs": {
+    "combined_v2.json": {
+      "entries": 1783
+    },
+    "combined.json": {
+      "entries": 1797,
+      "status": "unchanged — v2 는 이 파일을 절대 덮어쓰지 않는다"
+    }
+  },
+  "raw_count_by_source": {
+    "wassenaar_2025": 568,
+    "india_scomet_2024": 578,
+    "ecfr_part774": 637
+  },
+  "kept_count_by_source": {
+    "ecfr_part774": 637,
+    "india_scomet_2024": 578,
+    "wassenaar_2025": 568
+  },
+  "dropped_count_by_reason": {},
+  "dropped_examples": [],
+  "duplicate_count": 0,
+  "duplicate_examples": [],
+  "before_after": {
+    "total_entries_before": 1797,
+    "total_entries_after": 1783,
+    "total_chars_before": 555351,
+    "total_chars_after": 1030954,
+    "legacy_dropped_count_by_reason": {
+      "non_control_or_reserved_heading": 16,
+      "invalid_code_format": 15,
+      "short_fragment": 1
+    },
+    "by_source": {
+      "ecfr_part774": {
+        "entries_before": 637,
+        "entries_after": 637,
+        "entries_delta": 0,
+        "chars_before": 105567,
+        "chars_after": 105567,
+        "chars_delta": 0,
+        "codes_only_before": [],
+        "codes_only_after": [],
+        "shared_codes": 637,
+        "shared_text_grew": 0,
+        "shared_text_shrank": 0,
+        "shared_text_unchanged": 637,
+        "unterminated_before": {
+          "n": 637,
+          "unterminated": 1,
+          "ratio": 0.0016
+        },
+        "unterminated_after": {
+          "n": 637,
+          "unterminated": 1,
+          "ratio": 0.0016
+        }
+      },
+      "india_scomet_2024": {
+        "entries_before": 575,
+        "entries_after": 578,
+        "entries_delta": 3,
+        "chars_before": 195452,
+        "chars_after": 574007,
+        "chars_delta": 378555,
+        "codes_only_before": [],
+        "codes_only_after": [
+          "0A307",
+          "3D002",
+          "3D003"
+        ],
+        "shared_codes": 575,
+        "shared_text_grew": 137,
+        "shared_text_shrank": 18,
+        "shared_text_unchanged": 420,
+        "unterminated_before": {
+          "n": 575,
+          "unterminated": 199,
+          "ratio": 0.3461
+        },
+        "unterminated_after": {
+          "n": 578,
+          "unterminated": 196,
+          "ratio": 0.3391
+        }
+      },
+      "wassenaar_2025": {
+        "entries_before": 585,
+        "entries_after": 568,
+        "entries_delta": -17,
+        "chars_before": 254332,
+        "chars_after": 351380,
+        "chars_delta": 97048,
+        "codes_only_before": [
+          "1.A.2.a.1",
+          "1.A.n",
+          "1.D.2",
+          "2.A.n",
+          "2.A.t",
+          "2.D.1",
+          "3.A.1.a.10",
+          "3.A.2.g.1",
+          "3.A.n",
+          "3.B.1.a.2",
+          "4.A.1.a.2",
+          "4.A.3.b",
+          "4.A.3.c",
+          "5.A.1.h.1",
+          "5.A.n",
+          "5.B.1.a",
+          "5.D.1.a",
+          "5.D.1.b",
+          "5.E.1.a",
+          "6.A.2.a.1.b",
+          "6.A.2.a.1.c",
+          "6.A.2.a.1.d",
+          "6.A.4.d.2.a",
+          "6.A.5.b.6.c",
+          "6.A.6.a.1",
+          "6.A.6.c.1",
+          "6.A.6.g",
+          "6.A.6.h",
+          "6.A.8.d",
+          "6.A.8.h",
+          "6.A.8.l.3",
+          "6.D.1",
+          "7.D.3.a",
+          "7.D.3.c",
+          "7.D.3.d.1",
+          "7.D.3.d.4",
+          "7.D.4.a",
+          "8.A.1.c.1",
+          "8.A.2.o.3.b",
+          "8.E.2.a",
+          "9.D",
+          "9.D.4.a",
+          "9.E.3.a.1",
+          "9.E.3.a.3.a"
+        ],
+        "codes_only_after": [
+          "1.A",
+          "1.E",
+          "2.C",
+          "2.E",
+          "3.A.1.b.4.b.4",
+          "3.A.2.d.4",
+          "3.A.2.d.5",
+          "3.A.2.d.6",
+          "3.E",
+          "4.C",
+          "4.E",
+          "5.D.2.b",
+          "6.A.1.a.1.a.2",
+          "6.A.1.a.1.a.3",
+          "6.A.1.a.1.c.1",
+          "6.A.1.a.1.c.2",
+          "6.A.1.a.2.a.1",
+          "6.A.5.b.6.c.2",
+          "6.A.5.d.1.d.2",
+          "6.A.5.d.1.d.3",
+          "6.A.5.d.1.d.4",
+          "6.E",
+          "7.C",
+          "7.E",
+          "8.A",
+          "8.E",
+          "9.C"
+        ],
+        "shared_codes": 541,
+        "shared_text_grew": 118,
+        "shared_text_shrank": 40,
+        "shared_text_unchanged": 383,
+        "unterminated_before": {
+          "n": 585,
+          "unterminated": 161,
+          "ratio": 0.2752
+        },
+        "unterminated_after": {
+          "n": 568,
+          "unterminated": 97,
+          "ratio": 0.1708
+        }
+      }
+    }
+  },
+  "text_completeness_by_source": {
+    "ecfr_part774": {
+      "full": 637
+    },
+    "india_scomet_2024": {
+      "full": 563,
+      "stub": 15
+    },
+    "wassenaar_2025": {
+      "heading_only": 37,
+      "full": 494,
+      "stub": 37
+    }
+  },
+  "parse_flag_counts": {
+    "prebuilt_json_source": 637,
+    "unterminated_text": 294,
+    "page_continuation": 175,
+    "spans_many_pages": 27,
+    "duplicate_occurrences": 10,
+    "table_row_merged": 61,
+    "footnote_marker_stripped": 4
+  },
+  "defect_metrics": {
+    "defect_1_page_boundary_truncation": {
+      "legacy_page_end_flushes": {
+        "wassenaar_2025": 167,
+        "india_scomet_2024": 251
+      },
+      "legacy_silently_discarded_lines": {
+        "wassenaar_2025": 3544,
+        "india_scomet_2024": 5093
+      },
+      "legacy_silently_discarded_chars": {
+        "wassenaar_2025": 172620,
+        "india_scomet_2024": 278443
+      },
+      "note": "버려진 행에는 표지·목차·정의절 등 항목에 속하지 않는 행도 포함된다. 실제 회복량은 comparison[*].chars_delta 로 판단하라.",
+      "v2_entries_flagged_page_continuation": 175
+    },
+    "defect_2_numbered_list_as_fake_entry": {
+      "legacy_invalid_code_occurrences_in_pdf": 26,
+      "legacy_invalid_codes_unique": 15,
+      "legacy_invalid_codes": [
+        "2.I.n",
+        "3.I.n",
+        "5.C.P",
+        "2.I.s",
+        "2.T.o",
+        "3.A.2.d.4.A",
+        "3.A.2.d.5.A",
+        "3.A.2.d.6.A",
+        "1.T.o",
+        "1.I.t",
+        "2.I.t",
+        "2.C.W",
+        "1.C.W",
+        "4.C.W",
+        "2.A.P"
+      ],
+      "legacy_disposition": "corpus_quality_report.json 이 invalid_code_format 15건으로 드롭 — 본문까지 폐기",
+      "legacy_fake_codes_that_survived_into_combined_json": {
+        "1.A.n": {
+          "page": 4,
+          "text_len": 68,
+          "text_head": "organic \"matrix\" and \"fibrous or filamentary materials\" specified in"
+        },
+        "2.A.n": {
+          "page": 45,
+          "text_len": 39,
+          "text_head": "activator (normally a halide salt); and"
+        },
+        "2.A.t": {
+          "page": 29,
+          "text_len": 175,
+          "text_head": "least two rotary axes having all of the following: a. Can be coordinated simulta"
+        },
+        "3.A.n": {
+          "page": 45,
+          "text_len": 757,
+          "text_head": "inert powder, most frequently alumina. The substrate and powder mixture is conta"
+        },
+        "5.A.n": {
+          "page": 106,
+          "text_len": 630,
+          "text_head": "assembled array of less than 40 mm in diameter; 6. Not used since 2007 7. Hydrop"
+        }
+      },
+      "legacy_fake_codes_that_survived_note": "코드 문법 검사(^[0-9]\\.[A-E](\\.[a-z])?...)를 통과해 v1 코퍼스에 실제로 가짜 문서로 들어가 있던 항목들이다. 리포트의 invalid_code_format 15건 바깥에 있었다.",
+      "v2_disposition": "WASS_ENTRY_V2_RE 가 코드 성분마다 '마침표+공백'을 요구해 번호목록을 애초에 항목으로 보지 않는다. 남는 예외는 repair_wassenaar_code() 가 처리한다.",
+      "v2_invalid_code_entries": 0,
+      "v2_code_repaired": 0,
+      "v2_code_repaired_codes": [],
+      "v2_recovered_real_entries": {
+        "3.A.2.d.4": 584,
+        "3.A.2.d.5": 921,
+        "3.A.2.d.6": 558
+      },
+      "v2_recovered_note": "v1이 3.A.2.d.4.A / .5.A / .6.A 라는 잘못된 코드로 만들었다가 invalid_code_format 으로 통째로 버린 3개 항목이다. v2에서는 정상 코드로 복원됐다."
+    },
+    "defect_3_stub_and_footer_contamination": {
+      "legacy_not_used_since_entries_wassenaar": 44,
+      "legacy_reserved_entries_scomet": 16,
+      "legacy_footer_residue_entries_wassenaar": 59,
+      "legacy_footer_pattern_missed": "skip_tail=r'\\d+\\s*-\\s*\\d+\\s*-\\s*\\d+$' 는 '15-01-2026 - 95 -' 변형을 놓친다",
+      "v2_stub_entries": 52,
+      "v2_heading_only_entries": 37,
+      "v2_full_entries": 1694,
+      "v2_footer_residue_entries": 0
+    },
+    "defect_4_literal_dot_star": {
+      "verdict": "정규식 잔재가 아니다 — 원문 각주 표식(*)이다",
+      "evidence": [
+        "wassenaar_2025.pdf p130 행 '2.d.*' (각주 표식)",
+        "wassenaar_2025.pdf p157 행 '... see the Munitions List.*'",
+        "두 페이지 모두 각주 본문 '* The Russian Federation and Ukraine view this list as a reference list ...' 를 포함"
+      ],
+      "legacy_entries_with_literal_dot_star": 2,
+      "legacy_codes": [
+        "6.A.5.f",
+        "9.A"
+      ],
+      "v2_entries_with_literal_dot_star": 0,
+      "v2_footnote_marker_stripped": 4
+    },
+    "defect_5_scomet_table_row_split": {
+      "note": "SCOMET 원문은 좌측 코드 열이 하위 문단마다 반복되는 표다. v1은 매 행을 새 항목으로 만들고 중복 제거에서 하나만 남겨 하위 문단을 잃었다.",
+      "legacy_rows_with_lowercase_description": 380,
+      "v2_entries_flagged_table_row_merged": 61
+    },
+    "defect_6_annex_listing_as_primary_entry": {
+      "note": "Wassenaar 170-180쪽 Sensitive List / Very Sensitive List 는 본문 항목이 아니라 코드 나열 부속서다. v1은 여기서도 항목을 생성했다.",
+      "legacy_annex_only_codes": 34,
+      "legacy_annex_only_code_list": [
+        "1.A.2.a.1",
+        "1.D.2",
+        "2.D.1",
+        "3.A.2.g.1",
+        "3.B.1.a.2",
+        "4.A.1.a.2",
+        "4.A.3.b",
+        "4.A.3.c",
+        "5.B.1.a",
+        "5.D.1.a",
+        "5.D.1.b",
+        "5.E.1.a",
+        "6.A.2.a.1.b",
+        "6.A.2.a.1.c",
+        "6.A.2.a.1.d",
+        "6.A.6.a.1",
+        "6.A.6.c.1",
+        "6.A.6.g",
+        "6.A.6.h",
+        "6.A.8.d",
+        "6.A.8.h",
+        "6.A.8.l.3",
+        "6.D.1",
+        "7.D.3.a",
+        "7.D.3.c",
+        "7.D.3.d.1",
+        "7.D.3.d.4",
+        "7.D.4.a",
+        "8.A.1.c.1",
+        "8.A.2.o.3.b",
+        "9.D",
+        "9.D.4.a",
+        "9.E.3.a.1",
+        "9.E.3.a.3.a"
+      ],
+      "v2_disposition": "DUAL-USE LIST 러닝 헤더가 있는 페이지에서만 항목을 생성",
+      "annex_note_category1": "Category 1 의 'ANNEX / LIST - \"EXPLOSIVES\"'(23-24쪽)도 항목 코드가 없어 직전 항목 1.E.2.g 에 흡수됐다(134자 -> 5,092자). v2는 ANNEX 행에서 누적을 끊는다."
+    },
+    "wassenaar_code_set_delta": {
+      "lost_total": 44,
+      "lost_fake_numbered_list": {
+        "n": 5,
+        "codes": [
+          "1.A.n",
+          "2.A.n",
+          "2.A.t",
+          "3.A.n",
+          "5.A.n"
+        ]
+      },
+      "lost_annex_only": {
+        "n": 34,
+        "codes": [
+          "1.A.2.a.1",
+          "1.D.2",
+          "2.D.1",
+          "3.A.2.g.1",
+          "3.B.1.a.2",
+          "4.A.1.a.2",
+          "4.A.3.b",
+          "4.A.3.c",
+          "5.B.1.a",
+          "5.D.1.a",
+          "5.D.1.b",
+          "5.E.1.a",
+          "6.A.2.a.1.b",
+          "6.A.2.a.1.c",
+          "6.A.2.a.1.d",
+          "6.A.6.a.1",
+          "6.A.6.c.1",
+          "6.A.6.g",
+          "6.A.6.h",
+          "6.A.8.d",
+          "6.A.8.h",
+          "6.A.8.l.3",
+          "6.D.1",
+          "7.D.3.a",
+          "7.D.3.c",
+          "7.D.3.d.1",
+          "7.D.3.d.4",
+          "7.D.4.a",
+          "8.A.1.c.1",
+          "8.A.2.o.3.b",
+          "9.D",
+          "9.D.4.a",
+          "9.E.3.a.1",
+          "9.E.3.a.3.a"
+        ]
+      },
+      "lost_cross_reference_false_positive": {
+        "n": 5,
+        "codes": [
+          "3.A.1.a.10",
+          "5.A.1.h.1",
+          "6.A.4.d.2.a",
+          "6.A.5.b.6.c",
+          "8.E.2.a"
+        ]
+      },
+      "gained_total": 27,
+      "gained_codes": [
+        "1.A",
+        "1.E",
+        "2.C",
+        "2.E",
+        "3.A.1.b.4.b.4",
+        "3.A.2.d.4",
+        "3.A.2.d.5",
+        "3.A.2.d.6",
+        "3.E",
+        "4.C",
+        "4.E",
+        "5.D.2.b",
+        "6.A.1.a.1.a.2",
+        "6.A.1.a.1.a.3",
+        "6.A.1.a.1.c.1",
+        "6.A.1.a.1.c.2",
+        "6.A.1.a.2.a.1",
+        "6.A.5.b.6.c.2",
+        "6.A.5.d.1.d.2",
+        "6.A.5.d.1.d.3",
+        "6.A.5.d.1.d.4",
+        "6.E",
+        "7.C",
+        "7.E",
+        "8.A",
+        "8.E",
+        "9.C"
+      ],
+      "identity": "585 - 44 + 27 = 568"
+    }
+  },
+  "notes": [
+    "combined.json / corpus_quality_report.json 은 v1 그대로 보존한다. 교체 시점은 팀 결정 사항.",
+    "source_sha256_vs_v1_report 를 확인하라. match=false 인 원본이 있으면 v1 코퍼스는 현재 원본으로 재현되지 않는다(확인 필요).",
+    "text_completeness='stub' 항목은 검색 코퍼스에서 제외하고 쓰는 것을 권장한다 (예: [e for e in corpus if e['text_completeness'] != 'stub']).",
+    "SCOMET 파서의 스킵 집합('Technical Note' 등)은 v1과 동일하게 유지했다. 이 스킵이 본문 일부를 버리는지는 별도 검토 필요(확인 필요).",
+    "Wassenaar MUNITIONS LIST(ML*) 항목은 v1/v2 모두 코퍼스에 포함되지 않는다. 코드 문법이 dual-use 정규식과 다르기 때문이다(확인 필요: 포함 여부는 설계 결정).",
+    "official_route 는 보수적 워크플로 힌트이며 법적 결론이 아니다."
+  ]
+}

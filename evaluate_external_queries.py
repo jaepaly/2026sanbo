@@ -14,8 +14,7 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
-import numpy as np
-
+import retrieval_core as rc
 from run_experiments import BM25, build_doc_text
 
 ROOT = Path(__file__).resolve().parent
@@ -134,8 +133,13 @@ def evaluate_mode(
     for query in queries:
         query_text = select_query_text(query, use_query_en)
         scores = index.scores(query_text)
-        ranked = np.argsort(-scores)
-        top10_indices = ranked[:10]
+        # C1 정정: `np.argsort(-scores)` 는 동점의 순서를 정렬 구현에 맡긴다. BM25 점수
+        # 벡터가 전부 0인 질의(어휘 겹침 0 = 검색 실패)에서는 전 문서가 동점이므로
+        # '상위 10건'이 사실상 코퍼스 앞머리 10행이었고, 그 안에 정답이 있으면 적중으로
+        # 집계됐다. `rc.retrieve` 는 점수 내림차순 + 인덱스 오름차순으로 결정론화하고
+        # 전점수 0은 빈 결과(검색 실패)로 돌려준다.
+        no_signal = not rc.has_signal(scores)
+        top10_indices = rc.retrieve(scores, 10, zero_is_failure=True)
         top10_codes = [codes[i] for i in top10_indices]
         top10_scores = [float(scores[i]) for i in top10_indices]
         top10_normalized = [normalize_code(code) for code in top10_codes]
@@ -186,7 +190,8 @@ def evaluate_mode(
             "hit@5": int(any(rank <= 5 for rank in hit_ranks)),
             "hit@10": int(any(rank <= 10 for rank in hit_ranks)),
             "max_score": round(float(top10_scores[0]) if top10_scores else 0.0, 4),
-            "zero_score": bool(top10_scores and float(top10_scores[0]) == 0.0),
+            # 검색 실패는 이제 빈 결과로 나오므로 top10_scores 가 아니라 점수 벡터에서 본다.
+            "zero_score": bool(no_signal),
         }
         row["failure_type"] = failure_type_for_row(row)
         per_query.append(row)

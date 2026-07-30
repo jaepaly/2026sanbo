@@ -1,361 +1,598 @@
 #!/usr/bin/env python3
-"""Create TASK F figures from existing output/*.json files only.
+"""논문용 figure 생성 — 검증셋 n=71 기준으로 재작성.
 
-The figures intentionally include source file names, sample sizes, and compact
-value tables so the PNGs can be checked against the JSON without guessing.
-No retrieval, embedding, reranking, or external API call is run here.
+정정 내역 (감사 항목 M9-B / M14-D5):
+
+1. **stale 데이터 소스 교체.**
+   - `fig_validated_retriever`는 `output/validated_eval.json`(n=13, hybrid R@10
+     0.2308)을 읽고 있었다. 논문 헤드라인은 n=71의 0.578이다. 이제
+     `output/validated_suite.json`(없으면 `..._smoke.json`)을 읽는다.
+   - `fig_exposure_recall`은 `output/experiment_logs.json`, 즉 **자기참조 합성셋**을
+     읽고 있었다. 논문은 "합성셋이 아니라 검증셋으로 입증"이라고 주장한다. 이제
+     합성 / 검증 2패널로 분리해 둘을 나란히 놓고, 어느 쪽이 자기참조인지 그림
+     안에 명시한다.
+
+2. **오차막대 추가.** 이전 판은 점값만 찍었다. 이제
+   - 절대율(R@10)에는 Clopper-Pearson 정확 이항구간,
+   - 짝지음 차이(예: hybrid - BM25)에는 paired bootstrap 95% CI를 쓴다.
+   두 구간은 다른 질문에 답하므로 그림 안에 어느 쪽인지 표시한다.
+
+3. **fig_embedding_robustness 신설.** 모델 교체에도 dense 성분의 우위가 유지되는지
+   보여주는 그림이 없었다.
+
+4. **`docs/figures/fig1~3.png` 폐기 결정.** 세 PNG는 생성 코드가 저장소에 없고
+   README·PAPER·docs에서 참조 0건이다. 재생성이 불가능하므로 **폐기**로 판단한다
+   (여기서 대체 생성하지 않는다). 근거와 결정은 README.md '그림' 절에 남겼다.
+   파일 자체는 감사 목적으로 삭제하지 않는다.
+
+렌더러: matplotlib (이전 판은 Pillow로 축·눈금을 직접 그렸다). 한글 라벨은 Windows의
+'Malgun Gothic'을 쓰고, 폰트가 없으면 영문 라벨로 폴백하며 그 사실을 stdout에 출력한다.
+DPI 200.
+
+새 검색·임베딩·외부 API 호출은 하지 않는다(기존 output/*.json만 읽는다).
 """
 
 from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Iterable
+from typing import Any
 
-from PIL import Image, ImageDraw, ImageFont
+import matplotlib
+
+matplotlib.use("Agg")
+import matplotlib.font_manager as fm
+import matplotlib.pyplot as plt
+import numpy as np
+
+import retrieval_core as rc
 
 ROOT = Path(__file__).resolve().parent
 OUT_DIR = ROOT / "output"
+
+DPI = 200
+SEED = 20260626
+BOOTSTRAP_ITERS = 20000
 
 BLUE = "#4C78A8"
 ORANGE = "#F58518"
 GREEN = "#54A24B"
 PURPLE = "#B279A2"
+RED = "#D62728"
 GRAY = "#666666"
-DARK = "#222222"
-GRID = "#D9D9D9"
+
+# 한국어 우선 폰트 후보 (Windows 기본 → 대체 → 폴백)
+KOREAN_FONTS = ["Malgun Gothic", "NanumGothic", "Hancom Gothic", "Gulim", "Batang"]
+KOREAN_OK = False
+CHOSEN_FONT = None
 
 
-def load_json(name: str) -> dict:
-    return json.loads((OUT_DIR / name).read_text(encoding="utf-8"))
-
-
-def font(size: int, bold: bool = False) -> ImageFont.FreeTypeFont | ImageFont.ImageFont:
-    candidates = [
-        r"C:\Windows\Fonts\arialbd.ttf" if bold else r"C:\Windows\Fonts\arial.ttf",
-        r"C:\Windows\Fonts\segoeuib.ttf" if bold else r"C:\Windows\Fonts\segoeui.ttf",
-        r"C:\Windows\Fonts\malgunbd.ttf" if bold else r"C:\Windows\Fonts\malgun.ttf",
-    ]
-    for candidate in candidates:
-        path = Path(candidate)
-        if path.exists():
-            return ImageFont.truetype(str(path), size)
-    return ImageFont.load_default()
-
-
-FONT_TITLE = font(30, True)
-FONT_SUBTITLE = font(18)
-FONT_BODY = font(18)
-FONT_SMALL = font(15)
-FONT_TABLE = font(16)
-FONT_TABLE_BOLD = font(16, True)
-
-
-def fmt4(value: float) -> str:
-    return f"{value:.4f}"
-
-
-def fmt2(value: float) -> str:
-    return f"{value:.2f}"
-
-
-def scale(value: float, lo: float, hi: float, start: float, end: float) -> float:
-    if abs(hi - lo) < 1e-12:
-        return (start + end) / 2
-    return start + (value - lo) * (end - start) / (hi - lo)
-
-
-def draw_header(draw: ImageDraw.ImageDraw, title: str, subtitle: str) -> None:
-    draw.text((70, 35), title, fill=DARK, font=FONT_TITLE)
-    draw.text((70, 76), subtitle, fill=GRAY, font=FONT_SUBTITLE)
-
-
-def draw_axes(
-    draw: ImageDraw.ImageDraw,
-    box: tuple[int, int, int, int],
-    x_min: float,
-    x_max: float,
-    y_min: float,
-    y_max: float,
-    x_ticks: Iterable[float],
-    y_ticks: Iterable[float],
-    x_label: str,
-    y_label: str,
-) -> None:
-    left, top, right, bottom = box
-    for y in y_ticks:
-        y_px = scale(y, y_min, y_max, bottom, top)
-        draw.line((left, y_px, right, y_px), fill=GRID, width=1)
-        draw.text((left - 62, y_px - 10), f"{y:.3f}" if y_max - y_min < 0.1 else f"{y:.2f}", fill=DARK, font=FONT_SMALL)
-    for x in x_ticks:
-        x_px = scale(x, x_min, x_max, left, right)
-        draw.line((x_px, bottom, x_px, bottom + 7), fill=DARK, width=2)
-        label = f"{x:g}"
-        draw.text((x_px - 14, bottom + 12), label, fill=DARK, font=FONT_SMALL)
-    draw.line((left, bottom, right, bottom), fill=DARK, width=2)
-    draw.line((left, top, left, bottom), fill=DARK, width=2)
-    draw.text(((left + right) // 2 - 120, bottom + 45), x_label, fill=DARK, font=FONT_BODY)
-    draw.text((left, top - 30), y_label, fill=DARK, font=FONT_BODY)
-
-
-def draw_value_label(draw: ImageDraw.ImageDraw, xy: tuple[float, float], text: str, color: str, offset: tuple[int, int]) -> None:
-    x, y = xy
-    dx, dy = offset
-    pos = (x + dx, y + dy)
-    bbox = draw.textbbox(pos, text, font=FONT_SMALL)
-    pad = 3
-    draw.rectangle((bbox[0] - pad, bbox[1] - pad, bbox[2] + pad, bbox[3] + pad), fill="white")
-    draw.text(pos, text, fill=color, font=FONT_SMALL)
-
-
-def draw_legend(draw: ImageDraw.ImageDraw, x: int, y: int, items: list[tuple[str, str]]) -> None:
-    for idx, (label, color) in enumerate(items):
-        yy = y + idx * 30
-        draw.line((x, yy + 10, x + 36, yy + 10), fill=color, width=5)
-        draw.ellipse((x + 12, yy + 2, x + 24, yy + 14), fill=color)
-        draw.text((x + 46, yy - 2), label, fill=DARK, font=FONT_BODY)
-
-
-def draw_table(
-    draw: ImageDraw.ImageDraw,
-    x: int,
-    y: int,
-    headers: list[str],
-    rows: list[list[str]],
-    widths: list[int],
-    row_h: int = 34,
-) -> None:
-    total_w = sum(widths)
-    draw.rectangle((x, y, x + total_w, y + row_h), fill="#F2F2F2", outline=DARK)
-    xx = x
-    for header, width in zip(headers, widths):
-        draw.text((xx + 8, y + 8), header, fill=DARK, font=FONT_TABLE_BOLD)
-        draw.line((xx, y, xx, y + row_h * (len(rows) + 1)), fill="#BDBDBD")
-        xx += width
-    draw.line((x + total_w, y, x + total_w, y + row_h * (len(rows) + 1)), fill="#BDBDBD")
-    for ri, row in enumerate(rows):
-        yy = y + row_h * (ri + 1)
-        fill = "white" if ri % 2 == 0 else "#FAFAFA"
-        draw.rectangle((x, yy, x + total_w, yy + row_h), fill=fill, outline="#E0E0E0")
-        xx = x
-        for cell, width in zip(row, widths):
-            draw.text((xx + 8, yy + 8), cell, fill=DARK, font=FONT_TABLE)
-            xx += width
-
-
-def save_image(image: Image.Image, name: str) -> None:
-    image.save(OUT_DIR / name, dpi=(200, 200))
-
-
-def fig_paraphrase_gap() -> None:
-    data = load_json("paraphrase_gap.json")
-    rows_min = data["results"]["minimal_text"]["summary"]
-    rows_full = data["results"]["full_text"]["summary"]
-    xs = [r["n_removed_high_idf_shared_terms"] for r in rows_min]
-    min_vals = [r["recall@10"] for r in rows_min]
-    full_vals = [r["recall@10"] for r in rows_full]
-    n = data["query_count"]
-
-    image = Image.new("RGB", (1600, 1080), "white")
-    draw = ImageDraw.Draw(image)
-    draw_header(
-        draw,
-        "Self-Retrieval Dependency Under Vocabulary Gap",
-        f"source=output/paraphrase_gap.json | evaluated queries n={n} | metric=Recall@10",
+def setup_font() -> None:
+    """한글 폰트를 등록한다. 없으면 KOREAN_OK=False로 두고 영문 라벨로 폴백한다."""
+    global KOREAN_OK, CHOSEN_FONT
+    available = {f.name for f in fm.fontManager.ttflist}
+    for name in KOREAN_FONTS:
+        if name in available:
+            plt.rcParams["font.family"] = name
+            plt.rcParams["axes.unicode_minus"] = False
+            KOREAN_OK = True
+            CHOSEN_FONT = name
+            return
+    plt.rcParams["axes.unicode_minus"] = False
+    KOREAN_OK = False
+    CHOSEN_FONT = plt.rcParams["font.family"][0] if plt.rcParams["font.family"] else "default"
+    print(
+        "[font] 한글 폰트를 찾지 못했다 (후보: %s). 라벨을 영문으로 폴백한다. "
+        "현재 폰트=%s" % (", ".join(KOREAN_FONTS), CHOSEN_FONT)
     )
 
-    box = (100, 150, 1230, 675)
-    x_min, x_max = -0.4, 10.4
-    y_min, y_max = 0.38, 1.02
-    draw_axes(draw, box, x_min, x_max, y_min, y_max, xs, [0.40, 0.50, 0.60, 0.70, 0.80, 0.90, 1.00], "Removed high-IDF shared terms (N)", "Recall@10")
 
-    series = [("minimal_text", min_vals, BLUE, (8, 10)), ("full_text", full_vals, ORANGE, (8, -26))]
-    for label, vals, color, offset in series:
-        points = []
-        for x, y in zip(xs, vals):
-            px = scale(x, x_min, x_max, box[0], box[2])
-            py = scale(y, y_min, y_max, box[3], box[1])
-            points.append((px, py))
-        draw.line(points, fill=color, width=4)
-        for point, value in zip(points, vals):
-            draw.ellipse((point[0] - 6, point[1] - 6, point[0] + 6, point[1] + 6), fill=color)
-            draw_value_label(draw, point, fmt4(value), color, offset)
-    draw_legend(draw, 1280, 170, [("minimal_text", BLUE), ("full_text", ORANGE)])
-
-    table_rows = [[str(x), fmt4(m), fmt4(f)] for x, m, f in zip(xs, min_vals, full_vals)]
-    draw.text((80, 735), "JSON values used in the plot", fill=DARK, font=FONT_BODY)
-    draw_table(draw, 80, 770, ["N removed", "minimal_text R@10", "full_text R@10"], table_rows, [170, 260, 240])
-    draw.text((80, 1015), "Note: This is a self-retrieval sensitivity analysis, not a legal determination.", fill=GRAY, font=FONT_SMALL)
-    save_image(image, "fig_paraphrase_gap.png")
+def T(ko: str, en: str) -> str:
+    """한글 폰트가 있으면 한국어, 없으면 영문 라벨."""
+    return ko if KOREAN_OK else en
 
 
-def fig_retriever_alpha() -> None:
+def load_json(name: str) -> dict | None:
+    path = OUT_DIR / name
+    if not path.is_file():
+        return None
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def validated_source() -> tuple[dict, str, bool]:
+    """검증셋 통합 산출물. 본실행 파일이 없으면 smoke로 대체하고 그림에 표시한다."""
+    data = load_json("validated_suite.json")
+    if data is not None:
+        return data, "output/validated_suite.json", False
+    data = load_json("validated_suite_smoke.json")
+    if data is None:
+        raise FileNotFoundError(
+            "output/validated_suite.json / validated_suite_smoke.json 둘 다 없다."
+        )
+    return data, "output/validated_suite_smoke.json", True
+
+
+def smoke_banner(fig, is_smoke: bool) -> None:
+    if not is_smoke:
+        return
+    fig.text(
+        0.5, 0.005,
+        T("※ 단일 모델 smoke 산출물(validated_suite_smoke.json) 기준 — 3모델 본실행 후 재생성 필요",
+          "NOTE: single-model smoke output; regenerate after the full 3-model run"),
+        ha="center", va="bottom", fontsize=8, color=RED,
+    )
+
+
+def save(fig, name: str) -> str:
+    fig.savefig(OUT_DIR / name, dpi=DPI, bbox_inches="tight", facecolor="white")
+    plt.close(fig)
+    return name
+
+
+def cp_err(rates: list[float], cis: list[list[float]]) -> np.ndarray:
+    """errorbar용 비대칭 오차 (2, n) 배열."""
+    lo = [max(0.0, r - c[0]) for r, c in zip(rates, cis)]
+    hi = [max(0.0, c[1] - r) for r, c in zip(rates, cis)]
+    return np.array([lo, hi])
+
+
+def subgroup(vec: list[int], langs: list[str], lang: str | None) -> list[int]:
+    return [h for h, lg in zip(vec, langs) if lang is None or lg == lang]
+
+
+# --------------------------------------------------------------------------
+# (a) 검증셋 검색기 비교 — n=71
+# --------------------------------------------------------------------------
+
+
+def fig_validated_retriever() -> str:
+    data, src, is_smoke = validated_source()
+    meta = data["meta"]
+    langs = data["langs"]
+    model = meta["primary_model"]
+    imode = "minimal_text" if "minimal_text" in meta["index_modes"] else meta["index_modes"][0]
+    hits = data["hit_vectors"][model][imode]
+
+    order = ["BM25", "hybrid_0.7", "hybrid_0.5", "hybrid_0.3", "dense"]
+    order = [k for k in order if k in hits]
+    n, n_en, n_ko = meta["n"], meta["n_en"], meta["n_ko"]
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14.5, 6.2),
+                                   gridspec_kw={"width_ratios": [1.35, 1]})
+
+    # --- 좌: 절대 R@10 (Clopper-Pearson)
+    groups = [
+        (T(f"전체 n={n}", f"Overall n={n}"), None, BLUE),
+        (T(f"영어 n={n_en}", f"EN n={n_en}"), "en", ORANGE),
+        (T(f"한국어 n={n_ko}", f"KO n={n_ko}"), "ko", GREEN),
+    ]
+    x = np.arange(len(order))
+    width = 0.26
+    for gi, (label, lang, color) in enumerate(groups):
+        rates, cis = [], []
+        for retr in order:
+            r = rc.rate_with_ci(subgroup(hits[retr], langs, lang))
+            rates.append(r["rate"])
+            cis.append(r["ci95"])
+        pos = x + (gi - 1) * width
+        ax1.bar(pos, rates, width, label=label, color=color, edgecolor="white", linewidth=0.6)
+        ax1.errorbar(pos, rates, yerr=cp_err(rates, cis), fmt="none",
+                     ecolor="#333333", elinewidth=1.1, capsize=3)
+        for px, rv in zip(pos, rates):
+            ax1.text(px, rv + 0.022, f"{rv:.3f}", ha="center", va="bottom", fontsize=7.5)
+    ax1.set_xticks(x)
+    ax1.set_xticklabels(order, fontsize=9)
+    ax1.set_ylim(0, 1.0)
+    ax1.set_ylabel(T("R@10", "Recall@10"))
+    ax1.set_title(T("절대 R@10 — 오차막대 = Clopper-Pearson 95% 정확 이항구간",
+                    "Absolute R@10 — error bars = Clopper-Pearson exact 95% CI"),
+                  fontsize=10.5)
+    ax1.legend(fontsize=8.5, loc="upper left")
+    ax1.grid(axis="y", alpha=0.3, linewidth=0.6)
+    ax1.set_axisbelow(True)
+
+    # --- 우: 짝지음 차이 (paired bootstrap)
+    contrasts = [
+        ("hybrid_0.5", "BM25", T("hybrid(α0.5) - BM25", "hybrid(a0.5) - BM25")),
+        ("dense", "BM25", T("dense - BM25", "dense - BM25")),
+        ("hybrid_0.5", "dense", T("hybrid(α0.5) - dense", "hybrid(a0.5) - dense")),
+    ]
+    rows, ylabels, colors = [], [], []
+    for lang, lcolor in [(None, BLUE), ("en", ORANGE), ("ko", GREEN)]:
+        tag = T({None: "전체", "en": "영어", "ko": "한국어"}[lang],
+                {None: "all", "en": "EN", "ko": "KO"}[lang])
+        for treat, base, cname in contrasts:
+            a = subgroup(hits[treat], langs, lang)
+            b = subgroup(hits[base], langs, lang)
+            diffs = [p - q for p, q in zip(a, b)]
+            boot = rc.paired_bootstrap_ci(diffs, iters=BOOTSTRAP_ITERS, seed=SEED)
+            mc = rc.exact_mcnemar(a, b)
+            rows.append((boot["mean"], boot["ci"], mc))
+            ylabels.append(f"{cname} [{tag}]")
+            colors.append(lcolor)
+
+    ypos = np.arange(len(rows))[::-1]
+    for yp, (mean, ci, mc), color in zip(ypos, rows, colors):
+        ax2.errorbar([mean], [yp],
+                     xerr=[[max(0.0, mean - ci[0])], [max(0.0, ci[1] - mean)]],
+                     fmt="o", color=color, ecolor=color, elinewidth=1.6,
+                     capsize=4, markersize=6)
+        star = "*" if mc["p_two_sided_exact"] < 0.05 else ""
+        ax2.text(ci[1] + 0.02, yp,
+                 f"{mean:+.3f}  {mc['wins']}/{mc['losses']}/{mc['ties']}  "
+                 f"p={mc['p_two_sided_exact']:.2g}{star}",
+                 va="center", fontsize=7.5)
+    ax2.axvline(0, color="#333333", linewidth=1.0, linestyle="--")
+    ax2.set_yticks(ypos)
+    ax2.set_yticklabels(ylabels, fontsize=8)
+    ax2.set_xlim(-0.25, 1.05)
+    ax2.set_xlabel(T("R@10 평균차 (짝지음)", "Paired mean difference in R@10"))
+    ax2.set_title(T("짝지음 차이 — 오차막대 = paired bootstrap 95% CI\n"
+                    "숫자 = 평균차, 승/패/무, exact McNemar 양측 p (*p<0.05)",
+                    "Paired difference — error bars = paired bootstrap 95% CI\n"
+                    "labels = mean diff, wins/losses/ties, exact McNemar two-sided p"),
+                  fontsize=10.5)
+    ax2.grid(axis="x", alpha=0.3, linewidth=0.6)
+    ax2.set_axisbelow(True)
+
+    fig.suptitle(
+        T(f"검증셋 검색기 비교 (n={n}: 영어 {n_en} / 한국어 {n_ko})",
+          f"Validated set: retriever comparison (n={n}: EN {n_en} / KO {n_ko})"),
+        fontsize=14, y=1.0,
+    )
+    fig.text(0.5, 0.955,
+             T(f"source={src} | 색인={imode} | dense={model} | "
+               f"bootstrap {BOOTSTRAP_ITERS:,}회, seed {SEED} | "
+               "라벨=코퍼스 텍스트 근거 카테고리 라벨(법적 판정 아님)",
+               f"source={src} | index={imode} | dense={model} | "
+               f"bootstrap {BOOTSTRAP_ITERS:,}, seed {SEED} | "
+               "labels are corpus-text-grounded, not legal determinations"),
+             ha="center", va="top", fontsize=8, color=GRAY)
+    fig.tight_layout(rect=(0, 0.02, 1, 0.945))
+    smoke_banner(fig, is_smoke)
+    return save(fig, "fig_validated_retriever.png")
+
+
+# --------------------------------------------------------------------------
+# (b) 노출-성능 frontier — 합성(자기참조) vs 검증셋 2패널
+# --------------------------------------------------------------------------
+
+
+def fig_exposure_recall() -> str:
+    logs = load_json("experiment_logs.json")
+    data, src, is_smoke = validated_source()
+    meta = data["meta"]
+    model = meta["primary_model"]
+    langs = data["langs"]
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14.5, 6.4))
+
+    # --- 좌: 합성 자기참조 셋
+    conds = ["route_only", "minimal_no_code", "minimal_text", "full_text"]
+    conds = [c for c in conds if c in logs["metrics"]]
+    colors = {"route_only": PURPLE, "minimal_no_code": BLUE,
+              "minimal_text": ORANGE, "full_text": GREEN}
+    pts = [(c, logs["metrics"][c]["exposure@10"], logs["metrics"][c]["recall@10"],
+            logs["metrics"][c]["recall@10_ci95"]) for c in conds]
+    pts.sort(key=lambda p: p[1])
+    ax1.plot([p[1] for p in pts], [p[2] for p in pts], "-", color="#999999", linewidth=1.4, zorder=1)
+    # 라벨이 겹치지 않게 위/아래로 번갈아 배치한다 (minimal_* 두 점이 거의 같은 위치)
+    offsets = [(12, 14), (12, 14), (12, -34), (12, 10)]
+    for i, (cond, exp, rec, ci) in enumerate(pts):
+        ax1.errorbar([exp], [rec], yerr=[[max(0, rec - ci[0])], [max(0, ci[1] - rec)]],
+                     fmt="o", color=colors[cond], markersize=9, capsize=4,
+                     ecolor=colors[cond], elinewidth=1.4, zorder=3)
+        ax1.annotate(f"{cond}\n{exp:.0f} / {rec:.4f}", (exp, rec),
+                     textcoords="offset points", xytext=offsets[i % len(offsets)],
+                     fontsize=8, color=colors[cond])
+    ax1.set_xlabel(T("평균 노출량@10 (반환 문자 수)", "Mean exposure@10 (returned characters)"))
+    ax1.set_ylabel(T("R@10", "Recall@10"))
+    ax1.set_xlim(0, max(p[1] for p in pts) * 1.35)
+    ax1.set_ylim(-0.05, 1.15)
+    ax1.set_title(T("(A) 합성셋 — 자기참조 재검색 조건 (일반화 금지)\n"
+                    f"source=output/experiment_logs.json, n={logs['test_query_count']}",
+                    "(A) Synthetic set - SELF-RETRIEVAL condition (do not generalise)\n"
+                    f"source=output/experiment_logs.json, n={logs['test_query_count']}"),
+                  fontsize=10.5)
+    ax1.grid(alpha=0.3, linewidth=0.6)
+    ax1.set_axisbelow(True)
+
+    # --- 우: 검증셋 (색인 모드 × 반환 모드)
+    exp10 = data["exposure_at10"]
+    hits = data["hit_vectors"][model]
+    retr = "hybrid_0.5" if "hybrid_0.5" in hits[meta["index_modes"][0]] else "dense"
+    imodes = meta["index_modes"]
+    rmodes = meta["return_modes"]
+    marker_by_rmode = {"full_text": "o", "minimal_text": "s", "minimal_no_code": "^"}
+    color_by_imode = {"full_text": GREEN, "minimal_text": ORANGE, "minimal_no_code": BLUE}
+
+    for imode in imodes:
+        r = rc.rate_with_ci(hits[imode][retr])
+        xs, ys = [], []
+        for rmode in rmodes:
+            exp = exp10[imode][f"return={rmode}"]
+            xs.append(exp)
+            ys.append(r["rate"])
+            diagonal = (rmode == imode)
+            ax2.errorbar([exp], [r["rate"]],
+                         yerr=[[max(0, r["rate"] - r["ci95"][0])],
+                               [max(0, r["ci95"][1] - r["rate"])]],
+                         fmt=marker_by_rmode[rmode], color=color_by_imode[imode],
+                         markersize=10 if diagonal else 8,
+                         markerfacecolor=color_by_imode[imode] if diagonal else "white",
+                         markeredgecolor=color_by_imode[imode], markeredgewidth=1.6,
+                         capsize=3, ecolor=color_by_imode[imode], elinewidth=1.2, zorder=3)
+        # 같은 색인 모드는 R@10이 동일하다 (반환량만 바뀌므로 랭킹 불변)
+        ax2.plot(xs, ys, ":", color=color_by_imode[imode], linewidth=1.2, zorder=1)
+
+    # 핵심 화살표: 색인=full_text 유지, 반환만 축소 → 노출 급감, R@10 불변
+    if "full_text" in imodes and "minimal_no_code" in rmodes:
+        x0 = exp10["full_text"]["return=full_text"]
+        x1 = exp10["full_text"]["return=minimal_no_code"]
+        y0 = rc.rate_with_ci(hits["full_text"][retr])["rate"]
+        cut = 100 * (x0 - x1) / x0
+        ax2.annotate("", xy=(x1, y0), xytext=(x0, y0),
+                     arrowprops=dict(arrowstyle="->", color=RED, linewidth=1.8))
+        ax2.text((x0 + x1) / 2, y0 + 0.035,
+                 T(f"반환량만 축소: {x0:.0f}→{x1:.0f}자 ({cut:.1f}% 감소), R@10 불변",
+                   f"return-only cut: {x0:.0f}->{x1:.0f} chars ({cut:.1f}%), R@10 unchanged"),
+                 ha="center", fontsize=8.5, color=RED)
+
+    handles = [plt.Line2D([], [], marker="o", linestyle="", color=color_by_imode[m],
+                          label=T(f"색인={m}", f"index={m}")) for m in imodes]
+    handles += [plt.Line2D([], [], marker=marker_by_rmode[m], linestyle="", color="#444444",
+                           markerfacecolor="white",
+                           label=T(f"반환={m}", f"return={m}")) for m in rmodes]
+    ax2.legend(handles=handles, fontsize=7.5, loc="lower right", ncol=2)
+    ax2.set_xlabel(T("평균 노출량@10 (반환 문자 수)", "Mean exposure@10 (returned characters)"))
+    ax2.set_ylabel(T("R@10", "Recall@10"))
+    ax2.set_ylim(-0.05, 1.08)
+    ax2.set_title(T(f"(B) 검증셋 n={meta['n']} — 색인 모드 × 반환 모드 ({retr})\n"
+                    f"source={src} | 오차막대 = Clopper-Pearson 95% CI",
+                    f"(B) Validated set n={meta['n']} - index mode x return mode ({retr})\n"
+                    f"source={src} | error bars = Clopper-Pearson 95% CI"),
+                  fontsize=10.5)
+    ax2.grid(alpha=0.3, linewidth=0.6)
+    ax2.set_axisbelow(True)
+
+    fig.suptitle(T("노출-성능 frontier: 합성(자기참조) vs 검증셋",
+                   "Exposure-recall frontier: synthetic (self-retrieval) vs validated"),
+                 fontsize=14)
+    fig.text(0.5, 0.945,
+             T("비용은 '색인 축소'에서만 발생한다. 같은 색인 모드 안에서 반환량만 줄이면 랭킹이 "
+               "바뀌지 않으므로 R@10은 그대로다(점선).",
+               "Cost comes only from shrinking the INDEX. Within one index mode, cutting the "
+               "returned text does not change the ranking, so R@10 is unchanged (dotted line)."),
+             ha="center", va="top", fontsize=8, color=GRAY)
+    fig.tight_layout(rect=(0, 0.02, 1, 0.935))
+    smoke_banner(fig, is_smoke)
+    return save(fig, "fig_exposure_recall.png")
+
+
+# --------------------------------------------------------------------------
+# (c) 임베딩 robustness — 신설
+# --------------------------------------------------------------------------
+
+
+def fig_embedding_robustness() -> str:
+    data, src, is_smoke = validated_source()
+    meta = data["meta"]
+    langs = data["langs"]
+    imode = "minimal_text" if "minimal_text" in meta["index_modes"] else meta["index_modes"][0]
+    models = [m for m in meta["dense_models"] if m in data["hit_vectors"]]
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14.5, 5.8),
+                                   gridspec_kw={"width_ratios": [1.15, 1]})
+
+    # --- 좌: 모델별 R@10 (BM25 / dense / hybrid), 전체
+    series = [("BM25", BLUE), ("dense", ORANGE), ("hybrid_0.5", GREEN)]
+    x = np.arange(len(models))
+    width = 0.26 if len(models) > 1 else 0.16
+    ax1.set_xlim(-0.5, len(models) - 0.5)
+    for si, (retr, color) in enumerate(series):
+        rates, cis = [], []
+        for mk in models:
+            vec = data["hit_vectors"][mk][imode].get(retr)
+            r = rc.rate_with_ci(vec) if vec else {"rate": 0.0, "ci95": [0.0, 0.0]}
+            rates.append(r["rate"])
+            cis.append(r["ci95"])
+        pos = x + (si - 1) * width
+        ax1.bar(pos, rates, width, color=color, label=retr, edgecolor="white", linewidth=0.6)
+        ax1.errorbar(pos, rates, yerr=cp_err(rates, cis), fmt="none",
+                     ecolor="#333333", elinewidth=1.1, capsize=3)
+        for px, rv in zip(pos, rates):
+            ax1.text(px, rv + 0.02, f"{rv:.3f}", ha="center", va="bottom", fontsize=8)
+    ax1.set_xticks(x)
+    ax1.set_xticklabels(models, fontsize=9)
+    ax1.set_ylim(0, 1.0)
+    ax1.set_ylabel(T("R@10 (전체)", "Recall@10 (overall)"))
+    ax1.set_title(T("dense 모델별 R@10 — 오차막대 = Clopper-Pearson 95% CI",
+                    "R@10 by dense model - error bars = Clopper-Pearson 95% CI"),
+                  fontsize=10.5)
+    ax1.legend(fontsize=8.5, loc="upper left")
+    ax1.grid(axis="y", alpha=0.3, linewidth=0.6)
+    ax1.set_axisbelow(True)
+
+    # --- 우: 모델별 (hybrid - BM25) 짝지음 차이, 전체/영어/한국어
+    ylabels, rows, colors = [], [], []
+    for mk in models:
+        h = data["hit_vectors"][mk][imode]
+        for lang, color in [(None, BLUE), ("en", ORANGE), ("ko", GREEN)]:
+            tag = T({None: "전체", "en": "영어", "ko": "한국어"}[lang],
+                    {None: "all", "en": "EN", "ko": "KO"}[lang])
+            a = subgroup(h.get("hybrid_0.5") or h["dense"], langs, lang)
+            b = subgroup(h["BM25"], langs, lang)
+            diffs = [p - q for p, q in zip(a, b)]
+            boot = rc.paired_bootstrap_ci(diffs, iters=BOOTSTRAP_ITERS, seed=SEED)
+            mc = rc.exact_mcnemar(a, b)
+            rows.append((boot["mean"], boot["ci"], mc))
+            ylabels.append(f"{mk} [{tag}]")
+            colors.append(color)
+
+    ypos = np.arange(len(rows))[::-1]
+    for yp, (mean, ci, mc), color in zip(ypos, rows, colors):
+        ax2.errorbar([mean], [yp],
+                     xerr=[[max(0.0, mean - ci[0])], [max(0.0, ci[1] - mean)]],
+                     fmt="o", color=color, ecolor=color, elinewidth=1.6,
+                     capsize=4, markersize=6)
+        star = "*" if mc["p_two_sided_exact"] < 0.05 else ""
+        ax2.text(ci[1] + 0.015, yp,
+                 f"{mean:+.3f}  {mc['wins']}/{mc['losses']}  p={mc['p_two_sided_exact']:.2g}{star}",
+                 va="center", fontsize=7.5)
+    ax2.axvline(0, color="#333333", linewidth=1.0, linestyle="--")
+    ax2.set_yticks(ypos)
+    ax2.set_yticklabels(ylabels, fontsize=8)
+    ax2.set_xlim(-0.15, 1.0)
+    ax2.set_xlabel(T("hybrid(α0.5) - BM25 평균차 (짝지음)",
+                     "hybrid(a0.5) - BM25 paired mean difference"))
+    ax2.set_title(T("오차막대 = paired bootstrap 95% CI\n숫자 = 평균차, 승/패, exact McNemar p",
+                    "error bars = paired bootstrap 95% CI\nlabels = mean diff, wins/losses, "
+                    "exact McNemar p"),
+                  fontsize=10.5)
+    ax2.grid(axis="x", alpha=0.3, linewidth=0.6)
+    ax2.set_axisbelow(True)
+
+    fig.suptitle(T(f"임베딩 robustness (검증셋 n={meta['n']}, 색인={imode})",
+                   f"Embedding robustness (validated n={meta['n']}, index={imode})"),
+                 fontsize=14)
+    note = T(f"source={src} | 모델 {len(models)}개 | bootstrap {BOOTSTRAP_ITERS:,}회, seed {SEED}",
+             f"source={src} | {len(models)} model(s) | bootstrap {BOOTSTRAP_ITERS:,}, seed {SEED}")
+    if len(models) < 2:
+        note += T("  ← 모델이 1개뿐이므로 robustness 주장 불가 (확인 필요)",
+                  "  <- only one model: no robustness claim can be made (TO VERIFY)")
+    fig.text(0.5, 0.94, note, ha="center", va="top", fontsize=8,
+             color=RED if len(models) < 2 else GRAY)
+    fig.tight_layout(rect=(0, 0.02, 1, 0.93))
+    smoke_banner(fig, is_smoke)
+    return save(fig, "fig_embedding_robustness.png")
+
+
+# --------------------------------------------------------------------------
+# (d) 자기참조 의존성 (paraphrase gap)
+# --------------------------------------------------------------------------
+
+
+def fig_paraphrase_gap() -> str | None:
+    data = load_json("paraphrase_gap.json")
+    if data is None:
+        print("[skip] output/paraphrase_gap.json 없음")
+        return None
+    n = data["query_count"]
+    fig, ax = plt.subplots(figsize=(9.5, 6.0))
+    for mode, color in [("minimal_text", BLUE), ("full_text", ORANGE)]:
+        rows = data["results"][mode]["summary"]
+        xs = [r["n_removed_high_idf_shared_terms"] for r in rows]
+        ys = [r["recall@10"] for r in rows]
+        if "recall@10_ci95" in rows[0]:
+            cis = [r["recall@10_ci95"] for r in rows]
+            ax.errorbar(xs, ys, yerr=cp_err(ys, cis), fmt="o-", color=color,
+                        label=mode, capsize=3, elinewidth=1.1, markersize=6)
+        else:
+            ax.plot(xs, ys, "o-", color=color, label=mode, markersize=6)
+        for xv, yv in zip(xs, ys):
+            ax.annotate(f"{yv:.4f}", (xv, yv), textcoords="offset points",
+                        xytext=(0, 9), ha="center", fontsize=7.5, color=color)
+        legacy_key = "recall@10_legacy_zero_permissive"
+        if legacy_key in rows[0]:
+            ax.plot(xs, [r[legacy_key] for r in rows], "--", color=color, alpha=0.45,
+                    linewidth=1.2,
+                    label=T(f"{mode} (정정 전 정의)", f"{mode} (pre-fix definition)"))
+    ax.set_xlabel(T("제거한 고-IDF 공유토큰 수 N", "N removed high-IDF shared terms"))
+    ax.set_ylabel(T("R@10", "Recall@10"))
+    ax.set_ylim(0, 1.05)
+    ax.grid(alpha=0.3, linewidth=0.6)
+    ax.set_axisbelow(True)
+    ax.legend(fontsize=8.5)
+    ax.set_title(T(f"자기참조 의존성: 어휘 격차에 따른 R@10 붕괴 (합성셋 n={n})",
+                   f"Self-retrieval dependency under vocabulary gap (synthetic n={n})"),
+                 fontsize=12.5)
+    fig.text(0.5, 0.005,
+             T("source=output/paraphrase_gap.json | 오차막대 = Clopper-Pearson 95% CI | "
+               "점선 = 전점수 0 질의에 코퍼스 앞머리를 부여한 정정 전 정의",
+               "source=output/paraphrase_gap.json | error bars = Clopper-Pearson 95% CI | "
+               "dashed = pre-fix definition that awarded corpus-order rows to zero-score queries"),
+             ha="center", va="bottom", fontsize=8, color=GRAY)
+    fig.tight_layout(rect=(0, 0.03, 1, 1))
+    return save(fig, "fig_paraphrase_gap.png")
+
+
+# --------------------------------------------------------------------------
+# (e) 합성셋 alpha 스윕
+# --------------------------------------------------------------------------
+
+
+def fig_retriever_alpha() -> str | None:
     data = load_json("retriever_compare.json")
+    if data is None:
+        print("[skip] output/retriever_compare.json 없음")
+        return None
     alphas = sorted(data["alphas"])
     levels = data["ablation_levels"]
     n = data["query_count"]
-    dense_model = data.get("dense_model", "")
-
-    image = Image.new("RGB", (1700, 1120), "white")
-    draw = ImageDraw.Draw(image)
-    draw_header(
-        draw,
-        "Synthetic Set: Alpha vs Recall@10",
-        f"source=output/retriever_compare.json | evaluated queries n={n} | alpha=0 Dense, alpha=1 BM25 | dense={dense_model}",
-    )
-
-    box = (100, 155, 1260, 675)
-    x_min, x_max = -0.05, 1.05
-    y_min, y_max = 0.20, 1.02
-    draw_axes(draw, box, x_min, x_max, y_min, y_max, alphas, [0.20, 0.35, 0.50, 0.65, 0.80, 0.95, 1.00], "alpha", "Recall@10")
-
+    fig, ax = plt.subplots(figsize=(9.5, 6.0))
     colors = [BLUE, ORANGE, GREEN, PURPLE]
-    legend_items = []
-    table_rows: list[list[str]] = []
-    for idx, level in enumerate(levels):
+    for i, level in enumerate(levels):
         row = data["results"]["summary"][str(level)]
-        vals = [row[f"alpha={a}"]["recall@10"] for a in alphas]
-        color = colors[idx % len(colors)]
-        legend_items.append((f"N={level}", color))
-        points = [(scale(a, x_min, x_max, box[0], box[2]), scale(v, y_min, y_max, box[3], box[1])) for a, v in zip(alphas, vals)]
-        draw.line(points, fill=color, width=4)
-        for point, value in zip(points, vals):
-            draw.ellipse((point[0] - 6, point[1] - 6, point[0] + 6, point[1] + 6), fill=color)
-            draw_value_label(draw, point, fmt4(value), color, (8, -24 if idx % 2 == 0 else 10))
-        table_rows.append([str(level)] + [fmt4(v) for v in vals])
-    draw_legend(draw, 1305, 175, legend_items)
-
-    headers = ["N removed"] + [f"alpha={a:g}" for a in alphas]
-    draw.text((80, 735), "JSON values used in the plot", fill=DARK, font=FONT_BODY)
-    draw_table(draw, 80, 770, headers, table_rows, [150, 155, 155, 155, 155, 155])
-    save_image(image, "fig_retriever_alpha.png")
-
-
-def fig_exposure_recall() -> None:
-    data = load_json("experiment_logs.json")
-    n = data["test_query_count"]
-    conditions = ["minimal_no_code", "minimal_text", "full_text"]
-    colors = {"minimal_no_code": BLUE, "minimal_text": ORANGE, "full_text": GREEN}
-    vals = [(c, data["metrics"][c]["exposure@10"], data["metrics"][c]["recall@10"]) for c in conditions]
-
-    image = Image.new("RGB", (1550, 1050), "white")
-    draw = ImageDraw.Draw(image)
-    draw_header(
-        draw,
-        "Exposure-Recall Frontier",
-        f"source=output/experiment_logs.json | test queries n={n} | x=mean exposure@10 chars, y=Recall@10",
-    )
-
-    box = (100, 155, 1170, 675)
-    x_values = [x for _, x, _ in vals]
-    x_min, x_max = min(x_values) - 250, max(x_values) + 300
-    y_min, y_max = 0.975, 1.000
-    draw_axes(draw, box, x_min, x_max, y_min, y_max, [1600, 2400, 3200, 4000, 4800], [0.975, 0.980, 0.985, 0.990, 0.995, 1.000], "Mean exposure@10 (characters)", "Recall@10")
-
-    points = []
-    label_offsets = {"minimal_no_code": (55, -70), "minimal_text": (55, 26), "full_text": (-250, -10)}
-    for condition, exposure, recall in vals:
-        point = (scale(exposure, x_min, x_max, box[0], box[2]), scale(recall, y_min, y_max, box[3], box[1]))
-        points.append(point)
-        color = colors[condition]
-        draw.ellipse((point[0] - 11, point[1] - 11, point[0] + 11, point[1] + 11), fill=color)
-        label = f"{condition}\nexposure={fmt2(exposure)}\nR@10={fmt4(recall)}"
-        draw_value_label(draw, point, label, color, label_offsets[condition])
-    draw.line(points, fill="#8A8A8A", width=3)
-
-    table_rows = [[c, fmt2(exposure), fmt4(recall)] for c, exposure, recall in vals]
-    draw.text((80, 735), "JSON values used in the plot", fill=DARK, font=FONT_BODY)
-    draw_table(draw, 80, 770, ["condition", "exposure@10", "Recall@10"], table_rows, [250, 180, 180])
-    save_image(image, "fig_exposure_recall.png")
+        ys = [row[f"alpha={a}"]["recall@10"] for a in alphas]
+        color = colors[i % len(colors)]
+        if "recall@10_ci95" in row[f"alpha={alphas[0]}"]:
+            cis = [row[f"alpha={a}"]["recall@10_ci95"] for a in alphas]
+            ax.errorbar(alphas, ys, yerr=cp_err(ys, cis), fmt="o-", color=color,
+                        label=f"N={level}", capsize=3, elinewidth=1.0, markersize=5)
+        else:
+            ax.plot(alphas, ys, "o-", color=color, label=f"N={level}", markersize=5)
+        for xv, yv in zip(alphas, ys):
+            ax.annotate(f"{yv:.3f}", (xv, yv), textcoords="offset points",
+                        xytext=(0, 8 if i % 2 == 0 else -13), ha="center",
+                        fontsize=7, color=color)
+    ax.set_xlabel(T("alpha (1.0 = BM25 단독, 0.0 = dense 단독)",
+                    "alpha (1.0 = BM25 only, 0.0 = dense only)"))
+    ax.set_ylabel(T("R@10", "Recall@10"))
+    ax.set_ylim(0, 1.05)
+    ax.grid(alpha=0.3, linewidth=0.6)
+    ax.set_axisbelow(True)
+    ax.legend(fontsize=8.5, title=T("어휘격차 N", "vocab gap N"))
+    ax.set_title(T(f"합성셋: alpha별 R@10 (n={n}, 어휘격차별)",
+                   f"Synthetic set: R@10 by alpha (n={n}, per vocabulary gap)"),
+                 fontsize=12.5)
+    fig.text(0.5, 0.005,
+             T("source=output/retriever_compare.json | 오차막대 = Clopper-Pearson 95% CI | "
+               "BM25와 dense는 동일한 ablation 텍스트를 입력받는다(입력 비대칭 정정 후)",
+               "source=output/retriever_compare.json | error bars = Clopper-Pearson 95% CI | "
+               "BM25 and dense receive the identical ablated text (input asymmetry fixed)"),
+             ha="center", va="bottom", fontsize=8, color=GRAY)
+    fig.tight_layout(rect=(0, 0.03, 1, 1))
+    return save(fig, "fig_retriever_alpha.png")
 
 
-def fig_validated_retriever() -> None:
-    data = load_json("validated_eval.json")
-    meta = data["meta"]
-    alpha_order = ["alpha=1.0", "alpha=0.7", "alpha=0.5", "alpha=0.3", "alpha=0.0"]
-    labels = {
-        "alpha=1.0": "BM25\nalpha=1.0",
-        "alpha=0.7": "Hybrid\nalpha=0.7",
-        "alpha=0.5": "Hybrid\nalpha=0.5",
-        "alpha=0.3": "Hybrid\nalpha=0.3",
-        "alpha=0.0": "Dense\nalpha=0.0",
-    }
-    n_all = meta["evaluated_count"]
-    n_excluded = meta["excluded_count"]
-    n_en = data["summary"]["alpha=1.0"]["en_n"]
-    n_ko = data["summary"]["alpha=1.0"]["ko_n"]
-
-    image = Image.new("RGB", (1750, 1180), "white")
-    draw = ImageDraw.Draw(image)
-    draw_header(
-        draw,
-        "Validated Set: Recall@10 by Alpha",
-        f"source=output/validated_eval.json | evaluated n={n_all} (EN n={n_en}, KO n={n_ko}) | excluded n={n_excluded}",
-    )
-    draw.text((70, 104), "matching=exact full-code equality; labels are corpus-text-grounded category labels, not legal determinations", fill=GRAY, font=FONT_SMALL)
-
-    box = (100, 180, 1480, 690)
-    y_min, y_max = 0.0, 0.30
-    y_ticks = [0.00, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30]
-    left, top, right, bottom = box
-    for y in y_ticks:
-        y_px = scale(y, y_min, y_max, bottom, top)
-        draw.line((left, y_px, right, y_px), fill=GRID, width=1)
-        draw.text((left - 58, y_px - 10), f"{y:.2f}", fill=DARK, font=FONT_SMALL)
-    draw.line((left, bottom, right, bottom), fill=DARK, width=2)
-    draw.line((left, top, left, bottom), fill=DARK, width=2)
-    draw.text((left, top - 30), "Recall@10", fill=DARK, font=FONT_BODY)
-    draw.text(((left + right) // 2 - 80, bottom + 70), "Retriever / alpha", fill=DARK, font=FONT_BODY)
-
-    group_w = (right - left) / len(alpha_order)
-    bar_w = 48
-    series = [("Overall n=13", "recall@10", BLUE), ("EN n=8", "en_recall@10", ORANGE), ("KO n=5", "ko_recall@10", GREEN)]
-    for gi, alpha in enumerate(alpha_order):
-        center = left + group_w * (gi + 0.5)
-        label_lines = labels[alpha].split("\n")
-        draw.text((center - 62, bottom + 15), label_lines[0], fill=DARK, font=FONT_SMALL)
-        draw.text((center - 62, bottom + 38), label_lines[1], fill=DARK, font=FONT_SMALL)
-        for si, (_, key, color) in enumerate(series):
-            value = data["summary"][alpha][key]
-            x0 = center + (si - 1) * (bar_w + 10) - bar_w / 2
-            x1 = x0 + bar_w
-            y0 = scale(value, y_min, y_max, bottom, top)
-            draw.rectangle((x0, y0, x1, bottom), fill=color)
-            draw.text((x0 - 2, y0 - 24), fmt4(value), fill=DARK, font=FONT_SMALL)
-    draw_legend(draw, 1515, 200, [(s[0], s[2]) for s in series])
-
-    table_rows = []
-    for alpha in alpha_order:
-        row = data["summary"][alpha]
-        table_rows.append([alpha, labels[alpha].replace("\n", " "), fmt4(row["recall@10"]), fmt4(row["en_recall@10"]), fmt4(row["ko_recall@10"])])
-    draw.text((80, 785), "JSON values used in the plot", fill=DARK, font=FONT_BODY)
-    draw_table(draw, 80, 820, ["alpha", "retriever", "Overall R@10 (n=13)", "EN R@10 (n=8)", "KO R@10 (n=5)"], table_rows, [150, 210, 230, 200, 200])
-    save_image(image, "fig_validated_retriever.png")
-
-
-def save_figures() -> None:
-    fig_paraphrase_gap()
-    fig_retriever_alpha()
-    fig_exposure_recall()
-    fig_validated_retriever()
+# --------------------------------------------------------------------------
 
 
 def main() -> None:
-    save_figures()
-    print(
-        json.dumps(
-            {
-                "renderer": "Pillow detailed",
-                "created": [
-                    "fig_paraphrase_gap.png",
-                    "fig_retriever_alpha.png",
-                    "fig_exposure_recall.png",
-                    "fig_validated_retriever.png",
-                ],
-            },
-            indent=2,
-        )
-    )
+    setup_font()
+    created = []
+    for fn in (fig_validated_retriever, fig_exposure_recall, fig_embedding_robustness,
+               fig_paraphrase_gap, fig_retriever_alpha):
+        name = fn()
+        if name:
+            created.append(name)
+    _, src, is_smoke = validated_source()
+    print(json.dumps({
+        "renderer": "matplotlib",
+        "font": CHOSEN_FONT,
+        "korean_labels": KOREAN_OK,
+        "dpi": DPI,
+        "validated_source": src,
+        "validated_source_is_smoke": is_smoke,
+        "created": created,
+        "deprecated_not_regenerated": [
+            "docs/figures/fig1_scope_decomposition.png",
+            "docs/figures/fig2_privacy_utility_map.png",
+            "docs/figures/fig3_scenario_scope.png",
+        ],
+        "deprecation_reason": "생성 코드가 저장소에 없고 참조 0건. 재현 불가하므로 폐기 결정 "
+                             "(README.md '그림' 절에 기록). 파일은 감사용으로 삭제하지 않음.",
+    }, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":
