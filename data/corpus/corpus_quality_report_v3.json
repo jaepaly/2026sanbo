@@ -1,0 +1,50 @@
+{
+  "version": "v3",
+  "env": {
+    "numpy": "2.2.6",
+    "python": "3.10.5",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "torch": "2.6.0+cpu",
+    "sentence_transformers": "3.4.1"
+  },
+  "summary": {
+    "base": "combined_v2.json",
+    "ecfr_source": "ecfr_supp1_full.json",
+    "entries_total": 1783,
+    "ecfr_entries_replaced": 636,
+    "ecfr_missing_in_full": [
+      "ECCN-1C012"
+    ],
+    "ecfr_only_in_full_not_added": [
+      "ECCN-0A980",
+      "ECCN-8D001"
+    ],
+    "ecfr_stub_marker_before": 351,
+    "ecfr_stub_marker_after": 352,
+    "ecfr_stub_content_before": 475,
+    "ecfr_stub_content_after": 48,
+    "ecfr_chars_before": 105567,
+    "ecfr_chars_after": 814646,
+    "gold_all_stub_marker_before": 42,
+    "gold_all_stub_marker_after": 42,
+    "gold_all_stub_content_before": 47,
+    "gold_all_stub_content_after": 1,
+    "n_queries": 71,
+    "minimal_text_index_changed": 107,
+    "by_source": {
+      "ecfr_part774": 637,
+      "india_scomet_2024": 578,
+      "wassenaar_2025": 568
+    },
+    "text_completeness": {
+      "heading_only": 84,
+      "full": 1647,
+      "stub": 52
+    }
+  },
+  "sha256": {
+    "combined_v3.json": "26c9a84f7735416d1e18ccf865db9efca631d0f7369719120e95497292c283c8",
+    "ecfr_supp1_full.json": "06e8bf706d395dc9e0684ac4644335d643d2ff817192d46700ba4a520ab90d72"
+  },
+  "note": "v2에서 eCFR 본문만 교체. Wassenaar/SCOMET 은 v2 파싱 결과 그대로."
+}

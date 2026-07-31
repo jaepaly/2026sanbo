@@ -49,5 +49,11 @@
     "python experiment_stats.py",
     "python make_figures.py",
     "python verify_claims.py"
-  ]
+  ],
+  "v3_available": {
+    "path": "combined_v3.json",
+    "sha256": "26c9a84f7735416d1e18ccf865db9efca631d0f7369719120e95497292c283c8",
+    "total": 1783,
+    "note": "eCFR 표제 스텁 보강판. 채택 전 docs/corpus_v3_stub_recovery.md 검토 필요."
+  }
 }

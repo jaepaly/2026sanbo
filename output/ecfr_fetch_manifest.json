@@ -1,0 +1,42 @@
+{
+  "generated_by": "fetch_ecfr.py",
+  "seed": 20260730,
+  "randomness_used": "none (deterministic parse)",
+  "env_meta": {
+    "numpy": "2.2.6",
+    "python": "3.10.5",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "torch": "2.6.0+cpu",
+    "sentence_transformers": "3.4.1"
+  },
+  "ecfr_date": "2026-07-23",
+  "api_url": "https://www.ecfr.gov/api/versioner/v1/full/2026-07-23/title-15.xml?chapter=VII&subchapter=C&part=774&appendix=Supplement+No.+1+to+Part+774",
+  "fetched_from": "https://www.ecfr.gov/api/versioner/v1/full/2026-07-23/title-15.xml?chapter=VII&subchapter=C&part=774&appendix=Supplement+No.+1+to+Part+774",
+  "human_citation_url": "https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-774/appendix-Supplement%20No.%201%20to%20Part%20774",
+  "xml_sha256": "a20c1f8c7feb8bed03ba17d4ff529da353cf4d347ca470b64d6cc2cf33e22176",
+  "xml_bytes": 1999647,
+  "out_path": "data\\corpus\\ecfr_supp1_full.json",
+  "out_sha256": "06e8bf706d395dc9e0684ac4644335d643d2ff817192d46700ba4a520ab90d72",
+  "text_field": "full",
+  "sort": "document",
+  "counts": {
+    "entries": 638,
+    "heading_only": 47,
+    "chars_heading_total": 117539,
+    "chars_heading_plus_items_total": 814807,
+    "by_category": {
+      "0": 62,
+      "1": 136,
+      "2": 89,
+      "3": 78,
+      "4": 24,
+      "5": 25,
+      "6": 60,
+      "7": 46,
+      "8": 22,
+      "9": 96
+    }
+  },
+  "license_basis": "17 U.S.C. §105 (US federal government work, not copyrightable)",
+  "elapsed_sec": 30.4
+}
