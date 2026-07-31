@@ -741,8 +741,8 @@
       "where": "PAPER 4.6",
       "desc": "압력 level0 dense−BM25 평균차",
       "paper": 0.4225,
-      "artifact": 0.4225,
-      "status": "OK",
+      "artifact": 0.4366,
+      "status": "MISMATCH",
       "note": ""
     },
     {
@@ -759,8 +759,8 @@
       "where": "PAPER 4.6",
       "desc": "압력 level0 BM25 R@10",
       "paper": 0.169,
-      "artifact": 0.169,
-      "status": "OK",
+      "artifact": 0.1549,
+      "status": "MISMATCH",
       "note": ""
     },
     {
@@ -804,8 +804,8 @@
       "where": "PAPER 4.6",
       "desc": "압력 level3 hybrid_0.5 R@10",
       "paper": 0.2254,
-      "artifact": 0.2254,
-      "status": "OK",
+      "artifact": 0.2394,
+      "status": "MISMATCH",
       "note": ""
     },
     {
@@ -828,8 +828,8 @@
     }
   ],
   "counts": {
-    "OK": 90,
-    "MISMATCH": 0,
+    "OK": 87,
+    "MISMATCH": 3,
     "SKIP": 0,
     "ERROR": 0,
     "NEW": 0
