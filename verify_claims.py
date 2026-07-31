@@ -308,6 +308,48 @@ def build_checks() -> list[Check]:
                                            "holm_within_index_mode",
                                            "hybrid_vs_dense[overall]", "significant_at_0.05")))
 
+    # ---- 4.8 교차모델 검증 (한계 6 해소): 무엇이 일반화되고 무엇이 안 되는가 ----
+    cross = load(OUT / "tier1_crossmodel.json")
+
+    C.append(Check("cross.models", "PAPER 4.8", "Tier-1 번들 모델 수 (3)", 3,
+                   lambda: len(dig(cross, "models") or []), tol=0))
+    # ablation: level0은 전 모델 유의, level3은 2/3만 유의
+    C.append(Check("cross.abl.l0_all_sig", "PAPER 4.8",
+                   "압력 level0 dense−BM25가 세 모델 모두 유의한가", True,
+                   lambda: dig(cross, "conclusion",
+                               "ablation_dense_advantage_significant_at_level0_all_models")))
+    C.append(Check("cross.abl.l3_all_sig", "PAPER 4.8",
+                   "압력 level3에서도 세 모델 모두 유의한가 (아니오)", False,
+                   lambda: dig(cross, "conclusion",
+                               "ablation_dense_advantage_significant_at_level3_all_models")))
+    C.append(Check("cross.abl.l3_e5_not_sig", "PAPER 4.8",
+                   "level3에서 e5-base는 유의하지 않다", False,
+                   lambda: dig(cross, "conclusion",
+                               "ablation_level3_significant_by_model", "e5-base")))
+    for m, val in [("MiniLM", 0.2113), ("bge-m3", 0.2535), ("e5-base", 0.0845)]:
+        C.append(Check(f"cross.abl.l3.{m}", "PAPER 4.8", f"level3 dense−BM25 ({m})", val,
+                       lambda mm=m: dig(cross, "ablation", mm, "dense_vs_bm25", "3",
+                                        "dense_minus_bm25")))
+    # frontier: 권고가 모델 의존적이며 보수적 권고는 L1
+    C.append(Check("cross.front.model_dependent", "PAPER 4.8/초록",
+                   "운용 권고가 모델에 따라 달라지는가", True,
+                   lambda: dig(cross, "conclusion",
+                               "frontier_recommendation_is_model_dependent")))
+    C.append(Check("cross.front.conservative", "PAPER 4.8/초록/결론",
+                   "모델 불문 보수적 권고 등급", "L1",
+                   lambda: dig(cross, "conclusion",
+                               "conservative_recommendation_across_models")))
+    for m, val in [("MiniLM", "L2"), ("e5-base", "L2"), ("bge-m3", "L1")]:
+        C.append(Check(f"cross.front.rec.{m}", "PAPER 4.8", f"{m} 권고 등급", val,
+                       lambda mm=m: dig(cross, "frontier", mm, "recommended_level")))
+    C.append(Check("cross.front.bge.L2_diff", "PAPER 4.8",
+                   "bge-m3 L2 차이 (마진 초과 → 손실 징후)", -0.0704,
+                   lambda: dig(cross, "frontier", "bge-m3", "vs_L0", "L2", "mean_diff")))
+    C.append(Check("cross.front.bge.L1_not_equiv", "PAPER 4.8",
+                   "bge-m3에서 L1이 등가 입증되는가 (아니오)", False,
+                   lambda: dig(cross, "frontier", "bge-m3", "vs_L0", "L1",
+                               "equivalent_at_0.05")))
+
     # ---- claim 4 (핵심): 질의 측 disclosure-recall frontier ----
     ladder = load(OUT / "disclosure_frontier.json")
 

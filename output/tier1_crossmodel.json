@@ -1,0 +1,382 @@
+{
+  "experiment": "tier1_crossmodel",
+  "purpose": "PAPER 7 한계 6(단일 인코더) 해소 — ablation(4.6)과 frontier(4.5)의 모델 간 일반화",
+  "models": [
+    "MiniLM",
+    "bge-m3",
+    "e5-base"
+  ],
+  "model_names": {
+    "MiniLM": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+    "bge-m3": "BAAI/bge-m3",
+    "e5-base": "intfloat/multilingual-e5-base"
+  },
+  "primary_index_mode_ablation": "full_text",
+  "ablation": {
+    "MiniLM": {
+      "recall_by_level": {
+        "BM25": {
+          "0": 0.1549,
+          "1": 0.0423,
+          "2": 0.0282,
+          "3": 0.0282
+        },
+        "hybrid_0.5": {
+          "0": 0.6056,
+          "1": 0.3803,
+          "2": 0.2817,
+          "3": 0.2394
+        },
+        "dense": {
+          "0": 0.5915,
+          "1": 0.338,
+          "2": 0.2817,
+          "3": 0.2394
+        }
+      },
+      "recall_by_level_ko": {
+        "BM25": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0
+        },
+        "hybrid_0.5": {
+          "0": 0.6444,
+          "1": 0.4667,
+          "2": 0.3778,
+          "3": 0.3111
+        },
+        "dense": {
+          "0": 0.6444,
+          "1": 0.4667,
+          "2": 0.3778,
+          "3": 0.3111
+        }
+      },
+      "dense_vs_bm25": {
+        "0": {
+          "dense_minus_bm25": 0.4366,
+          "wins": 32,
+          "losses": 1,
+          "p_two_sided_exact": 7.91624e-09,
+          "significant_at_0.05": true
+        },
+        "1": {
+          "dense_minus_bm25": 0.2958,
+          "wins": 24,
+          "losses": 3,
+          "p_two_sided_exact": 4.92334e-05,
+          "significant_at_0.05": true
+        },
+        "2": {
+          "dense_minus_bm25": 0.2535,
+          "wins": 20,
+          "losses": 2,
+          "p_two_sided_exact": 0.000121117,
+          "significant_at_0.05": true
+        },
+        "3": {
+          "dense_minus_bm25": 0.2113,
+          "wins": 17,
+          "losses": 2,
+          "p_two_sided_exact": 0.000728607,
+          "significant_at_0.05": true
+        }
+      }
+    },
+    "bge-m3": {
+      "recall_by_level": {
+        "BM25": {
+          "0": 0.1549,
+          "1": 0.0423,
+          "2": 0.0282,
+          "3": 0.0282
+        },
+        "hybrid_0.5": {
+          "0": 0.5634,
+          "1": 0.3803,
+          "2": 0.2254,
+          "3": 0.2113
+        },
+        "dense": {
+          "0": 0.5634,
+          "1": 0.4225,
+          "2": 0.3239,
+          "3": 0.2817
+        }
+      },
+      "recall_by_level_ko": {
+        "BM25": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0
+        },
+        "hybrid_0.5": {
+          "0": 0.6,
+          "1": 0.4889,
+          "2": 0.3333,
+          "3": 0.3111
+        },
+        "dense": {
+          "0": 0.6,
+          "1": 0.4889,
+          "2": 0.3333,
+          "3": 0.3111
+        }
+      },
+      "dense_vs_bm25": {
+        "0": {
+          "dense_minus_bm25": 0.4085,
+          "wins": 30,
+          "losses": 1,
+          "p_two_sided_exact": 2.98023e-08,
+          "significant_at_0.05": true
+        },
+        "1": {
+          "dense_minus_bm25": 0.3803,
+          "wins": 27,
+          "losses": 0,
+          "p_two_sided_exact": 1.49012e-08,
+          "significant_at_0.05": true
+        },
+        "2": {
+          "dense_minus_bm25": 0.2958,
+          "wins": 22,
+          "losses": 1,
+          "p_two_sided_exact": 5.72205e-06,
+          "significant_at_0.05": true
+        },
+        "3": {
+          "dense_minus_bm25": 0.2535,
+          "wins": 20,
+          "losses": 2,
+          "p_two_sided_exact": 0.000121117,
+          "significant_at_0.05": true
+        }
+      }
+    },
+    "e5-base": {
+      "recall_by_level": {
+        "BM25": {
+          "0": 0.1549,
+          "1": 0.0423,
+          "2": 0.0282,
+          "3": 0.0282
+        },
+        "hybrid_0.5": {
+          "0": 0.507,
+          "1": 0.2676,
+          "2": 0.1127,
+          "3": 0.0845
+        },
+        "dense": {
+          "0": 0.4789,
+          "1": 0.3099,
+          "2": 0.1549,
+          "3": 0.1127
+        }
+      },
+      "recall_by_level_ko": {
+        "BM25": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0
+        },
+        "hybrid_0.5": {
+          "0": 0.5111,
+          "1": 0.3333,
+          "2": 0.1556,
+          "3": 0.1111
+        },
+        "dense": {
+          "0": 0.5111,
+          "1": 0.3333,
+          "2": 0.1556,
+          "3": 0.1111
+        }
+      },
+      "dense_vs_bm25": {
+        "0": {
+          "dense_minus_bm25": 0.3239,
+          "wins": 25,
+          "losses": 2,
+          "p_two_sided_exact": 5.64754e-06,
+          "significant_at_0.05": true
+        },
+        "1": {
+          "dense_minus_bm25": 0.2676,
+          "wins": 20,
+          "losses": 1,
+          "p_two_sided_exact": 2.09808e-05,
+          "significant_at_0.05": true
+        },
+        "2": {
+          "dense_minus_bm25": 0.1268,
+          "wins": 11,
+          "losses": 2,
+          "p_two_sided_exact": 0.0224609,
+          "significant_at_0.05": true
+        },
+        "3": {
+          "dense_minus_bm25": 0.0845,
+          "wins": 8,
+          "losses": 2,
+          "p_two_sided_exact": 0.109375,
+          "significant_at_0.05": false
+        }
+      }
+    }
+  },
+  "frontier": {
+    "MiniLM": {
+      "recommended_level": "L2",
+      "proven_equivalent": [
+        "L1"
+      ],
+      "underpowered": [
+        "L2"
+      ],
+      "evidence_of_loss": [
+        "L4"
+      ],
+      "confounded_by_selfreference": [
+        "L3"
+      ],
+      "recall@10": {
+        "L0": 0.5775,
+        "L1": 0.5775,
+        "L2": 0.5493,
+        "L3": 0.5775,
+        "L4": 0.4507
+      },
+      "vs_L0": {
+        "L1": {
+          "mean_diff": 0.0,
+          "tost_p_max": 0.00634257,
+          "equivalent_at_0.05": true
+        },
+        "L2": {
+          "mean_diff": -0.0282,
+          "tost_p_max": 0.263928,
+          "equivalent_at_0.05": false
+        },
+        "L3": {
+          "mean_diff": 0.0,
+          "tost_p_max": 0.252659,
+          "equivalent_at_0.05": false
+        },
+        "L4": {
+          "mean_diff": -0.1268,
+          "tost_p_max": 0.887689,
+          "equivalent_at_0.05": false
+        }
+      }
+    },
+    "bge-m3": {
+      "recommended_level": "L1",
+      "proven_equivalent": [],
+      "underpowered": [
+        "L1"
+      ],
+      "evidence_of_loss": [
+        "L2",
+        "L4"
+      ],
+      "confounded_by_selfreference": [
+        "L3"
+      ],
+      "recall@10": {
+        "L0": 0.5634,
+        "L1": 0.5211,
+        "L2": 0.493,
+        "L3": 0.5634,
+        "L4": 0.4648
+      },
+      "vs_L0": {
+        "L1": {
+          "mean_diff": -0.0423,
+          "tost_p_max": 0.402305,
+          "equivalent_at_0.05": false
+        },
+        "L2": {
+          "mean_diff": -0.0704,
+          "tost_p_max": 0.711715,
+          "equivalent_at_0.05": false
+        },
+        "L3": {
+          "mean_diff": 0.0,
+          "tost_p_max": 0.226172,
+          "equivalent_at_0.05": false
+        },
+        "L4": {
+          "mean_diff": -0.0986,
+          "tost_p_max": 0.788308,
+          "equivalent_at_0.05": false
+        }
+      }
+    },
+    "e5-base": {
+      "recommended_level": "L2",
+      "proven_equivalent": [
+        "L1"
+      ],
+      "underpowered": [
+        "L2"
+      ],
+      "evidence_of_loss": [
+        "L4"
+      ],
+      "confounded_by_selfreference": [
+        "L3"
+      ],
+      "recall@10": {
+        "L0": 0.493,
+        "L1": 0.507,
+        "L2": 0.4507,
+        "L3": 0.4366,
+        "L4": 0.4225
+      },
+      "vs_L0": {
+        "L1": {
+          "mean_diff": 0.0141,
+          "tost_p_max": 0.00538615,
+          "equivalent_at_0.05": true
+        },
+        "L2": {
+          "mean_diff": -0.0423,
+          "tost_p_max": 0.417495,
+          "equivalent_at_0.05": false
+        },
+        "L3": {
+          "mean_diff": -0.0563,
+          "tost_p_max": 0.540018,
+          "equivalent_at_0.05": false
+        },
+        "L4": {
+          "mean_diff": -0.0704,
+          "tost_p_max": 0.618877,
+          "equivalent_at_0.05": false
+        }
+      }
+    }
+  },
+  "conclusion": {
+    "ablation_dense_advantage_significant_at_level0_all_models": true,
+    "ablation_dense_advantage_significant_at_level3_all_models": false,
+    "ablation_level3_significant_by_model": {
+      "MiniLM": true,
+      "bge-m3": true,
+      "e5-base": false
+    },
+    "frontier_recommendation_by_model": {
+      "MiniLM": "L2",
+      "bge-m3": "L1",
+      "e5-base": "L2"
+    },
+    "frontier_recommendation_is_model_dependent": true,
+    "conservative_recommendation_across_models": "L1"
+  }
+}

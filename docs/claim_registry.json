@@ -598,6 +598,132 @@
       "note": ""
     },
     {
+      "id": "cross.models",
+      "where": "PAPER 4.8",
+      "desc": "Tier-1 번들 모델 수 (3)",
+      "paper": 3,
+      "artifact": 3,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "cross.abl.l0_all_sig",
+      "where": "PAPER 4.8",
+      "desc": "압력 level0 dense−BM25가 세 모델 모두 유의한가",
+      "paper": true,
+      "artifact": true,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "cross.abl.l3_all_sig",
+      "where": "PAPER 4.8",
+      "desc": "압력 level3에서도 세 모델 모두 유의한가 (아니오)",
+      "paper": false,
+      "artifact": false,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "cross.abl.l3_e5_not_sig",
+      "where": "PAPER 4.8",
+      "desc": "level3에서 e5-base는 유의하지 않다",
+      "paper": false,
+      "artifact": false,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "cross.abl.l3.MiniLM",
+      "where": "PAPER 4.8",
+      "desc": "level3 dense−BM25 (MiniLM)",
+      "paper": 0.2113,
+      "artifact": 0.2113,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "cross.abl.l3.bge-m3",
+      "where": "PAPER 4.8",
+      "desc": "level3 dense−BM25 (bge-m3)",
+      "paper": 0.2535,
+      "artifact": 0.2535,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "cross.abl.l3.e5-base",
+      "where": "PAPER 4.8",
+      "desc": "level3 dense−BM25 (e5-base)",
+      "paper": 0.0845,
+      "artifact": 0.0845,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "cross.front.model_dependent",
+      "where": "PAPER 4.8/초록",
+      "desc": "운용 권고가 모델에 따라 달라지는가",
+      "paper": true,
+      "artifact": true,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "cross.front.conservative",
+      "where": "PAPER 4.8/초록/결론",
+      "desc": "모델 불문 보수적 권고 등급",
+      "paper": "L1",
+      "artifact": "L1",
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "cross.front.rec.MiniLM",
+      "where": "PAPER 4.8",
+      "desc": "MiniLM 권고 등급",
+      "paper": "L2",
+      "artifact": "L2",
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "cross.front.rec.e5-base",
+      "where": "PAPER 4.8",
+      "desc": "e5-base 권고 등급",
+      "paper": "L2",
+      "artifact": "L2",
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "cross.front.rec.bge-m3",
+      "where": "PAPER 4.8",
+      "desc": "bge-m3 권고 등급",
+      "paper": "L1",
+      "artifact": "L1",
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "cross.front.bge.L2_diff",
+      "where": "PAPER 4.8",
+      "desc": "bge-m3 L2 차이 (마진 초과 → 손실 징후)",
+      "paper": -0.0704,
+      "artifact": -0.0704,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "cross.front.bge.L1_not_equiv",
+      "where": "PAPER 4.8",
+      "desc": "bge-m3에서 L1이 등가 입증되는가 (아니오)",
+      "paper": false,
+      "artifact": false,
+      "status": "OK",
+      "note": ""
+    },
+    {
       "id": "ladder.hybrid.L0",
       "where": "PAPER 4.5",
       "desc": "사다리 L0 hybrid R@10",
@@ -828,7 +954,7 @@
     }
   ],
   "counts": {
-    "OK": 90,
+    "OK": 104,
     "MISMATCH": 0,
     "SKIP": 0,
     "ERROR": 0,
