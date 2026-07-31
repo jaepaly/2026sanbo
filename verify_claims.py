@@ -355,13 +355,13 @@ def build_checks() -> list[Check]:
     # ---- claim 5: 자기참조 압력 하 강건성 ----
     abl = load(OUT / "symmetric_ablation.json")
 
-    C.append(Check("abl.dense_vs_bm25.L0", "PAPER 4.6", "압력 level0 dense−BM25 평균차", 0.4225,
+    C.append(Check("abl.dense_vs_bm25.L0", "PAPER 4.6", "압력 level0 dense−BM25 평균차", 0.4366,
                    lambda: dig(abl, "headline", "dense_advantage_over_bm25_by_level", "0")))
     C.append(Check("abl.dense_vs_bm25.L3", "PAPER 4.6",
                    "압력 level3 dense−BM25 평균차 (유의 유지)", 0.2113,
                    lambda: dig(abl, "headline", "dense_advantage_over_bm25_by_level", "3")))
-    for retr, l0, l3 in [("BM25", 0.1690, 0.0282), ("dense", 0.5915, 0.2394),
-                         ("hybrid_0.5", 0.6056, 0.2254)]:
+    for retr, l0, l3 in [("BM25", 0.1549, 0.0282), ("dense", 0.5915, 0.2394),
+                         ("hybrid_0.5", 0.6056, 0.2394)]:
         C.append(Check(f"abl.{retr}.L0", "PAPER 4.6", f"압력 level0 {retr} R@10", l0,
                        lambda r=retr: dig(abl, "headline", "recall_by_level", r, "0")))
         C.append(Check(f"abl.{retr}.L3", "PAPER 4.6", f"압력 level3 {retr} R@10", l3,

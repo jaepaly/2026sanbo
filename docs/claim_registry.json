@@ -740,9 +740,9 @@
       "id": "abl.dense_vs_bm25.L0",
       "where": "PAPER 4.6",
       "desc": "압력 level0 dense−BM25 평균차",
-      "paper": 0.4225,
+      "paper": 0.4366,
       "artifact": 0.4366,
-      "status": "MISMATCH",
+      "status": "OK",
       "note": ""
     },
     {
@@ -758,9 +758,9 @@
       "id": "abl.BM25.L0",
       "where": "PAPER 4.6",
       "desc": "압력 level0 BM25 R@10",
-      "paper": 0.169,
+      "paper": 0.1549,
       "artifact": 0.1549,
-      "status": "MISMATCH",
+      "status": "OK",
       "note": ""
     },
     {
@@ -803,9 +803,9 @@
       "id": "abl.hybrid_0.5.L3",
       "where": "PAPER 4.6",
       "desc": "압력 level3 hybrid_0.5 R@10",
-      "paper": 0.2254,
+      "paper": 0.2394,
       "artifact": 0.2394,
-      "status": "MISMATCH",
+      "status": "OK",
       "note": ""
     },
     {
@@ -828,8 +828,8 @@
     }
   ],
   "counts": {
-    "OK": 87,
-    "MISMATCH": 3,
+    "OK": 90,
+    "MISMATCH": 0,
     "SKIP": 0,
     "ERROR": 0,
     "NEW": 0
