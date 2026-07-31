@@ -115,18 +115,50 @@ def main() -> int:
         check(f"frontier {lv}: BM25 가 로컬 재계산과 동일", got == expect,
               f"{n_diff}개 불일치 (샤드 {sum(got)} vs 재계산 {sum(expect)})" if n_diff else "")
 
+    # ablation 도 로컬 재계산으로 대조한다. 동료 번들과만 비교하면 **비교 상대가 없을 때
+    # 검사가 통째로 건너뛰어지고**, 그 틈으로 낡은 코퍼스에서 계산된 기준본이 통과한다.
+    # 실제로 그 사고가 났다: v1 코퍼스로 만든 MiniLM ablation 이 기준본으로 커밋됐고,
+    # 두 번째 번들이 들어와서야 드러났다. substitution_log 가 등급별 치환 질의 전문을
+    # 담고 있으므로 인코더 없이 BM25 를 그대로 재계산할 수 있다.
+    log = abl.get("substitution_log") or {}
+    abl_hits = abl.get("hit_vectors") or {}
+    qids = abl.get("query_ids") or [q["id"] for q in ladder]
+    if not log:
+        check("ablation: substitution_log 존재(로컬 재계산에 필요)", False)
+    else:
+        for imode in ("full_text", "minimal_text"):
+            for lv in ("0", "1", "2", "3"):
+                got = ((abl_hits.get(imode) or {}).get(lv) or {}).get("BM25")
+                if got is None:
+                    check(f"ablation {imode} L{lv}: BM25 벡터 존재", False)
+                    continue
+                qs, ls = [], []
+                for qid, lab in zip(qids, labels):
+                    node = (log.get(qid) or {}).get(lv)
+                    if node is None:
+                        qs = []
+                        break
+                    qs.append(node["text"])
+                    ls.append(lab)
+                if not qs:
+                    check(f"ablation {imode} L{lv}: substitution_log 완전성", False,
+                          "일부 질의의 등급 텍스트 누락")
+                    continue
+                expect = bm25_hits(corpus, qs, ls, imode)
+                n_diff = sum(1 for x, y in zip(got, expect) if x != y)
+                check(f"ablation {imode} L{lv}: BM25 가 로컬 재계산과 동일",
+                      got == expect,
+                      f"{n_diff}개 불일치 (번들 {sum(got)} vs 재계산 {sum(expect)}) — "
+                      f"다른 코퍼스에서 계산된 번들입니다" if n_diff else "")
     if ref:
         abl_ref = (ref.get("symmetric_ablation") or {}).get("hit_vectors") or {}
-        abl_got = abl.get("hit_vectors") or {}
         for imode in ("full_text", "minimal_text"):
-            a = (abl_got.get(imode) or {})
+            a = (abl_hits.get(imode) or {})
             r = (abl_ref.get(imode) or {})
             keys = sorted(set(a) & set(r))
             bad = [k for k in keys if isinstance(a[k], dict) and "BM25" in a[k]
                    and a[k]["BM25"] != r[k].get("BM25")]
-            check(f"ablation {imode}: BM25 가 {src} 와 동일", not bad, str(bad[:4]))
-    else:
-        print("  (비교할 다른 번들 없음 — ablation BM25 는 frontier 대조로 갈음)")
+            check(f"ablation: BM25 가 {src} 와 동일 ({imode})", not bad, str(bad[:4]))
 
     print("\n[정합성]")
     hl = abl.get("headline") or {}
