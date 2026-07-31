@@ -54,15 +54,30 @@ DATA_DIR = ROOT / "data"
 OUT_DIR = ROOT / "output"
 OUT_DIR.mkdir(exist_ok=True)
 
+# 모델별 실행 (Tier 1 다모델 확장). 팀원이 자기 모델로 돌려도 다른 사람의 산출물을
+# 덮어쓰지 않도록, 기본 모델이 아니면 출력 경로에 모델 키를 붙인다.
+SANBO_MODELS = {
+    "MiniLM": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+    "e5-base": "intfloat/multilingual-e5-base",
+    "bge-m3": "BAAI/bge-m3",
+}
+PRIMARY_MODEL_KEY = "MiniLM"
+MODEL_KEY = os.environ.get("SANBO_MODEL_KEY", PRIMARY_MODEL_KEY)
+if MODEL_KEY not in SANBO_MODELS:
+    raise SystemExit(
+        f"SANBO_MODEL_KEY 는 {sorted(SANBO_MODELS)} 중 하나여야 합니다: {MODEL_KEY!r}")
+_SUFFIX = "" if MODEL_KEY == PRIMARY_MODEL_KEY else f"_{MODEL_KEY}"
+# SANBO_ABLATION_MODEL 은 하위호환으로 남긴다(모델 전체 이름을 직접 지정).
+DENSE_MODEL = os.environ.get("SANBO_ABLATION_MODEL", SANBO_MODELS[MODEL_KEY])
+
+JSON_PATH = OUT_DIR / f"symmetric_ablation{_SUFFIX}.json"
+MD_PATH = OUT_DIR / f"symmetric_ablation{_SUFFIX}.md"
+
 CORPUS_PATH = DATA_DIR / "corpus" / "combined.json"
 QUERIES_PATH = DATA_DIR / "validated_queries_expanded.json"
 SUBS_PATH = DATA_DIR / "hypernym_substitutions.json"
-JSON_PATH = OUT_DIR / "symmetric_ablation.json"
-MD_PATH = OUT_DIR / "symmetric_ablation.md"
 
-# 지시대로 MiniLM 단일 모델. 3모델 전체 실행은 하지 않는다.
-DENSE_MODEL = os.environ.get(
-    "SANBO_ABLATION_MODEL", "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2")
+DENSE_MODEL = os.environ.get("SANBO_ABLATION_MODEL", SANBO_MODELS[MODEL_KEY])
 GATE_MODEL = "sentence-transformers/LaBSE"   # 진단용(평가에 쓰지 않는 제3모델)
 
 LEVELS = [0, 1, 2, 3]
