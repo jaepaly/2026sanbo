@@ -104,7 +104,7 @@ BM25 한국어 = **0.0000** (45개 중 44개가 어휘 교집합 0).
 | 라벨 강건성 | `output/label_sensitivity.md` |
 | 통계 | `docs/statistics.md` |
 | 재현 절차 | `docs/reproducibility.md` |
-| 팀 분담 이력 | `README.md` §팀 협업 가이드, `docs/RESEARCH_IMPROVEMENT_PLAN.md` |
+| 팀 분담 이력 | `README.md` §완료된 이전 라운드, `docs/RESEARCH_IMPROVEMENT_PLAN.md` |
 | 공통 검색 코어 | `retrieval_core.py` (BM25·랭킹·노출·통계 단일 출처) |
 
 ---
@@ -185,7 +185,7 @@ eCFR 637건 중 **351건(55.1%)**이 `(see List of Items Controlled)` 형태의 
 | 이예찬 | TASK F(그림·통계), TASK G 슬라이스(0/1/2/8), bge-m3 샤드 | 완료·병합됨 |
 | 장승우 | TASK D(한국어), TASK G 슬라이스(3~7/9), e5-base 샤드 | 완료·병합됨 |
 
-새 작업을 팀원에게 분담할 때는 `README.md` §팀 협업 가이드의 복붙 프롬프트와 `docs/RESULT_REPORT_TEMPLATE.md` 양식을 쓴다. 샤드 제출물은 반드시 `validate_shard.py`로 검증한 뒤 병합한다(BM25 히트 벡터가 바이트 단위로 일치해야 하며, 이것이 상대 환경을 신뢰하지 않고도 동일 조건이었음을 보장한다).
+새 작업을 팀원에게 분담할 때는 `README.md` §코퍼스 v2 채택 매뉴얼의 1인칭 절차(배정모델만 바꿔 재사용)와 `docs/RESULT_REPORT_TEMPLATE.md` 양식을 쓴다. 이전 라운드의 에이전트 프롬프트 전문은 `docs/RESEARCH_IMPROVEMENT_PLAN.md`에 있다. 샤드 제출물은 반드시 `validate_shard.py`로 검증한 뒤 병합한다(BM25 히트 벡터가 바이트 단위로 일치해야 하며, 이것이 상대 환경을 신뢰하지 않고도 동일 조건이었음을 보장한다).
 
 ---
 
