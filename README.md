@@ -2,7 +2,7 @@
 
 > **다른 기기·다른 세션에서 이어받는다면 → [`docs/HANDOFF.md`](docs/HANDOFF.md) 를 먼저 읽으세요.**
 > 셋업, 인수 직후 건강검진 명령, 현재 확정 수치, 재실행 의존 순서, 알려진 함정, 다음 착수점이 정리돼 있습니다.
-> 첫 명령은 `python verify_claims.py` (기대: `OK=90 / MISMATCH=0`).
+> 첫 명령은 `python verify_claims.py` (기대: `OK=104 / MISMATCH=0`).
 
 이 저장소는 외부 AI/검색 서비스에 기술정보를 전송할 때, 반환·처리하는 정보량을 줄이면서 공개 통제목록 후보검색 성능을 어느 정도 유지할 수 있는지 검증하기 위한 연구용 실험 저장소입니다.
 
@@ -213,110 +213,54 @@ python make_figures.py                 # figure 5종 → output/fig_*.png
 
 ---
 
-## Tier 1 다모델 확장 (진행 중)
+## TASK J — 검증셋 표본 확대 (진행 중)
+
+**상세 스펙: [`docs/TASK_J_SAMPLE_EXPANSION.md`](docs/TASK_J_SAMPLE_EXPANSION.md)** — 담당자는 그 문서를 그대로 따르면 됩니다.
 
 ### 무엇을 닫는 작업인가
 
-`PAPER.md` 한계 6이 **"대칭 ablation(4.6)과 disclosure frontier(4.5)는 MiniLM 단일 실행이므로
-모델 간 일반화는 확인되지 않았다(확인 필요)"** 라고 적고 있습니다. 4.5는 운용 권고(L2)를 담은
-핵심 결과이고 4.6은 강건성 절 자체라, 여기가 단일 모델인 것은 심사에서 바로 지적당할 자리입니다.
+Tier 1 다모델 확장(아래 '완료된 이전 라운드')이 한계 6을 닫으면서 **새 문제**를 드러냈습니다.
+질의 노출 사다리의 **운용 권고 등급이 인코더마다 갈립니다**(`PAPER.md` 4.8).
 
-두 실험을 `e5-base`·`bge-m3`로도 돌리면 논문에 남는 `확인 필요` 마커가 사라집니다.
+| 인코더 | L1 등가 입증 | L2 판정 | 권고 |
+|---|---|---|---|
+| MiniLM | 예 (TOST p_max 0.0063) | 검정력 부족 | L2 |
+| e5-base | 예 (p_max 0.0054) | 검정력 부족 | L2 |
+| bge-m3 | **아니오** (p_max 0.402) | **손실 징후** (−0.0704 > δ=0.05) | **L1** |
 
-### 실행 방법
+논문은 현재 보수적으로 L1을 권고합니다. 이 분기가 **진짜 모델 차이인지 n=71의 잡음인지**가
+지금 가장 큰 미해결 질문이고, 표본을 늘리면 답이 나옵니다.
 
-아래 '모델 배정' 표에서 자기 모델을 확인하고, `<배정모델>` 자리에 그 값을 넣어 실행하십시오.
-실험 두 개를 돌려서 결과 파일 **하나**를 보내면 끝입니다. 판단할 것은 없습니다.
+### ⚠ 기대치를 먼저 맞춥니다
 
-```bash
-$env:PYTHONIOENCODING="utf-8"
-```
+**이 확장으로 L2 등가(δ=0.05)를 입증할 수는 없습니다.** 필요 표본이 n≈1,102인데, 새 질의를
+만들 수 있는 미사용·비스텁 eCFR 항목이 257개뿐이라 **이론적 최대가 n=328**입니다. 목표로
+삼지 마십시오. +80이 사는 것은 (1) 위 모델 분기의 정체 규명, (2) e5-base ablation 검정력
+회복, (3) 라벨 결함 비율 희석입니다.
 
-mac/linux 라면 `export PYTHONIOENCODING=utf-8`.
+### 배정
 
-#### 1. 저장소 준비
+| 담당 | 배정 구간 (미사용·비스텁 eCFR) | 가용 | 목표 |
+|---|---|---:|---:|
+| 이예찬 | 카테고리 **0·1·2·8** | 66개 | 40 |
+| 장승우 | 카테고리 **3·4·5·6·7·9** | 72개 | 40 |
 
-```bash
-git clone https://github.com/jaepaly/2026sanbo.git
-```
+### TASK G와 다른 점
 
-```bash
-cd 2026sanbo && python -m venv .venv && .venv\Scriptsctivate && pip install -r requirements.txt
-```
+질의 하나마다 **L0~L4 사다리 5버전**을 모두 써야 합니다(40개 질의 = 200문장). 미해결 질문의
+무대가 사다리이기 때문입니다. 기존 71개의 실제 사다리 전문이 `data/disclosure_ladder.json`에
+있으니 반드시 몇 개 읽고 같은 톤·같은 삭제 기준으로 쓰십시오.
 
-이미 클론해 둔 저장소가 있으면 `git pull` 하십시오.
-
-#### 2. 실험을 돌린다
-
-```bash
-python run_tier1.py <배정모델>
-```
-
-두 실험(대칭 ablation, disclosure frontier)이 차례로 돌아갑니다. 중간에 끊어도 안전합니다 —
-부분 결과를 쓰지 않으므로 처음부터 다시 돌리면 됩니다.
-
-#### 3. 검증한다
+### 제출 전 필수
 
 ```bash
-python validate_tier1.py output/tier1/tier1_<배정모델>.json
+python validate_query_slice.py data/validated_queries_slice_j_<이름>.json
 ```
 
-마지막 줄이 **"모든 검증 통과"** 여야 합니다. 실패하면 출력을 그대로 공유해 주십시오.
+**exit 0** 이어야 보냅니다. 어휘 Jaccard와 **의미 게이트(제3 인코더)**가 자기참조를 함께
+검사합니다. 자기참조는 이 프로젝트에서 두 번 데인 함정이니(스펙 4절) 항목 원문 표현을
+베끼지 말고, 특히 L3를 통제목록 문체로 수렴시키지 마십시오.
 
-#### 4. 파일 하나만 보낸다
-
-```
-output/tier1/tier1_<배정모델>.json
-```
-
-이 파일만 보내면 됩니다. 커밋도 PR도 필요 없습니다. 다른 파일은 건드리지 마십시오.
-
----
-
-### 모델 배정
-
-| 담당 | `<배정모델>` | 모델 |
-|---|---|---|
-| 이예찬 | `bge-m3` | BAAI/bge-m3 |
-| 장승우 | `e5-base` | intfloat/multilingual-e5-base |
-
-GPU가 있으면 훨씬 빠릅니다. 없어도 그냥 돌아갑니다.
-
-### 내 결과가 맞는지 확인하기
-
-`validate_tier1.py` 가 자동으로 검사하지만, 아래는 **세 사람이 같아야 하는 값**입니다.
-BM25는 임베딩 모델을 전혀 쓰지 않으므로 모델이 달라도 결과가 같아야 하고, 다르면 잘못된 것입니다.
-
-| 확인 항목 | 기대값 |
-|---|---|
-| ablation BM25 R@10 (치환 0→3) | `0.169 → 0.0563 → 0.0282 → 0.0282` |
-| ablation 한국어 BM25 | 전 level **0.0000** |
-| frontier 각 등급 BM25 | 로컬 재계산과 완전 일치 |
-| frontier 권고 등급 | **L2** (L3는 자기참조 교란으로 제외) |
-| 질의 수 | 71 |
-
-dense·hybrid 값은 모델마다 **달라야 정상**입니다. 그게 이 실험의 목적입니다.
-
-### 문제가 생기면
-
-| 증상 | 대응 |
-|---|---|
-| 한글이 깨져 출력 | `PYTHONIOENCODING=utf-8` 미설정 |
-| 모델 다운로드가 느림 | `pip install hf_xet` |
-| 메모리 부족 | `batch_size=32` 를 8로 낮추십시오. 결과는 동일합니다 |
-| BM25 불일치 보고 | `git pull` 후 2번부터 다시. 코퍼스가 최신이 아닐 수 있습니다 |
-| 그 외 | `validate_tier1.py` 출력 전체를 공유 |
-
-### 하지 말아야 할 것
-
-| 항목 | 이유 |
-|---|---|
-| `retrieval_core.py` 수정 | 33개 검증이 걸려 있습니다. 여기가 틀리면 모든 수치가 조용히 틀어집니다 |
-| 사전지정 값(δ, α, 시드) 변경 | 실험 전에 고정한 값입니다 |
-| `data/disclosure_ladder.json`, `data/hypernym_substitutions.json` 수정 | 세 모델이 **같은** 질의·치환을 써야 비교가 성립합니다 |
-| 자기 번들 외 `output/` 파일 수정 | 다른 사람 결과를 덮어씁니다 |
-
----
 
 ## 코퍼스 v2 채택 매뉴얼
 
@@ -508,6 +452,7 @@ python -c "import json;c=json.load(open('data/corpus/combined.json',encoding='ut
 
 | TASK | 내용 | 산출물 |
 |---|---|---|
+| Tier 1 | 다모델 확장으로 한계 6 해소 — ablation 방향은 일반화되나 최대 압력 유의성 2/3, **운용 권고는 모델 의존적** | `output/tier1/`, `output/tier1_crossmodel.*` |
 | A | 합성셋 자기참조 의존성 정량화 | `output/paraphrase_gap.*` |
 | B/C | 코드 충돌 제거 + 검증 라벨셋 구축 | `data/external_consultation_queries_validated.json` |
 | D | 한국어 cross-lingual 트랙 | `output/crosslingual_eval.*` |
