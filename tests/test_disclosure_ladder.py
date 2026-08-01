@@ -289,6 +289,71 @@ def test_spec_exclusions(payload: dict) -> None:
 # ----------------------------------------------------------- 6. 계량기 동작
 
 
+def test_detector_boundary() -> None:
+    """quantitative_spec / function 경계를 고정한다.
+
+    이 경계는 노출 축(민감토큰 수) 전체를 좌우한다. 항목 하나를 조용히 옮기면
+    논문의 L0~L4 수치가 통째로 바뀌므로, 판정 기준을 대표 사례로 못박아 둔다.
+
+    기준(L1 정의에서 유도): 수치이거나, 측정 차원을 지칭하거나, 명시적 등급어면
+    quantitative_spec. 값·차원·등급이 모두 없는 맨 속성 형용사는 function.
+    """
+    print("[검출기 경계]")
+    overlap = set(bdl.GRADE_TERMS) & set(bdl.ATTRIBUTE_TERMS)
+    check("두 목록이 서로소", not overlap, str(sorted(overlap)[:5]))
+    check("ATTRIBUTE_TERMS 는 계수 제외 카테고리에 들어간다",
+          bdl.CATEGORY_DEFS["function"]["counted"] is False)
+    check("ATTRIBUTE_TERMS 가 실제로 function 으로 등록돼 있다",
+          set(bdl.TERMS["function"]) == set(bdl.ATTRIBUTE_TERMS))
+
+    counted = {                       # 수치 / 차원 지칭 / 등급어
+        "공차 ±5마이크론": "quantitative_spec",
+        "형상 정밀도가 중요합니다": "quantitative_spec",
+        "분해능이 관건입니다": "quantitative_spec",
+        "high-precision alignment": "quantitative_spec",
+    }
+    for text, cat in counted.items():
+        m = bdl.measure(text)
+        check(f"계수: {text[:22]}", cat in m["counted_sensitive_fields"],
+              str(m["counted_sensitive_fields"]))
+
+    not_counted = ["고온 환경용 부품", "고속 회전 장비", "경량 합금", "저소음 추진",
+                   "특수 추진 장비", "lightweight composite", "low-noise drive"]
+    for text in not_counted:
+        m = bdl.measure(text)
+        check(f"비계수: {text[:22]}", m["sensitive_token_count"] == 0,
+              str([(s["category"], s["surface"]) for s in m["spans"]]))
+
+    # 수치는 여전히 잡혀야 한다 (경계를 넓히다 숫자까지 놓치면 축이 무의미해진다)
+    m = bdl.measure("300밀리미터 웨이퍼, 0.5마이크론 공차")
+    check("수치 표현은 계속 계수된다",
+          "quantitative_spec" in m["counted_sensitive_fields"]
+          and m["sensitive_token_count"] >= 2, str(m["counted_sensitive_fields"]))
+
+
+def test_irreducible_floor(payload: dict) -> None:
+    """제외 질의가 '용도로 정의된 품목군'에 몰려 있다는 사실을 고정한다.
+
+    이것은 계량기 결함이 아니라 논문 4.5 가 결과로 보고하는 내용이다. 제외가
+    특정 품목군에 집중돼 있다는 성질이 사라지면 그 서술도 다시 써야 한다.
+    """
+    print("[환원 불가능한 노출 바닥]")
+    ident = {"로켓", "미사일", "위성", "군용", "군사", "방사성", "항공기",
+             "rocket", "missile", "military", "propulsion", "satellite"}
+    excluded = [e for e in payload["queries"]
+                if not e.get("ladder_spec_compliant", True)]
+    hits = []
+    for e in excluded:
+        blob = " ".join(e["levels"][lv]["query"] for lv in ("L3", "L4")).lower()
+        if any(t.lower() in blob for t in ident):
+            hits.append(e["id"])
+    check("제외 질의의 과반이 용도 정의형 품목군이다",
+          len(hits) > len(excluded) / 2, f"{len(hits)}/{len(excluded)}")
+    check("제외가 사다리 표본의 20% 미만이다 (계량기 정정 후)",
+          len(excluded) < 0.20 * len(payload["queries"]),
+          f"{len(excluded)}/{len(payload['queries'])}")
+
+
 def test_detector() -> None:
     print("[계량기]")
     m = bdl.measure("300밀리미터 실리콘 웨이퍼를 외국 파운드리에 이전하려 합니다.")
@@ -400,6 +465,8 @@ def main() -> int:
     test_no_leak(payload)
     test_level_definitions(payload)
     test_spec_exclusions(payload)
+    test_detector_boundary()
+    test_irreducible_floor(payload)
     test_detector()
     test_slice_ladder_source()
     print()

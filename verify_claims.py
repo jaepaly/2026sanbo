@@ -343,7 +343,7 @@ def build_checks() -> list[Check]:
         C.append(Check(f"cross.front.rec.{m}", "PAPER 4.8", f"{m} 권고 등급", val,
                        lambda mm=m: dig(cross, "frontier", mm, "recommended_level")))
     C.append(Check("cross.front.bge.L2_diff", "PAPER 4.8",
-                   "bge-m3 L2 차이 (마진 초과 → 손실 징후)", -0.0504,
+                   "bge-m3 L2 차이 (마진 초과 → 손실 징후)", -0.1053,
                    lambda: dig(cross, "frontier", "bge-m3", "vs_L0", "L2", "mean_diff")))
     C.append(Check("cross.front.bge.L1_not_equiv", "PAPER 4.8",
                    "bge-m3에서 L1이 등가 입증되는가 (아니오)", False,
@@ -359,15 +359,15 @@ def build_checks() -> list[Check]:
     def ladder_tost(level, field, retr="hybrid_0.5"):
         return dig(ladder, "equivalence_vs_L0", retr, f"{level}_vs_L0", "primary", field)
 
-    for lv, val in [("L0", 0.5294), ("L1", 0.5126), ("L2", 0.4454),
-                    ("L3", 0.4874), ("L4", 0.4034)]:
+    for lv, val in [("L0", 0.5188), ("L1", 0.4962), ("L2", 0.4211),
+                    ("L3", 0.4586), ("L4", 0.3835)]:
         C.append(Check(f"ladder.hybrid.{lv}", "PAPER 4.5", f"사다리 {lv} hybrid R@10", val,
                        lambda l=lv: ladder_rate(l)))
     C.append(Check("ladder.bm25.L0.ko", "PAPER 4.5",
-                   "사다리 BM25 한국어 R@10 (바닥 수준)", 0.0235,
+                   "사다리 BM25 한국어 R@10 (바닥 수준)", 0.0303,
                    lambda: ladder_rate("L0", "BM25", "ko")))
     # L1 = 손실 징후가 없는 가장 깊은 등급. n=151에서 TOST 등가는 통과하지 못한다 (증거등급 B)
-    C.append(Check("ladder.L1.tost_pmax", "PAPER 4.5/초록", "L1 TOST p_max", 0.0817,
+    C.append(Check("ladder.L1.tost_pmax", "PAPER 4.5/초록", "L1 TOST p_max", 0.1119,
                    lambda: ladder_tost("L1", "p_max"), tol=1e-3))
     C.append(Check("ladder.L1.equivalent", "PAPER 4.5/초록",
                    "L1이 δ=0.05에서 등가 입증되는가 (아니오)", False,
@@ -375,17 +375,17 @@ def build_checks() -> list[Check]:
     C.append(Check("ladder.L2.not_equivalent", "PAPER 4.5",
                    "L2가 δ=0.05에서 등가 입증되는가 (아니오)", False,
                    lambda: ladder_tost("L2", "equivalent_at_0.05")))
-    C.append(Check("ladder.L1.n_required", "PAPER 4.5", "L1 등가 입증에 필요한 n", 379,
+    C.append(Check("ladder.L1.n_required", "PAPER 4.5", "L1 등가 입증에 필요한 n", 556,
                    lambda: dig(ladder, "equivalence_vs_L0", "hybrid_0.5", "L1_vs_L0",
                                "required_n_for_delta_0.05"), tol=0))
-    C.append(Check("ladder.L2.diff", "PAPER 4.5", "L2 평균차 (마진 초과 = 손실 징후)", -0.0840,
+    C.append(Check("ladder.L2.diff", "PAPER 4.5", "L2 평균차 (마진 초과 = 손실 징후)", -0.0977,
                    lambda: dig(ladder, "contrasts_vs_L0", "hybrid_0.5", "L2_vs_L0",
                                "mean_diff")))
-    C.append(Check("ladder.n", "PAPER 3.5/4.5", "사다리 분석 대상 질의 수 (정의 위반 제외 후)", 119,
+    C.append(Check("ladder.n", "PAPER 3.5/4.5", "사다리 분석 대상 질의 수 (정의 위반 제외 후)", 133,
                    lambda: dig(ladder, "data", "n_queries"), tol=0))
-    C.append(Check("ladder.excluded", "PAPER 3.5/7", "사다리 정의 위반으로 제외된 질의 수", 32,
+    C.append(Check("ladder.excluded", "PAPER 3.5/7", "사다리 정의 위반으로 제외된 질의 수", 18,
                    lambda: dig(ladder, "data", "ladder_spec_excluded"), tol=0))
-    C.append(Check("ladder.L4.diff", "PAPER 4.5", "L4 평균차 (마진 초과 = 손실 징후)", -0.1261,
+    C.append(Check("ladder.L4.diff", "PAPER 4.5", "L4 평균차 (마진 초과 = 손실 징후)", -0.1353,
                    lambda: dig(ladder, "contrasts_vs_L0", "hybrid_0.5", "L4_vs_L0",
                                "mean_diff")))
     C.append(Check("ladder.recommended", "PAPER 4.5/초록/결론", "운용 권고 등급", "L1",
@@ -394,10 +394,10 @@ def build_checks() -> list[Check]:
                    "L3가 자기참조 교란으로 판정되는가", ["L3"],
                    lambda: dig(ladder, "evidence_tiers", "hybrid_0.5",
                                "confounded_by_selfreference")))
-    C.append(Check("ladder.sens_tokens.L0", "PAPER 3.5", "L0 평균 민감토큰", 5.966,
+    C.append(Check("ladder.sens_tokens.L0", "PAPER 3.5", "L0 평균 민감토큰", 5.353,
                    lambda: dig(ladder, "exposure_axis", "L0", "mean_sensitive_token_count"),
                    tol=1e-2))
-    C.append(Check("ladder.sens_tokens.L2", "PAPER 3.5", "L2 평균 민감토큰", 4.471,
+    C.append(Check("ladder.sens_tokens.L2", "PAPER 3.5", "L2 평균 민감토큰", 4.188,
                    lambda: dig(ladder, "exposure_axis", "L2", "mean_sensitive_token_count"),
                    tol=1e-2))
 

@@ -245,31 +245,31 @@
         "L3"
       ],
       "recall@10": {
-        "L0": 0.5294,
-        "L1": 0.5126,
-        "L2": 0.4454,
-        "L3": 0.4874,
-        "L4": 0.4034
+        "L0": 0.5188,
+        "L1": 0.4962,
+        "L2": 0.4211,
+        "L3": 0.4586,
+        "L4": 0.3835
       },
       "vs_L0": {
         "L1": {
-          "mean_diff": -0.0168,
-          "tost_p_max": 0.0817213,
+          "mean_diff": -0.0226,
+          "tost_p_max": 0.111866,
           "equivalent_at_0.05": false
         },
         "L2": {
-          "mean_diff": -0.084,
-          "tost_p_max": 0.849853,
+          "mean_diff": -0.0977,
+          "tost_p_max": 0.933505,
           "equivalent_at_0.05": false
         },
         "L3": {
-          "mean_diff": -0.042,
-          "tost_p_max": 0.441124,
+          "mean_diff": -0.0602,
+          "tost_p_max": 0.579003,
           "equivalent_at_0.05": false
         },
         "L4": {
-          "mean_diff": -0.1261,
-          "tost_p_max": 0.941347,
+          "mean_diff": -0.1353,
+          "tost_p_max": 0.967474,
           "equivalent_at_0.05": false
         }
       }
@@ -278,41 +278,41 @@
       "recommended_level": "L1",
       "proven_equivalent": [],
       "underpowered": [
-        "L1",
-        "L4"
+        "L1"
       ],
       "evidence_of_loss": [
-        "L2"
+        "L2",
+        "L4"
       ],
       "confounded_by_selfreference": [
         "L3"
       ],
       "recall@10": {
-        "L0": 0.5294,
-        "L1": 0.5042,
-        "L2": 0.479,
-        "L3": 0.5546,
-        "L4": 0.5126
+        "L0": 0.5489,
+        "L1": 0.5113,
+        "L2": 0.4436,
+        "L3": 0.5338,
+        "L4": 0.4962
       },
       "vs_L0": {
         "L1": {
-          "mean_diff": -0.0252,
-          "tost_p_max": 0.187062,
+          "mean_diff": -0.0376,
+          "tost_p_max": 0.323032,
           "equivalent_at_0.05": false
         },
         "L2": {
-          "mean_diff": -0.0504,
-          "tost_p_max": 0.505367,
+          "mean_diff": -0.1053,
+          "tost_p_max": 0.946974,
           "equivalent_at_0.05": false
         },
         "L3": {
-          "mean_diff": 0.0252,
-          "tost_p_max": 0.314395,
+          "mean_diff": -0.015,
+          "tost_p_max": 0.242397,
           "equivalent_at_0.05": false
         },
         "L4": {
-          "mean_diff": -0.0168,
-          "tost_p_max": 0.249869,
+          "mean_diff": -0.0526,
+          "tost_p_max": 0.521812,
           "equivalent_at_0.05": false
         }
       }
@@ -331,31 +331,31 @@
         "L3"
       ],
       "recall@10": {
-        "L0": 0.4622,
-        "L1": 0.437,
-        "L2": 0.3529,
-        "L3": 0.4286,
-        "L4": 0.3782
+        "L0": 0.4812,
+        "L1": 0.4662,
+        "L2": 0.3609,
+        "L3": 0.4135,
+        "L4": 0.3684
       },
       "vs_L0": {
         "L1": {
-          "mean_diff": -0.0252,
-          "tost_p_max": 0.132137,
+          "mean_diff": -0.015,
+          "tost_p_max": 0.0504072,
           "equivalent_at_0.05": false
         },
         "L2": {
-          "mean_diff": -0.1092,
-          "tost_p_max": 0.962346,
+          "mean_diff": -0.1203,
+          "tost_p_max": 0.985772,
           "equivalent_at_0.05": false
         },
         "L3": {
-          "mean_diff": -0.0336,
-          "tost_p_max": 0.369313,
+          "mean_diff": -0.0677,
+          "tost_p_max": 0.643702,
           "equivalent_at_0.05": false
         },
         "L4": {
-          "mean_diff": -0.084,
-          "tost_p_max": 0.751793,
+          "mean_diff": -0.1128,
+          "tost_p_max": 0.902216,
           "equivalent_at_0.05": false
         }
       }

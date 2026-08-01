@@ -131,18 +131,39 @@ NUM_UNIT_RE = re.compile(
     re.I,
 )
 
-# 수치가 없는 정량 사양 표현(성능 등급). 사전 기반이므로 열거한다.
+# 수치가 없는 정량 사양 표현. 사전 기반이므로 열거한다.
+#
+# 분류 기준 (L1 정의 "수치·단위·정밀도·공차·성능 등급 표현"에서 직접 유도):
+#   quantitative_spec = 수치 표현이거나, **측정 차원을 지칭**(정밀도·공차·분해능·
+#                       대역폭·사거리)하거나 **명시적 등급어**(고정밀·최첨단·ultra)인 것.
+#   function          = 값도 차원 지칭도 등급어도 없이 속성·동작 환경만 서술하는
+#                       맨 형용사(고온·고속·경량·저소음 …). 계수하지 않는다.
+#
+# 왜 고쳤나: 초판은 아래 ATTRIBUTE_TERMS 를 전부 quantitative_spec 으로 셌다. 그러나
+# 두 작성자(장승우·이예찬)가 **독립적으로** L1 재작성에서 이 표현들을 남겼다 —
+# 정의를 읽고 "수치를 지우라"는 뜻으로 이해했기 때문이다. 두 주석자가 일치하고
+# 검출기만 어긋나면 어긋난 쪽은 검출기다. 이 오분류는 L3·L4 에서 '기능만 남기라'는
+# 지시를 따른 질의를 정의 위반으로 만들었고(13건), L2 에서 고유명칭을 일반어로
+# 바꾸자 민감토큰이 오히려 늘어나는 가짜 비단조도 만들었다(2건).
+#
+# 주의: 이 수정은 표본 전체의 노출 축(민감토큰 수)을 낮춘다. 수정 전후 frontier 를
+# 모두 산출해 비교한다(PAPER 4.5 민감도).
 GRADE_TERMS = [
-    "고정밀", "초정밀", "정밀측정", "정밀도", "정밀하게", "정밀", "고속", "고온",
-    "고압", "고전압", "높은 전압", "고출력", "고부식성", "초내열", "저소음", "경량",
-    "대구경", "미세공정", "최첨단", "특수", "고점도", "심해", "원거리", "분해능",
-    "공차", "등급이 높아", "매우 높은", "매우 작은", "장거리", "다중", "소형",
-    "무거운", "사거리가 긴", "사거리",
-    "high-precision", "high precision", "high-speed", "high speed",
-    "high-current", "high current", "high-voltage", "high voltage",
-    "low-noise", "low noise", "lightweight", "deep-sea", "deep sea",
-    "very high", "very short", "high birefringence", "total dose",
+    "고정밀", "초정밀", "정밀측정", "정밀도", "정밀하게", "정밀",
+    "미세공정", "최첨단", "분해능", "공차", "등급이 높아",
+    "사거리가 긴", "사거리",
+    "high-precision", "high precision", "high birefringence", "total dose",
     "bandwidth", "beat length", "resolution", "tolerance", "ultra",
+]
+
+# 값·차원·등급이 없는 속성 서술 — L3 정의가 명시적으로 남기라고 한 '기능·물리적 원리'.
+ATTRIBUTE_TERMS = [
+    "고속", "고온", "고압", "고전압", "높은 전압", "고출력", "고부식성", "초내열",
+    "저소음", "경량", "대구경", "특수", "고점도", "심해", "원거리",
+    "매우 높은", "매우 작은", "장거리", "다중", "소형", "무거운",
+    "high-speed", "high speed", "high-current", "high current",
+    "high-voltage", "high voltage", "low-noise", "low noise", "lightweight",
+    "deep-sea", "deep sea", "very high", "very short",
 ]
 
 # --------------------------------------------------------------------------
@@ -220,6 +241,9 @@ TERMS: dict[str, list[str]] = {
         "before contracting", "before procurement", "before delivery",
         "sending the proposal",
     ],
+    # 계수 제외. 맨 마지막에 두어 계수 대상 카테고리가 먼저 구간을 가져가게 한다
+    # (분류가 애매할 때 '덜 세는' 쪽이 아니라 '더 세는' 쪽으로 기울도록).
+    "function": list(ATTRIBUTE_TERMS),
 }
 
 
