@@ -10,7 +10,7 @@ refuses to run twice by accident.
     python adopt_corpus_v2.py             # perform the swap
     python adopt_corpus_v2.py --revert    # go back to v1
 
-After swapping you MUST regenerate. See README section "코퍼스 v2 채택 매뉴얼".
+After swapping you MUST regenerate. See docs/TEAM_WORKFLOW.md "코퍼스 v2 채택 매뉴얼".
 The synthetic query set is derived from corpus text, so it is invalid until
 `generate_queries.py` re-runs; `verify_claims.py` will fail loudly until the
 whole chain is redone, which is the intended behaviour.
@@ -89,7 +89,7 @@ def main() -> int:
             {"active": "v1", "note": "adopt_corpus_v2.py --revert 로 복원",
              "v1": describe(ACTIVE)}, ensure_ascii=False, indent=2), encoding="utf-8")
         print(f"v1으로 복원했습니다. 이제 재생성 체인을 다시 돌려야 합니다"
-              f"(README '코퍼스 v2 채택 매뉴얼' 참조).")
+              f"(docs/TEAM_WORKFLOW.md '코퍼스 v2 채택 매뉴얼' 참조).")
         return 0
 
     if not V2.exists():
@@ -148,7 +148,7 @@ def main() -> int:
     print(f"\n교체 완료. v1은 {BACKUP.name} 으로 보존했습니다.")
     print(f"기록: {MANIFEST.name}")
     print("\n중요: 지금 저장소의 산출물은 전부 v1 기준이라 코퍼스와 불일치합니다.")
-    print("README '코퍼스 v2 채택 매뉴얼'의 재생성 체인을 반드시 완주하세요.")
+    print("docs/TEAM_WORKFLOW.md '코퍼스 v2 채택 매뉴얼'의 재생성 체인을 반드시 완주하세요.")
     print("verify_claims.py 가 통과할 때까지는 논문에 수치를 옮기지 마십시오.")
     return 0
 

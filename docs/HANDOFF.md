@@ -113,7 +113,7 @@ BM25 한국어 = **0.0275** (151개 중 96개가 어휘 교집합 0. n=71에서�
 | 라벨 강건성 | `output/label_sensitivity.md` |
 | 통계 | `docs/statistics.md` |
 | 재현 절차 | `docs/reproducibility.md` |
-| 팀 분담 이력 | `README.md` §완료된 이전 라운드, `docs/RESEARCH_IMPROVEMENT_PLAN.md` |
+| 팀 분담 이력 | `docs/TEAM_WORKFLOW.md`, `docs/RESEARCH_IMPROVEMENT_PLAN.md` |
 | 공통 검색 코어 | `retrieval_core.py` (BM25·랭킹·노출·통계 단일 출처) |
 
 ---

@@ -1,526 +1,285 @@
-# 전략물자 AI 사전 트리아지 실험
+# 외부 AI 사전 트리아지에서 무엇을 최소화해야 하는가
 
-> **다른 기기·다른 세션에서 이어받는다면 → [`docs/HANDOFF.md`](docs/HANDOFF.md) 를 먼저 읽으세요.**
-> 셋업, 인수 직후 건강검진 명령, 현재 확정 수치, 재실행 의존 순서, 알려진 함정, 다음 착수점이 정리돼 있습니다.
-> 첫 명령은 `python verify_claims.py` (기대: `OK=104 / MISMATCH=0`).
+**질의 측 노출 사다리와 다국어 dense 검색의 필요성** — 산업보안논문경진대회 제출 연구
 
-이 저장소는 외부 AI/검색 서비스에 기술정보를 전송할 때, 반환·처리하는 정보량을 줄이면서 공개 통제목록 후보검색 성능을 어느 정도 유지할 수 있는지 검증하기 위한 연구용 실험 저장소입니다.
+기업이 외부 AI·검색 서비스로 전략물자 통제목록 후보를 찾을 때, **무엇을 얼마나 덜 보내면서** 후보검색을 유지할 수 있는지를 측정한 실험 저장소입니다.
 
-중요한 정정:
+| | |
+|---|---|
+| 논문 초안 | [`PAPER.md`](PAPER.md) |
+| 이어받기(다른 기기·세션) | [`docs/HANDOFF.md`](docs/HANDOFF.md) |
+| 팀 작업 절차(아카이브) | [`docs/TEAM_WORKFLOW.md`](docs/TEAM_WORKFLOW.md) |
+| 검증 상태 | `python verify_claims.py` → **OK=112 / MISMATCH=0**, 테스트 8개 파일 전부 통과 |
 
-- 이 실험은 전략물자 해당/비해당을 법적으로 판정하지 않습니다.
-- 이 실험은 수출허가를 대신하거나, 자가판정·전문판정을 보조하는 수준을 넘어서지 않습니다.
-- 이전 버전의 "정답 코드가 쿼리에 포함된 A-scenario"는 후보탐지 실험으로 부적절하여 제거했습니다.
-- 법제 라우팅 "정확도" 수치는 공식 라벨이 아니므로 제거했습니다.
-- **투명 기준선은 BM25이지만, 실제 시스템 구성은 다국어 hybrid(BM25 + 다국어 dense)입니다.** 이전 판의 "BM25-only baseline을 쓰고 임베딩 실험은 후속 연구로 분리한다"는 문장은 같은 문서 안의 hybrid 결과 및 논문 본문 주장과 모순되어 삭제했습니다. 코퍼스가 100% 영어이므로 BM25 단독은 한국어 질의에서 구조적으로 R@10=0이며(§한계), dense 성분 없이는 한국어 상담 질의를 다룰 수 없습니다. LLM reranker는 여전히 후속 연구입니다.
-- "privacy-preserving" 표현은 과장 소지가 있어, "controlled disclosure", "reduced exposure", "minimum necessary disclosure"를 사용합니다.
+논문의 **모든 수치는 저장소의 결정론적 스크립트가 만든 `output/*.json`에서 직접 인용**하며, `verify_claims.py`가 논문과 산출물을 자동 대조합니다. 손으로 고친 수치는 즉시 불일치로 잡힙니다.
 
-## 현재 연구 질문
+---
 
-공개 통제목록 설명문에서 파생한 제품·기술 설명형 쿼리를 사용할 때, 통제번호를 쿼리에 넣지 않고도 후보 통제항목을 검색할 수 있는가? 또한 검색 결과로 반환하는 정보량을 줄이면 Recall@k와 정보노출량은 어떻게 변하는가?
+## 0. 범위 한정 — 이 연구가 하지 않는 것
 
-## 데이터
+- 전략물자 해당/비해당을 **법적으로 판정하지 않습니다.** 모든 수치는 후보검색 성능(Recall@k)이지 법적 분류 정확도가 아닙니다.
+- YesTrade 자가판정·전문판정을 **대체하지 않습니다.** 산출물은 후보 통제항목 목록이며 공식 판정 절차로 연결하는 보조 도구입니다.
+- 검증 라벨은 **코퍼스 텍스트 근거 카테고리 라벨**이며 전문가·법적 판정이 아닙니다.
+- 실제 기업 질의로 검증하지 않았습니다. 질의는 전부 통제목록 항목에서 **역생성**한 합성 질의입니다.
 
-정화 후 코퍼스는 **1,783개** 항목입니다(v2).
+---
+
+## 1. 핵심 결과 네 가지
+
+### ① 최소화해야 하는 것은 반환량이 아니라 질의다
+
+초기 설계는 노출량을 "top-10으로 반환된 통제목록 문자 수"로 정의했습니다. 그런데 **반환 텍스트는 전부 공개문서**라 덜 보여줘도 어떤 기업 비밀도 보호되지 않고, 색인에 들어가지 않아 랭킹도 바꾸지 않습니다. 즉 반환량 축소는 **비용이 구조적으로 0**입니다.
+
+> 색인 `full_text` 고정 + 반환만 `minimal_text` → 노출량@10 **7,886 → 1,781자 (−77.4%)**, R@10 **변화 정확히 0.0**
+
+비용 없이 줄일 수 있는 양은 프라이버시–성능 트레이드오프가 아닙니다. 실제 트레이드오프는 **질의 축소**와 **색인 축소**에서만 발생합니다. 이 정정이 연구 전체의 방향을 바꿨습니다.
+
+### ② 질의 측 노출 사다리 — 지워도 되는 건 정량 사양치까지
+
+민감 필드(정량 사양치·고유명칭·목적지·최종사용자·용도·자사 정체성·거래 형태)를 단계적으로 지우는 L0~L4 사다리를 만들고 사전지정 δ=0.05 TOST로 판정했습니다. (n=133, MiniLM, hybrid α=0.5)
+
+| 등급 | 무엇을 지우나 | 평균 민감토큰 | R@10 | 판정 |
+|---|---|---:|---:|---|
+| L0 | — (원문) | 5.35 | 0.5188 | 기준 |
+| **L1** | 수치·단위·정밀도·공차 | 4.77 | 0.4962 | **손실 징후 없음 ← 권고** |
+| L2 | + 고유명칭·조문 인용 | 4.19 | 0.4211 | **손실 징후** (Holm p 0.018) |
+| L3 | + 용도·최종사용자·목적지 | 0.00 | 0.4586 | **자기참조 교란 → 사용 금지** |
+| L4 | 카테고리 키워드만 | 0.00 | 0.3835 | **손실 징후** (Holm p 0.019) |
+
+**단, 어느 등급도 등가가 입증되지 않았습니다.** L1의 TOST p_max는 0.112이고 입증에 n≈556이 필요한데, 이 코퍼스의 상한은 328입니다(§5). 지지되는 진술은 **"무해가 입증됐다"가 아니라 "손실 징후가 없다"**입니다.
+
+### ③ 저노출 후보검색에는 dense 성분이 필수다
+
+검증셋 n=151(영어 42 / 한국어 109), 색인 `minimal_text`:
+
+| 인코더 | BM25 | dense | hybrid(α0.5) | dense−BM25 (Holm) | hybrid−dense (Holm) |
+|---|---:|---:|---:|---|---|
+| MiniLM | 0.1523 | 0.4503 | 0.5099 | p 1.8×10⁻⁸ **유의** | +0.060, p 0.059 비유의 |
+| e5-base | 0.1523 | 0.4768 | 0.4901 | p 1.0×10⁻¹⁰ **유의** | +0.013, p 1 비유의 |
+| bge-m3 | 0.1523 | **0.5695** | 0.5497 | p <10⁻¹⁵ **유의** | **−0.020** (dense가 더 높음) |
+
+BM25의 한국어 R@10은 **0.0275**입니다 — 151건 중 **96건이 점수 벡터 전부 0**(영어 코퍼스와 어휘 교집합 없음). 코퍼스가 100% 영어인 한 어휘 검색은 한국어 질의를 회수하지 못합니다.
+
+**hybrid−dense는 세 모델 전부 Holm 보정 후 비유의**이고 bge-m3에서는 부호까지 뒤집힙니다. 그래서 지지되는 진술은 "하이브리드가 필요하다"가 아니라 **"dense 성분이 필요하다"**입니다.
+
+### ④ 노출 축소에는 품목 의존적 바닥이 있다
+
+사다리 정의를 만족하지 못해 제외된 18건 중 16건은 **통제 범주 자체가 용도로 정의된 품목**입니다 — 4A611(군용으로 특별히 설계된 컴퓨터), 9A011(램제트·스크램제트 추진기관), 방사성 발광 소자 등. 이런 품목은 **무엇인지 말하는 것과 무엇에 쓰는지 말하는 것이 분리되지 않아** L3의 '민감토큰 0'에 원리상 도달할 수 없습니다.
+
+"질의만 잘 다듬으면 노출을 0으로 만들 수 있다"는 낙관은 **하필 수출통제에서 가장 민감한 품목군에서 성립하지 않습니다.** 노출 축소 지침은 품목군 조건부여야 합니다.
+
+---
+
+## 2. 데이터
+
+**코퍼스 v2 — 1,783건, 100% 영어**(한글 본문 0건)
 
 | 소스 | 항목 수 | 원문 |
 |---|---:|---|
-| Wassenaar Arrangement 2025 | 568 | [공식 PDF](https://www.wassenaar.org/app/uploads/2025/12/List-of-Dual-Use-Goods-and-Technologies-and-ML-2025.pdf) |
-| India SCOMET 2024 | 578 | [DGFT 공식 PDF](https://content.dgft.gov.in/Website/UPDATED%20SCOMET%20List%202024%20as%20on%2002.09.2024.pdf) |
 | U.S. eCFR CCL, 15 CFR Part 774 Supp. 1 | 637 | [eCFR](https://www.ecfr.gov/current/title-15/subtitle-B/chapter-VII/subchapter-C/part-774/appendix-Supplement%20No.%201%20to%20Part%20774) |
+| India SCOMET 2024 | 578 | [DGFT PDF](https://content.dgft.gov.in/Website/UPDATED%20SCOMET%20List%202024%20as%20on%2002.09.2024.pdf) |
+| Wassenaar Arrangement 2025 | 568 | [공식 PDF](https://www.wassenaar.org/app/uploads/2025/12/List-of-Dual-Use-Goods-and-Technologies-and-ML-2025.pdf) |
 
-품질 리포트: `data/corpus/corpus_quality_report.json`
+**질의셋 두 종류** — 성격이 완전히 다르므로 절대 섞어 쓰지 않습니다.
 
-## 쿼리
-
-`generate_queries.py`는 정답 통제번호를 포함하지 않는 설명형 쿼리만 생성합니다.
-
-- 총 쿼리: 780개
-- train/val/test: 78 / 78 / 624
-- 소스 분포: 각 소스 260개
-- 언어 분포: EN 390개, KO 390개
-- 코드 누출 검증: 통과
-
-품질 리포트: `data/query_quality_report.json`
-
-## 상담형 모사 질의셋 (stress test)
-
-본 저장소는 합성 benchmark와 별도로, 외부 모사 질의셋을 통해 BM25 단독 기준선의 한계를 드러내는 stress test를 포함한다. (이 30개 셋은 라벨이 연구자 예비 추정값이라 노이즈가 크다. 헤드라인 평가셋은 `data/validated_queries_expanded.json`의 n=71이다.)
-
-| 항목 | 내용 |
-|---|---|
-| 파일 | `data/external_consultation_queries.json` |
-| 질의 수 | 30개 (KO 16, EN 14) |
-| 라벨 | 연구자가 예비로 부여한 `candidate_labels`. 정답이 아님. |
-| 평가 스크립트 | `evaluate_external_queries.py` |
-| 평가 결과 | `output/external_eval.json`, `output/external_eval.md` |
-| 라벨 감사 | `output/external_label_audit.json` |
-
-주의: 본 외부 질의셋은 "상담형 모사" 일 뿐, 실제 기업 질의를 대체하거나 현장 검증을 완료한 것이 아니다.
-
-## 현재 결과
-
-### (1) 합성셋 — **자기참조 재검색 조건** (일반화 금지)
-
-> ⚠ **이 표의 쿼리는 각 코퍼스 항목 자기 본문에서 코드만 제거해 만든 것**이라 정답
-> 문서와 near-duplicate입니다(평균 Jaccard 0.4871). 따라서 아래 R@10은 **후보 발견
-> 능력이 아니라 자기참조 재검색 성능**입니다. 절대수치를 단독 헤드라인으로 쓰지
-> 마십시오. 실제 상담형 질의 성능은 아래 (2)를 보십시오.
-
-BM25 단독, 코퍼스 1,783개(v2), 테스트 쿼리 624개. 수치는 후보검색 성능이지 법적 판정 정확도가 아닙니다.
-출처: `output/experiment_logs.json` (정정 후).
-
-| 조건 | R@1 | R@5 | R@10 | R@20 | MRR | nDCG@10 | 노출량@10 | 노출량@10(정정 전) | 고유 색인문서 |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| full_text | 0.8462 | 0.9824 | 0.9920 | 0.9936 | 0.9081 | 0.9291 | 15,639 | 15,559 | 1,783 |
-| minimal_text | 0.7692 | 0.9599 | 0.9840 | 0.9920 | 0.8573 | 0.8884 | 1,725 | 1,640 | 1,783 |
-| minimal_no_code | 0.7821 | 0.9663 | 0.9856 | 0.9920 | 0.8634 | 0.8934 | 1,607 | 1,607 | 1,656 |
-| route_only | 0.0016 | 0.0016 | 0.0016 | 0.0096 | 0.0028 | 0.0016 | 431 | 431 | **16** |
-| random_baseline | - | - | 0.0080 | - | - | - | - | - | - |
-
-- 자기참조 의존성 실증: 정답 문서와 공유하는 고-IDF 토큰 5개만 제거하면 `minimal_text`
-  R@10이 0.9840 → **0.7756**, 10개에서 **0.4535**로 붕괴합니다(`output/paraphrase_gap.md`).
-- `route_only`는 **고유 색인문서가 16개뿐**인 퇴화 조건입니다(624개 질의 중 251개는
-  어휘 교집합이 0이어서 애초에 아무것도 검색하지 못합니다). 랜덤 기준선과 구별되지 않는
-  음성 대조군으로만 읽어야 하며, 소수 4자리 수치에 해석을 부여하면 안 됩니다. 이전 표의
-  `route_only` R@10 0.0080은 동점 정렬 인공물이었고, 정정 후 값은 0.0016입니다.
-- 랭킹을 결정론화(동점을 코퍼스 인덱스 오름차순으로 처리)하면서 R@1·R@5 일부 칸이
-  ±0.007 이내로 변동했습니다. before/after 전량은 `docs/statistics.md` §6에 있습니다.
-  **v2 재실행 후 헤드라인 R@10 4개 값은 0.9920 / 0.9840 / 0.7756 / 0.4535 입니다.**
-- 노출량@10이 소폭 늘어난 것은 값이 나빠져서가 아니라 **정의가 정확해졌기 때문**입니다.
-  정정 전 정의는 색인 텍스트에 붙는 통제번호 문자열을 노출량에서 빠뜨렸고,
-  `minimal_text`와 `minimal_no_code`에 동일한 값을 부여했습니다.
-
-상세 결과: `output/report.md`, `output/experiment_logs.json`
-
-### (2) 검증셋 n=71 — 비자기참조, 실제 한국어 포함 (헤드라인)
-
-eCFR 항목 역생성으로 만든 검증 질의셋(영어 26 / 한국어 45), 라벨은 정확한 full eCFR
-code. 색인 `minimal_text`, dense = multilingual MiniLM.
-
-| retriever | 전체 R@10 | 95% CI (Clopper-Pearson) | 영어 R@10 | 한국어 R@10 |
-|---|---:|---|---:|---:|
-| BM25 (α=1.0) | 0.1549 | [0.080, 0.260] | 0.4231 | **0.0000** |
-| dense (α=0.0) | 0.5493 | [0.427, 0.668] | 0.4615 | 0.6000 |
-| hybrid (α=0.5) | **0.5775** | [0.454, 0.694] | 0.5385 | 0.6000 |
-
-- **BM25 한국어 R@10은 0.0000입니다.** 이전 산출물의 0.0222는 오류였습니다. 한국어
-  질의 45개 중 **44개**가 BM25 점수 벡터 전부 0(영어 코퍼스와 어휘 교집합 0)인데,
-  이전 코드가 `np.argsort(-scores)`로 정렬해 **코퍼스 배열 앞머리 10행**을 결과로
-  집계했고 정답이 우연히 그 안에 있으면 적중으로 세었습니다.
-- hybrid − BM25 = **+0.4225**, exact McNemar 양측 p = 1.9e-09 (30승 0패 41무).
-  한국어만 보면 +0.6000, p = 1.5e-08 (27승 0패).
-- hybrid − dense = +0.0282, p = 0.62로 **유의하지 않습니다**. 한국어에서는 BM25 점수가
-  항등 0이므로 α<1의 랭킹이 dense와 수학적으로 동일합니다(0승 0패). 즉 데이터가
-  지지하는 진술은 "하이브리드가 필요하다"가 아니라 **"dense 성분이 필요하다"**입니다.
-
-상세: `output/validated_suite.md`, `docs/statistics.md`
-
-### (3) 노출량 — 비용은 '색인 축소'에서만 발생
-
-색인 모드와 반환 모드를 분리해 측정한 결과, 색인을 `full_text`로 유지한 채 **반환
-텍스트만** `minimal_text`로 줄이면 노출량@10이 9,730 → 1,811자(**81.4% 감소**)인데
-랭킹이 전혀 바뀌지 않으므로 R@10은 0.6056 그대로입니다. 즉 **반환량 축소는 성능 비용이
-0이고, 비용은 색인을 줄일 때만 발생합니다.** 기존 설계는 색인 모드와 반환 모드를 같은
-값으로 묶어 두어 이 조건을 표현할 수 없었습니다.
-
-> 이전 노출량 정의에는 버그가 있었습니다. `minimal_text`와 `minimal_no_code`에
-> **코퍼스 전체 항목에 동일한 값**을 반환해 두 조건을 구분하지 못했습니다. 현재 노출량은
-> 실제 반환 문자열에서 파생하며, 이전 값은 각 산출물의 `*_legacy` 필드에 남겼습니다.
-
-## 그림
-
-`python make_figures.py`가 `output/`에 5종을 생성합니다(matplotlib, 200 dpi, 한글 라벨).
-
-| 파일 | 내용 | 오차막대 |
+| | 합성셋 | **검증셋 (헤드라인)** |
 |---|---|---|
-| `fig_validated_retriever.png` | 검증셋 n=71 검색기 비교 (절대 R@10 + 짝지음 차이) | 절대율 Clopper-Pearson / 차이 paired bootstrap |
-| `fig_exposure_recall.png` | 노출-성능 frontier, **합성(자기참조) / 검증셋 2패널** | Clopper-Pearson |
-| `fig_embedding_robustness.png` | dense 모델 교체 시 우위 유지 여부 | 절대율 Clopper-Pearson / 차이 paired bootstrap |
-| `fig_paraphrase_gap.png` | 어휘격차에 따른 자기참조 의존성 붕괴 | Clopper-Pearson |
-| `fig_retriever_alpha.png` | 합성셋 alpha 스윕 | Clopper-Pearson |
+| 규모 | 624개 | **151개** (영어 42 / 한국어 109) |
+| 생성 | 코퍼스 항목 자기 본문에서 코드만 제거 | eCFR 항목에서 **역생성**한 상담형 질의 |
+| 정답 | 자기 자신 | 정확한 eCFR full code (구성상 확정) |
+| 성격 | **자기참조 재검색** (평균 Jaccard 0.4871) | 비자기참조, 실제 한국어 포함 |
+| 용도 | 자기참조 함정의 정량 공개 전용 | **모든 헤드라인 주장** |
 
-한글 폰트는 Windows의 `Malgun Gothic`을 사용하며, 없으면 영문 라벨로 폴백하고 그 사실을
-stdout에 출력합니다.
-
-> **`docs/figures/fig1~3.png` 폐기.** `fig1_scope_decomposition.png`,
-> `fig2_privacy_utility_map.png`, `fig3_scenario_scope.png` 세 파일은 **생성 코드가
-> 저장소에 없고** README·PAPER·docs 어디에서도 참조되지 않습니다(참조 0건). 재현이
-> 불가능하므로 **폐기**로 결정했으며 `make_figures.py`에 통합하지 않습니다. 파일 자체는
-> 감사 목적으로 삭제하지 않고 그대로 둡니다. 논문에 쓰려면 생성 코드를 새로 작성해
-> `make_figures.py`에 넣어야 합니다.
-
-## 법제·업무흐름 라우팅
-
-`experiment_legal_route.py`는 정확도 평가를 하지 않습니다. 대신 보수적 업무흐름 힌트를 요약합니다.
-
-- 전략물자 후보 검토 및 YesTrade 자가·전문판정 안내
-- 외국 공개 통제목록 참고자료 표시
-- 국가핵심기술 가능 키워드가 있을 때 2차 검토 플래그 표시
-
-공식 참고:
-
-- [YesTrade 제도개요](https://www.yestrade.go.kr/system-guidance)
-- [YesTrade 온라인 자가판정 한계](https://www.yestrade.go.kr/judgements/self/intro)
-- [전략물자수출입고시](https://www.law.go.kr/LSW/admRulInfoP.do?admRulSeq=2100000270104&chrClsCd=010201)
-- [대외무역법](https://www.law.go.kr/LSW/lsInfoP.do?lsiSeq=241530&lsNm=%EB%8C%80%ED%99%98%EB%AC%B4%EC%97%85%EB%B2%95)
-- [산업기술보호법](https://www.law.go.kr/LSW/lsInfoP.do?lsiSeq=247501&lsNm=%EC%82%B0%EC%97%85%EA%B8%B0%EC%88%A0%EB%B3%B4%ED%98%B8%EB%B2%95)
-- [국가핵심기술 제도](https://kaits.or.kr/web/content.do?menu_cd=000067)
-- 한국 법제도 워크플로우 상세: `docs/korean_regulatory_framework.md`
-
-## 재현 방법
-
-```bash
-python -m venv .venv
-.venv\Scripts\activate
-pip install -r requirements.txt
-
-python build_corpus_clean.py
-python generate_queries.py
-python run_experiments.py
-python experiment_legal_route.py
-python evaluate_external_queries.py    # 외부 모사 질의 stress test
-python experiment_paraphrase_gap.py    # 자기참조 의존성 검증 (TASK A)
-python experiment_retriever_compare.py # BM25 vs Dense vs Hybrid, 합성 (TASK E)
-python experiment_external_retriever.py# BM25 vs Dense vs Hybrid, 외부셋 (TASK E)
-python build_validated_queries.py      # 충돌제거 검증 라벨셋 생성 (TASK B/C)
-python experiment_crosslingual_eval.py # 한국어 KO-원문/번역/EN 비교 (TASK D)
-python validate_query_slice.py data/validated_queries_slice_<이름>.json  # G 슬라이스 검증
-python build_expanded_validated.py     # 검증셋+G슬라이스 병합 → data/validated_queries_expanded.json
-
-# 검증셋 헤드라인 (n=71). 이 한 스크립트가 아래 3개를 대체한다.
-python experiment_validated_suite.py
-#   SANBO_MODELS=MiniLM python experiment_validated_suite.py   # 단일 모델 스모크
-
-python experiment_stats.py             # 통계 재집계 → output/stats_summary.json, docs/statistics.md
-python make_figures.py                 # figure 5종 → output/fig_*.png
-```
-
-**대체된 스크립트** (실행은 되지만 헤드라인으로 인용하지 마십시오):
-
-| 스크립트 | 대체 |
-|---|---|
-| `evaluate_validated_queries.py` (n=13) | `experiment_validated_suite.py` (n=71) |
-| `build_expanded_validated.py`의 **평가** 부분 | 동상 (병합 기능은 계속 사용) |
-| `experiment_embedding_robustness.py` | 동상 (모델별 hit 벡터 포함) |
-| `experiment_exposure_frontier_validated.py` | 동상 (색인×반환 2차원 노출표) |
-
-> 참고: dense를 쓰는 스크립트는 다국어 모델
-> (`paraphrase-multilingual-MiniLM-L12-v2`, 약 470MB)을 처음 실행 시 자동 다운로드합니다.
-> 임베딩 연산은 전부 로컬에서 수행되며 외부 추론 API를 호출하지 않습니다.
-> `experiment_validated_suite.py`는 기본적으로 3개 모델을 돌아 오래 걸립니다. 코드 변경을
-> 빠르게 검증하려면 `SANBO_MODELS=MiniLM`으로 단일 모델 스모크 경로를 쓰십시오.
+합성셋 R@10 0.9840은 성능이 아니라 near-duplicate 재검색입니다. 정답과 공유하는 고-IDF 변별어를 5개 지우면 0.7756, 10개면 0.4535로 붕괴합니다.
 
 ---
 
-## TASK J — 검증셋 표본 확대 (진행 중)
+## 3. 실험 목록
 
-**상세 스펙: [`docs/TASK_J_SAMPLE_EXPANSION.md`](docs/TASK_J_SAMPLE_EXPANSION.md)** — 담당자는 그 문서를 그대로 따르면 됩니다.
-
-### 무엇을 닫는 작업인가
-
-Tier 1 다모델 확장(아래 '완료된 이전 라운드')이 한계 6을 닫으면서 **새 문제**를 드러냈습니다.
-질의 노출 사다리의 **운용 권고 등급이 인코더마다 갈립니다**(`PAPER.md` 4.8).
-
-| 인코더 | L1 등가 입증 | L2 판정 | 권고 |
+| 실험 | 무엇을 묻는가 | 답 | 산출물 |
 |---|---|---|---|
-| MiniLM | 예 (TOST p_max 0.0063) | 검정력 부족 | L2 |
-| e5-base | 예 (p_max 0.0054) | 검정력 부족 | L2 |
-| bge-m3 | **아니오** (p_max 0.402) | **손실 징후** (−0.0704 > δ=0.05) | **L1** |
+| 자기참조 정량화 | 합성 R@10은 후보 발견 능력인가 | 아니다 — 변별어 5개에 −20.8%p | `paraphrase_gap.*` |
+| 게이트 공허성 | 어휘 Jaccard 게이트가 작동하는가 | 아니다 — 69%에서 공회전 | `selfreference_audit.*` |
+| 검색기 비교 | BM25 / dense / hybrid | dense 성분 필수, hybrid 이득 미결 | `validated_suite.*` |
+| 노출 2차원 분해 | 색인 축소와 반환 축소를 분리하면 | 반환은 비용 0, 색인은 비용 발생 | `exposure_decomposition.*` |
+| **질의 사다리** | 어디까지 지워도 되는가 | **L1까지** (등가 입증은 아님) | `disclosure_frontier.*` |
+| L3 자기참조 감사 | L3 회수율 유지가 무해의 증거인가 | 아니다 — 정답 쪽으로 표류 | `ladder_selfreference.*` |
+| 대칭 ablation | 자기참조 압력 하에서도 우위가 유지되나 | 유지 (3/3 모델) | `symmetric_ablation.*` |
+| 교차모델 검증 | 결론이 인코더에 의존하나 | 하지 않는다 (3/3 L1 수렴) | `tier1_crossmodel.*` |
+| 라벨 강건성 | 라벨 결함이 결론을 흔드나 | 흔들지 않는다 (15/15 조합) | `label_sensitivity.*` |
 
-논문은 현재 보수적으로 L1을 권고합니다. 이 분기가 **진짜 모델 차이인지 n=71의 잡음인지**가
-지금 가장 큰 미해결 질문이고, 표본을 늘리면 답이 나옵니다.
+### 대칭 ablation — 자기비판 도구를 우리 자신에게도 적용
 
-### ⚠ 기대치를 먼저 맞춥니다
+합성셋 변별어 제거 ablation은 BM25에만 적용됐습니다. 즉 자기비판 도구를 **경쟁 상대에게만** 쓴 셈입니다. 그래서 검증셋 × 3검색기에 **상위어 치환**으로 같은 압력을 대칭으로 가했습니다(치환 사전 330개 규칙, 커버리지 151/151).
 
-**이 확장으로 L2 등가(δ=0.05)를 입증할 수는 없습니다.** 필요 표본이 n≈1,102인데, 새 질의를
-만들 수 있는 미사용·비스텁 eCFR 항목이 257개뿐이라 **이론적 최대가 n=328**입니다. 목표로
-삼지 마십시오. +80이 사는 것은 (1) 위 모델 분기의 정체 규명, (2) e5-base ablation 검정력
-회복, (3) 라벨 결함 비율 희석입니다.
+| 검색기 | 압력 없음 | 최대 압력 | 상대 감소 |
+|---|---:|---:|---:|
+| BM25 | 0.1523 | 0.0199 | **−86.9%** |
+| dense | 0.5166 | 0.2318 | −55.1% |
+| hybrid | 0.5497 | 0.2252 | −59.0% |
 
-### 배정
+최대 압력에서도 dense−BM25는 **세 모델 전부 유의**합니다(MiniLM +0.2119 p=6.7×10⁻⁸, bge-m3 +0.2980, e5-base +0.1325). 동시에 **dense 성능이 표현 되받아쓰기에 매우 민감**하다는 것도 드러났습니다 — 의미 자기참조는 11.3%만 줄었는데 R@10은 55.1% 떨어졌습니다.
 
-| 담당 | 배정 구간 (미사용·비스텁 eCFR) | 가용 | 목표 |
-|---|---|---:|---:|
-| 이예찬 | 카테고리 **0·1·2·8** | 66개 | 40 |
-| 장승우 | 카테고리 **3·4·5·6·7·9** | 72개 | 40 |
+### 라벨 강건성 — 전문가 검수 없이 결론의 견고함 보이기
 
-### TASK G와 다른 점
+라벨은 전문가 검증을 받지 않았습니다. 그러나 헤드라인은 전부 **같은 라벨을 고정 기준점으로 둔 질의별 짝지음 비교**라 라벨의 법적 정확성이 대비에서 상쇄됩니다. 그럼에도 라벨 결함이 *어떤 질의가 남는지*를 통해 결론을 흔들 수 있으므로, 결함 유형별로 해당 질의를 제거한 5개 부분집합에서 재계산했습니다.
 
-질의 하나마다 **L0~L4 사다리 5버전**을 모두 써야 합니다(40개 질의 = 200문장). 미해결 질문의
-무대가 사다리이기 때문입니다. 기존 71개의 실제 사다리 전문이 `data/disclosure_ladder.json`에
-있으니 반드시 몇 개 읽고 같은 톤·같은 삭제 기준으로 쓰십시오.
+**모든 변형 × 모든 모델(15개 조합)에서 dense−BM25가 유의**합니다. 스텁 정답 42개를 버린 가장 보수적인 조건(n=109)에서도 +0.27~+0.43으로 오히려 격차가 커집니다.
 
-### 제출 전 필수
+이는 **라벨 강건성**의 증거이지 **라벨 정확성**의 증거가 아닙니다. 절대 성능을 "법적으로 옳은 ECCN을 찾는 비율"로 읽으려면 여전히 전문가 검증이 필요합니다.
 
-```bash
-python validate_query_slice.py data/validated_queries_slice_j_<이름>.json
-```
+### 그림
 
-**exit 0** 이어야 보냅니다. 어휘 Jaccard와 **의미 게이트(제3 인코더)**가 자기참조를 함께
-검사합니다. 자기참조는 이 프로젝트에서 두 번 데인 함정이니(스펙 4절) 항목 원문 표현을
-베끼지 말고, 특히 L3를 통제목록 문체로 수렴시키지 마십시오.
+`python make_figures.py`가 `output/`에 5종을 생성합니다(matplotlib, 200 dpi, 한글 라벨, 오차막대 포함).
 
-
-## 코퍼스 v2 채택 매뉴얼
-
-> **이 라운드는 완료됐습니다.** 코퍼스 v2가 활성 상태이고 세 인코더 샤드
-> (`MiniLM` · `e5-base` · `bge-m3`)가 전부 병합돼 있습니다. 지금은 아래 '내가 할 일'을
-> 수행할 필요가 없습니다. 현재 상태는 `python verify_claims.py`로 확인하십시오
-> (`OK=90` / `MISMATCH=0` 이면 정상).
->
-> 절차는 **코퍼스를 다시 바꿀 때 재사용**하기 위해 남겨 둡니다. 그때 `<배정모델>`만
-> 새로 배정하면 그대로 돌아갑니다. 저장소를 이어받는 경우에는
-> [`docs/HANDOFF.md`](docs/HANDOFF.md)를 먼저 읽으십시오.
-
-### 왜 교체하는가
-
-v1 파서에 결함이 있고, 그중 일부는 **코퍼스에 존재하지 않는 문서를 만들었습니다.**
-
-| 결함 | 실측 |
+| 파일 | 내용 |
 |---|---|
-| 유령 항목 (번호목록을 항목으로 오인) | **5건**. `1.A.n` `2.A.n` `2.A.t` `3.A.n` `5.A.n`. 예: `3.A.n`은 757자 항목인데 원문은 *"3. An inert powder, most frequently alumina."* 한 줄 |
-| 통째로 사라진 진짜 항목 | **3건**. `3.A.2.d.4` (584자) / `.5` (921자) / `.6` (558자) |
-| 페이지 경계 절단으로 폐기된 본문 | Wassenaar 3,544행·172,620자 / SCOMET 5,093행·278,443자 |
-| 부속서 흡수 | `1.E.2.g` 134자 → 5,092자로 부풀음 |
-| 푸터·각주 혼입 | 푸터 잔재 53건, 각주 본문 흡수 2건 |
+| `fig_validated_retriever.png` | 검증셋 검색기 비교 (절대 R@10 + 짝지음 차이) |
+| `fig_exposure_recall.png` | 노출–성능 frontier, 합성(자기참조)/검증셋 2패널 |
+| `fig_embedding_robustness.png` | dense 모델 교체 시 우위 유지 여부 |
+| `fig_paraphrase_gap.png` | 어휘격차에 따른 자기참조 의존성 붕괴 |
+| `fig_retriever_alpha.png` | 합성셋 alpha 스윕 |
 
-논문이 "정화 후 1,797개 항목"이라고 쓰는 한, 그중 5개가 유령이고 3개가 누락이라는 사실은 남습니다. 심사위원이 원문 PDF와 대조하면 나옵니다.
+절대율은 Clopper-Pearson, 차이는 paired bootstrap 오차막대를 씁니다. 한글 폰트는 Windows `Malgun Gothic`을 쓰고, 없으면 영문 라벨로 폴백하며 그 사실을 stdout에 출력합니다.
 
-교정 근거와 원문 인용 예시는 [`docs/corpus_parsing_fixes.md`](docs/corpus_parsing_fixes.md)에 16건 있습니다.
-
-### 교체가 수치에 미치는 영향 (측정 완료)
-
-`compare_corpus_versions.py`와 `check_v2_exposure_impact.py`로 실측했습니다.
-
-| 항목 | 결과 |
-|---|---|
-| **검증셋 정답 문서** | **70개 전부 무변경.** 라벨이 전부 eCFR이고 v2에서 eCFR은 바이트 단위 동일(637건·105,567자) |
-| **검증셋 R@10** | **213개 판정 전부 동일** (71질의 × BM25/dense/hybrid). BM25 0.1549 / dense 0.5493 / hybrid 0.5775 — 언어별도 동일 |
-| **노출량@10** | **크게 이동.** full_text 4,043 → **9,730자**(+140%). minimal_text는 1,820 → 1,811로 거의 불변 |
-| **헤드라인 노출 감소율** | **55.0% → 81.4%** (+26.4%p) |
-| top-10 문서 집합 | full_text 색인에서 27/71만 동일, minimal_text 57/71 |
-| 코퍼스 구성 | 1,797 → **1,783** (Wassenaar 585→568, SCOMET 575→578, eCFR 637→637) |
-
-즉 **논문에 유리한 방향입니다.** v1은 본문이 잘려 있어 full_text가 실제로 얼마나 노출하는지를 과소계상했습니다. 성능 손실 0에 노출 감소가 55%가 아니라 81.4%가 됩니다.
-
-### 무엇을 다시 돌려야 하는가
-
-| 다시 돌려야 함 | 이유 |
-|---|---|
-| 합성 질의셋 | 코퍼스 본문에서 파생되므로 교체 즉시 무효 |
-| 합성셋 실험 + ablation (주장 1) | 위와 같음. 값이 이동함 |
-| 검증셋 3모델 통합 실행 | recall은 불변이나 **노출량@10이 크게 이동**하므로 필수 |
-| 통계·그림·claim registry | 위 산출물에 의존 |
-
-| 다시 안 돌려도 됨 | 이유 |
-|---|---|
-| 질의 노출 사다리 (L0~L4) | 질의 재작성물이며 코퍼스와 무관. 단 frontier 실험은 재실행 |
-| 자기참조 게이트 임계값 | 대조군이 코퍼스 텍스트가 아닌 별도 필드 기반 |
-| 등가 라벨 사전 | eCFR 무변경이므로 정답 쪽은 그대로. Wassenaar/SCOMET 대응은 `audit_label_quality.py audit` 재실행 권장 |
+> **`docs/figures/fig1~3.png`는 폐기했습니다.** 생성 코드가 저장소에 없고 어디에서도 참조되지 않아 재현이 불가능합니다. 파일 자체는 감사 목적으로 삭제하지 않고 두되 `make_figures.py`에 통합하지 않습니다. 논문에 쓰려면 생성 코드를 새로 작성해야 합니다.
 
 ---
 
-### 실행 방법
+## 4. 스스로 뒤집은 것들
 
-아래 '모델 배정' 표에서 자기 모델을 확인하고, `<배정모델>` 자리에 그 값을 넣어 실행하십시오.
-모델 하나를 돌려서 결과 파일 **하나**를 보내면 끝입니다. 판단할 것은 없습니다.
+이 연구의 성격을 가장 잘 보여주는 부분입니다. 발견된 결함은 숨기지 않고 **정정 방향까지 함께** 기록했습니다.
 
-먼저 콘솔 인코딩을 설정합니다. Windows 기본 콘솔(cp949)에서는 한글 출력이 깨집니다.
+| 무엇이 틀렸나 | 어떻게 드러났나 | 정정 후 방향 |
+|---|---|---|
+| 노출 지표를 반환량으로 정의 | 위협모형을 명시하니 반환 텍스트가 공개 비자산 | 연구 축을 질의 측으로 전환 |
+| `np.argsort(-scores)`가 전부 0인 벡터를 정렬 | 한국어 BM25가 0.0222로 부풀려짐 | 무신호를 검색 실패로 집계 |
+| CI가 0을 포함하니 등가라고 서술 | 귀무가설 수용 오류 | 사전지정 δ TOST로만 등가 주장 |
+| "하이브리드가 필요하다" | hybrid−dense가 어디서도 유의하지 않음 | "dense 성분이 필요하다"로 축소 |
+| L3까지 안전하다는 자동 결론 | 제3 인코더(LaBSE) 감사에서 정답 쪽 표류 | L3를 운용 근거에서 배제 |
+| 민감토큰 계량기가 `고온·경량`을 정량 사양으로 계수 | 두 작성자가 **독립적으로** L1에서 이 표현을 남김 | 정의에서 경계 재유도 → 손실 판정이 **강화**됨 |
+| 치환 사전이 원본 71개만 덮음 | 커버리지 71/151 | 전량 확대 → 우위 폭이 **줄었는데도** 결론 유지 |
+| `core.autocrlf`가 출처 해시 검증을 깨뜨림 | 원본이 멀쩡한데 SHA-256 4건 불일치 | `.gitattributes`로 변환 차단 |
 
-```bash
-$env:PYTHONIOENCODING="utf-8"
-```
+**정정의 방향을 함께 보고하는 것**이 이 저장소의 규칙입니다. 계량기 수정은 L2·L4 손실 판정을 유의하게 만들고 L1 등가 입증을 **더 어렵게**(n 379→556) 했으며, 치환 사전 확대는 dense 우위 폭을 **줄였습니다**(+0.2450→+0.2119). 둘 다 연구자에게 불리한 방향이고, 그래서 정정이 결과를 위해 이뤄진 게 아님을 보일 수 있습니다. 수정 전 산출물도 함께 보존합니다(`*_strict_detector.json`, `*_partial_coverage.json`).
 
-mac/linux 라면:
+표본 확대(n=71→151)도 양방향이었습니다.
 
-```bash
-export PYTHONIOENCODING=utf-8
-```
+- **강해진 것**: 운용 권고의 모델 의존성 해소(3/3 L1 수렴), 최대 압력 하 dense 우위 2/3→3/3, 정답 스텁 오염 59.2%→27.8%
+- **약해진 것**: L1 등가 입증 상실(2/3→0/3), L2가 검정력 부족 → 손실 징후
 
-#### 1. 저장소 준비
+---
+
+## 5. 한계
+
+1. **정답셋 오염** — eCFR 637건 중 351건(55.1%)이 기술 파라미터 없는 표제 스텁. 정답이 전부 스텁인 질의가 42/151(27.8%). 코퍼스의 64.3%는 원리상 정답이 될 수 없습니다(라벨 공간이 eCFR 한정).
+2. **라벨이 전문가 검증이 아님** — 짝지음 대비로 상쇄되고 4.7에서 강건성을 확인했으나, 절대 성능을 법적 정확도로 읽을 수 없습니다.
+3. **질의가 합성(역생성)** — 어휘 자기참조는 해결했으나 **의미 자기참조는 남아 있고** 현장 대표성이 제한됩니다.
+4. **등가 입증은 이 코퍼스로 불가** — L1에 n≈556이 필요한데 1질의 1항목 상한이 **328**입니다(비스텁 286 − 사용중 109 = 미사용 177, 151+177=328). 표본이 아니라 **라벨 공간 설계**를 바꿔야 합니다.
+5. **절대 성능이 중간 수준** — 전 구성 최고 R@10 0.6026. top-10에서 관련 항목의 40~49%를 놓칩니다.
+6. **모델 계열 편중** — 세 인코더 모두 다국어 문장 임베딩 계열이라 계열 밖(재순위 LLM 등) 일반화는 미확인입니다.
+7. **사다리 적용 범위 제한** — 용도 정의형 품목군 18건이 제외되어, 사다리 결과는 **그 품목군을 뺀 133건**에 대한 것입니다.
+
+---
+
+## 6. 재현
 
 ```bash
 git clone https://github.com/jaepaly/2026sanbo.git
+cd 2026sanbo
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
 ```
 
-```bash
-cd 2026sanbo && python -m venv .venv && .venv\Scripts\activate && pip install -r requirements.txt
-```
-
-이미 클론해 둔 저장소가 있으면 `git pull` 하십시오.
-
-#### 2. 코퍼스를 교정판으로 맞춘다
-
-```bash
-python adopt_corpus_v2.py
-```
-
-"이미 v2가 활성 상태입니다"가 나오면 정상이니 다음으로 넘어가십시오.
-
-#### 3. 배정받은 모델을 돌린다
-
-`<배정모델>` 자리에 아래 표에서 받은 값을 그대로 넣으십시오.
-
-```bash
-python run_model_shard.py <배정모델>
-```
-
-중간에 끊어도 안전합니다. 부분 결과를 쓰지 않으므로 처음부터 다시 돌리면 됩니다.
-
-#### 4. 검증한다
-
-```bash
-python validate_shard.py output/shards/shard_<배정모델>.json
-```
-
-마지막 줄이 **"모든 검증 통과"** 여야 합니다. 실패하면 출력을 그대로 공유해 주십시오. 아래 '내 결과가 맞는지 확인하기'와 '문제가 생기면'을 먼저 보셔도 됩니다.
-
-#### 5. 파일 하나만 보낸다
-
-```
-output/shards/shard_<배정모델>.json
-```
-
-이 파일만 보내면 됩니다. 커밋도, PR도 필요 없습니다. 다른 파일은 건드리지 마십시오.
-
----
-
-### 모델 배정
-
-| 담당 | `<배정모델>` | 모델 |
-|---|---|---|
-| 이예찬 | `bge-m3` | BAAI/bge-m3 |
-| 장승우 | `e5-base` | intfloat/multilingual-e5-base |
-
-GPU가 있으면 훨씬 빠릅니다. 없어도 그냥 돌아갑니다.
-
----
-
-### 내 결과가 맞는지 확인하기
-
-`validate_shard.py` 출력에서 아래 값을 직접 확인하십시오. **세 사람의 값이 서로 같아야 합니다.** BM25는 임베딩 모델을 전혀 쓰지 않으므로 모델이 달라도 결과가 같아야 하고, 다르면 무언가 잘못된 것입니다.
-
-| 확인 항목 | 기대값 |
-|---|---|
-| BM25 R@10 (minimal_text) | **11/71** |
-| BM25 무신호 질의 | **44/71** |
-| hybrid ≡ dense 건수 | **44/71** |
-| hit 벡터 길이 | 71 |
-| 코퍼스 항목수 | 1,783 |
-
-교정판 코퍼스가 제대로 적용됐는지 확인하려면:
-
-```bash
-python -c "import json;c=json.load(open('data/corpus/combined.json',encoding='utf-8'));k={e['code'] for e in c};print(len(c), [x for x in ['3.A.n','5.A.n'] if x in k] or 'ok', [x for x in ['3.A.2.d.4'] if x in k])"
-```
-
-`1783 ok ['3.A.2.d.4']` 가 나와야 합니다.
-
----
-
-### 문제가 생기면
-
-| 증상 | 대응 |
-|---|---|
-| 한글이 `?`나 깨진 문자로 출력 | `PYTHONIOENCODING=utf-8`을 설정하지 않았습니다 |
-| 모델 다운로드가 느림 | `pip install hf_xet` |
-| 메모리 부족 | `experiment_validated_suite.py`의 `batch_size=32`를 8로 낮추십시오. 결과는 동일합니다 |
-| `revision: None` 경고 | `pip install huggingface_hub` 후 다시 돌리십시오. 재현성 기록이 비면 논문 부록에 쓸 수 없습니다 |
-| `validate_shard.py`가 BM25 불일치를 보고 | 코퍼스·질의 파일이 최신인지 확인하십시오. `git pull` 후 `python adopt_corpus_v2.py`, 그다음 3번부터 다시 |
-| `output/shards/`에 예전 파일이 있음 | 지우고 3번부터 다시 돌리십시오. 예전 코퍼스로 계산된 결과가 섞이면 안 됩니다 |
-| 그 외 | `validate_shard.py` 출력 전체를 공유해 주십시오 |
-
----
-
-### 하지 말아야 할 것
-
-| 항목 | 이유 |
-|---|---|
-| `retrieval_core.py` 수정 | 33개 검증이 걸려 있고 scipy와 대조되어 있습니다. 여기가 틀리면 모든 수치가 조용히 틀어집니다 |
-| 등가성 마진 δ, α, 시드 변경 | 실험 전에 고정한 값입니다. 결과를 보고 바꾸면 사전지정의 의미가 사라집니다 |
-| `output/` 의 다른 파일 수정·삭제 | 자기 샤드 외에는 건드리지 마십시오 |
-| 논문 수치를 직접 고치기 | `verify_claims.py`가 산출물과 대조합니다. 손으로 고치면 대조가 깨집니다 |
-
-
----
-
-## 완료된 이전 라운드 (기록)
-
-아래 작업은 모두 완료되어 저장소에 반영되어 있습니다. 상세 스펙과 당시 사용한 프롬프트는
-[`docs/RESEARCH_IMPROVEMENT_PLAN.md`](docs/RESEARCH_IMPROVEMENT_PLAN.md)에 있습니다.
-
-| TASK | 내용 | 산출물 |
-|---|---|---|
-| Tier 1 | 다모델 확장으로 한계 6 해소 — ablation 방향은 일반화되나 최대 압력 유의성 2/3, **운용 권고는 모델 의존적** | `output/tier1/`, `output/tier1_crossmodel.*` |
-| A | 합성셋 자기참조 의존성 정량화 | `output/paraphrase_gap.*` |
-| B/C | 코드 충돌 제거 + 검증 라벨셋 구축 | `data/external_consultation_queries_validated.json` |
-| D | 한국어 cross-lingual 트랙 | `output/crosslingual_eval.*` |
-| E | BM25 vs Dense vs Hybrid 비교 | `output/retriever_compare.*` |
-| F | 논문 figure + 통계 보강 | `output/fig_*.png`, `docs/statistics.md` |
-| G | 검증 질의셋 역생성 확장 (n=71) | `data/validated_queries_slice_*.json` |
-| H | 임베딩 robustness (3개 인코더) | `output/validated_suite.*` |
-| I | 슬라이스 병합·재집계 | `data/validated_queries_expanded.json` |
-
-이후 외부 감사에서 나온 결함 수정 내역은 커밋 히스토리와 아래 문서에 있습니다.
-
-| 문서 | 내용 |
-|---|---|
-| [`docs/threat_model.md`](docs/threat_model.md) | 보호자산·신뢰경계·노출채널 정의 |
-| [`docs/selfreference.md`](docs/selfreference.md) | 자기참조 게이트의 공허성과 대칭 ablation |
-| [`docs/corpus_parsing_fixes.md`](docs/corpus_parsing_fixes.md) | 코퍼스 파서 결함과 교정 (원문 인용 16건) |
-| [`docs/label_audit.md`](docs/label_audit.md) | 정답셋 오염 감사 |
-| [`docs/statistics.md`](docs/statistics.md) | 검증셋 통계 (paired bootstrap · exact McNemar · TOST) |
-| [`docs/reproducibility.md`](docs/reproducibility.md) | 전체 재현 절차와 환경 |
-| [`docs/claim_registry.json`](docs/claim_registry.json) | 논문 수치 ↔ 산출물 대조 결과 |
-
-검증 명령:
+건강검진 — 이어받은 직후 가장 먼저:
 
 ```bash
 python verify_claims.py
 ```
 
-논문의 모든 수치를 산출물과 대조합니다. 불일치 목록이 곧 고쳐야 할 논문 수치 목록입니다.
+기대: `OK=112 / MISMATCH=0`. 하나라도 불일치면 논문과 근거가 어긋난 것이니 그것부터 해결합니다(산출물이 낡았으면 재실행, 논문이 낡았으면 논문 수정).
+
+전체 테스트:
 
 ```bash
-python tests/test_retrieval_core.py
+for f in tests/test_*.py; do python "$f" || echo "FAIL $f"; done
 ```
 
-통계 코어 검증(scipy와 독립 대조). `tests/` 아래 나머지 테스트도 같은 방식으로 실행합니다.
+주요 실험 재실행(의존 순서는 [`docs/HANDOFF.md`](docs/HANDOFF.md) §7):
 
+```bash
+python experiment_validated_suite.py
+```
 
-## 한계
+```bash
+python build_disclosure_ladder.py
+```
 
-- 합성 쿼리는 각 코퍼스 항목 **자기 본문**에서 코드만 제거해 만든 것이라 정답 문서와 near-duplicate입니다(평균 Jaccard 0.485). 따라서 합성 R@10 0.9792는 자기참조 재검색 성능에 가깝고, 후보 발견 능력의 절대 지표로 직접 일반화할 수 없습니다. `experiment_paraphrase_gap.py`로 검증: 정답 문서와 공유하는 변별(고-IDF) 토큰 5개를 제거하면 minimal_text R@10이 0.9792→0.7596, 10개에서 0.4407로 떨어집니다(`output/paraphrase_gap.md`).
-- 합성 "한국어" 쿼리는 설명 본문이 영어라 언어 분리가 가짜입니다. 진짜 언어 격차는 검증셋(한국어 45개)에서만 관찰됩니다.
-- 외부 모사 질의셋(`data/external_consultation_queries.json`) 30개의 `candidate_labels`는 연구자 예비 추정값이며 검증된 정답이 아닙니다. 30개 중 13개는 코드 정규화 충돌을 가집니다. 따라서 R@10=0은 "BM25 현장 성능=0"이 아니라 "불확실한 후보 라벨 기준 비수렴"으로 읽어야 합니다.
-- Retriever 비교(TASK E): 자기참조 합성셋은 BM25에 구조적으로 유리해 retriever 비교에 부적합합니다. 이전 판에는 **입력 비대칭 결함**도 있었습니다 — dense에만 구두점이 제거되고 소문자화된 `" ".join(tokens)` 문자열을 주고 BM25에는 토큰 형태를 주었습니다. 양쪽에 동일한 문자열(원문에서 대상 토큰만 word-boundary 삭제)을 주도록 고치고 재실행한 결과, 격차는 사실상 그대로였습니다(전 조건 |Δ| ≤ 0.016; before/after 전량은 `docs/statistics.md` §6-2). 즉 **결함은 실재했지만 BM25 우위의 원인은 아니었고, 원인은 자기참조 구조**입니다. 외부 모사셋 30개에서는 BM25 R@10=0(30개 중 14개가 BM25 무신호), hybrid(α=0.5) 0.10, 한국어 0→0.0625입니다(`output/external_retriever.md`). 라벨 노이즈가 커서 절대값 해석은 피하고, 헤드라인은 위 검증셋 n=71을 쓰십시오.
-- 검증 라벨셋 n=13(TASK B/C)은 **대체되었습니다**. 당시 표기했던 "한국어 0→0.20, hybrid 0.2308"과 "표본이 작아 경향으로 보고"라는 판단은 `docs/statistics_n13_superseded.md`에 보존했습니다. 그 판단의 근거였던 95% CI [0.0000, 0.4615]는 소표본 percentile bootstrap의 **이산 경계 인공물**입니다: 3승 0패 10무에서 재표본에 승리 질의가 하나도 안 뽑힐 확률이 (10/13)^13 = 0.0330 > 0.025라서 2.5분위수가 **구조적으로** 0이 됩니다. 즉 n=13에서 3승 0패인 어떤 결과도 자동으로 "CI가 0을 포함"합니다. 동시에 exact McNemar p=0.25이므로 n=13은 실제로도 검정력이 부족했습니다. **소표본 이진 짝지음의 primary 검정은 exact McNemar / Clopper-Pearson입니다**(`docs/statistics.md` §5).
-- 검증셋 확장(TASK G/I): eCFR 항목 역생성으로 n=71(영어 26, 한국어 45). hybrid(α=0.5) vs BM25 = **+0.4225**, exact McNemar 양측 p=1.9e-09(30승 0패 41무), paired bootstrap 95% CI [0.310, 0.535]. 한국어 BM25 **0.0000**(이전 표기 0.022는 오류) → dense/hybrid 0.60. 단 **hybrid vs dense는 유의하지 않습니다**(+0.028, p=0.62). 한국어에서 BM25 점수가 항등 0이면 α<1의 랭킹이 dense와 수학적으로 동일하므로(0승 0패), 데이터가 지지하는 진술은 "하이브리드가 필요하다"가 아니라 **"dense 성분이 필요하다"**입니다. 라벨은 여전히 코퍼스 텍스트 근거이며 전문가 검증은 후속 과제입니다.
-- 역생성 질의의 자기참조 게이트(`jaccard(질의, 정답 minimal_text) < 0.30`)는 **한국어 45개 전부에서 정확히 0.0000**입니다. 한국어 질의와 영어 정답 텍스트는 토큰이 겹칠 수 없으므로 이 게이트는 한국어에 대해 아무것도 검사하지 못합니다(영어 26개는 평균 0.0941, 최대 0.2364로 한 번도 발동하지 않았습니다). 또 역생성 질의는 코퍼스 등장 순서를 훑은 흔적이 있습니다(slice_yechan 28/28, slice_seungwoo 25/28 단조증가). 언어중립 게이트가 필요합니다.
-- 임베딩 robustness(TASK H): 이전 판은 세 모델이 **동일한 bootstrap 리샘플 행렬**을 공유해 모델별 CI가 독립적으로 얻어진 것처럼 보였습니다. 모델별 seed로 분리했습니다. 3모델 결과는 `experiment_validated_suite.py` 본실행 산출물로 갱신해야 합니다.
-- 노출-성능: full_text→minimal_text로 **색인**을 줄이면 hybrid R@10 0.6056→0.5775로 감소합니다. 반면 색인은 그대로 두고 **반환 텍스트만** minimal_text로 줄이면 노출량@10이 9,730→1,811자(81.4% 감소)인데 랭킹이 바뀌지 않아 R@10은 0.6056 그대로입니다. 즉 반환량 축소는 비용이 0이고 비용은 색인 축소에서만 발생합니다. **"CI가 0을 포함하므로 손실이 없다"는 주장은 하지 않습니다**(귀무가설 수용). 등가 주장은 사전지정 마진 δ에 대한 TOST로만 합니다.
-- 코퍼스 파싱은 정규식 기반이므로 수작업 표본 검수가 필요합니다.
-- LLM reranker 비교는 아직 수행하지 않았습니다(후속 연구). Dense·hybrid는 이미 본 실험에 포함되어 있습니다.
-- 노출량은 문자 수 기반 proxy입니다. 실제 영업비밀·기술정보 민감도와 동일하지 않습니다. 이전 정의에는 `minimal_text`와 `minimal_no_code`에 코퍼스 전체 항목에 동일한 값을 부여하는 버그가 있었습니다.
-- BM25 단독은 어휘 불일치·언어 격차에서 구조적 한계를 보입니다(`docs/case_analysis.md`). "실제 현장에서 충분하다"고 단정하지 마십시오.
-- 독립 누출 감사에서 원 검사기가 놓친 실제 코드 누출 4건이 발견되었습니다(예: q0613의 "ML19"). 원 검사기가 질의 생성에 쓴 정규식을 그대로 재사용해 구조적으로 누출을 찾을 수 없었기 때문입니다.
+```bash
+python experiment_disclosure_frontier.py
+```
 
-## 제출 논문에서 안전한 주장
+원본 PDF·HTML은 제3자 저작물이라 저장소에 없지만, **정화된 코퍼스와 모든 질의셋이 커밋돼 있어 실험 재현에는 원본이 필요 없습니다.** dense 모델은 첫 실행 시 자동 다운로드되며 외부 추론 API는 쓰지 않습니다(전부 로컬 실행).
 
-사용 가능:
+> **Windows 주의**: `core.autocrlf=true`인 클론에서 원본 파일이 CRLF로 바뀌면 출처 SHA-256 검증이 전부 깨집니다. `.gitattributes`가 이를 막고 있으니 지우지 마십시오. 콘솔이 cp949면 `PYTHONIOENCODING=utf-8`을 앞에 붙입니다.
 
-> 정답 통제번호를 쿼리에 포함하지 않는 합성 설명형 쿼리에서, 공개 통제목록 후보검색 기준 `minimal_text` 조건은 `full_text` 대비 평균 반환 정보량을 약 66.4% 줄이면서 R@10 0.9792를 유지했다. 단, 이 합성 쿼리는 코퍼스 항목 자기 본문에서 파생되어 정답 문서와 near-duplicate 관계이므로 절대수치는 자기참조 재검색에 가깝다(고-IDF 공유토큰 5개 제거 시 0.7596, 10개 제거 시 0.4407). 자기참조가 아닌 검증셋 n=71(영어 26 / 한국어 45)에서는 BM25 단독 R@10이 0.1549이고 한국어에서는 정확히 0.0000인 반면, 다국어 dense 성분을 넣으면 0.5493~0.5775로 올라간다(exact McNemar 양측 p=1.9e-09, 30승 0패). 즉 합성 benchmark 결과를 현장 성능으로 직접 일반화하지 않으며, 다국어 상담 질의에는 dense 성분이 필요하다. 상세는 `docs/statistics.md`, `docs/case_analysis.md` 참조.
+---
 
-> 색인 텍스트와 반환 텍스트를 분리하면, 색인을 그대로 두고 반환 텍스트만 줄이는 조건에서 top-10 반환 문자 수가 9,730 → 1,811(81.4% 감소)인데 랭킹이 바뀌지 않으므로 R@10은 0.6056으로 동일하다. 정보 노출 축소의 비용은 반환 단계가 아니라 색인 단계에서 발생한다.
+## 7. 검증 인프라
 
-사용 금지:
+수치가 조용히 낡거나 틀어지는 것을 막기 위한 장치들입니다.
 
-- “AI가 전략물자 여부를 판정한다”
-- “법제 라우팅 정확도 n%”
-- “전문판정/자가판정을 대체할 수 있다”
-- “실제 기업 질의에서 검증됐다”
-- “BM25 baseline이 실제 현장에서 충분하다”
-- “다국어 **하이브리드**가 유의하게 필요하다” — 검증셋에서 hybrid vs dense는 유의하지 않다(p=0.62). 지지되는 진술은 “**dense 성분**이 필요하다”이다.
-- “노출을 줄여도 성능 손실이 없다” — CI가 0을 포함한다는 것은 등가성의 근거가 아니다. 사전지정 마진에 대한 TOST가 통과했을 때만 비열등을 말한다.
-- “검증셋 한국어 BM25 R@10 = 0.0222” — 실제 값은 **0.0000**이다.
+| 도구 | 무엇을 막는가 |
+|---|---|
+| `verify_claims.py` | 논문 수치 ↔ 산출물 불일치 (112개 청구 등록) |
+| `validate_shard.py` / `validate_tier1.py` | 팀원 제출물 위변조·환경 불일치. **BM25는 인코더를 쓰지 않으므로 적중 벡터가 바이트 단위로 같아야 한다**는 성질로 상대 기기를 신뢰하지 않고 검증 |
+| `validate_query_slice.py` | 정답 코드 누출, 어휘·의미 자기참조(LaBSE τ=0.44) |
+| `tests/test_disclosure_ladder.py` | 계량기 경계가 조용히 바뀌는 것, 사다리 제외 회계 누락 |
+| `tests/test_selfreference.py` | 치환어가 정답 토큰을 들여오는 것, 커버리지 하락 |
+| `tests/test_retrieval_core.py` | 통계 코어 (scipy와 독립 대조) |
+| `fetch_sources.py verify` | 출처 원본 변조 |
+
+---
+
+## 8. 안전한 주장 / 금지 표현
+
+**사용 가능**
+
+> 외부 AI 사전 트리아지에서 최소화해야 하는 것은 시스템이 반환하는 공개 통제목록이 아니라 기업이 내보내는 질의다. 반환량 축소는 랭킹을 바꾸지 않아 노출량을 77.4%까지 무비용으로 줄일 수 있으나 보호법익과 무관하다.
+
+> 질의 측에서 정량 사양치 전면 삭제(L1)는 손실 징후 없이 가능한 가장 깊은 등급이며 세 인코더에서 일치한다. 단 δ=0.05 TOST 등가는 입증되지 않았다.
+
+> 저노출 후보검색에는 dense 성분이 필수다. BM25는 영어 코퍼스에 대한 한국어 질의에서 R@10 0.0275에 그치며(151건 중 96건 무신호), dense 우위는 세 인코더와 자기참조 압력 하에서 유지된다.
+
+**사용 금지**
+
+- "AI가 전략물자 해당/비해당을 판정한다"
+- "자가판정·전문판정을 대체·보조한다"
+- "검증 라벨이 법적 정답이다"
+- "신뢰구간이 0을 포함하므로 성능 손실이 없다" — 귀무가설 수용 오류
+- "**L1은 등가가 입증되었다**" — TOST 미통과. 지지되는 진술은 "손실 징후가 없다"까지
+- "하이브리드가 필요하다" — 데이터가 지지하는 것은 dense 성분의 필요성
+- "합성 R@10 0.9840이 후보검색 성능이다" — 자기참조 재검색임을 명시할 것
+- "L3까지 지워도 안전하다" — 자기참조 교란으로 철회된 결론
+- "반환량을 줄여 기업 비밀을 보호했다" — 반환 텍스트는 공개문서
+- "실제 기업 질의에서 검증됐다"
+
+---
+
+## 9. 문서 지도
+
+| 문서 | 내용 |
+|---|---|
+| [`PAPER.md`](PAPER.md) | 논문 초안 (초록~결론, 재현성 매핑) |
+| [`docs/HANDOFF.md`](docs/HANDOFF.md) | 이어받기: 셋업·확정 수치·재실행 의존 순서·함정 |
+| [`docs/threat_model.md`](docs/threat_model.md) | 보호자산·신뢰경계·노출채널 정의 |
+| [`docs/selfreference.md`](docs/selfreference.md) | 자기참조 게이트의 공허성과 대칭 ablation |
+| [`docs/label_audit.md`](docs/label_audit.md) | 정답셋 오염 감사 (D1~D6) |
+| [`docs/statistics.md`](docs/statistics.md) | paired bootstrap · exact McNemar · TOST |
+| [`docs/korean_regulatory_framework.md`](docs/korean_regulatory_framework.md) | 대외무역법·전략물자수출입고시·산업기술보호법 연계 |
+| [`docs/reproducibility.md`](docs/reproducibility.md) | 전체 재현 절차와 환경 |
+| [`docs/claim_registry.json`](docs/claim_registry.json) | 논문 수치 ↔ 산출물 대조 결과 |
+| [`docs/TEAM_WORKFLOW.md`](docs/TEAM_WORKFLOW.md) | 팀원 분담 절차 (아카이브) |
+
+**공식 참고**: [YesTrade 제도개요](https://www.yestrade.go.kr/system-guidance) · [온라인 자가판정 한계](https://www.yestrade.go.kr/judgements/self/intro) · [전략물자수출입고시](https://www.law.go.kr/LSW/admRulInfoP.do?admRulSeq=2100000270104&chrClsCd=010201) · [국가핵심기술 제도](https://kaits.or.kr/web/content.do?menu_cd=000067)
