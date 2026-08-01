@@ -181,79 +181,79 @@ def build_checks() -> list[Check]:
                    tol=TOL_CHARS))
 
     # ---- validated set composition ----
-    C.append(Check("valid.n", "PAPER 4.3", "검증셋 n", 71,
+    C.append(Check("valid.n", "PAPER 4.3", "검증셋 n", 151,
                    lambda: len(validated["queries"]) if validated else None, tol=0))
-    C.append(Check("valid.n_en", "PAPER 4.3", "검증셋 영어", 26,
+    C.append(Check("valid.n_en", "PAPER 4.3", "검증셋 영어", 42,
                    lambda: (sum(1 for q in validated["queries"] if q["lang"] == "en")
                             if validated else None), tol=0))
-    C.append(Check("valid.n_ko", "PAPER 4.3", "검증셋 한국어", 45,
+    C.append(Check("valid.n_ko", "PAPER 4.3", "검증셋 한국어", 109,
                    lambda: (sum(1 for q in validated["queries"] if q["lang"] == "ko")
                             if validated else None), tol=0))
 
     # ---- claim 3: retriever comparison on the validated set ----
-    C.append(Check("valid.bm25.r10", "PAPER 4.3", "BM25 R@10", 0.1549,
+    C.append(Check("valid.bm25.r10", "PAPER 4.3", "BM25 R@10", 0.1523,
                    lambda: suite_rate("minimal_text", "BM25")))
-    C.append(Check("valid.bm25.en", "PAPER 4.3", "BM25 영어 R@10", 0.4231,
+    C.append(Check("valid.bm25.en", "PAPER 4.3", "BM25 영어 R@10", 0.4762,
                    lambda: suite_rate("minimal_text", "BM25", "en")))
-    C.append(Check("valid.bm25.ko", "PAPER 4.3", "BM25 한국어 R@10 (구조적 0)", 0.0,
+    C.append(Check("valid.bm25.ko", "PAPER 4.3", "BM25 한국어 R@10 (구조적 저조)", 0.0275,
                    lambda: suite_rate("minimal_text", "BM25", "ko")))
-    C.append(Check("valid.hybrid.r10", "PAPER 4.3", "hybrid R@10 (논문 0.578)", 0.578,
+    C.append(Check("valid.hybrid.r10", "PAPER 4.3", "hybrid R@10 (논문 0.510)", 0.5099,
                    lambda: suite_rate("minimal_text", "hybrid_0.5")))
-    C.append(Check("valid.hybrid.en", "PAPER 4.3", "hybrid 영어 R@10 (논문 0.538)", 0.538,
+    C.append(Check("valid.hybrid.en", "PAPER 4.3", "hybrid 영어 R@10 (논문 0.548)", 0.5476,
                    lambda: suite_rate("minimal_text", "hybrid_0.5", "en")))
-    C.append(Check("valid.hybrid.ko", "PAPER 4.3", "hybrid 한국어 R@10 (논문 0.600)", 0.600,
+    C.append(Check("valid.hybrid.ko", "PAPER 4.3", "hybrid 한국어 R@10 (논문 0.495)", 0.4954,
                    lambda: suite_rate("minimal_text", "hybrid_0.5", "ko")))
-    C.append(Check("valid.dense.r10", "PAPER 4.3", "dense R@10 (논문 0.549)", 0.549,
+    C.append(Check("valid.dense.r10", "PAPER 4.3", "dense R@10 (논문 0.450)", 0.4503,
                    lambda: suite_rate("minimal_text", "dense")))
     C.append(Check("valid.hyb_vs_bm25.diff", "PAPER 4.3/초록",
-                   "hybrid−BM25 평균차", 0.4225,
+                   "hybrid−BM25 평균차", 0.3576,
                    lambda: suite_contrast("minimal_text", "hybrid_vs_bm25[overall]", "mean_diff")))
     C.append(Check("valid.hyb_vs_bm25.ci", "PAPER 4.3/초록",
-                   "hybrid−BM25 95% CI", [0.3099, 0.5352],
+                   "hybrid−BM25 95% CI", [0.2848, 0.4371],
                    lambda: suite_contrast("minimal_text", "hybrid_vs_bm25[overall]", "diff_95_ci")))
     C.append(Check("valid.hyb_vs_bm25.wins", "PAPER 4.3/초록",
-                   "hybrid−BM25 승 (30승 0패)", 30,
+                   "hybrid−BM25 승 (54승 0패)", 54,
                    lambda: suite_contrast("minimal_text", "hybrid_vs_bm25[overall]", "wins"), tol=0))
     C.append(Check("valid.hyb_vs_bm25.losses", "PAPER 4.3/초록", "hybrid−BM25 패", 0,
                    lambda: suite_contrast("minimal_text", "hybrid_vs_bm25[overall]", "losses"),
                    tol=0))
-    C.append(Check("valid.dense_vs_bm25.diff", "PAPER 4.3", "dense−BM25 평균차", 0.3944,
+    C.append(Check("valid.dense_vs_bm25.diff", "PAPER 4.3", "dense−BM25 평균차", 0.2980,
                    lambda: suite_contrast("minimal_text", "dense_vs_bm25[overall]", "mean_diff")))
     # 논문의 핵심 진술: "hybrid가 필요"가 아니라 "dense 성분이 필요" (PAPER 4.3, 8)
-    C.append(Check("valid.hyb_vs_dense.diff", "PAPER 4.3/초록", "hybrid−dense 평균차 (비유의)",
-                   0.0282,
+    C.append(Check("valid.hyb_vs_dense.diff", "PAPER 4.3/초록", "hybrid−dense 평균차 (Holm 후 비유의)",
+                   0.0596,
                    lambda: suite_contrast("minimal_text", "hybrid_vs_dense[overall]", "mean_diff")))
     C.append(Check("valid.hyb_vs_dense.ko_wins", "PAPER 4.3",
-                   "hybrid−dense 한국어 승 (수학적 동일이므로 0)", 0,
+                   "hybrid−dense 한국어 승 (BM25 대부분 항등 0)", 2,
                    lambda: suite_contrast("minimal_text", "hybrid_vs_dense[ko]", "wins"), tol=0))
-    C.append(Check("valid.bm25_no_signal", "PAPER 4.3", "BM25 무신호 질의 수 (44/71)", 44,
+    C.append(Check("valid.bm25_no_signal", "PAPER 4.3", "BM25 무신호 질의 수 (96/151)", 96,
                    lambda: dig(suite, "retriever", dig(suite, "meta", "primary_model"),
                                "diagnostics", "minimal_text", "bm25_no_signal_queries"), tol=0))
 
     # ---- claim 2: exposure-recall frontier ----
     # 2-D 노출표 (PAPER 4.4). 대각선이 아니라 '색인 x 반환' 칸을 직접 검사한다.
-    C.append(Check("front.full.exposure", "PAPER 4.4", "색인=full/반환=full 노출량@10", 9729.9,
+    C.append(Check("front.full.exposure", "PAPER 4.4", "색인=full/반환=full 노출량@10", 7886.2,
                    lambda: dig(suite, "exposure_at10", "full_text", "return=full_text"),
                    tol=TOL_CHARS))
     C.append(Check("front.full_return_min.exposure", "PAPER 4.4",
-                   "색인=full/반환=minimal_text 노출량@10 (운용점)", 1810.9,
+                   "색인=full/반환=minimal_text 노출량@10 (운용점)", 1780.8,
                    lambda: dig(suite, "exposure_at10", "full_text", "return=minimal_text"),
                    tol=TOL_CHARS))
     C.append(Check("front.minimal.exposure", "PAPER 4.4", "색인=minimal/반환=minimal 노출량@10",
-                   1856.7,
+                   1805.5,
                    lambda: dig(suite, "exposure_at10", "minimal_text", "return=minimal_text"),
                    tol=TOL_CHARS))
     C.append(Check("front.nocode.exposure", "PAPER 4.4",
-                   "색인=minimal_no_code/반환=동일 노출량@10", 1674.2,
+                   "색인=minimal_no_code/반환=동일 노출량@10", 1618.4,
                    lambda: dig(suite, "exposure_at10", "minimal_no_code",
                                "return=minimal_no_code"), tol=TOL_CHARS))
-    C.append(Check("front.full.hybrid", "PAPER 4.4", "색인 full_text hybrid R@10", 0.6056,
+    C.append(Check("front.full.hybrid", "PAPER 4.4", "색인 full_text hybrid R@10", 0.5497,
                    lambda: suite_rate("full_text", "hybrid_0.5")))
     C.append(Check("front.nocode.hybrid", "PAPER 4.4", "색인 minimal_no_code hybrid R@10",
-                   0.5211, lambda: suite_rate("minimal_no_code", "hybrid_0.5")))
+                   0.4901, lambda: suite_rate("minimal_no_code", "hybrid_0.5")))
     # 반환 측 축소: 논문 헤드라인은 '색인 고정 + 반환만 축소' 81.4%, 비용 정확히 0
     C.append(Check("front.return_only.cut_pct", "PAPER 4.4/초록/결론",
-                   "반환만 축소 시 노출 감소율 (81.4%)", 81.4,
+                   "반환만 축소 시 노출 감소율 (77.4%)", 77.4,
                    lambda: dig(decomp, "best_operating_point",
                                "exposure_cut_vs_baseline_pct"), tol=TOL_PCT))
     C.append(Check("front.return_only.recall_delta", "PAPER 4.4/초록",
@@ -264,12 +264,12 @@ def build_checks() -> list[Check]:
                    lambda: dig(decomp, "best_operating_point", "cell", "actionable")))
     # 색인 측 축소: 비용이 발생하며 δ=0.05 등가는 성립하지 않는다
     C.append(Check("front.index_cut.diff", "PAPER 4.4", "색인 minimal−full hybrid 평균차",
-                   -0.0282,
+                   -0.0397,
                    lambda: dig(suite, "equivalence",
                                "minimal_text_vs_full_text[hybrid_0.5]",
                                "paired_bootstrap", "mean")))
     C.append(Check("front.index_cut.ci", "PAPER 4.4",
-                   "색인 minimal−full 95% CI", [-0.1127, 0.0423],
+                   "색인 minimal−full 95% CI", [-0.0927, 0.0132],
                    lambda: dig(suite, "equivalence",
                                "minimal_text_vs_full_text[hybrid_0.5]",
                                "paired_bootstrap", "ci")))
@@ -279,7 +279,7 @@ def build_checks() -> list[Check]:
                                "minimal_text_vs_full_text[hybrid_0.5]",
                                "equivalent_at_primary_delta")))
     C.append(Check("front.index_cut.n_required", "PAPER 4.4",
-                   "색인 축소 등가 입증에 필요한 n", 1473,
+                   "색인 축소 등가 입증에 필요한 n", 6166,
                    lambda: dig(suite, "equivalence",
                                "minimal_text_vs_full_text[hybrid_0.5]",
                                "n_required_for_primary_delta"), tol=0))
@@ -287,9 +287,9 @@ def build_checks() -> list[Check]:
     # ---- 4.6 모델 robustness: 3개 인코더 전부에서 결론이 유지되는가 ----
     C.append(Check("robust.models", "PAPER 4.6", "포함된 dense 인코더 수 (3)", 3,
                    lambda: len(dig(suite, "meta", "dense_models") or {}), tol=0))
-    for model, dense_r, hyb_r, ko_r in [("MiniLM", 0.5493, 0.5775, 0.6000),
-                                        ("e5-base", 0.4648, 0.4930, 0.4889),
-                                        ("bge-m3", 0.5634, 0.5634, 0.6222)]:
+    for model, dense_r, hyb_r, ko_r in [("MiniLM", 0.4503, 0.5099, 0.4954),
+                                        ("e5-base", 0.4768, 0.4901, 0.4587),
+                                        ("bge-m3", 0.5695, 0.5497, 0.5596)]:
         C.append(Check(f"robust.{model}.dense", "PAPER 4.6", f"{model} dense R@10", dense_r,
                        lambda m=model: suite_rate("minimal_text", "dense", model=m)))
         C.append(Check(f"robust.{model}.hybrid", "PAPER 4.6", f"{model} hybrid R@10", hyb_r,
@@ -313,37 +313,37 @@ def build_checks() -> list[Check]:
 
     C.append(Check("cross.models", "PAPER 4.8", "Tier-1 번들 모델 수 (3)", 3,
                    lambda: len(dig(cross, "models") or []), tol=0))
-    # ablation: level0은 전 모델 유의, level3은 2/3만 유의
+    # ablation: level0·level3 모두 전 모델 유의 (n=71에서는 level3이 2/3였다)
     C.append(Check("cross.abl.l0_all_sig", "PAPER 4.8",
                    "압력 level0 dense−BM25가 세 모델 모두 유의한가", True,
                    lambda: dig(cross, "conclusion",
                                "ablation_dense_advantage_significant_at_level0_all_models")))
     C.append(Check("cross.abl.l3_all_sig", "PAPER 4.8",
-                   "압력 level3에서도 세 모델 모두 유의한가 (아니오)", False,
+                   "압력 level3에서도 세 모델 모두 유의한가 (예)", True,
                    lambda: dig(cross, "conclusion",
                                "ablation_dense_advantage_significant_at_level3_all_models")))
-    C.append(Check("cross.abl.l3_e5_not_sig", "PAPER 4.8",
-                   "level3에서 e5-base는 유의하지 않다", False,
+    C.append(Check("cross.abl.l3_e5_sig", "PAPER 4.8",
+                   "level3에서 e5-base도 유의하다 (n=151에서 역전)", True,
                    lambda: dig(cross, "conclusion",
                                "ablation_level3_significant_by_model", "e5-base")))
-    for m, val in [("MiniLM", 0.2113), ("bge-m3", 0.2535), ("e5-base", 0.0845)]:
+    for m, val in [("MiniLM", 0.2450), ("bge-m3", 0.3576), ("e5-base", 0.1589)]:
         C.append(Check(f"cross.abl.l3.{m}", "PAPER 4.8", f"level3 dense−BM25 ({m})", val,
                        lambda mm=m: dig(cross, "ablation", mm, "dense_vs_bm25", "3",
                                         "dense_minus_bm25")))
-    # frontier: 권고가 모델 의존적이며 보수적 권고는 L1
+    # frontier: n=151에서 세 모델의 권고가 L1로 수렴 (모델 의존성 해소)
     C.append(Check("cross.front.model_dependent", "PAPER 4.8/초록",
-                   "운용 권고가 모델에 따라 달라지는가", True,
+                   "운용 권고가 모델에 따라 달라지는가 (아니오)", False,
                    lambda: dig(cross, "conclusion",
                                "frontier_recommendation_is_model_dependent")))
     C.append(Check("cross.front.conservative", "PAPER 4.8/초록/결론",
                    "모델 불문 보수적 권고 등급", "L1",
                    lambda: dig(cross, "conclusion",
                                "conservative_recommendation_across_models")))
-    for m, val in [("MiniLM", "L2"), ("e5-base", "L2"), ("bge-m3", "L1")]:
+    for m, val in [("MiniLM", "L1"), ("e5-base", "L1"), ("bge-m3", "L1")]:
         C.append(Check(f"cross.front.rec.{m}", "PAPER 4.8", f"{m} 권고 등급", val,
                        lambda mm=m: dig(cross, "frontier", mm, "recommended_level")))
     C.append(Check("cross.front.bge.L2_diff", "PAPER 4.8",
-                   "bge-m3 L2 차이 (마진 초과 → 손실 징후)", -0.0704,
+                   "bge-m3 L2 차이 (마진 초과 → 손실 징후)", -0.0504,
                    lambda: dig(cross, "frontier", "bge-m3", "vs_L0", "L2", "mean_diff")))
     C.append(Check("cross.front.bge.L1_not_equiv", "PAPER 4.8",
                    "bge-m3에서 L1이 등가 입증되는가 (아니오)", False,
@@ -359,60 +359,80 @@ def build_checks() -> list[Check]:
     def ladder_tost(level, field, retr="hybrid_0.5"):
         return dig(ladder, "equivalence_vs_L0", retr, f"{level}_vs_L0", "primary", field)
 
-    for lv, val in [("L0", 0.5775), ("L1", 0.5775), ("L2", 0.5493),
-                    ("L3", 0.5775), ("L4", 0.4507)]:
+    for lv, val in [("L0", 0.5294), ("L1", 0.5126), ("L2", 0.4454),
+                    ("L3", 0.4874), ("L4", 0.4034)]:
         C.append(Check(f"ladder.hybrid.{lv}", "PAPER 4.5", f"사다리 {lv} hybrid R@10", val,
                        lambda l=lv: ladder_rate(l)))
     C.append(Check("ladder.bm25.L0.ko", "PAPER 4.5",
-                   "사다리 BM25 한국어 R@10 (전 등급 0)", 0.0,
+                   "사다리 BM25 한국어 R@10 (바닥 수준)", 0.0235,
                    lambda: ladder_rate("L0", "BM25", "ko")))
-    # L1 = 유일하게 등가가 입증된 등급 (증거등급 A)
-    C.append(Check("ladder.L1.tost_pmax", "PAPER 4.5/초록", "L1 TOST p_max", 0.0063,
+    # L1 = 손실 징후가 없는 가장 깊은 등급. n=151에서 TOST 등가는 통과하지 못한다 (증거등급 B)
+    C.append(Check("ladder.L1.tost_pmax", "PAPER 4.5/초록", "L1 TOST p_max", 0.0817,
                    lambda: ladder_tost("L1", "p_max"), tol=1e-3))
     C.append(Check("ladder.L1.equivalent", "PAPER 4.5/초록",
-                   "L1이 δ=0.05에서 등가 입증되는가 (예)", True,
+                   "L1이 δ=0.05에서 등가 입증되는가 (아니오)", False,
                    lambda: ladder_tost("L1", "equivalent_at_0.05")))
     C.append(Check("ladder.L2.not_equivalent", "PAPER 4.5",
                    "L2가 δ=0.05에서 등가 입증되는가 (아니오)", False,
                    lambda: ladder_tost("L2", "equivalent_at_0.05")))
-    C.append(Check("ladder.L2.n_required", "PAPER 4.5", "L2 등가 입증에 필요한 n", 1102,
-                   lambda: dig(ladder, "equivalence_vs_L0", "hybrid_0.5", "L2_vs_L0",
+    C.append(Check("ladder.L1.n_required", "PAPER 4.5", "L1 등가 입증에 필요한 n", 379,
+                   lambda: dig(ladder, "equivalence_vs_L0", "hybrid_0.5", "L1_vs_L0",
                                "required_n_for_delta_0.05"), tol=0))
-    C.append(Check("ladder.L4.diff", "PAPER 4.5", "L4 평균차 (마진 초과 = 손실 징후)", -0.1268,
+    C.append(Check("ladder.L2.diff", "PAPER 4.5", "L2 평균차 (마진 초과 = 손실 징후)", -0.0840,
+                   lambda: dig(ladder, "contrasts_vs_L0", "hybrid_0.5", "L2_vs_L0",
+                               "mean_diff")))
+    C.append(Check("ladder.n", "PAPER 3.5/4.5", "사다리 분석 대상 질의 수 (정의 위반 제외 후)", 119,
+                   lambda: dig(ladder, "data", "n_queries"), tol=0))
+    C.append(Check("ladder.excluded", "PAPER 3.5/7", "사다리 정의 위반으로 제외된 질의 수", 32,
+                   lambda: dig(ladder, "data", "ladder_spec_excluded"), tol=0))
+    C.append(Check("ladder.L4.diff", "PAPER 4.5", "L4 평균차 (마진 초과 = 손실 징후)", -0.1261,
                    lambda: dig(ladder, "contrasts_vs_L0", "hybrid_0.5", "L4_vs_L0",
                                "mean_diff")))
-    C.append(Check("ladder.recommended", "PAPER 4.5/초록/결론", "운용 권고 등급", "L2",
+    C.append(Check("ladder.recommended", "PAPER 4.5/초록/결론", "운용 권고 등급", "L1",
                    lambda: dig(ladder, "evidence_tiers", "hybrid_0.5", "recommended_level")))
     C.append(Check("ladder.L3.confounded", "PAPER 4.5/초록",
                    "L3가 자기참조 교란으로 판정되는가", ["L3"],
                    lambda: dig(ladder, "evidence_tiers", "hybrid_0.5",
                                "confounded_by_selfreference")))
-    C.append(Check("ladder.sens_tokens.L0", "PAPER 3.5", "L0 평균 민감토큰", 7.35,
+    C.append(Check("ladder.sens_tokens.L0", "PAPER 3.5", "L0 평균 민감토큰", 5.966,
                    lambda: dig(ladder, "exposure_axis", "L0", "mean_sensitive_token_count"),
                    tol=1e-2))
-    C.append(Check("ladder.sens_tokens.L2", "PAPER 3.5", "L2 평균 민감토큰", 5.63,
+    C.append(Check("ladder.sens_tokens.L2", "PAPER 3.5", "L2 평균 민감토큰", 4.471,
                    lambda: dig(ladder, "exposure_axis", "L2", "mean_sensitive_token_count"),
                    tol=1e-2))
 
     # ---- claim 5: 자기참조 압력 하 강건성 ----
     abl = load(OUT / "symmetric_ablation.json")
 
-    C.append(Check("abl.dense_vs_bm25.L0", "PAPER 4.6", "압력 level0 dense−BM25 평균차", 0.4366,
+    C.append(Check("abl.dense_vs_bm25.L0", "PAPER 4.6", "압력 level0 dense−BM25 평균차", 0.3642,
                    lambda: dig(abl, "headline", "dense_advantage_over_bm25_by_level", "0")))
     C.append(Check("abl.dense_vs_bm25.L3", "PAPER 4.6",
-                   "압력 level3 dense−BM25 평균차 (유의 유지)", 0.2113,
+                   "압력 level3 dense−BM25 평균차 (유의 유지)", 0.2450,
                    lambda: dig(abl, "headline", "dense_advantage_over_bm25_by_level", "3")))
-    for retr, l0, l3 in [("BM25", 0.1549, 0.0282), ("dense", 0.5915, 0.2394),
-                         ("hybrid_0.5", 0.6056, 0.2394)]:
+    for retr, l0, l3 in [("BM25", 0.1523, 0.0927), ("dense", 0.5166, 0.3377),
+                         ("hybrid_0.5", 0.5497, 0.3642)]:
         C.append(Check(f"abl.{retr}.L0", "PAPER 4.6", f"압력 level0 {retr} R@10", l0,
                        lambda r=retr: dig(abl, "headline", "recall_by_level", r, "0")))
         C.append(Check(f"abl.{retr}.L3", "PAPER 4.6", f"압력 level3 {retr} R@10", l3,
                        lambda r=retr: dig(abl, "headline", "recall_by_level", r, "3")))
     C.append(Check("abl.ko.bm25.L3", "PAPER 4.6",
-                   "압력 level3 BM25 한국어 R@10 (전 level 0)", 0.0,
+                   "압력 level3 BM25 한국어 R@10 (전 level 동일)", 0.0367,
                    lambda: dig(abl, "headline", "recall_by_level_ko", "BM25", "3")))
-    C.append(Check("abl.ko.dense.L3", "PAPER 4.6", "압력 level3 dense 한국어 R@10", 0.3111,
+    C.append(Check("abl.ko.dense.L3", "PAPER 4.6", "압력 level3 dense 한국어 R@10", 0.3853,
                    lambda: dig(abl, "headline", "recall_by_level_ko", "dense", "3")))
+    # 치환 커버리지: 사전이 원본 71개만 덮으므로 압력이 표본 전체에 걸리지 않는다.
+    # 논문 4.6 이 이 수치를 그대로 인용하며, 조용히 떨어지면 검증이 실패해야 한다.
+    for lv, changed in [("1", 71), ("2", 71), ("3", 121)]:
+        C.append(Check(f"abl.coverage.L{lv}", "PAPER 4.6",
+                       f"level{lv} 치환이 적용된 질의 수", changed,
+                       lambda l=lv: dig(abl, "substitution_coverage", l, "queries_changed"),
+                       tol=0))
+    C.append(Check("abl.gate_cos.L0", "PAPER 4.6", "압력 level0 게이트 cos 평균", 0.3420,
+                   lambda: dig(abl, "manipulation_diagnostics", "per_level", "0",
+                               "mean_gate_cos"), tol=1e-3))
+    C.append(Check("abl.gate_cos.L3", "PAPER 4.6", "압력 level3 게이트 cos 평균", 0.3189,
+                   lambda: dig(abl, "manipulation_diagnostics", "per_level", "3",
+                               "mean_gate_cos"), tol=1e-3))
 
     return C
 

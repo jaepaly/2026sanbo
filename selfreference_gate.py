@@ -168,22 +168,43 @@ def has_hangul(text: str) -> bool:
     return any("가" <= ch <= "힣" for ch in text or "")
 
 
+# 공허 판정 기준. "전부 정확히 0"만 보면 질의에 숫자·라틴 약어가 하나만 섞여도
+# 경고가 꺼진다 — 게이트는 여전히 아무것도 검사하지 못하는데 진단만 조용해진다.
+# 그래서 (a) 정확히 0인 비율과 (b) 최대값이 임계에 한참 못 미치는지를 함께 본다.
+VOID_ZERO_SHARE = 0.90
+VOID_MAX_RATIO = 1 / 3
+
+
 def lexical_void_warning(rows: list[dict]) -> dict:
     """언어별로 어휘 게이트가 구조적으로 공허한지 진단한다."""
     out: dict = {}
     for lang in sorted({r["lang"] for r in rows}):
         vals = [r["lexical_jaccard"] for r in rows if r["lang"] == lang]
-        allz = all(v == 0.0 for v in vals)
+        n_zero = sum(1 for v in vals if v == 0.0)
+        share = n_zero / len(vals) if vals else 0.0
+        vmax = float(np.max(vals)) if vals else 0.0
+        allz = bool(vals) and n_zero == len(vals)
+        void = bool(vals) and share >= VOID_ZERO_SHARE and vmax < MAX_JACCARD * VOID_MAX_RATIO
+        if allz:
+            warning = (f"어휘 Jaccard가 {len(vals)}개 전부 정확히 0 — 이 언어에서 어휘 게이트는 "
+                       "아무것도 검사하지 않는다(코퍼스가 100% 영어이므로 교집합이 원리상 공집합).")
+        elif void:
+            warning = (f"어휘 Jaccard가 {n_zero}/{len(vals)}개({share:.1%}) 정확히 0이고 최대값도 "
+                       f"{vmax:.4f}(임계 {MAX_JACCARD})라 이 언어에서 어휘 게이트는 사실상 "
+                       "아무것도 검사하지 않는다. 0이 아닌 값은 질의에 섞인 숫자·라틴 약어 "
+                       "토큰에서 나온 것이며 의미 수준 자기참조와 무관하다.")
+        else:
+            warning = None
         out[lang] = {
             "n": len(vals),
             "mean_jaccard": round(float(np.mean(vals)), 4) if vals else 0.0,
-            "max_jaccard": round(float(np.max(vals)), 4) if vals else 0.0,
-            "all_exactly_zero": bool(allz),
+            "max_jaccard": round(vmax, 4),
+            "n_exactly_zero": n_zero,
+            "share_exactly_zero": round(share, 4),
+            "all_exactly_zero": allz,
+            "effectively_void": void,
             "ever_triggered_at_0.30": bool(any(v >= MAX_JACCARD for v in vals)),
-            "warning": (
-                f"어휘 Jaccard가 {len(vals)}개 전부 정확히 0 — 이 언어에서 어휘 게이트는 "
-                "아무것도 검사하지 않는다(코퍼스가 100% 영어이므로 교집합이 원리상 공집합)."
-            ) if allz else None,
+            "warning": warning,
         }
     return out
 

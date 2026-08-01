@@ -31,11 +31,11 @@
     ]
   },
   "env": {
-    "numpy": "2.2.6",
-    "python": "3.10.5",
-    "platform": "Windows-10-10.0.26200-SP0",
-    "torch": "2.6.0+cpu",
-    "sentence_transformers": "3.4.1",
+    "numpy": "2.4.6",
+    "python": "3.11.15",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "torch": "2.6.0+cu124",
+    "sentence_transformers": "5.6.1",
     "seed": 20260626,
     "bootstrap_iterations": 20000
   },
@@ -44,9 +44,9 @@
     "paraphrase_gap_queries": 624,
     "retriever_compare_queries": 624,
     "external_candidate_label_queries": 30,
-    "validated_queries": 71,
-    "validated_en_n": 26,
-    "validated_ko_n": 45,
+    "validated_queries": 151,
+    "validated_en_n": 42,
+    "validated_ko_n": 109,
     "superseded_validated_n13": 13
   },
   "validated_recall_at_10": {
@@ -56,146 +56,146 @@
     "rates": {
       "BM25": {
         "overall": {
-          "k": 11,
-          "n": 71,
-          "rate": 0.1549,
+          "k": 23,
+          "n": 151,
+          "rate": 0.1523,
           "ci95": [
-            0.08,
-            0.2603
+            0.0991,
+            0.2197
           ]
         },
         "en": {
-          "k": 11,
-          "n": 26,
-          "rate": 0.4231,
+          "k": 20,
+          "n": 42,
+          "rate": 0.4762,
           "ci95": [
-            0.2335,
-            0.6308
+            0.32,
+            0.6358
           ]
         },
         "ko": {
-          "k": 0,
-          "n": 45,
-          "rate": 0.0,
+          "k": 3,
+          "n": 109,
+          "rate": 0.0275,
           "ci95": [
-            0.0,
-            0.0787
+            0.0057,
+            0.0783
           ]
         }
       },
       "hybrid_0.7": {
         "overall": {
-          "k": 39,
-          "n": 71,
-          "rate": 0.5493,
+          "k": 71,
+          "n": 151,
+          "rate": 0.4702,
           "ci95": [
-            0.4266,
-            0.6677
+            0.3886,
+            0.553
           ]
         },
         "en": {
-          "k": 12,
-          "n": 26,
-          "rate": 0.4615,
+          "k": 21,
+          "n": 42,
+          "rate": 0.5,
           "ci95": [
-            0.2659,
-            0.6663
+            0.3419,
+            0.6581
           ]
         },
         "ko": {
-          "k": 27,
-          "n": 45,
-          "rate": 0.6,
+          "k": 50,
+          "n": 109,
+          "rate": 0.4587,
           "ci95": [
-            0.4433,
-            0.743
+            0.3629,
+            0.5568
           ]
         }
       },
       "hybrid_0.5": {
         "overall": {
-          "k": 41,
-          "n": 71,
-          "rate": 0.5775,
+          "k": 77,
+          "n": 151,
+          "rate": 0.5099,
           "ci95": [
-            0.4544,
-            0.6939
+            0.4274,
+            0.5921
           ]
         },
         "en": {
-          "k": 14,
-          "n": 26,
-          "rate": 0.5385,
+          "k": 23,
+          "n": 42,
+          "rate": 0.5476,
           "ci95": [
-            0.3337,
-            0.7341
+            0.3867,
+            0.7015
           ]
         },
         "ko": {
-          "k": 27,
-          "n": 45,
-          "rate": 0.6,
+          "k": 54,
+          "n": 109,
+          "rate": 0.4954,
           "ci95": [
-            0.4433,
-            0.743
+            0.3982,
+            0.5928
           ]
         }
       },
       "hybrid_0.3": {
         "overall": {
-          "k": 41,
-          "n": 71,
-          "rate": 0.5775,
+          "k": 77,
+          "n": 151,
+          "rate": 0.5099,
           "ci95": [
-            0.4544,
-            0.6939
+            0.4274,
+            0.5921
           ]
         },
         "en": {
-          "k": 14,
-          "n": 26,
-          "rate": 0.5385,
+          "k": 23,
+          "n": 42,
+          "rate": 0.5476,
           "ci95": [
-            0.3337,
-            0.7341
+            0.3867,
+            0.7015
           ]
         },
         "ko": {
-          "k": 27,
-          "n": 45,
-          "rate": 0.6,
+          "k": 54,
+          "n": 109,
+          "rate": 0.4954,
           "ci95": [
-            0.4433,
-            0.743
+            0.3982,
+            0.5928
           ]
         }
       },
       "dense": {
         "overall": {
-          "k": 39,
-          "n": 71,
-          "rate": 0.5493,
+          "k": 68,
+          "n": 151,
+          "rate": 0.4503,
           "ci95": [
-            0.4266,
-            0.6677
+            0.3694,
+            0.5333
           ]
         },
         "en": {
-          "k": 12,
-          "n": 26,
-          "rate": 0.4615,
+          "k": 16,
+          "n": 42,
+          "rate": 0.381,
           "ci95": [
-            0.2659,
-            0.6663
+            0.2357,
+            0.5436
           ]
         },
         "ko": {
-          "k": 27,
-          "n": 45,
-          "rate": 0.6,
+          "k": 52,
+          "n": 109,
+          "rate": 0.4771,
           "ci95": [
-            0.4433,
-            0.743
+            0.3805,
+            0.5749
           ]
         }
       }
@@ -203,56 +203,56 @@
   },
   "validated_holm_within_family": {
     "validated71_hybrid_vs_bm25[overall]": {
-      "p_raw": 1.9e-09,
-      "p_adjusted": 1.68e-08,
+      "p_raw": 0.0,
+      "p_adjusted": 0.0,
       "significant_at_0.05": true,
       "family_size": 9
     },
     "validated71_hybrid_vs_bm25[ko]": {
-      "p_raw": 1.49e-08,
-      "p_adjusted": 1.192e-07,
+      "p_raw": 0.0,
+      "p_adjusted": 0.0,
       "significant_at_0.05": true,
       "family_size": 9
     },
     "validated71_dense_vs_bm25[ko]": {
-      "p_raw": 1.49e-08,
-      "p_adjusted": 1.192e-07,
+      "p_raw": 0.0,
+      "p_adjusted": 0.0,
       "significant_at_0.05": true,
       "family_size": 9
     },
     "validated71_dense_vs_bm25[overall]": {
-      "p_raw": 5.77e-08,
-      "p_adjusted": 3.465e-07,
+      "p_raw": 3e-09,
+      "p_adjusted": 1.79e-08,
       "significant_at_0.05": true,
       "family_size": 9
     },
-    "validated71_hybrid_vs_bm25[en]": {
-      "p_raw": 0.25,
-      "p_adjusted": 1.0,
-      "significant_at_0.05": false,
-      "family_size": 9
-    },
     "validated71_hybrid_vs_dense[overall]": {
-      "p_raw": 0.625,
-      "p_adjusted": 1.0,
+      "p_raw": 0.0117188,
+      "p_adjusted": 0.058594,
       "significant_at_0.05": false,
       "family_size": 9
     },
     "validated71_hybrid_vs_dense[en]": {
-      "p_raw": 0.625,
-      "p_adjusted": 1.0,
+      "p_raw": 0.0390625,
+      "p_adjusted": 0.15625,
+      "significant_at_0.05": false,
+      "family_size": 9
+    },
+    "validated71_hybrid_vs_bm25[en]": {
+      "p_raw": 0.25,
+      "p_adjusted": 0.75,
       "significant_at_0.05": false,
       "family_size": 9
     },
     "validated71_dense_vs_bm25[en]": {
-      "p_raw": 1.0,
-      "p_adjusted": 1.0,
+      "p_raw": 0.289062,
+      "p_adjusted": 0.75,
       "significant_at_0.05": false,
       "family_size": 9
     },
     "validated71_hybrid_vs_dense[ko]": {
-      "p_raw": 1.0,
-      "p_adjusted": 1.0,
+      "p_raw": 0.5,
+      "p_adjusted": 0.75,
       "significant_at_0.05": false,
       "family_size": 9
     }
@@ -265,41 +265,41 @@
       "n": 624,
       "baseline": {
         "label": "full_text",
-        "k": 622,
+        "k": 619,
         "n": 624,
-        "rate": 0.9968,
+        "rate": 0.992,
         "ci95": [
-          0.9885,
-          0.9996
+          0.9814,
+          0.9974
         ]
       },
       "treatment": {
         "label": "minimal_text",
-        "k": 611,
+        "k": 614,
         "n": 624,
-        "rate": 0.9792,
+        "rate": 0.984,
         "ci95": [
-          0.9646,
-          0.9889
+          0.9707,
+          0.9923
         ]
       },
       "effect_size": {
         "type": "paired_mean_difference_in_recall_at_10",
-        "value": -0.0176,
-        "percentage_points": -1.76
+        "value": -0.008,
+        "percentage_points": -0.8
       },
       "difference_bootstrap_95_ci": [
-        -0.0288,
-        -0.0064
+        -0.0208,
+        0.0032
       ],
-      "bootstrap_excludes_zero": true,
+      "bootstrap_excludes_zero": false,
       "mcnemar": {
-        "wins": 1,
-        "losses": 12,
-        "ties": 611,
-        "discordant": 13,
-        "p_two_sided_exact": 0.00341797,
-        "p_one_sided_exact": 0.999878
+        "wins": 5,
+        "losses": 10,
+        "ties": 609,
+        "discordant": 15,
+        "p_two_sided_exact": 0.301758,
+        "p_one_sided_exact": 0.940765
       },
       "primary_test": "exact_mcnemar",
       "note": ""
@@ -311,41 +311,41 @@
       "n": 624,
       "baseline": {
         "label": "full_text",
-        "k": 622,
+        "k": 619,
         "n": 624,
-        "rate": 0.9968,
+        "rate": 0.992,
         "ci95": [
-          0.9885,
-          0.9996
+          0.9814,
+          0.9974
         ]
       },
       "treatment": {
         "label": "minimal_no_code",
-        "k": 612,
+        "k": 615,
         "n": 624,
-        "rate": 0.9808,
+        "rate": 0.9856,
         "ci95": [
-          0.9666,
-          0.99
+          0.9728,
+          0.9934
         ]
       },
       "effect_size": {
         "type": "paired_mean_difference_in_recall_at_10",
-        "value": -0.016,
-        "percentage_points": -1.6
+        "value": -0.0064,
+        "percentage_points": -0.64
       },
       "difference_bootstrap_95_ci": [
-        -0.0272,
-        -0.0064
+        -0.0176,
+        0.0048
       ],
-      "bootstrap_excludes_zero": true,
+      "bootstrap_excludes_zero": false,
       "mcnemar": {
-        "wins": 1,
-        "losses": 11,
-        "ties": 612,
-        "discordant": 12,
-        "p_two_sided_exact": 0.00634766,
-        "p_one_sided_exact": 0.999756
+        "wins": 5,
+        "losses": 9,
+        "ties": 610,
+        "discordant": 14,
+        "p_two_sided_exact": 0.42395,
+        "p_one_sided_exact": 0.910217
       },
       "primary_test": "exact_mcnemar",
       "note": ""
@@ -357,12 +357,12 @@
       "n": 624,
       "baseline": {
         "label": "full_text",
-        "k": 622,
+        "k": 619,
         "n": 624,
-        "rate": 0.9968,
+        "rate": 0.992,
         "ci95": [
-          0.9885,
-          0.9996
+          0.9814,
+          0.9974
         ]
       },
       "treatment": {
@@ -377,20 +377,20 @@
       },
       "effect_size": {
         "type": "paired_mean_difference_in_recall_at_10",
-        "value": -0.9952,
-        "percentage_points": -99.52
+        "value": -0.9904,
+        "percentage_points": -99.04
       },
       "difference_bootstrap_95_ci": [
-        -1.0,
-        -0.9888
+        -0.9968,
+        -0.9824
       ],
       "bootstrap_excludes_zero": true,
       "mcnemar": {
         "wins": 0,
-        "losses": 621,
-        "ties": 3,
-        "discordant": 621,
-        "p_two_sided_exact": 2.29828e-187,
+        "losses": 618,
+        "ties": 6,
+        "discordant": 618,
+        "p_two_sided_exact": 1.83862e-186,
         "p_one_sided_exact": 1.0
       },
       "primary_test": "exact_mcnemar",
@@ -403,40 +403,40 @@
       "n": 624,
       "baseline": {
         "label": "minimal_text_N0",
-        "k": 611,
+        "k": 614,
         "n": 624,
-        "rate": 0.9792,
+        "rate": 0.984,
         "ci95": [
-          0.9646,
-          0.9889
+          0.9707,
+          0.9923
         ]
       },
       "treatment": {
         "label": "minimal_text_N5",
-        "k": 474,
+        "k": 484,
         "n": 624,
-        "rate": 0.7596,
+        "rate": 0.7756,
         "ci95": [
-          0.7241,
-          0.7926
+          0.7408,
+          0.8078
         ]
       },
       "effect_size": {
         "type": "paired_mean_difference_in_recall_at_10",
-        "value": -0.2196,
-        "percentage_points": -21.96
+        "value": -0.2083,
+        "percentage_points": -20.83
       },
       "difference_bootstrap_95_ci": [
-        -0.2516,
-        -0.1875
+        -0.2404,
+        -0.1763
       ],
       "bootstrap_excludes_zero": true,
       "mcnemar": {
         "wins": 1,
-        "losses": 138,
-        "ties": 485,
-        "discordant": 139,
-        "p_two_sided_exact": 4.0178e-40,
+        "losses": 131,
+        "ties": 492,
+        "discordant": 132,
+        "p_two_sided_exact": 4.88565e-38,
         "p_one_sided_exact": 1.0
       },
       "primary_test": "exact_mcnemar",
@@ -449,40 +449,40 @@
       "n": 624,
       "baseline": {
         "label": "minimal_text_N0",
-        "k": 611,
+        "k": 614,
         "n": 624,
-        "rate": 0.9792,
+        "rate": 0.984,
         "ci95": [
-          0.9646,
-          0.9889
+          0.9707,
+          0.9923
         ]
       },
       "treatment": {
         "label": "minimal_text_N10",
-        "k": 275,
+        "k": 283,
         "n": 624,
-        "rate": 0.4407,
+        "rate": 0.4535,
         "ci95": [
-          0.4013,
-          0.4807
+          0.414,
+          0.4935
         ]
       },
       "effect_size": {
         "type": "paired_mean_difference_in_recall_at_10",
-        "value": -0.5385,
-        "percentage_points": -53.85
+        "value": -0.5304,
+        "percentage_points": -53.04
       },
       "difference_bootstrap_95_ci": [
-        -0.5769,
-        -0.4984
+        -0.5689,
+        -0.4904
       ],
       "bootstrap_excludes_zero": true,
       "mcnemar": {
         "wins": 0,
-        "losses": 336,
-        "ties": 288,
-        "discordant": 336,
-        "p_two_sided_exact": 1.42873e-101,
+        "losses": 331,
+        "ties": 293,
+        "discordant": 331,
+        "p_two_sided_exact": 4.57195e-100,
         "p_one_sided_exact": 1.0
       },
       "primary_test": "exact_mcnemar",
@@ -722,44 +722,44 @@
       "label": "validated71_hybrid_vs_bm25[overall]",
       "source": "output/validated_suite.json",
       "method": "paired_per_query_bootstrap+exact_mcnemar",
-      "n": 71,
+      "n": 151,
       "baseline": {
         "label": "BM25",
-        "k": 11,
-        "n": 71,
-        "rate": 0.1549,
+        "k": 23,
+        "n": 151,
+        "rate": 0.1523,
         "ci95": [
-          0.08,
-          0.2603
+          0.0991,
+          0.2197
         ]
       },
       "treatment": {
         "label": "hybrid_0.5",
-        "k": 41,
-        "n": 71,
-        "rate": 0.5775,
+        "k": 77,
+        "n": 151,
+        "rate": 0.5099,
         "ci95": [
-          0.4544,
-          0.6939
+          0.4274,
+          0.5921
         ]
       },
       "effect_size": {
         "type": "paired_mean_difference_in_recall_at_10",
-        "value": 0.4225,
-        "percentage_points": 42.25
+        "value": 0.3576,
+        "percentage_points": 35.76
       },
       "difference_bootstrap_95_ci": [
-        0.3099,
-        0.5352
+        0.2848,
+        0.4371
       ],
       "bootstrap_excludes_zero": true,
       "mcnemar": {
-        "wins": 30,
+        "wins": 54,
         "losses": 0,
-        "ties": 41,
-        "discordant": 30,
-        "p_two_sided_exact": 1.86265e-09,
-        "p_one_sided_exact": 9.31323e-10
+        "ties": 97,
+        "discordant": 54,
+        "p_two_sided_exact": 1.11022e-16,
+        "p_one_sided_exact": 5.55112e-17
       },
       "primary_test": "exact_mcnemar",
       "note": "색인=minimal_text, 모델=MiniLM, 언어=overall"
@@ -768,44 +768,44 @@
       "label": "validated71_dense_vs_bm25[overall]",
       "source": "output/validated_suite.json",
       "method": "paired_per_query_bootstrap+exact_mcnemar",
-      "n": 71,
+      "n": 151,
       "baseline": {
         "label": "BM25",
-        "k": 11,
-        "n": 71,
-        "rate": 0.1549,
+        "k": 23,
+        "n": 151,
+        "rate": 0.1523,
         "ci95": [
-          0.08,
-          0.2603
+          0.0991,
+          0.2197
         ]
       },
       "treatment": {
         "label": "dense",
-        "k": 39,
-        "n": 71,
-        "rate": 0.5493,
+        "k": 68,
+        "n": 151,
+        "rate": 0.4503,
         "ci95": [
-          0.4266,
-          0.6677
+          0.3694,
+          0.5333
         ]
       },
       "effect_size": {
         "type": "paired_mean_difference_in_recall_at_10",
-        "value": 0.3944,
-        "percentage_points": 39.44
+        "value": 0.298,
+        "percentage_points": 29.8
       },
       "difference_bootstrap_95_ci": [
-        0.2676,
-        0.507
+        0.2119,
+        0.3841
       ],
       "bootstrap_excludes_zero": true,
       "mcnemar": {
-        "wins": 29,
-        "losses": 1,
-        "ties": 41,
-        "discordant": 30,
-        "p_two_sided_exact": 5.7742e-08,
-        "p_one_sided_exact": 2.8871e-08
+        "wins": 53,
+        "losses": 8,
+        "ties": 90,
+        "discordant": 61,
+        "p_two_sided_exact": 2.98644e-09,
+        "p_one_sided_exact": 1.49322e-09
       },
       "primary_test": "exact_mcnemar",
       "note": "색인=minimal_text, 모델=MiniLM, 언어=overall"
@@ -814,44 +814,44 @@
       "label": "validated71_hybrid_vs_dense[overall]",
       "source": "output/validated_suite.json",
       "method": "paired_per_query_bootstrap+exact_mcnemar",
-      "n": 71,
+      "n": 151,
       "baseline": {
         "label": "dense",
-        "k": 39,
-        "n": 71,
-        "rate": 0.5493,
+        "k": 68,
+        "n": 151,
+        "rate": 0.4503,
         "ci95": [
-          0.4266,
-          0.6677
+          0.3694,
+          0.5333
         ]
       },
       "treatment": {
         "label": "hybrid_0.5",
-        "k": 41,
-        "n": 71,
-        "rate": 0.5775,
+        "k": 77,
+        "n": 151,
+        "rate": 0.5099,
         "ci95": [
-          0.4544,
-          0.6939
+          0.4274,
+          0.5921
         ]
       },
       "effect_size": {
         "type": "paired_mean_difference_in_recall_at_10",
-        "value": 0.0282,
-        "percentage_points": 2.82
+        "value": 0.0596,
+        "percentage_points": 5.96
       },
       "difference_bootstrap_95_ci": [
-        -0.0282,
-        0.0845
+        0.0199,
+        0.106
       ],
-      "bootstrap_excludes_zero": false,
+      "bootstrap_excludes_zero": true,
       "mcnemar": {
-        "wins": 3,
+        "wins": 10,
         "losses": 1,
-        "ties": 67,
-        "discordant": 4,
-        "p_two_sided_exact": 0.625,
-        "p_one_sided_exact": 0.3125
+        "ties": 140,
+        "discordant": 11,
+        "p_two_sided_exact": 0.0117188,
+        "p_one_sided_exact": 0.00585938
       },
       "primary_test": "exact_mcnemar",
       "note": "색인=minimal_text, 모델=MiniLM, 언어=overall"
@@ -860,41 +860,41 @@
       "label": "validated71_hybrid_vs_bm25[en]",
       "source": "output/validated_suite.json",
       "method": "paired_per_query_bootstrap+exact_mcnemar",
-      "n": 26,
+      "n": 42,
       "baseline": {
         "label": "BM25",
-        "k": 11,
-        "n": 26,
-        "rate": 0.4231,
+        "k": 20,
+        "n": 42,
+        "rate": 0.4762,
         "ci95": [
-          0.2335,
-          0.6308
+          0.32,
+          0.6358
         ]
       },
       "treatment": {
         "label": "hybrid_0.5",
-        "k": 14,
-        "n": 26,
-        "rate": 0.5385,
+        "k": 23,
+        "n": 42,
+        "rate": 0.5476,
         "ci95": [
-          0.3337,
-          0.7341
+          0.3867,
+          0.7015
         ]
       },
       "effect_size": {
         "type": "paired_mean_difference_in_recall_at_10",
-        "value": 0.1154,
-        "percentage_points": 11.54
+        "value": 0.0714,
+        "percentage_points": 7.14
       },
       "difference_bootstrap_95_ci": [
         0.0,
-        0.2692
+        0.1667
       ],
       "bootstrap_excludes_zero": false,
       "mcnemar": {
         "wins": 3,
         "losses": 0,
-        "ties": 23,
+        "ties": 39,
         "discordant": 3,
         "p_two_sided_exact": 0.25,
         "p_one_sided_exact": 0.125
@@ -906,44 +906,44 @@
       "label": "validated71_dense_vs_bm25[en]",
       "source": "output/validated_suite.json",
       "method": "paired_per_query_bootstrap+exact_mcnemar",
-      "n": 26,
+      "n": 42,
       "baseline": {
         "label": "BM25",
-        "k": 11,
-        "n": 26,
-        "rate": 0.4231,
+        "k": 20,
+        "n": 42,
+        "rate": 0.4762,
         "ci95": [
-          0.2335,
-          0.6308
+          0.32,
+          0.6358
         ]
       },
       "treatment": {
         "label": "dense",
-        "k": 12,
-        "n": 26,
-        "rate": 0.4615,
+        "k": 16,
+        "n": 42,
+        "rate": 0.381,
         "ci95": [
-          0.2659,
-          0.6663
+          0.2357,
+          0.5436
         ]
       },
       "effect_size": {
         "type": "paired_mean_difference_in_recall_at_10",
-        "value": 0.0385,
-        "percentage_points": 3.85
+        "value": -0.0952,
+        "percentage_points": -9.52
       },
       "difference_bootstrap_95_ci": [
-        -0.0769,
-        0.1538
+        -0.2143,
+        0.0238
       ],
       "bootstrap_excludes_zero": false,
       "mcnemar": {
         "wins": 2,
-        "losses": 1,
-        "ties": 23,
-        "discordant": 3,
-        "p_two_sided_exact": 1.0,
-        "p_one_sided_exact": 0.5
+        "losses": 6,
+        "ties": 34,
+        "discordant": 8,
+        "p_two_sided_exact": 0.289062,
+        "p_one_sided_exact": 0.964844
       },
       "primary_test": "exact_mcnemar",
       "note": "색인=minimal_text, 모델=MiniLM, 언어=en"
@@ -952,44 +952,44 @@
       "label": "validated71_hybrid_vs_dense[en]",
       "source": "output/validated_suite.json",
       "method": "paired_per_query_bootstrap+exact_mcnemar",
-      "n": 26,
+      "n": 42,
       "baseline": {
         "label": "dense",
-        "k": 12,
-        "n": 26,
-        "rate": 0.4615,
+        "k": 16,
+        "n": 42,
+        "rate": 0.381,
         "ci95": [
-          0.2659,
-          0.6663
+          0.2357,
+          0.5436
         ]
       },
       "treatment": {
         "label": "hybrid_0.5",
-        "k": 14,
-        "n": 26,
-        "rate": 0.5385,
+        "k": 23,
+        "n": 42,
+        "rate": 0.5476,
         "ci95": [
-          0.3337,
-          0.7341
+          0.3867,
+          0.7015
         ]
       },
       "effect_size": {
         "type": "paired_mean_difference_in_recall_at_10",
-        "value": 0.0769,
-        "percentage_points": 7.69
+        "value": 0.1667,
+        "percentage_points": 16.67
       },
       "difference_bootstrap_95_ci": [
-        -0.0769,
-        0.2308
+        0.0476,
+        0.3095
       ],
-      "bootstrap_excludes_zero": false,
+      "bootstrap_excludes_zero": true,
       "mcnemar": {
-        "wins": 3,
+        "wins": 8,
         "losses": 1,
-        "ties": 22,
-        "discordant": 4,
-        "p_two_sided_exact": 0.625,
-        "p_one_sided_exact": 0.3125
+        "ties": 33,
+        "discordant": 9,
+        "p_two_sided_exact": 0.0390625,
+        "p_one_sided_exact": 0.0195312
       },
       "primary_test": "exact_mcnemar",
       "note": "색인=minimal_text, 모델=MiniLM, 언어=en"
@@ -998,44 +998,44 @@
       "label": "validated71_hybrid_vs_bm25[ko]",
       "source": "output/validated_suite.json",
       "method": "paired_per_query_bootstrap+exact_mcnemar",
-      "n": 45,
+      "n": 109,
       "baseline": {
         "label": "BM25",
-        "k": 0,
-        "n": 45,
-        "rate": 0.0,
+        "k": 3,
+        "n": 109,
+        "rate": 0.0275,
         "ci95": [
-          0.0,
-          0.0787
+          0.0057,
+          0.0783
         ]
       },
       "treatment": {
         "label": "hybrid_0.5",
-        "k": 27,
-        "n": 45,
-        "rate": 0.6,
+        "k": 54,
+        "n": 109,
+        "rate": 0.4954,
         "ci95": [
-          0.4433,
-          0.743
+          0.3982,
+          0.5928
         ]
       },
       "effect_size": {
         "type": "paired_mean_difference_in_recall_at_10",
-        "value": 0.6,
-        "percentage_points": 60.0
+        "value": 0.4679,
+        "percentage_points": 46.79
       },
       "difference_bootstrap_95_ci": [
-        0.4444,
-        0.7333
+        0.3761,
+        0.5596
       ],
       "bootstrap_excludes_zero": true,
       "mcnemar": {
-        "wins": 27,
+        "wins": 51,
         "losses": 0,
-        "ties": 18,
-        "discordant": 27,
-        "p_two_sided_exact": 1.49012e-08,
-        "p_one_sided_exact": 7.45058e-09
+        "ties": 58,
+        "discordant": 51,
+        "p_two_sided_exact": 8.88178e-16,
+        "p_one_sided_exact": 4.44089e-16
       },
       "primary_test": "exact_mcnemar",
       "note": "색인=minimal_text, 모델=MiniLM, 언어=ko"
@@ -1044,44 +1044,44 @@
       "label": "validated71_dense_vs_bm25[ko]",
       "source": "output/validated_suite.json",
       "method": "paired_per_query_bootstrap+exact_mcnemar",
-      "n": 45,
+      "n": 109,
       "baseline": {
         "label": "BM25",
-        "k": 0,
-        "n": 45,
-        "rate": 0.0,
+        "k": 3,
+        "n": 109,
+        "rate": 0.0275,
         "ci95": [
-          0.0,
-          0.0787
+          0.0057,
+          0.0783
         ]
       },
       "treatment": {
         "label": "dense",
-        "k": 27,
-        "n": 45,
-        "rate": 0.6,
+        "k": 52,
+        "n": 109,
+        "rate": 0.4771,
         "ci95": [
-          0.4433,
-          0.743
+          0.3805,
+          0.5749
         ]
       },
       "effect_size": {
         "type": "paired_mean_difference_in_recall_at_10",
-        "value": 0.6,
-        "percentage_points": 60.0
+        "value": 0.4495,
+        "percentage_points": 44.95
       },
       "difference_bootstrap_95_ci": [
-        0.4444,
-        0.7333
+        0.3486,
+        0.5505
       ],
       "bootstrap_excludes_zero": true,
       "mcnemar": {
-        "wins": 27,
-        "losses": 0,
-        "ties": 18,
-        "discordant": 27,
-        "p_two_sided_exact": 1.49012e-08,
-        "p_one_sided_exact": 7.45058e-09
+        "wins": 51,
+        "losses": 2,
+        "ties": 56,
+        "discordant": 53,
+        "p_two_sided_exact": 3.17968e-13,
+        "p_one_sided_exact": 1.58984e-13
       },
       "primary_test": "exact_mcnemar",
       "note": "색인=minimal_text, 모델=MiniLM, 언어=ko"
@@ -1090,44 +1090,44 @@
       "label": "validated71_hybrid_vs_dense[ko]",
       "source": "output/validated_suite.json",
       "method": "paired_per_query_bootstrap+exact_mcnemar",
-      "n": 45,
+      "n": 109,
       "baseline": {
         "label": "dense",
-        "k": 27,
-        "n": 45,
-        "rate": 0.6,
+        "k": 52,
+        "n": 109,
+        "rate": 0.4771,
         "ci95": [
-          0.4433,
-          0.743
+          0.3805,
+          0.5749
         ]
       },
       "treatment": {
         "label": "hybrid_0.5",
-        "k": 27,
-        "n": 45,
-        "rate": 0.6,
+        "k": 54,
+        "n": 109,
+        "rate": 0.4954,
         "ci95": [
-          0.4433,
-          0.743
+          0.3982,
+          0.5928
         ]
       },
       "effect_size": {
         "type": "paired_mean_difference_in_recall_at_10",
-        "value": 0.0,
-        "percentage_points": 0.0
+        "value": 0.0183,
+        "percentage_points": 1.83
       },
       "difference_bootstrap_95_ci": [
         0.0,
-        0.0
+        0.0459
       ],
       "bootstrap_excludes_zero": false,
       "mcnemar": {
-        "wins": 0,
+        "wins": 2,
         "losses": 0,
-        "ties": 45,
-        "discordant": 0,
-        "p_two_sided_exact": 1.0,
-        "p_one_sided_exact": 1.0
+        "ties": 107,
+        "discordant": 2,
+        "p_two_sided_exact": 0.5,
+        "p_one_sided_exact": 0.25
       },
       "primary_test": "exact_mcnemar",
       "note": "색인=minimal_text, 모델=MiniLM, 언어=ko"
@@ -1376,20 +1376,20 @@
       },
       "after": {
         "source": "output/validated_suite.json",
-        "n": 71,
-        "treatment_rate": 0.5775,
-        "baseline_rate": 0.1549,
-        "mean_diff": 0.4225,
+        "n": 151,
+        "treatment_rate": 0.5099,
+        "baseline_rate": 0.1523,
+        "mean_diff": 0.3576,
         "bootstrap_95_ci": [
-          0.3099,
-          0.5352
+          0.2848,
+          0.4371
         ],
         "bootstrap_excludes_zero": true,
-        "mcnemar_p_two_sided": 1.86265e-09,
+        "mcnemar_p_two_sided": 1.11022e-16,
         "wins_losses_ties": [
-          30,
+          54,
           0,
-          41
+          97
         ]
       }
     },
@@ -1415,20 +1415,20 @@
       },
       "after": {
         "source": "output/validated_suite.json",
-        "n": 71,
-        "treatment_rate": 0.5493,
-        "baseline_rate": 0.1549,
-        "mean_diff": 0.3944,
+        "n": 151,
+        "treatment_rate": 0.4503,
+        "baseline_rate": 0.1523,
+        "mean_diff": 0.298,
         "bootstrap_95_ci": [
-          0.2676,
-          0.507
+          0.2119,
+          0.3841
         ],
         "bootstrap_excludes_zero": true,
-        "mcnemar_p_two_sided": 5.7742e-08,
+        "mcnemar_p_two_sided": 2.98644e-09,
         "wins_losses_ties": [
-          29,
-          1,
-          41
+          53,
+          8,
+          90
         ]
       }
     }

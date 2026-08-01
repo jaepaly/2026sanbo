@@ -90,6 +90,12 @@ BOOTSTRAP_ITERS = 20000
 SEED = 20260626
 
 
+# 배치 크기는 임베딩 값에 영향을 주지 않는다(같은 문장 → 같은 벡터).
+# bge-m3 는 8GB VRAM 에서 batch 32 로 OOM 이므로 SANBO_BATCH 로 낮춘다.
+_BATCH = int(os.environ.get("SANBO_BATCH", "32"))
+_GATE_BATCH = max(1, _BATCH // 2)
+
+
 def alpha_name(a: float) -> str:
     if a == 1.0:
         return "BM25"
@@ -154,11 +160,11 @@ def hits_for_level(corpus: list[dict], label_sets: list[set], qtexts: list[str],
     index = doc_emb_cache[("bm25", index_mode)]
     if ("emb", index_mode) not in doc_emb_cache:
         doc_emb_cache[("emb", index_mode)] = model.encode(
-            docs, batch_size=32, normalize_embeddings=True,
+            docs, batch_size=_BATCH, normalize_embeddings=True,
             show_progress_bar=False).astype(np.float32)
     doc_emb = doc_emb_cache[("emb", index_mode)]
 
-    q_emb = model.encode(qtexts, batch_size=32, normalize_embeddings=True,
+    q_emb = model.encode(qtexts, batch_size=_BATCH, normalize_embeddings=True,
                          show_progress_bar=False).astype(np.float32)
 
     out = {alpha_name(a): [] for a in ALPHAS}
@@ -218,7 +224,7 @@ def manipulation_diagnostics(corpus: list[dict], queries: list[dict],
                  for q in queries]
     uniq = sorted(set(ans_texts))
     gate = SentenceTransformer(GATE_MODEL)
-    a_emb = gate.encode(uniq, batch_size=16, normalize_embeddings=True,
+    a_emb = gate.encode(uniq, batch_size=_GATE_BATCH, normalize_embeddings=True,
                         show_progress_bar=False).astype(np.float32)
     a_idx = {t: i for i, t in enumerate(uniq)}
 
@@ -227,7 +233,7 @@ def manipulation_diagnostics(corpus: list[dict], queries: list[dict],
     per_query: dict[str, dict] = {}
     for lv in sorted(level_texts):
         texts = level_texts[lv]
-        q_emb = gate.encode(texts, batch_size=16, normalize_embeddings=True,
+        q_emb = gate.encode(texts, batch_size=_GATE_BATCH, normalize_embeddings=True,
                             show_progress_bar=False).astype(np.float32)
         lex, cos = [], []
         for qi, t in enumerate(texts):

@@ -5,15 +5,15 @@
     "generated_by": "audit_label_quality.py emit",
     "seed": 20260626,
     "env": {
-      "numpy": "2.2.6",
-      "python": "3.10.5",
-      "platform": "Windows-10-10.0.26200-SP0",
-      "torch": "2.6.0+cpu",
-      "sentence_transformers": "3.4.1"
+      "numpy": "2.4.6",
+      "python": "3.11.15",
+      "platform": "Windows-10-10.0.19045-SP0",
+      "torch": "2.6.0+cu124",
+      "sentence_transformers": "5.6.1"
     },
-    "n": 71,
+    "n": 151,
     "n_excluded_from_metrics": 1,
-    "n_evaluable": 70,
+    "n_evaluable": 150,
     "label_nature": "corpus-text-grounded category labels (exact eCFR codes); not legal or expert determinations",
     "changes_vs_v1": [
       "context / label_confidence / label_basis_corpus_text 복원 (v1 병합에서 누락되어 스키마 검증이 71건 전부 실패했다)",
@@ -195,7 +195,8 @@
         "item_term_check_applicable": true,
         "warn_item_name_absent": false,
         "discriminative_terms_missing_from_gold_text": [
-          "cryptographic"
+          "cryptographic",
+          "transferred"
         ],
         "warn_discriminative_term_absent": true
       },
@@ -319,11 +320,9 @@
       "label_confidence": "medium",
       "label_basis_corpus_text": "eCFR 2D001 = software for 2B test/production equipment; plausible for vibration-test control software.",
       "equivalent_labels": [
-        "2.D.1",
         "8D201"
       ],
       "equivalent_labels_strict": [
-        "2.D.1",
         "8D201"
       ],
       "label_issues": [
@@ -640,7 +639,6 @@
         "item_term_check_applicable": true,
         "warn_item_name_absent": true,
         "discriminative_terms_missing_from_gold_text": [
-          "angular",
           "lithography",
           "precision",
           "table"
@@ -651,6 +649,2738 @@
       "duplicate_with": [
         "ext-002"
       ]
+    },
+    {
+      "id": "j-seungwoo-001",
+      "lang": "ko",
+      "query": "미사일에 들어가는 안테나 보호용 덮개를 중동 방산업체에 납품하려 합니다. 극한 환경에서도 견디도록 특별히 만든 부품인데 통제 대상인지 확인하고 싶습니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-6A103"
+      ],
+      "primary_label": "ECCN-6A103",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          380
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-002",
+      "lang": "en",
+      "query": "We build a compact unit that bounces radio and light pulses off the terrain below a fast-moving flying body to read its height above the ground in real time, accurate to within a few meters even at very low level. It is fitted into a guided ordnance platform and we are shipping it to an overseas defense integrator. What export category does this fall under?",
+      "context": "",
+      "validated_labels": [
+        "ECCN-7A106"
+      ],
+      "primary_label": "ECCN-7A106",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          198
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.0,
+        "item_terms_missing_from_gold_text": [
+          "above",
+          "accurate",
+          "below",
+          "body",
+          "bounce",
+          "build",
+          "compact",
+          "defense",
+          "even",
+          "fall",
+          "fast",
+          "fitted",
+          "flying",
+          "ground",
+          "guided",
+          "height",
+          "light",
+          "meter",
+          "moving",
+          "ordnance",
+          "platform",
+          "pulse",
+          "radio",
+          "read",
+          "real",
+          "terrain",
+          "time",
+          "within"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": true,
+        "discriminative_terms_missing_from_gold_text": [
+          "accurate",
+          "body",
+          "defense",
+          "even",
+          "fast",
+          "fitted",
+          "guided",
+          "height",
+          "moving",
+          "platform",
+          "read",
+          "terrain"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-003",
+      "lang": "ko",
+      "query": "고속 비행체용 공기흡입식 추진기관을 개발 중입니다. 별도 압축기 없이 비행 속도로 유입되는 공기를 압축해 연소시키는 방식이고, 초음속과 극초음속 영역을 아우르는 겸용 형태로 설계했습니다. 마하 5 이상에서 추력을 내며, 동남아 항공우주 연구기관과 공동 개발 중입니다. 이 엔진과 전용 부품이 통제 품목인지 알고 싶습니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-9A011"
+      ],
+      "primary_label": "ECCN-9A011",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          180
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-004",
+      "lang": "en",
+      "query": "We make a self-contained motor that burns a cast solid fuel block, delivering a total impulse near one million newton-seconds, for a customer building large launch vehicles abroad. Which export classification applies?",
+      "context": "",
+      "validated_labels": [
+        "ECCN-9A107"
+      ],
+      "primary_label": "ECCN-9A107",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          308
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.222,
+        "item_terms_missing_from_gold_text": [
+          "block",
+          "burn",
+          "cast",
+          "contained",
+          "delivering",
+          "fuel",
+          "large",
+          "launch",
+          "million",
+          "near",
+          "newton",
+          "second",
+          "self",
+          "vehicle"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": true,
+        "discriminative_terms_missing_from_gold_text": [
+          "block",
+          "cast",
+          "contained",
+          "delivering",
+          "large",
+          "launch",
+          "million",
+          "near",
+          "self"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-005",
+      "lang": "ko",
+      "query": "국내 우주부품 업체에 공급할 환경 신뢰성 시험 장비를 준비 중입니다. 시편을 뜨겁게 달군 상태에서 큰 소리와 흔들림을 동시에 가하는 설비인데, 통제 품목인지 확인하고 싶습니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-9B006"
+      ],
+      "primary_label": "ECCN-9B006",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          260
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-006",
+      "lang": "en",
+      "query": "We supply pre-impregnated high-strength fiber sheets, plus metal-coated fiber blanks, used to build lightweight composite parts for an overseas launch-vehicle maker. The fibers are an unusually high grade. Does this need an export license?",
+      "context": "",
+      "validated_labels": [
+        "ECCN-9C110"
+      ],
+      "primary_label": "ECCN-9C110",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          360
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.375,
+        "item_terms_missing_from_gold_text": [
+          "blank",
+          "build",
+          "launch",
+          "lightweight",
+          "maker",
+          "part",
+          "plus",
+          "sheet",
+          "unusually",
+          "vehicle"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [
+          "blank",
+          "launch",
+          "lightweight",
+          "plus",
+          "sheet"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-007",
+      "lang": "ko",
+      "query": "고속 비행체 시험용 풍동 설비를 국내 연구기관과 함께 구축하려 합니다. 음속을 넘는 기류를 만드는 사양인데 통제 대상인지 확인하고 싶습니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-9B105"
+      ],
+      "primary_label": "ECCN-9B105",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          204
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-008",
+      "lang": "ko",
+      "query": "비행체를 목표까지 유도하는 유도 장치 세트를 해외 방산 고객에 수출하려 합니다. 장거리에서도 명중 정밀도가 높은 사양인데 통제 분류를 확인하고 싶습니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-7A117"
+      ],
+      "primary_label": "ECCN-7A117",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          214
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-009",
+      "lang": "en",
+      "query": "We're exporting a production tool used to fabricate electronic components and their parts on a line. It's a general manufacturing setup for a foreign electronics plant. Which export classification should we check?",
+      "context": "",
+      "validated_labels": [
+        "ECCN-3B991"
+      ],
+      "primary_label": "ECCN-3B991",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          199
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.222,
+        "item_terms_missing_from_gold_text": [
+          "fabricate",
+          "general",
+          "line",
+          "manufacturing",
+          "production",
+          "setup",
+          "tool"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": true,
+        "discriminative_terms_missing_from_gold_text": [
+          "fabricate"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-010",
+      "lang": "ko",
+      "query": "복잡한 비행체 거동을 실시간으로 모의 계산하는 특수 연산 장비를 해외 방산 연구소에 납품하려 합니다. 통제 대상인지 확인이 필요합니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-4A102"
+      ],
+      "primary_label": "ECCN-4A102",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          197
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-011",
+      "lang": "en",
+      "query": "We supply ruggedized computing units built specifically for a defense platform, headed to an allied military program overseas. Do these need an export license?",
+      "context": "",
+      "validated_labels": [
+        "ECCN-4A611"
+      ],
+      "primary_label": "ECCN-4A611",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          224
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.1,
+        "item_terms_missing_from_gold_text": [
+          "allied",
+          "built",
+          "computing",
+          "defense",
+          "headed",
+          "platform",
+          "ruggedized",
+          "specifically",
+          "these"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": true,
+        "discriminative_terms_missing_from_gold_text": [
+          "built",
+          "computing",
+          "defense",
+          "platform",
+          "specifically"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-012",
+      "lang": "ko",
+      "query": "국방 사업에 쓸 통신 장비 한 세트를 해외 파트너와 거래하려 합니다. 일반 상용이 아니라 특정 용도에 맞춰 만든 제품인데, 수출 통제에 걸리는지 확인하고 싶습니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-5A611"
+      ],
+      "primary_label": "ECCN-5A611",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          243
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-013",
+      "lang": "en",
+      "query": "We're shipping sonar-type acoustic gear and a radar unit built for a naval defense program abroad. What controls apply?",
+      "context": "",
+      "validated_labels": [
+        "ECCN-6A611"
+      ],
+      "primary_label": "ECCN-6A611",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          411
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.333,
+        "item_terms_missing_from_gold_text": [
+          "built",
+          "defense",
+          "naval",
+          "sonar"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [
+          "built",
+          "defense",
+          "naval",
+          "sonar"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-014",
+      "lang": "ko",
+      "query": "항공기용 항법·방향탐지 장비와 관성항법 장치를 해외 항공사에 공급하려 합니다. 별도 통제에 안 걸리는 일반 항전 장비인데 그래도 확인이 필요할까요?",
+      "context": "",
+      "validated_labels": [
+        "ECCN-7A994"
+      ],
+      "primary_label": "ECCN-7A994",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          229
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-015",
+      "lang": "en",
+      "query": "We make test and calibration rigs used to build and tune inertial navigation units for a foreign aerospace maker. Which classification applies?",
+      "context": "",
+      "validated_labels": [
+        "ECCN-7B101"
+      ],
+      "primary_label": "ECCN-7B101",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          235
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.222,
+        "item_terms_missing_from_gold_text": [
+          "aerospace",
+          "build",
+          "inertial",
+          "maker",
+          "navigation",
+          "rig",
+          "tune"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": true,
+        "discriminative_terms_missing_from_gold_text": [
+          "aerospace"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-016",
+      "lang": "ko",
+      "query": "고정밀 유도 장치를 양산하기 위한 전용 생산 설비를 해외 방산 협력사와 구축하려 합니다. 통제 대상인지 확인하고 싶습니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-7B103"
+      ],
+      "primary_label": "ECCN-7B103",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          154
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-017",
+      "lang": "ko",
+      "query": "국내 발사체 기업과 함께 로켓 엔진 계통 전체를 공급하는 건을 진행 중입니다. 액체 추진제를 쓰는 방식인데 통제 품목인지 확인이 필요합니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-9A005"
+      ],
+      "primary_label": "ECCN-9A005",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          175
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-018",
+      "lang": "en",
+      "query": "We have an order for some engine-section parts of a launch vehicle, meant for the liquid-fuel side, from a developer overseas. Which export category should we look at?",
+      "context": "",
+      "validated_labels": [
+        "ECCN-9A006"
+      ],
+      "primary_label": "ECCN-9A006",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          156
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.154,
+        "item_terms_missing_from_gold_text": [
+          "developer",
+          "engine",
+          "fuel",
+          "launch",
+          "look",
+          "meant",
+          "order",
+          "section",
+          "side",
+          "some",
+          "vehicle"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": true,
+        "discriminative_terms_missing_from_gold_text": [
+          "launch",
+          "section",
+          "side",
+          "some"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-019",
+      "lang": "ko",
+      "query": "해외 우주기업과 부품 공급 계약을 논의 중입니다. 발사체 기체에 들어가는 경량 구조 패널과 브래킷류를 맞춤 제작해 납품하는 건인데, 수출 통제에 걸리는지 확인하고 싶습니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-9A010"
+      ],
+      "primary_label": "ECCN-9A010",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          173
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-020",
+      "lang": "en",
+      "query": "We're exporting a small turboprop engine system rated above ten kilowatts to an overseas drone maker. Which export classification applies?",
+      "context": "",
+      "validated_labels": [
+        "ECCN-9A102"
+      ],
+      "primary_label": "ECCN-9A102",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          320
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.25,
+        "item_terms_missing_from_gold_text": [
+          "above",
+          "drone",
+          "kilowatt",
+          "maker",
+          "rated",
+          "small"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [
+          "drone",
+          "small"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-021",
+      "lang": "ko",
+      "query": "미사일용 액체 추진제를 담는 전용 탱크를 해외 방산 고객에 수출하려 합니다. 통제 분류를 확인하고 싶습니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-9A103"
+      ],
+      "primary_label": "ECCN-9A103",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          220
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-022",
+      "lang": "en",
+      "query": "We're supplying a batch of parts that go into a solid-fuel motor for a large flying vehicle, for a customer overseas. Which export classification should we check?",
+      "context": "",
+      "validated_labels": [
+        "ECCN-9A108"
+      ],
+      "primary_label": "ECCN-9A108",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          226
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.222,
+        "item_terms_missing_from_gold_text": [
+          "batch",
+          "flying",
+          "fuel",
+          "large",
+          "motor",
+          "supplying",
+          "vehicle"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": true,
+        "discriminative_terms_missing_from_gold_text": [
+          "batch",
+          "large"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-023",
+      "lang": "ko",
+      "query": "고체와 액체를 함께 쓰는 혼합형 로켓 모터를 국내 발사체 스타트업에 공급하려 합니다. 장거리 비행이 가능한 급인데 통제 대상인지 확인하고 싶습니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-9A109"
+      ],
+      "primary_label": "ECCN-9A109",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          258
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-024",
+      "lang": "ko",
+      "query": "무인기와 로켓에 쓰는 펄스 제트 엔진을 해외 연구기관에 제공하려 합니다. 장거리 비행이 가능한 사양인데 통제 품목인지 궁금합니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-9A111"
+      ],
+      "primary_label": "ECCN-9A111",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          274
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-025",
+      "lang": "en",
+      "query": "We build wheeled equipment for moving, handling and launching large rockets, going to a defense customer abroad. What controls should we check?",
+      "context": "",
+      "validated_labels": [
+        "ECCN-9A115"
+      ],
+      "primary_label": "ECCN-9A115",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          231
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.333,
+        "item_terms_missing_from_gold_text": [
+          "build",
+          "defense",
+          "going",
+          "large",
+          "moving",
+          "wheeled"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [
+          "defense",
+          "large",
+          "moving"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-026",
+      "lang": "ko",
+      "query": "대기권에 다시 진입할 때의 열과 하중을 견디는 재진입체를 해외 방산 사업에 납품하려 합니다. 통제 대상인지 확인하고 싶습니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-9A116"
+      ],
+      "primary_label": "ECCN-9A116",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          159
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-027",
+      "lang": "ko",
+      "query": "다단 로켓에서 각 단을 분리하는 단 분리 장치를 국내 발사체 기업에 공급하려 합니다. 통제 대상인지 확인이 필요합니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-9A117"
+      ],
+      "primary_label": "ECCN-9A117",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          165
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-028",
+      "lang": "en",
+      "query": "We supply a control device that regulates combustion inside a propulsion engine for a long-range unmanned vehicle, headed to a customer abroad. Which classification applies?",
+      "context": "",
+      "validated_labels": [
+        "ECCN-9A118"
+      ],
+      "primary_label": "ECCN-9A118",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          285
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.75,
+        "item_terms_missing_from_gold_text": [
+          "headed",
+          "propulsion"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-029",
+      "lang": "ko",
+      "query": "다단 발사체의 개별 단 하나를 통째로 제작해 해외 우주기업에 공급하려 합니다. 장거리 비행이 가능한 급인데 통제 대상인지 확인하고 싶습니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-9A119"
+      ],
+      "primary_label": "ECCN-9A119",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          250
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-030",
+      "lang": "en",
+      "query": "We build tooling used to make and check a small sealing part that sits inside jet-engine turbines, for an engine manufacturer abroad. Which classification applies?",
+      "context": "",
+      "validated_labels": [
+        "ECCN-9B003"
+      ],
+      "primary_label": "ECCN-9B003",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          250
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.111,
+        "item_terms_missing_from_gold_text": [
+          "build",
+          "engine",
+          "manufacturer",
+          "part",
+          "sealing",
+          "sit",
+          "small",
+          "tooling"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": true,
+        "discriminative_terms_missing_from_gold_text": [
+          "sealing",
+          "small",
+          "tooling"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-031",
+      "lang": "ko",
+      "query": "항공엔진 제조사에 납품할 특수 공정용 지그·금형 세트를 준비 중입니다. 터빈 부품을 서로 붙이는 접합 공정에 쓰는 도구인데 통제 대상인지 확인하고 싶습니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-9B004"
+      ],
+      "primary_label": "ECCN-9B004",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          178
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-032",
+      "lang": "ko",
+      "query": "국내 방산 업체에 납품할 검사 장비를 준비 중입니다. 로켓 모터를 뜯지 않고 안쪽 상태를 확인하는 방식인데 통제 대상인지 확인이 필요합니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-9B007"
+      ],
+      "primary_label": "ECCN-9B007",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          188
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-033",
+      "lang": "en",
+      "query": "We supply sensors that measure friction along a surface in a very hot high-speed flow, for a foreign aerospace test lab. Which export classification applies?",
+      "context": "",
+      "validated_labels": [
+        "ECCN-9B008"
+      ],
+      "primary_label": "ECCN-9B008",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          154
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.333,
+        "item_terms_missing_from_gold_text": [
+          "aerospace",
+          "along",
+          "measure",
+          "sensor",
+          "speed",
+          "surface"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [
+          "aerospace",
+          "along",
+          "measure"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-034",
+      "lang": "ko",
+      "query": "고속 비행 시 발생하는 공기 마찰열과 하중을 지상에서 재현하는 시험 설비를 국내 연구기관과 구축하려 합니다. 대전력이 필요한 대형 설비인데 통제 대상인지 확인하고 싶습니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-9B104"
+      ],
+      "primary_label": "ECCN-9B104",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          310
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-035",
+      "lang": "ko",
+      "query": "해외 방산 협력사에 공급할 양산용 생산 장비를 준비 중입니다. 특정 비행체 부품과 하위 조립품을 대량 생산하는 설비인데 통제 대상인지 확인이 필요합니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-9B115"
+      ],
+      "primary_label": "ECCN-9B115",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          168
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-036",
+      "lang": "en",
+      "query": "We license software that reconstructs chip layout data by aligning layers from electron-microscope images and rebuilding the design files. It goes to an overseas semiconductor lab. Does this need an export license?",
+      "context": "",
+      "validated_labels": [
+        "ECCN-3D907"
+      ],
+      "primary_label": "ECCN-3D907",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          189
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.333,
+        "item_terms_missing_from_gold_text": [
+          "aligning",
+          "chip",
+          "design",
+          "electron",
+          "file",
+          "goe",
+          "microscope",
+          "rebuilding",
+          "reconstruct",
+          "semiconductor"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [
+          "aligning",
+          "chip",
+          "file",
+          "microscope"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-037",
+      "lang": "ko",
+      "query": "해외 방산 연구소에 제공할 분석 소프트웨어를 준비 중입니다. 비행 뒤 남은 기록을 가지고 비행체가 어디를 지나갔는지 되짚는 프로그램인데 통제 대상인지 확인하고 싶습니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-6D103"
+      ],
+      "primary_label": "ECCN-6D103",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          173
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-038",
+      "lang": "en",
+      "query": "We provide simulation software that models how a precision guidance package behaves and how it integrates into a flying vehicle. It's headed to a defense contractor abroad. Which classification applies?",
+      "context": "",
+      "validated_labels": [
+        "ECCN-7D103"
+      ],
+      "primary_label": "ECCN-7D103",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          224
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.25,
+        "item_terms_missing_from_gold_text": [
+          "behave",
+          "contractor",
+          "defense",
+          "flying",
+          "headed",
+          "integrate",
+          "model",
+          "precision",
+          "vehicle"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [
+          "contractor",
+          "defense",
+          "model",
+          "precision"
+        ],
+        "warn_discriminative_term_absent": true
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-039",
+      "lang": "ko",
+      "query": "항공 엔진을 전자적으로 완전 제어하는 통합 제어 소프트웨어(FADEC)를 해외 엔진 제조사에 제공하려 합니다. 통제 대상인지 확인하고 싶습니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-9D003"
+      ],
+      "primary_label": "ECCN-9D003",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          306
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 1.0,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-seungwoo-040",
+      "lang": "ko",
+      "query": "관성항법 장비를 작동·정비하는 데 쓰는 소스코드를 해외 협력사에 넘기려 합니다. 통제 대상인지 확인이 필요합니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-7D002"
+      ],
+      "primary_label": "ECCN-7D002",
+      "origin": "slice_j_seungwoo",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          199
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-001",
+      "lang": "ko",
+      "query": "원전 해양 플랫폼에 들어가는 이동식 원자로용 보조 추진 장치를 해외 조선소에 시제품으로 보내려 합니다. 열출력 5MW급 장비라 통제목록 후보를 먼저 확인하고 싶습니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-0A002"
+      ],
+      "primary_label": "ECCN-0A002",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          193
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-002",
+      "lang": "ko",
+      "query": "스포츠용 산탄총의 교체 방아쇠 모듈과 탄창 연장 튜브 500세트를 캐나다 유통사에 납품하려 합니다. 완제품 총기는 아니지만 관련 후보 항목을 확인하고 싶습니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-0A502"
+      ],
+      "primary_label": "ECCN-0A502",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          506
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-003",
+      "lang": "ko",
+      "query": "보안장비 업체가 전기충격봉과 저치명성 발사체 200개를 남미 경찰 조달 입찰에 제출하려 합니다. 인명 피해를 줄이는 장비라고 설명하지만 사전 분류가 필요합니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-0A503"
+      ],
+      "primary_label": "ECCN-0A503",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          530
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-004",
+      "lang": "ko",
+      "query": "법집행 장비 판매사가 손가락 압박 구속구와 뾰족한 진압봉 80개를 해외 교정기관에 공급하려 합니다. 인권 민감 장비라 수출 전에 후보 분류를 확인해야 합니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-0A983"
+      ],
+      "primary_label": "ECCN-0A983",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          179
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-005",
+      "lang": "ko",
+      "query": "해양 원자로 추진 보조장치의 제어 로직과 시험 자동화 소프트웨어를 프랑스 협력사에 1년 라이선스로 제공하려 합니다. 하드웨어 없이 코드만 이전해도 후보가 있는지 봐주세요.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-0D001"
+      ],
+      "primary_label": "ECCN-0D001",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          199
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-006",
+      "lang": "ko",
+      "query": "총기 부품 정비용 진단 프로그램과 조립 공정 관리 소프트웨어를 태국 정비업체에 공급하려 합니다. 20개 작업장에 설치될 예정이라 후보 항목을 확인하고 싶습니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-0D501"
+      ],
+      "primary_label": "ECCN-0D501",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          160
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-007",
+      "lang": "ko",
+      "query": "야간 감시 장비에 들어가는 전자식 영상 감지부의 양산 레시피와 보정 절차를 UAE 광학업체와 공유하려 합니다. 640x512급 화면을 쓰는 조준 보조품이라 기술 이전 가능성을 검토해야 합니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-0E504"
+      ],
+      "primary_label": "ECCN-0E504",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          160
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.0,
+        "item_terms_missing_from_gold_text": [
+          "uae"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": true,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-008",
+      "lang": "ko",
+      "query": "야간 조준 장치의 설치, 수리, 오버홀 매뉴얼과 생산 공정 교육 자료를 인도네시아 고객사에 넘기려 합니다. 교육 시간이 40시간이라 기술자료 분류를 확인하고 싶습니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-0E505"
+      ],
+      "primary_label": "ECCN-0E505",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          168
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-009",
+      "lang": "ko",
+      "query": "장거리 무인 시험기의 앞단 열보호용 경량 복합재 캡을 폴란드 항공 연구소에 시험품으로 보냅니다. 고온 재진입 조건을 버티도록 만든 부품이라 분류 검토가 필요합니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-1A102"
+      ],
+      "primary_label": "ECCN-1A102",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          259
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-010",
+      "lang": "ko",
+      "query": "중수 처리 연구에 쓰는 백금 코팅 촉매 시편을 일본 대학에 공동연구용으로 제공합니다. 수소 동위원소 교환 효율이 12% 개선된 제품이라 후보 항목을 확인하려 합니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-1A225"
+      ],
+      "primary_label": "ECCN-1A225",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          216
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-011",
+      "lang": "ko",
+      "query": "방사선 차폐가 들어간 산업용 X선 장비를 해체하면서 나온 감손 우라늄 차폐 블록 1.2톤을 독일 재활용 업체에 넘기려 합니다. 폐기물 이전 전 후보 분류를 확인하고 싶습니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-1A290"
+      ],
+      "primary_label": "ECCN-1A290",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          319
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-012",
+      "lang": "ko",
+      "query": "군중 안전 훈련용 최루 분말 카트리지와 연막 캔을 필리핀 보안교육 업체에 판매하려 합니다. 각 카트리지 함량은 15g 이하인데도 후보 항목 검토가 필요합니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-1A984"
+      ],
+      "primary_label": "ECCN-1A984",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          561
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.0,
+        "item_terms_missing_from_gold_text": [
+          "15g"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": true,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-013",
+      "lang": "ko",
+      "query": "탄소계 막을 입히는 고온 장비용 가스 헤드를 대만 장비업체에 공급하려 합니다. 표면 처리 온도가 1,600K 이상인 공정이라 후보 항목을 확인해야 합니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-1B116"
+      ],
+      "primary_label": "ECCN-1B116",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          256
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.0,
+        "item_terms_missing_from_gold_text": [
+          "600k"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": true,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-014",
+      "lang": "ko",
+      "query": "추진제 원료를 미세 분쇄하는 유체 에너지 밀과 교체 로터를 호주 연구기관에 납품하려 합니다. 분말 입도 목표가 20마이크론이라 수출 전 후보 분류가 필요합니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-1B119"
+      ],
+      "primary_label": "ECCN-1B119",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          218
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-015",
+      "lang": "ko",
+      "query": "실험 장치 안에서 원자 조각을 한쪽으로 모으는 장비에 강한 입자 공급부를 추가해 스웨덴 연구소에 납품하려 합니다. 전원 사양이 큰 편이라 후보 항목을 확인하고 싶습니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-1B226"
+      ],
+      "primary_label": "ECCN-1B226",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          164
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-016",
+      "lang": "ko",
+      "query": "드론 외피에 바르는 레이더·적외선 저감 코팅 시료를 튀르키예 협력사에 시험 이전하려 합니다. 적용 기체의 목표 항속거리가 300km 이상이라 후보 분류를 확인해야 합니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-1C101"
+      ],
+      "primary_label": "ECCN-1C101",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          342
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 1.0,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-017",
+      "lang": "ko",
+      "query": "소형 발사체 열차폐 부품용 재침탄 탄소-탄소 소재 판재를 브라질 대학에 공동연구 샘플로 보냅니다. 두께 8mm 시편이라 사전 후보검색을 요청합니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-1C102"
+      ],
+      "primary_label": "ECCN-1C102",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          214
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.0,
+        "item_terms_missing_from_gold_text": [
+          "8mm"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": true,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-018",
+      "lang": "ko",
+      "query": "원자력 계측기 부품에 쓰는 보론-10 농축 분말 3kg을 영국 연구기관에 분석용으로 보내려 합니다. 천연 동위원소 비율보다 높은 재료라 통제 후보를 확인하고 싶습니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-1C225"
+      ],
+      "primary_label": "ECCN-1C225",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          223
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-019",
+      "lang": "ko",
+      "query": "항공우주 열관리 부품용 베릴륨 합금 봉재를 이스라엘 가공업체에 판매하려 합니다. 베릴륨 함량이 55중량%라 일반 금속 소재로 봐도 되는지 후보 분류가 필요합니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-1C230"
+      ],
+      "primary_label": "ECCN-1C230",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          156
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-020",
+      "lang": "ko",
+      "query": "중성자 계측용 세라믹 부품에 특정 경량 금속 동위원소 농축 물질이 들어갑니다. 스위스 연구소에 샘플로 보내려는데 자연비보다 높은 농축도라 후보 항목을 확인하려 합니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-1C233"
+      ],
+      "primary_label": "ECCN-1C233",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          295
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-021",
+      "lang": "ko",
+      "query": "부식성 화학공정용 특수 금속 튜브를 네덜란드 플랜트 회사에 납품하려 합니다. 원자로 소재로도 쓰이는 등급이고 불순물 비율이 1:500보다 낮아 통제목록 후보를 확인해야 합니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-1C234"
+      ],
+      "primary_label": "ECCN-1C234",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          243
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-022",
+      "lang": "ko",
+      "query": "자체 발광 안전 표지에 넣는 방사성 기체 밀봉 캡슐을 캐나다 연구기관에 반출하려 합니다. 동위원소 비율이 1:1000을 넘는 혼합물이라 후보 분류가 필요합니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-1C235"
+      ],
+      "primary_label": "ECCN-1C235",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          185
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-023",
+      "lang": "ko",
+      "query": "충격파 실험에 쓰는 고에너지 결정 분말 25kg을 호주 시험장에 보내려 합니다. 제조사가 제시한 반응 속도가 매우 높은 자료라 후보 항목 검토가 필요합니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-1C239"
+      ],
+      "primary_label": "ECCN-1C239",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          245
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-024",
+      "lang": "ko",
+      "query": "복합재 압력용기 보강용 아라미드 섬유 롤을 멕시코 부품사에 판매하려 합니다. 비강도와 비탄성률이 각각 7.62e4m, 3.18e6m 이상이라 후보 분류를 봐야 합니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-1C990"
+      ],
+      "primary_label": "ECCN-1C990",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          219
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.0,
+        "item_terms_missing_from_gold_text": [
+          "18e6m",
+          "62e4m"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": true,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-025",
+      "lang": "ko",
+      "query": "광산 폭파 보조제로 쓰일 수 있는 질산암모늄 기반 비료 블렌드를 인도 업체에 수출하려 합니다. 질산암모늄 함량이 18중량%라 농업용이라도 후보 항목을 확인하고 싶습니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-1C997"
+      ],
+      "primary_label": "ECCN-1C997",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          256
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-026",
+      "lang": "ko",
+      "query": "무인기 외피의 레이더 반사와 열 신호를 낮추는 형상 최적화 소프트웨어를 말레이시아 개발사에 3년 구독형으로 제공하려 합니다. 비행체 적용 가능성이 있어 분류를 확인하고 싶습니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-1D103"
+      ],
+      "primary_label": "ECCN-1D103",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          338
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-027",
+      "lang": "ko",
+      "query": "항공부품 공장에서 쓰는 대형 압력 오븐의 운전 레시피와 환경 제어 절차를 체코 업체에 교육자료로 넘기려 합니다. 경화 온도 180도 공정이라 기술 이전 분류가 필요합니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-1E103"
+      ],
+      "primary_label": "ECCN-1E103",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          344
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-028",
+      "lang": "ko",
+      "query": "가스 전구체 조성비와 유량 스케줄을 포함한 열분해 증착 공정 패키지를 싱가포르 장비사에 이전하려 합니다. 반응 온도는 1,300도 이상이라 후보 항목 검토가 필요합니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-1E104"
+      ],
+      "primary_label": "ECCN-1E104",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          392
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-029",
+      "lang": "ko",
+      "query": "공항 보안검색용 폭발물 흔적 탐지 장비를 카타르 시설 운영사에 납품하려 합니다. 자동 판정 기능과 12초 분석 주기가 있어 통제목록 후보를 확인하고 싶습니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-2A983"
+      ],
+      "primary_label": "ECCN-2A983",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          290
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-030",
+      "lang": "ko",
+      "query": "차량 동력전달 부품의 맞물림 면을 최종 정밀 가공하는 자동 장비를 베트남 변속기 공장에 수출하려 합니다. 고경도 부품 전용이라 후보 분류가 필요합니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-2B003"
+      ],
+      "primary_label": "ECCN-2B003",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          206
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-031",
+      "lang": "ko",
+      "query": "탄소-탄소 복합재 밀도 향상을 위한 CVD 전기로를 인도 항공소재 업체에 설치하려 합니다. 챔버 직경 900mm 장비라 수출 전 후보 항목을 확인하고 싶습니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-2B105"
+      ],
+      "primary_label": "ECCN-2B105",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          153
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.5,
+        "item_terms_missing_from_gold_text": [
+          "900mm"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-032",
+      "lang": "ko",
+      "query": "로켓 노즐 목 부품과 재진입체 앞부분을 치밀화·열분해 처리하는 공정 제어 장비를 폴란드 연구소에 보냅니다. 2개 공정이 한 장비에 통합돼 후보 분류를 확인해야 합니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-2B117"
+      ],
+      "primary_label": "ECCN-2B117",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          221
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-033",
+      "lang": "ko",
+      "query": "고속 회전체 시험용 원심분리기를 싱가포르 대학에 납품하려 합니다. 120g 가속을 줄 수 있고 회전 중 전원과 신호를 넘기는 비접촉 인터페이스가 있어 후보 항목을 확인하고 싶습니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-2B122"
+      ],
+      "primary_label": "ECCN-2B122",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          220
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": 0.0,
+        "item_terms_missing_from_gold_text": [
+          "120g"
+        ],
+        "item_term_check_applicable": true,
+        "warn_item_name_absent": true,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-034",
+      "lang": "ko",
+      "query": "세라믹 터빈 부품을 가공하는 3축 동시 윤곽제어 머시닝센터를 루마니아 제조사에 수출하려 합니다. 금속과 복합재도 절삭 가능한 장비라 후보 분류를 봐주세요.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-2B201"
+      ],
+      "primary_label": "ECCN-2B201",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          299
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-035",
+      "lang": "ko",
+      "query": "목재 수출업체가 북미산 향목 원목과 변재가 남은 거친 제재목을 일본 가구회사에 재판매하려 합니다. 물량이 60입방미터라 후보 통제항목이 있는지 확인해주세요.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-1C988"
+      ],
+      "primary_label": "ECCN-1C988",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          152
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-036",
+      "lang": "ko",
+      "query": "공장 자동화용 로봇 팔이 센서 피드백을 실시간으로 받아 작업 프로그램을 스스로 수정합니다. 6축 모델 30대를 인도 공장에 납품하려는데 후보 통제항목이 있는지 확인해주세요.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-2B997"
+      ],
+      "primary_label": "ECCN-2B997",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          223
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-037",
+      "lang": "ko",
+      "query": "전자장치에 탑재되는 수치제어 소프트웨어가 5개 축을 동시에 조정해 곡면 절삭 경로를 만듭니다. 대만 장비사에 임베디드 형태로 제공하려는데 후보 분류가 필요합니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-2D002"
+      ],
+      "primary_label": "ECCN-2D002",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          246
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-038",
+      "lang": "ko",
+      "query": "광학 렌즈 금형을 측정한 뒤 보정 절삭 경로로 변환하는 장비 운용 소프트웨어를 일본 정밀가공 업체에 팔려고 합니다. 형상 오차 목표가 0.5마이크론이라 분류를 확인하고 싶습니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-2D003"
+      ],
+      "primary_label": "ECCN-2D003",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          240
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-039",
+      "lang": "ko",
+      "query": "저소음 선박 추진기를 개발하는 소프트웨어 모듈을 그리스 조선소에 제공하려 합니다. 수중 소음 저감용 프로펠러 재가공 기능까지 포함돼 후보 항목 검토가 필요합니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-8D002"
+      ],
+      "primary_label": "ECCN-8D002",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          204
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
+    },
+    {
+      "id": "j-yechan-040",
+      "lang": "ko",
+      "query": "수중 장비용 복합재 구조물 생산 기술 문서와 선체 부착 장비 개발 노하우를 핀란드 해양연구소에 제공하려 합니다. 교육자료 120쪽이라 후보 기술 분류를 확인하고 싶습니다.",
+      "context": "",
+      "validated_labels": [
+        "ECCN-8E001"
+      ],
+      "primary_label": "ECCN-8E001",
+      "origin": "slice_j_yechan",
+      "label_confidence": null,
+      "label_basis_corpus_text": "",
+      "equivalent_labels": [],
+      "equivalent_labels_strict": [],
+      "label_issues": [],
+      "text_completeness": {
+        "gold_text_chars": [
+          161
+        ],
+        "gold_is_heading_stub": [
+          false
+        ],
+        "item_term_coverage": null,
+        "item_terms_missing_from_gold_text": [],
+        "item_term_check_applicable": false,
+        "warn_item_name_absent": false,
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
+      },
+      "excluded_from_metrics": false
     },
     {
       "id": "g-seungwoo-001",
@@ -870,10 +3600,8 @@
         ],
         "item_term_check_applicable": true,
         "warn_item_name_absent": false,
-        "discriminative_terms_missing_from_gold_text": [
-          "security"
-        ],
-        "warn_discriminative_term_absent": true
+        "discriminative_terms_missing_from_gold_text": [],
+        "warn_discriminative_term_absent": false
       },
       "excluded_from_metrics": false
     },
@@ -1291,8 +4019,10 @@
         ],
         "item_term_check_applicable": true,
         "warn_item_name_absent": false,
-        "discriminative_terms_missing_from_gold_text": [],
-        "warn_discriminative_term_absent": false
+        "discriminative_terms_missing_from_gold_text": [
+          "capture"
+        ],
+        "warn_discriminative_term_absent": true
       },
       "excluded_from_metrics": false
     },
@@ -1469,8 +4199,10 @@
         ],
         "item_term_check_applicable": true,
         "warn_item_name_absent": false,
-        "discriminative_terms_missing_from_gold_text": [],
-        "warn_discriminative_term_absent": false
+        "discriminative_terms_missing_from_gold_text": [
+          "short"
+        ],
+        "warn_discriminative_term_absent": true
       },
       "excluded_from_metrics": false
     },
@@ -2601,8 +5333,6 @@
         "discriminative_terms_missing_from_gold_text": [
           "corrosion",
           "exchanger",
-          "glass",
-          "heat",
           "lined",
           "precursor",
           "reactor",
@@ -2765,7 +5495,6 @@
         "item_term_check_applicable": true,
         "warn_item_name_absent": false,
         "discriminative_terms_missing_from_gold_text": [
-          "channel",
           "hydrodynamic",
           "propeller",
           "signature"
@@ -2822,7 +5551,6 @@
         "discriminative_terms_missing_from_gold_text": [
           "block",
           "deep",
-          "glass",
           "housing"
         ],
         "warn_discriminative_term_absent": true
@@ -2861,6 +5589,7 @@
         "item_term_check_applicable": true,
         "warn_item_name_absent": false,
         "discriminative_terms_missing_from_gold_text": [
+          "pipeline",
           "survey"
         ],
         "warn_discriminative_term_absent": true

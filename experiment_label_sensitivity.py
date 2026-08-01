@@ -80,7 +80,7 @@ def build_variants(query_ids, queries, corpus):
                 seen.add(code)
 
     return {
-        "V0_baseline": (set(), "전체 71개 (기준)"),
+        "V0_baseline": (set(), "전체 질의 (기준)"),
         "V1_no_stub_gold": (stub_ids, "정답이 전부 표제 스텁인 질의 제거 (D1)"),
         "V2_no_label_defect": (defect_ids, "부정확 2차 라벨·규제체계 모순 제거 (D3/D4)"),
         "V3_unique_gold_code": (dup_ids, "정답 코드 재사용 질의 제거 (D5)"),

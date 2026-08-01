@@ -1,18 +1,20 @@
 # 인수인계 (HANDOFF)
 
 > 다른 기기·다른 세션·다른 에이전트가 이 저장소를 이어받을 때 **가장 먼저 읽는 문서**.
-> 최종 갱신: 2026-07-31 / 기준 커밋: `16e4e37`
+> 최종 갱신: 2026-08-01 / TASK J 병합 후 로컬 GPU 전체 재실행 완료 (n=71 → **n=151**)
 
 ---
 
 ## 0. 30초 요약
 
-산업보안논문경진대회 제출용 연구. **논문 초안은 `PAPER.md`에 완성돼 있고, 그 안의 모든 수치는 `python verify_claims.py`가 산출물과 자동 대조한다(현재 OK=104 / MISMATCH=0).**
+산업보안논문경진대회 제출용 연구. **논문 초안은 `PAPER.md`에 완성돼 있고, 그 안의 모든 수치는 `python verify_claims.py`가 산출물과 자동 대조한다(현재 OK=112 / MISMATCH=0).**
 
 논문의 세 축:
-1. **최소화 대상은 반환량이 아니라 질의다.** 반환 텍스트는 공개문서이고 색인에 안 들어가 랭킹을 안 바꾸므로 축소 비용이 구조적으로 0이다(노출량 81.4%↓, R@10 변화 0.0000).
-2. **질의 측에서 정량 사양치 삭제(L1)는 등가가 입증**됐다(3개 인코더 중 2개). **운용 권고는 L1**(보수적) — 권고 등급이 인코더에 따라 갈린다(MiniLM·e5-base L2, bge-m3 L1). L3는 세 모델 모두 자기참조 교란으로 거부.
-3. **저노출 후보검색엔 dense 성분이 필수.** BM25는 한국어에서 구조적으로 R@10 0.0000. dense−BM25는 3개 인코더 전부에서 유의, **hybrid−dense는 어디서도 유의하지 않다**.
+1. **최소화 대상은 반환량이 아니라 질의다.** 반환 텍스트는 공개문서이고 색인에 안 들어가 랭킹을 안 바꾸므로 축소 비용이 구조적으로 0이다(노출량 77.4%↓, R@10 변화 0.0000).
+2. **질의 측 운용 권고는 L1**(정량 사양치 삭제)이고 **세 인코더가 모두 L1로 일치**한다. 단 **어느 모델에서도 TOST 등가는 입증되지 않았다**(L1 p_max 0.08~0.19, 입증에 n≈379 필요) — 지지되는 진술은 "무해 입증"이 아니라 "손실 징후 없음"이다. L2·L4는 손실 징후, L3는 세 모델 모두 자기참조 교란으로 거부.
+3. **저노출 후보검색엔 dense 성분이 필수.** BM25는 한국어에서 R@10 0.0275(151개 중 96개 무신호). dense−BM25는 3개 인코더 전부에서 유의, **hybrid−dense는 세 모델 모두 Holm 보정 후 비유의**(MiniLM만 보정 전 0.012 → 보정 후 0.059로 경계).
+
+> **n=71 → n=151에서 바뀐 것**: 권고의 모델 의존성 해소(강화), 최대 압력 하 dense 우위 2/3→3/3(강화), 정답 스텁 오염 59.2%→27.8%(강화) / L1 등가 입증 2/3→0/3(약화), L2가 검정력 부족→손실 징후(약화). 양방향을 모두 논문에 적었다.
 
 ---
 
@@ -42,50 +44,54 @@ pip install -r requirements.txt
 python verify_claims.py
 ```
 
-**기대: `OK=104` / `MISMATCH=0` / exit 0.** 하나라도 MISMATCH면 논문과 근거가 어긋난 것이니 **먼저 그것부터 해결**한다(산출물이 낡았으면 재실행, 논문이 낡았으면 논문 수정).
+**기대: `OK=112` / `MISMATCH=0` / exit 0.** 하나라도 MISMATCH면 논문과 근거가 어긋난 것이니 **먼저 그것부터 해결**한다(산출물이 낡았으면 재실행, 논문이 낡았으면 논문 수정).
 
 ```bash
-python tests/test_repo_invariants.py
-python tests/test_corpus.py
-python tests/test_label_audit.py
-python tests/test_retrieval_core.py
-python tests/test_selfreference.py
+for f in tests/test_*.py; do python "$f" >/dev/null && echo "PASS $f" || echo "FAIL $f"; done
 ```
-(`pytest`가 없으면 위처럼 직접 실행. 전부 exit 0이어야 한다.)
+(`pytest`가 없으면 위처럼 직접 실행. 8개 파일 전부 exit 0이어야 한다.)
+
+> **Windows 주의**: `core.autocrlf=true`인 클론에서 원본 출처 파일이 CRLF로 변환되면
+> `fetch_sources.py verify`의 SHA-256이 전부 어긋난다. `.gitattributes`가 이를 막고
+> 있으니 지우지 말 것. 콘솔이 cp949면 `PYTHONIOENCODING=utf-8`을 앞에 붙인다.
 
 ---
 
 ## 3. 현재 확정된 수치 (2026-07-31)
 
 **코퍼스 v2**: 1,783건 = eCFR 637 + SCOMET 578 + Wassenaar 568. **100% 영어**(한글 항목 0).
-**검증셋**: n=71 (영어 26 / 한국어 45), 정답은 eCFR full code.
+**검증셋**: n=151 (영어 42 / 한국어 109), 정답은 eCFR full code.
+**사다리 분석 대상**: n=119 (정의 위반 32건 제외 — `data/disclosure_ladder.json` → `ladder_spec_exclusions`).
 
 ### 검색기 (색인 `minimal_text`)
 | 인코더 | BM25 | dense | hybrid(α0.5) | 한국어 hybrid | dense−BM25 Holm | hybrid−dense |
 |---|---:|---:|---:|---:|---|---|
-| MiniLM | 0.1549 | 0.5493 | 0.5775 | 0.6000 | 3.5×10⁻⁷ 유의 | 비유의 |
-| e5-base | 0.1549 | 0.4648 | 0.4930 | 0.4889 | 1.8×10⁻⁵ 유의 | 비유의 |
-| bge-m3 | 0.1549 | 0.5634 | 0.5634 | 0.6222 | 1.8×10⁻⁷ 유의 | 비유의 |
+| MiniLM | 0.1523 | 0.4503 | 0.5099 | 0.4954 | 1.8×10⁻⁸ 유의 | +0.060, p_adj 0.059 비유의 |
+| e5-base | 0.1523 | 0.4768 | 0.4901 | 0.4587 | 1.0×10⁻¹⁰ 유의 | +0.013, p_adj 1 비유의 |
+| bge-m3 | 0.1523 | **0.5695** | 0.5497 | 0.5596 | <10⁻¹⁵ 유의 | **−0.020** (dense가 더 높다) |
 
-BM25 한국어 = **0.0000** (45개 중 44개가 어휘 교집합 0).
+BM25 한국어 = **0.0275** (151개 중 96개가 어휘 교집합 0. n=71에서는 정확히 0이었고, 확장 질의의 숫자·라틴 토큰이 드물게 교집합을 만든다).
 
 ### 노출 2차원표 (MiniLM, hybrid α0.5)
 | 색인 ＼ 반환 | full_text | minimal_text | minimal_no_code | R@10 |
 |---|---:|---:|---:|---:|
-| full_text | 9,729.9 | **1,810.9** | 1,720.8 | 0.6056 |
-| minimal_text | 6,149.2 | 1,856.7 | 1,765.2 | 0.5775 |
-| minimal_no_code | 6,277.1 | 1,764.3 | 1,674.2 | 0.5211 |
+| full_text | 7,886.2 | **1,780.8** | 1,691.0 | 0.5497 |
+| minimal_text | 5,868.2 | 1,805.5 | 1,714.6 | 0.5099 |
+| minimal_no_code | 5,804.2 | 1,708.1 | 1,618.4 | 0.4901 |
 
-**운용점**: 색인 `full_text` + 반환 `minimal_text` → 노출 **−81.4%**, R@10 변화 **정확히 0.0**.
+**운용점**: 색인 `full_text` + 반환 `minimal_text` → 노출 **−77.4%**, R@10 변화 **정확히 0.0**.
+색인 축소는 비용이 있다: `minimal_text` −0.0397, δ=0.05 등가 미성립(입증에 n≈6,166 필요).
 
 ### 질의 노출 사다리 (hybrid α0.5)
-| 등급 | 민감토큰 | R@10 | 증거등급 |
-|---|---:|---:|---|
-| L0 | 7.35 | 0.5775 | 기준 |
-| L1 | 6.41 | 0.5775 | **A. 등가 입증** (TOST p_max 0.0063) |
-| L2 | 5.63 | 0.5493 | B. 하락 미검출 (n≈1,102 필요) ← **운용 권고** |
-| L3 | 0.00 | 0.5775 | **D. 자기참조 교란 → 사용 금지** |
-| L4 | 0.00 | 0.4507 | C. 손실 징후 (−0.1268) |
+| 등급 | 민감토큰 | R@10 | 평균차 | 증거등급 |
+|---|---:|---:|---:|---|
+| L0 | 5.97 | 0.5294 | — | 기준 |
+| L1 | 5.12 | 0.5126 | −0.0168 | B. 하락 미검출 (TOST p_max 0.082, n≈379 필요) ← **운용 권고** |
+| L2 | 4.47 | 0.4454 | −0.0840 | **C. 손실 징후** (CI가 0 배제) |
+| L3 | 0.00 | 0.4874 | −0.0420 | **D. 자기참조 교란 → 사용 금지** |
+| L4 | 0.00 | 0.4034 | −0.1261 | C. 손실 징후 |
+
+세 인코더 전부 L1을 권고한다(`frontier_recommendation_is_model_dependent: false`). **등가가 입증된 등급은 하나도 없다.**
 
 ---
 
@@ -188,9 +194,26 @@ eCFR 637건 중 **351건(55.1%)**이 `(see List of Items Controlled)` 형태의 
    → **report_exposure_decomposition.py**   ← 빠뜨리기 쉬움!
    → experiment_label_sensitivity.py
 
-③ 항상 마지막
+③ 질의셋(검증셋) 확대 시  ← TASK J 에서 실제로 밟은 순서
+   build_expanded_validated.py            (슬라이스 병합, n 갱신)
+   → build_disclosure_ladder.py           (사다리 + 정의 위반 제외 회계)
+   → audit_ladder_selfreference.py        (L3 판정)
+   → audit_label_quality.py audit / emit  (라벨 감사 + 등가 라벨 재생성)
+   → selfreference_gate.py                (게이트 공허성 재측정) ← 빠뜨리기 쉬움!
+   → run_model_shard.py ×3 → validate_shard.py → merge_shards.py
+   → report_exposure_decomposition.py → experiment_label_sensitivity.py
+   → experiment_disclosure_frontier.py → experiment_symmetric_ablation.py
+   → run_tier1.py ×3 → validate_tier1.py ×3 → report_tier1_crossmodel.py
+
+④ 치환 사전(data/hypernym_substitutions.json) 변경 시
+   experiment_symmetric_ablation.py → run_tier1.py ×3 → report_tier1_crossmodel.py
+
+⑤ 항상 마지막
    make_figures.py → experiment_stats.py → verify_claims.py
+   → for f in tests/test_*.py; do python "$f"; done
 ```
+
+**GPU 실행 메모(RTX 3060 8GB)**: `.venv`는 torch 2.6.0+cu124다. bge-m3는 8GB에서 OOM이 나므로 `SANBO_BATCH`로 배치를 낮춘다 — 샤드/ablation은 `SANBO_BATCH=8`, Tier-1 bge-m3는 `SANBO_BATCH=2`. `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True`도 함께 준다. 배치 크기는 임베딩 값을 바꾸지 않는다(수치 동일성 확인됨).
 
 ---
 
@@ -201,6 +224,9 @@ eCFR 637건 중 **351건(55.1%)**이 `(see List of Items Controlled)` 형태의 
 - **`.gitignore` 방침**: `output/`은 이제 **기본 커밋 대상**이다(허용목록 → 부정목록으로 전환). 새 산출물이 조용히 빠지지 않는다.
 - **낡은 v1 산출물**: `external_eval`, `external_label_audit`, `external_retriever`, `retriever_compare`는 코퍼스 v1 기준이며 논문이 인용하지 않는다. `meta.superseded_by`가 박혀 있으니 되살리지 말 것.
 - **문서의 v1 수치는 의도적일 수 있다**: README 변경이력표, `docs/corpus_parsing_fixes.md`, `docs/statistics_n13_superseded.md`, `docs/case_analysis.md`(superseded 배너)는 v1을 **일부러** 참조한다. 일괄 치환 금지.
+- **CRLF가 출처 해시를 깨뜨린다**: `core.autocrlf=true`인 Windows 클론은 체크아웃 때 텍스트 원본을 CRLF로 바꿔 `fetch_sources.py verify`의 SHA-256을 전부 어긋나게 만든다(원본은 그대로인데). `.gitattributes`가 해당 경로의 변환을 끄고 있으니 **지우지 말 것**.
+- **사다리 정의 위반 32건은 버그가 아니라 정책**이다: 고쳐서 통과시키지 않고 제외하고 세었다. `ladder_spec_compliant=false`인 질의를 사다리 분석에 되돌려 넣지 말 것(검색기 비교에는 그대로 쓴다).
+- **치환 사전은 원본 71개만 덮는다**: level 1·2에서 71/151, level 3에서 121/151에만 압력이 걸린다. 이 커버리지는 `verify_claims.py`가 고정하고 있으며 PAPER 4.6이 공개한다. 사전을 늘려 커버리지를 올리는 것은 '측정도구를 결과가 좋아지는 방향으로 손보는' 일이므로 하려면 그 사실을 논문에 함께 적어야 한다.
 
 ---
 
@@ -209,8 +235,8 @@ eCFR 637건 중 **351건(55.1%)**이 `(see List of Items Controlled)` 형태의 
 | 사람 | 담당 | 상태 |
 |---|---|---|
 | 팀장(jaepaly) | 통합·검증·논문 | 진행 중 |
-| 이예찬 | TASK F(그림·통계), TASK G 슬라이스(0/1/2/8), bge-m3 샤드 | 완료·병합됨 |
-| 장승우 | TASK D(한국어), TASK G 슬라이스(3~7/9), e5-base 샤드 | 완료·병합됨 |
+| 이예찬 | TASK F(그림·통계), TASK G 슬라이스(0/1/2/8), bge-m3 샤드·Tier-1, TASK J 슬라이스 40건 | 완료·병합됨 |
+| 장승우 | TASK D(한국어), TASK G 슬라이스(3~7/9), e5-base 샤드, TASK J 슬라이스 40건 | 완료·병합됨 |
 
 새 작업을 팀원에게 분담할 때는 `README.md` §코퍼스 v2 채택 매뉴얼의 1인칭 절차(배정모델만 바꿔 재사용)와 `docs/RESULT_REPORT_TEMPLATE.md` 양식을 쓴다. 이전 라운드의 에이전트 프롬프트 전문은 `docs/RESEARCH_IMPROVEMENT_PLAN.md`에 있다. 샤드 제출물은 반드시 `validate_shard.py`로 검증한 뒤 병합한다(BM25 히트 벡터가 바이트 단위로 일치해야 하며, 이것이 상대 환경을 신뢰하지 않고도 동일 조건이었음을 보장한다).
 
@@ -219,7 +245,11 @@ eCFR 637건 중 **351건(55.1%)**이 `(see List of Items Controlled)` 형태의 
 ## 10. 남은 과제 (우선순위)
 
 1. ~~표제 스텁 보강~~ — **완료·반증**(§6). 코퍼스를 실제로 고쳐 측정했으나 성능 향상 없음. v3는 아티팩트로 보존, 채택 안 함. 음성 결과로 논문 한계 절에 사용 가능
-2. **표본 확대 (TASK J, 분담 중)** — 스펙: `docs/TASK_J_SAMPLE_EXPANSION.md`. n=71 → 151 목표. 핵심 질문은 "bge-m3의 L2 손실 징후가 n=151에서도 유지되는가"(모델 차이 vs 검정력 부족). **L2 등가(δ=0.05) 입증은 이 코퍼스로 불가**(필요 n≈1,102, 상한 328)
-3. ~~대칭 ablation·사다리의 다모델 확장~~ — **완료**(PAPER 4.8, `output/tier1_crossmodel.md`). ablation 방향은 일반화되나 최대 압력 유의성은 2/3, 운용 권고는 모델 의존적
-4. **실제 기업 질의 확보** — 현장 대표성(현재 전부 역생성 합성)
-5. ~~전문가 라벨 검수~~ — **범위 밖으로 확정**. 대신 PAPER 4.7의 라벨 강건성 분석으로 대체함(라벨 결함 질의를 모두 제거해도 결론 유지)
+2. ~~표본 확대 (TASK J)~~ — **완료·병합**(n=151). 동기가 된 질문에 답이 나왔다: **bge-m3의 L2 손실 징후는 모델 차이가 아니라 검정력 부족이었고**, n=151에서는 세 모델 모두 L2가 손실 징후·L1 권고로 수렴했다. 대가로 L1 등가 입증이 사라졌다
+3. ~~대칭 ablation·사다리의 다모델 확장~~ — **완료**(PAPER 4.8, `output/tier1_crossmodel.md`). n=151에서 최대 압력 유의성 3/3, 운용 권고 모델 비의존
+4. **L1 등가 입증용 추가 확대 (n≈379)** — 현재 최대 약점. 지금 논문이 말할 수 있는 것은 "손실 징후 없음"까지이고 "무해 입증"이 아니다. eCFR 비스텁 항목 상한이 병목이므로 코퍼스 확장과 함께 검토해야 한다
+5. **사다리 정의 위반 32건 재작성** — 장승우 19 / 이예찬 13. 어휘목록이 품목 정체와 용도를 구분 못 하는 사례라, 질의를 고치는 대신 **어휘목록에 품목-정체 예외를 넣는 쪽**이 방법론적으로 더 방어 가능하다(둘 다 하면 사다리 표본이 119 → 151로 회복)
+6. **치환 사전 커버리지 확대** — level 1·2가 71/151만 덮는다. 확대하려면 그 사실과 확대 전후 수치를 함께 보고할 것
+7. **실제 기업 질의 확보** — 현장 대표성(현재 전부 역생성 합성)
+8. ~~전문가 라벨 검수~~ — **범위 밖으로 확정**. 대신 PAPER 4.7의 라벨 강건성 분석으로 대체함(라벨 결함 질의를 모두 제거해도 결론 유지)
+9. **제출 형식 확정(팀장만 가능)** — 대회 마감일과 제출 포맷(hwp/docx/pdf·분량 제한)이 아직 미확인이다. `PAPER.md`는 마크다운뿐이라 변환·재편집 시간이 필요하다

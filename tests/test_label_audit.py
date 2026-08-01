@@ -101,8 +101,14 @@ def test_audits_reproduce() -> None:
           d6["labelable_entries"] == d6["per_source"].get("ecfr_part774"), d6["per_source"])
 
     d1 = alq.audit_stub_text(CORPUS, QUERIES_V1)
-    check("정답 코드 과반이 표제 스텁",
-          d1["gold_stub_share"] > 0.5, d1["gold_stub_share"])
+    # n=71 시절에는 정답 코드의 과반(58.6%)이 스텁이었다. TASK G/J 확장이 비스텁
+    # 항목을 우선 고르도록 지시받아 이 비율이 희석됐다. 검사할 성질은 '과반'이
+    # 아니라 **오염이 여전히 무시할 수 없는 규모**라는 것이다(PAPER 7 한계 1).
+    check("정답 코드의 표제 스텁 비율이 여전히 유의미하다 (>0.2)",
+          d1["gold_stub_share"] > 0.2, d1["gold_stub_share"])
+    check("스텁 정답 질의 비율이 코퍼스 전체 스텁 비율보다 낮다 (확장이 희석했다)",
+          d1["queries_all_gold_labels_stub_share"] < d1["stub_share"],
+          f"query={d1['queries_all_gold_labels_stub_share']} corpus={d1['stub_share']}")
 
     d2 = alq.audit_cross_regime_twins(CORPUS, QUERIES_V1)
     first = d2["minimal_text|first_label_only"]
@@ -203,13 +209,19 @@ def test_queries_v2() -> None:
     doc = json.loads(alq.QUERIES_V2_PATH.read_text(encoding="utf-8"))
     qs = doc["queries"]
     by_id = {q["id"]: q for q in qs}
-    check("71개 유지", len(qs) == 71, len(qs))
+    check("151개 유지", len(qs) == 151, len(qs))
     check("id 집합이 v1 과 동일",
           {q["id"] for q in qs} == {q["id"] for q in QUERIES_V1})
     check("env_meta / seed 기록",
           "numpy" in doc["meta"]["env"] and doc["meta"]["seed"] == alq.SEED)
-    check("context 71건 전부 복원", all(q["context"] for q in qs),
-          [q["id"] for q in qs if not q["context"]][:5])
+    # context 는 TASK G 단계 71개(validated_base + slice_seungwoo + slice_yechan)에서
+    # 병합 버그로 누락됐다가 복원된 필드다. TASK J 슬라이스에서는 선택 필드이므로
+    # 그 구간에서만 전량을 요구한다.
+    G_ORIGINS = {"validated_base", "slice_seungwoo", "slice_yechan"}
+    base = [q for q in qs if q.get("origin") in G_ORIGINS]
+    check("TASK G 단계 71개 context 전부 복원",
+          len(base) == 71 and all(q["context"] for q in base),
+          f"n={len(base)} 누락={[q['id'] for q in base if not q['context']][:5]}")
     check("primary_label 지정", all(q["primary_label"] for q in qs))
     check("primary_label 은 validated_labels 의 원소",
           all(q["primary_label"] in q["validated_labels"] for q in qs))
@@ -232,8 +244,11 @@ def test_queries_v2() -> None:
     check("중복 코드 질의에 duplicate_gold_code 표시",
           all("duplicate_gold_code" in by_id[q]["label_issues"]
               for q in ("ext-002", "ext-029", "ext-006", "ext-016", "ext-007")))
-    check("등가 라벨이 붙은 질의가 과반",
-          sum(1 for q in qs if q["equivalent_labels"]) > len(qs) / 2)
+    # 등가 라벨(타 규제체계 쌍둥이)이 붙는 비율도 확장으로 희석됐다(71개 기준 과반
+    # → 151개 기준 32.5%). 성질은 '과반'이 아니라 '무시할 수 없는 규모'다.
+    n_equiv = sum(1 for q in qs if q["equivalent_labels"])
+    check("등가 라벨이 붙은 질의가 4분의 1 이상",
+          n_equiv >= len(qs) / 4, f"{n_equiv}/{len(qs)}")
     check("등가 라벨에 정답 코드가 섞여 있지 않다",
           all(not (set(q["equivalent_labels"]) & set(q["validated_labels"])) for q in qs))
 

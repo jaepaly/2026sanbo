@@ -81,9 +81,13 @@ def test_lexical_gate_is_void_for_korean() -> None:
     en = [r["lexical_jaccard"] for r in rows if r["lang"] == "en"]
 
     check("한국어 질의가 존재한다", len(ko) > 0, f"n={len(ko)}")
-    check("한국어 어휘 Jaccard가 전부 정확히 0 (원리상 교집합 공집합)",
-          all(v == 0.0 for v in ko),
-          f"nonzero={[v for v in ko if v != 0.0][:5]}")
+    # n=71 시절 이 값은 전부 정확히 0이었다. 확장 질의에 숫자·라틴 약어가 섞이면서
+    # 극소수가 0을 벗어나므로, 검사해야 할 성질은 '전부 0'이 아니라 '게이트가 검사할
+    # 것이 사실상 없다'는 쪽이다. 임계 0.30 대비 최대값이 한 자릿수 퍼센트에 머무는지를 본다.
+    n_zero_ko = sum(1 for v in ko if v == 0.0)
+    check("한국어 어휘 Jaccard가 사실상 전부 0 (교집합이 원리상 거의 공집합)",
+          n_zero_ko >= 0.9 * len(ko) and max(ko) < sg.MAX_JACCARD / 3,
+          f"zero={n_zero_ko}/{len(ko)} max={max(ko)}")
     check("영어 어휘 Jaccard는 0이 아닌 값을 가진다(토크나이저가 실제로 동작함)",
           any(v > 0.0 for v in en), f"max={max(en) if en else None}")
     check("어휘 게이트는 임계 0.30에서 한 번도 발동하지 않는다",
@@ -92,8 +96,8 @@ def test_lexical_gate_is_void_for_korean() -> None:
 
     # 고쳐진 게이트가 이 공허성을 경고로 잡아내는가
     void = sg.lexical_void_warning(rows)
-    check("게이트가 한국어의 구조적 0을 경고로 보고한다",
-          void.get("ko", {}).get("all_exactly_zero") is True
+    check("게이트가 한국어의 구조적 공허를 경고로 보고한다",
+          void.get("ko", {}).get("effectively_void") is True
           and bool(void.get("ko", {}).get("warning")),
           f"ko={void.get('ko')}")
     check("게이트가 영어에는 잘못된 경고를 내지 않는다",
@@ -174,11 +178,21 @@ def test_substitution_ladder() -> None:
           all(totals[i] <= totals[i + 1] for i in range(len(totals) - 1)), f"{totals}")
     check("질의별 적용 규칙 수도 단조 비감소", per_query_monotone, f"{offenders[:3]}")
     check("level 0에서는 아무것도 치환되지 않는다", totals[0] == 0, f"{totals[0]}")
-    check("level 1에서 모든 질의가 최소 1건 치환된다",
-          all(ex.substitute(q["query"], q["id"], q["lang"], rules, 1)["n_applied"] >= 1
-              for q in queries),
-          str([q["id"] for q in queries
-               if ex.substitute(q["query"], q["id"], q["lang"], rules, 1)["n_applied"] < 1]))
+    # 치환 사전은 원본 71개 질의를 보고 만든 것이라 TASK J 확장 질의(80건)에는
+    # tier1/2 질의별 규칙이 없다. 이는 사전의 한계이지 버그가 아니므로 '전량 치환'을
+    # 요구하지 않고, 대신 **커버리지를 명시적으로 세어 고정**한다 — 커버리지가 조용히
+    # 더 떨어지면 실패한다(PAPER 4.6 이 이 수치를 인용한다).
+    cov1 = sum(1 for q in queries
+               if ex.substitute(q["query"], q["id"], q["lang"], rules, 1)["n_applied"] >= 1)
+    cov3 = sum(1 for q in queries
+               if ex.substitute(q["query"], q["id"], q["lang"], rules, 3)["n_applied"] >= 1)
+    check("level 1 치환 커버리지 71건 (원본 질의 전량)", cov1 == 71, f"{cov1}/{len(queries)}")
+    check("level 3 치환 커버리지 121건 이상 (전역 규칙까지 적용)",
+          cov3 >= 121, f"{cov3}/{len(queries)}")
+    uncovered = [q["id"] for q in queries
+                 if ex.substitute(q["query"], q["id"], q["lang"], rules, 3)["n_applied"] < 1]
+    check("미커버 질의가 전부 확장분(TASK G/J)이다 — 원본 71개는 빠짐없이 압력을 받는다",
+          all(not q.startswith("ext-") for q in uncovered), str(uncovered[:5]))
 
     # 결정론: 같은 입력 → 같은 출력
     a = [ex.substitute(q["query"], q["id"], q["lang"], rules, 3)["text"] for q in queries]
@@ -187,8 +201,8 @@ def test_substitution_ladder() -> None:
 
     # 텍스트가 실제로 변한다 & 원문과 다르다
     changed = sum(1 for q, t in zip(queries, a) if t != q["query"])
-    check("level 3에서 모든 질의 텍스트가 변경된다", changed == len(queries),
-          f"{changed}/{len(queries)}")
+    check("level 3에서 커버된 질의는 텍스트가 실제로 변경된다", changed == cov3,
+          f"{changed}/{cov3}")
 
     # ---- 치환이 자기참조를 늘리지 않는다 --------------------------------
     # Jaccard는 |교집합|/|합집합| 이므로 질의가 짧아지면 교집합이 그대로여도 값이
@@ -281,13 +295,14 @@ def test_audit_artifact() -> None:
           < c["pos_b_korean_basis_vs_answer"]["stats"]["mean"],
           f"neg={c['neg_unrelated_pairs']['stats']['mean']} "
           f"pos_b={c['pos_b_korean_basis_vs_answer']['stats']['mean']}")
-    check("한국어 어휘 Jaccard가 산출물에서도 전부 0",
-          p["distribution_by_lang"]["ko"]["lexical_jaccard"]["all_exactly_zero"] is True)
+    check("한국어 어휘 Jaccard가 산출물에서도 사실상 전부 0",
+          p["verdict_primary"]["lexical_void_by_lang"]["ko"]["effectively_void"] is True,
+          str(p["verdict_primary"]["lexical_void_by_lang"]["ko"]))
     check("상위 15건이 원문과 나란히 기록되어 있다",
           len(p["top_side_by_side"]) > 0
           and all(r.get("query") and r.get("answer_minimal_text")
                   for r in p["top_side_by_side"]))
-    check("71개 전량이 per_query에 있다", len(p["per_query"]) == p["meta"]["n"],
+    check("질의 전량이 per_query에 있다", len(p["per_query"]) == p["meta"]["n"],
           f"{len(p['per_query'])} vs {p['meta']['n']}")
 
 

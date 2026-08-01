@@ -10,142 +10,142 @@
   ],
   "conclusion": {
     "dense_beats_bm25_in_every_variant_and_model": true,
-    "hybrid_never_significantly_beats_dense": true
+    "hybrid_never_significantly_beats_dense": false
   },
   "variants": {
     "V0_baseline": {
-      "description": "전체 71개 (기준)",
+      "description": "전체 질의 (기준)",
       "dropped": 0,
-      "n": 71,
-      "n_ko": 45,
-      "n_en": 26,
+      "n": 151,
+      "n_ko": 109,
+      "n_en": 42,
       "models": {
         "MiniLM": {
           "BM25": {
-            "k": 11,
-            "n": 71,
-            "rate": 0.1549,
+            "k": 23,
+            "n": 151,
+            "rate": 0.1523,
             "ci95": [
-              0.08,
-              0.2603
+              0.0991,
+              0.2197
             ]
           },
           "dense": {
-            "k": 39,
-            "n": 71,
-            "rate": 0.5493,
+            "k": 68,
+            "n": 151,
+            "rate": 0.4503,
             "ci95": [
-              0.4266,
-              0.6677
+              0.3694,
+              0.5333
             ]
           },
           "hybrid_0.5": {
-            "k": 41,
-            "n": 71,
-            "rate": 0.5775,
+            "k": 77,
+            "n": 151,
+            "rate": 0.5099,
             "ci95": [
-              0.4544,
-              0.6939
+              0.4274,
+              0.5921
             ]
           },
-          "BM25_ko": 0.0,
-          "dense_ko": 0.6,
+          "BM25_ko": 0.0275,
+          "dense_ko": 0.4771,
           "dense_vs_bm25": {
-            "mean_diff": 0.3944,
-            "wins": 29,
-            "losses": 1,
-            "p_two_sided_exact": 5.7742e-08,
+            "mean_diff": 0.298,
+            "wins": 53,
+            "losses": 8,
+            "p_two_sided_exact": 2.98644e-09,
             "significant_at_0.05": true
           },
           "hybrid_vs_dense": {
-            "mean_diff": 0.0282,
-            "p_two_sided_exact": 0.625,
-            "significant_at_0.05": false
+            "mean_diff": 0.0596,
+            "p_two_sided_exact": 0.0117188,
+            "significant_at_0.05": true
           }
         },
         "bge-m3": {
           "BM25": {
-            "k": 11,
-            "n": 71,
-            "rate": 0.1549,
+            "k": 23,
+            "n": 151,
+            "rate": 0.1523,
             "ci95": [
-              0.08,
-              0.2603
+              0.0991,
+              0.2197
             ]
           },
           "dense": {
-            "k": 40,
-            "n": 71,
-            "rate": 0.5634,
+            "k": 86,
+            "n": 151,
+            "rate": 0.5695,
             "ci95": [
-              0.4405,
-              0.6809
+              0.4865,
+              0.6497
             ]
           },
           "hybrid_0.5": {
-            "k": 40,
-            "n": 71,
-            "rate": 0.5634,
+            "k": 83,
+            "n": 151,
+            "rate": 0.5497,
             "ci95": [
-              0.4405,
-              0.6809
+              0.4667,
+              0.6306
             ]
           },
-          "BM25_ko": 0.0,
-          "dense_ko": 0.6222,
+          "BM25_ko": 0.0275,
+          "dense_ko": 0.578,
           "dense_vs_bm25": {
-            "mean_diff": 0.4085,
-            "wins": 30,
-            "losses": 1,
-            "p_two_sided_exact": 2.98023e-08,
+            "mean_diff": 0.4172,
+            "wins": 65,
+            "losses": 2,
+            "p_two_sided_exact": 3.08862e-17,
             "significant_at_0.05": true
           },
           "hybrid_vs_dense": {
-            "mean_diff": 0.0,
-            "p_two_sided_exact": 1.0,
+            "mean_diff": -0.0199,
+            "p_two_sided_exact": 0.453125,
             "significant_at_0.05": false
           }
         },
         "e5-base": {
           "BM25": {
-            "k": 11,
-            "n": 71,
-            "rate": 0.1549,
+            "k": 23,
+            "n": 151,
+            "rate": 0.1523,
             "ci95": [
-              0.08,
-              0.2603
+              0.0991,
+              0.2197
             ]
           },
           "dense": {
-            "k": 33,
-            "n": 71,
-            "rate": 0.4648,
+            "k": 72,
+            "n": 151,
+            "rate": 0.4768,
             "ci95": [
-              0.3455,
-              0.5871
+              0.395,
+              0.5596
             ]
           },
           "hybrid_0.5": {
-            "k": 35,
-            "n": 71,
-            "rate": 0.493,
+            "k": 74,
+            "n": 151,
+            "rate": 0.4901,
             "ci95": [
-              0.3722,
-              0.6144
+              0.4079,
+              0.5726
             ]
           },
-          "BM25_ko": 0.0,
-          "dense_ko": 0.4889,
+          "BM25_ko": 0.0275,
+          "dense_ko": 0.4679,
           "dense_vs_bm25": {
-            "mean_diff": 0.3099,
-            "wins": 23,
-            "losses": 1,
-            "p_two_sided_exact": 2.98023e-06,
+            "mean_diff": 0.3245,
+            "wins": 54,
+            "losses": 5,
+            "p_two_sided_exact": 1.90674e-11,
             "significant_at_0.05": true
           },
           "hybrid_vs_dense": {
-            "mean_diff": 0.0282,
-            "p_two_sided_exact": 0.625,
+            "mean_diff": 0.0132,
+            "p_two_sided_exact": 0.774414,
             "significant_at_0.05": false
           }
         }
@@ -154,135 +154,135 @@
     "V1_no_stub_gold": {
       "description": "정답이 전부 표제 스텁인 질의 제거 (D1)",
       "dropped": 42,
-      "n": 29,
-      "n_ko": 18,
-      "n_en": 11,
+      "n": 109,
+      "n_ko": 82,
+      "n_en": 27,
       "models": {
         "MiniLM": {
           "BM25": {
-            "k": 8,
-            "n": 29,
-            "rate": 0.2759,
+            "k": 20,
+            "n": 109,
+            "rate": 0.1835,
             "ci95": [
-              0.1273,
-              0.4724
+              0.1158,
+              0.2691
             ]
           },
           "dense": {
-            "k": 20,
-            "n": 29,
-            "rate": 0.6897,
+            "k": 49,
+            "n": 109,
+            "rate": 0.4495,
             "ci95": [
-              0.4917,
-              0.8472
+              0.3541,
+              0.5478
             ]
           },
           "hybrid_0.5": {
-            "k": 21,
-            "n": 29,
-            "rate": 0.7241,
+            "k": 57,
+            "n": 109,
+            "rate": 0.5229,
             "ci95": [
-              0.5276,
-              0.8727
+              0.4251,
+              0.6195
             ]
           },
-          "BM25_ko": 0.0,
-          "dense_ko": 0.7222,
+          "BM25_ko": 0.0366,
+          "dense_ko": 0.4634,
           "dense_vs_bm25": {
-            "mean_diff": 0.4138,
-            "wins": 13,
-            "losses": 1,
-            "p_two_sided_exact": 0.00183105,
+            "mean_diff": 0.2661,
+            "wins": 37,
+            "losses": 8,
+            "p_two_sided_exact": 1.53741e-05,
             "significant_at_0.05": true
           },
           "hybrid_vs_dense": {
-            "mean_diff": 0.0345,
-            "p_two_sided_exact": 1.0,
-            "significant_at_0.05": false
+            "mean_diff": 0.0734,
+            "p_two_sided_exact": 0.0078125,
+            "significant_at_0.05": true
           }
         },
         "bge-m3": {
           "BM25": {
-            "k": 8,
-            "n": 29,
-            "rate": 0.2759,
+            "k": 20,
+            "n": 109,
+            "rate": 0.1835,
             "ci95": [
-              0.1273,
-              0.4724
+              0.1158,
+              0.2691
             ]
           },
           "dense": {
-            "k": 21,
-            "n": 29,
-            "rate": 0.7241,
+            "k": 67,
+            "n": 109,
+            "rate": 0.6147,
             "ci95": [
-              0.5276,
-              0.8727
+              0.5166,
+              0.7063
             ]
           },
           "hybrid_0.5": {
-            "k": 22,
-            "n": 29,
-            "rate": 0.7586,
+            "k": 65,
+            "n": 109,
+            "rate": 0.5963,
             "ci95": [
-              0.5646,
-              0.897
+              0.4981,
+              0.6892
             ]
           },
-          "BM25_ko": 0.0,
-          "dense_ko": 0.7778,
+          "BM25_ko": 0.0366,
+          "dense_ko": 0.5976,
           "dense_vs_bm25": {
-            "mean_diff": 0.4483,
-            "wins": 14,
-            "losses": 1,
-            "p_two_sided_exact": 0.000976562,
+            "mean_diff": 0.4312,
+            "wins": 49,
+            "losses": 2,
+            "p_two_sided_exact": 1.17861e-12,
             "significant_at_0.05": true
           },
           "hybrid_vs_dense": {
-            "mean_diff": 0.0345,
-            "p_two_sided_exact": 1.0,
+            "mean_diff": -0.0183,
+            "p_two_sided_exact": 0.6875,
             "significant_at_0.05": false
           }
         },
         "e5-base": {
           "BM25": {
-            "k": 8,
-            "n": 29,
-            "rate": 0.2759,
+            "k": 20,
+            "n": 109,
+            "rate": 0.1835,
             "ci95": [
-              0.1273,
-              0.4724
+              0.1158,
+              0.2691
             ]
           },
           "dense": {
-            "k": 20,
-            "n": 29,
-            "rate": 0.6897,
+            "k": 59,
+            "n": 109,
+            "rate": 0.5413,
             "ci95": [
-              0.4917,
-              0.8472
+              0.4432,
+              0.6371
             ]
           },
           "hybrid_0.5": {
-            "k": 21,
-            "n": 29,
-            "rate": 0.7241,
+            "k": 60,
+            "n": 109,
+            "rate": 0.5505,
             "ci95": [
-              0.5276,
-              0.8727
+              0.4522,
+              0.6459
             ]
           },
-          "BM25_ko": 0.0,
-          "dense_ko": 0.7222,
+          "BM25_ko": 0.0366,
+          "dense_ko": 0.5122,
           "dense_vs_bm25": {
-            "mean_diff": 0.4138,
-            "wins": 13,
-            "losses": 1,
-            "p_two_sided_exact": 0.00183105,
+            "mean_diff": 0.3578,
+            "wins": 44,
+            "losses": 5,
+            "p_two_sided_exact": 7.59716e-09,
             "significant_at_0.05": true
           },
           "hybrid_vs_dense": {
-            "mean_diff": 0.0345,
+            "mean_diff": 0.0092,
             "p_two_sided_exact": 1.0,
             "significant_at_0.05": false
           }
@@ -292,136 +292,136 @@
     "V2_no_label_defect": {
       "description": "부정확 2차 라벨·규제체계 모순 제거 (D3/D4)",
       "dropped": 3,
-      "n": 68,
-      "n_ko": 44,
-      "n_en": 24,
+      "n": 148,
+      "n_ko": 108,
+      "n_en": 40,
       "models": {
         "MiniLM": {
           "BM25": {
-            "k": 11,
-            "n": 68,
-            "rate": 0.1618,
+            "k": 23,
+            "n": 148,
+            "rate": 0.1554,
             "ci95": [
-              0.0836,
-              0.271
+              0.1011,
+              0.224
             ]
           },
           "dense": {
-            "k": 39,
-            "n": 68,
-            "rate": 0.5735,
+            "k": 68,
+            "n": 148,
+            "rate": 0.4595,
             "ci95": [
-              0.4477,
-              0.6928
+              0.3773,
+              0.5432
             ]
           },
           "hybrid_0.5": {
-            "k": 41,
-            "n": 68,
-            "rate": 0.6029,
+            "k": 77,
+            "n": 148,
+            "rate": 0.5203,
             "ci95": [
-              0.477,
-              0.7197
+              0.4367,
+              0.603
             ]
           },
-          "BM25_ko": 0.0,
-          "dense_ko": 0.6136,
+          "BM25_ko": 0.0278,
+          "dense_ko": 0.4815,
           "dense_vs_bm25": {
-            "mean_diff": 0.4118,
-            "wins": 29,
-            "losses": 1,
-            "p_two_sided_exact": 5.7742e-08,
+            "mean_diff": 0.3041,
+            "wins": 53,
+            "losses": 8,
+            "p_two_sided_exact": 2.98644e-09,
             "significant_at_0.05": true
           },
           "hybrid_vs_dense": {
-            "mean_diff": 0.0294,
-            "p_two_sided_exact": 0.625,
-            "significant_at_0.05": false
+            "mean_diff": 0.0608,
+            "p_two_sided_exact": 0.0117188,
+            "significant_at_0.05": true
           }
         },
         "bge-m3": {
           "BM25": {
-            "k": 11,
-            "n": 68,
-            "rate": 0.1618,
+            "k": 23,
+            "n": 148,
+            "rate": 0.1554,
             "ci95": [
-              0.0836,
-              0.271
+              0.1011,
+              0.224
             ]
           },
           "dense": {
-            "k": 40,
-            "n": 68,
-            "rate": 0.5882,
+            "k": 86,
+            "n": 148,
+            "rate": 0.5811,
             "ci95": [
-              0.4623,
-              0.7063
+              0.4973,
+              0.6616
             ]
           },
           "hybrid_0.5": {
-            "k": 40,
-            "n": 68,
-            "rate": 0.5882,
+            "k": 83,
+            "n": 148,
+            "rate": 0.5608,
             "ci95": [
-              0.4623,
-              0.7063
+              0.4769,
+              0.6422
             ]
           },
-          "BM25_ko": 0.0,
-          "dense_ko": 0.6364,
+          "BM25_ko": 0.0278,
+          "dense_ko": 0.5833,
           "dense_vs_bm25": {
-            "mean_diff": 0.4265,
-            "wins": 30,
-            "losses": 1,
-            "p_two_sided_exact": 2.98023e-08,
+            "mean_diff": 0.4257,
+            "wins": 65,
+            "losses": 2,
+            "p_two_sided_exact": 3.08862e-17,
             "significant_at_0.05": true
           },
           "hybrid_vs_dense": {
-            "mean_diff": 0.0,
-            "p_two_sided_exact": 1.0,
+            "mean_diff": -0.0203,
+            "p_two_sided_exact": 0.453125,
             "significant_at_0.05": false
           }
         },
         "e5-base": {
           "BM25": {
-            "k": 11,
-            "n": 68,
-            "rate": 0.1618,
+            "k": 23,
+            "n": 148,
+            "rate": 0.1554,
             "ci95": [
-              0.0836,
-              0.271
+              0.1011,
+              0.224
             ]
           },
           "dense": {
-            "k": 33,
-            "n": 68,
-            "rate": 0.4853,
+            "k": 72,
+            "n": 148,
+            "rate": 0.4865,
             "ci95": [
-              0.3622,
-              0.6097
+              0.4036,
+              0.5699
             ]
           },
           "hybrid_0.5": {
-            "k": 35,
-            "n": 68,
-            "rate": 0.5147,
+            "k": 74,
+            "n": 148,
+            "rate": 0.5,
             "ci95": [
-              0.3903,
-              0.6378
+              0.4168,
+              0.5832
             ]
           },
-          "BM25_ko": 0.0,
-          "dense_ko": 0.5,
+          "BM25_ko": 0.0278,
+          "dense_ko": 0.4722,
           "dense_vs_bm25": {
-            "mean_diff": 0.3235,
-            "wins": 23,
-            "losses": 1,
-            "p_two_sided_exact": 2.98023e-06,
+            "mean_diff": 0.3311,
+            "wins": 54,
+            "losses": 5,
+            "p_two_sided_exact": 1.90674e-11,
             "significant_at_0.05": true
           },
           "hybrid_vs_dense": {
-            "mean_diff": 0.0294,
-            "p_two_sided_exact": 0.625,
+            "mean_diff": 0.0135,
+            "p_two_sided_exact": 0.774414,
             "significant_at_0.05": false
           }
         }
@@ -430,136 +430,136 @@
     "V3_unique_gold_code": {
       "description": "정답 코드 재사용 질의 제거 (D5)",
       "dropped": 3,
-      "n": 68,
-      "n_ko": 43,
-      "n_en": 25,
+      "n": 148,
+      "n_ko": 107,
+      "n_en": 41,
       "models": {
         "MiniLM": {
           "BM25": {
-            "k": 11,
-            "n": 68,
-            "rate": 0.1618,
+            "k": 23,
+            "n": 148,
+            "rate": 0.1554,
             "ci95": [
-              0.0836,
-              0.271
+              0.1011,
+              0.224
             ]
           },
           "dense": {
-            "k": 39,
-            "n": 68,
-            "rate": 0.5735,
+            "k": 68,
+            "n": 148,
+            "rate": 0.4595,
             "ci95": [
-              0.4477,
-              0.6928
+              0.3773,
+              0.5432
             ]
           },
           "hybrid_0.5": {
-            "k": 41,
-            "n": 68,
-            "rate": 0.6029,
+            "k": 77,
+            "n": 148,
+            "rate": 0.5203,
             "ci95": [
-              0.477,
-              0.7197
+              0.4367,
+              0.603
             ]
           },
-          "BM25_ko": 0.0,
-          "dense_ko": 0.6279,
+          "BM25_ko": 0.028,
+          "dense_ko": 0.486,
           "dense_vs_bm25": {
-            "mean_diff": 0.4118,
-            "wins": 29,
-            "losses": 1,
-            "p_two_sided_exact": 5.7742e-08,
+            "mean_diff": 0.3041,
+            "wins": 53,
+            "losses": 8,
+            "p_two_sided_exact": 2.98644e-09,
             "significant_at_0.05": true
           },
           "hybrid_vs_dense": {
-            "mean_diff": 0.0294,
-            "p_two_sided_exact": 0.625,
-            "significant_at_0.05": false
+            "mean_diff": 0.0608,
+            "p_two_sided_exact": 0.0117188,
+            "significant_at_0.05": true
           }
         },
         "bge-m3": {
           "BM25": {
-            "k": 11,
-            "n": 68,
-            "rate": 0.1618,
+            "k": 23,
+            "n": 148,
+            "rate": 0.1554,
             "ci95": [
-              0.0836,
-              0.271
+              0.1011,
+              0.224
             ]
           },
           "dense": {
-            "k": 39,
-            "n": 68,
-            "rate": 0.5735,
+            "k": 85,
+            "n": 148,
+            "rate": 0.5743,
             "ci95": [
-              0.4477,
-              0.6928
+              0.4905,
+              0.6551
             ]
           },
           "hybrid_0.5": {
-            "k": 40,
-            "n": 68,
-            "rate": 0.5882,
+            "k": 83,
+            "n": 148,
+            "rate": 0.5608,
             "ci95": [
-              0.4623,
-              0.7063
+              0.4769,
+              0.6422
             ]
           },
-          "BM25_ko": 0.0,
-          "dense_ko": 0.6512,
+          "BM25_ko": 0.028,
+          "dense_ko": 0.5888,
           "dense_vs_bm25": {
-            "mean_diff": 0.4118,
-            "wins": 29,
-            "losses": 1,
-            "p_two_sided_exact": 5.7742e-08,
+            "mean_diff": 0.4189,
+            "wins": 64,
+            "losses": 2,
+            "p_two_sided_exact": 5.99564e-17,
             "significant_at_0.05": true
           },
           "hybrid_vs_dense": {
-            "mean_diff": 0.0147,
-            "p_two_sided_exact": 1.0,
+            "mean_diff": -0.0135,
+            "p_two_sided_exact": 0.6875,
             "significant_at_0.05": false
           }
         },
         "e5-base": {
           "BM25": {
-            "k": 11,
-            "n": 68,
-            "rate": 0.1618,
+            "k": 23,
+            "n": 148,
+            "rate": 0.1554,
             "ci95": [
-              0.0836,
-              0.271
+              0.1011,
+              0.224
             ]
           },
           "dense": {
-            "k": 33,
-            "n": 68,
-            "rate": 0.4853,
+            "k": 72,
+            "n": 148,
+            "rate": 0.4865,
             "ci95": [
-              0.3622,
-              0.6097
+              0.4036,
+              0.5699
             ]
           },
           "hybrid_0.5": {
-            "k": 35,
-            "n": 68,
-            "rate": 0.5147,
+            "k": 74,
+            "n": 148,
+            "rate": 0.5,
             "ci95": [
-              0.3903,
-              0.6378
+              0.4168,
+              0.5832
             ]
           },
-          "BM25_ko": 0.0,
-          "dense_ko": 0.5116,
+          "BM25_ko": 0.028,
+          "dense_ko": 0.4766,
           "dense_vs_bm25": {
-            "mean_diff": 0.3235,
-            "wins": 23,
-            "losses": 1,
-            "p_two_sided_exact": 2.98023e-06,
+            "mean_diff": 0.3311,
+            "wins": 54,
+            "losses": 5,
+            "p_two_sided_exact": 1.90674e-11,
             "significant_at_0.05": true
           },
           "hybrid_vs_dense": {
-            "mean_diff": 0.0294,
-            "p_two_sided_exact": 0.625,
+            "mean_diff": 0.0135,
+            "p_two_sided_exact": 0.774414,
             "significant_at_0.05": false
           }
         }
@@ -568,135 +568,135 @@
     "V4_strict": {
       "description": "V1 ∩ V2 ∩ V3 (가장 보수적)",
       "dropped": 42,
-      "n": 29,
-      "n_ko": 18,
-      "n_en": 11,
+      "n": 109,
+      "n_ko": 82,
+      "n_en": 27,
       "models": {
         "MiniLM": {
           "BM25": {
-            "k": 8,
-            "n": 29,
-            "rate": 0.2759,
+            "k": 20,
+            "n": 109,
+            "rate": 0.1835,
             "ci95": [
-              0.1273,
-              0.4724
+              0.1158,
+              0.2691
             ]
           },
           "dense": {
-            "k": 20,
-            "n": 29,
-            "rate": 0.6897,
+            "k": 49,
+            "n": 109,
+            "rate": 0.4495,
             "ci95": [
-              0.4917,
-              0.8472
+              0.3541,
+              0.5478
             ]
           },
           "hybrid_0.5": {
-            "k": 21,
-            "n": 29,
-            "rate": 0.7241,
+            "k": 57,
+            "n": 109,
+            "rate": 0.5229,
             "ci95": [
-              0.5276,
-              0.8727
+              0.4251,
+              0.6195
             ]
           },
-          "BM25_ko": 0.0,
-          "dense_ko": 0.7222,
+          "BM25_ko": 0.0366,
+          "dense_ko": 0.4634,
           "dense_vs_bm25": {
-            "mean_diff": 0.4138,
-            "wins": 13,
-            "losses": 1,
-            "p_two_sided_exact": 0.00183105,
+            "mean_diff": 0.2661,
+            "wins": 37,
+            "losses": 8,
+            "p_two_sided_exact": 1.53741e-05,
             "significant_at_0.05": true
           },
           "hybrid_vs_dense": {
-            "mean_diff": 0.0345,
-            "p_two_sided_exact": 1.0,
-            "significant_at_0.05": false
+            "mean_diff": 0.0734,
+            "p_two_sided_exact": 0.0078125,
+            "significant_at_0.05": true
           }
         },
         "bge-m3": {
           "BM25": {
-            "k": 8,
-            "n": 29,
-            "rate": 0.2759,
+            "k": 20,
+            "n": 109,
+            "rate": 0.1835,
             "ci95": [
-              0.1273,
-              0.4724
+              0.1158,
+              0.2691
             ]
           },
           "dense": {
-            "k": 21,
-            "n": 29,
-            "rate": 0.7241,
+            "k": 67,
+            "n": 109,
+            "rate": 0.6147,
             "ci95": [
-              0.5276,
-              0.8727
+              0.5166,
+              0.7063
             ]
           },
           "hybrid_0.5": {
-            "k": 22,
-            "n": 29,
-            "rate": 0.7586,
+            "k": 65,
+            "n": 109,
+            "rate": 0.5963,
             "ci95": [
-              0.5646,
-              0.897
+              0.4981,
+              0.6892
             ]
           },
-          "BM25_ko": 0.0,
-          "dense_ko": 0.7778,
+          "BM25_ko": 0.0366,
+          "dense_ko": 0.5976,
           "dense_vs_bm25": {
-            "mean_diff": 0.4483,
-            "wins": 14,
-            "losses": 1,
-            "p_two_sided_exact": 0.000976562,
+            "mean_diff": 0.4312,
+            "wins": 49,
+            "losses": 2,
+            "p_two_sided_exact": 1.17861e-12,
             "significant_at_0.05": true
           },
           "hybrid_vs_dense": {
-            "mean_diff": 0.0345,
-            "p_two_sided_exact": 1.0,
+            "mean_diff": -0.0183,
+            "p_two_sided_exact": 0.6875,
             "significant_at_0.05": false
           }
         },
         "e5-base": {
           "BM25": {
-            "k": 8,
-            "n": 29,
-            "rate": 0.2759,
+            "k": 20,
+            "n": 109,
+            "rate": 0.1835,
             "ci95": [
-              0.1273,
-              0.4724
+              0.1158,
+              0.2691
             ]
           },
           "dense": {
-            "k": 20,
-            "n": 29,
-            "rate": 0.6897,
+            "k": 59,
+            "n": 109,
+            "rate": 0.5413,
             "ci95": [
-              0.4917,
-              0.8472
+              0.4432,
+              0.6371
             ]
           },
           "hybrid_0.5": {
-            "k": 21,
-            "n": 29,
-            "rate": 0.7241,
+            "k": 60,
+            "n": 109,
+            "rate": 0.5505,
             "ci95": [
-              0.5276,
-              0.8727
+              0.4522,
+              0.6459
             ]
           },
-          "BM25_ko": 0.0,
-          "dense_ko": 0.7222,
+          "BM25_ko": 0.0366,
+          "dense_ko": 0.5122,
           "dense_vs_bm25": {
-            "mean_diff": 0.4138,
-            "wins": 13,
-            "losses": 1,
-            "p_two_sided_exact": 0.00183105,
+            "mean_diff": 0.3578,
+            "wins": 44,
+            "losses": 5,
+            "p_two_sided_exact": 7.59716e-09,
             "significant_at_0.05": true
           },
           "hybrid_vs_dense": {
-            "mean_diff": 0.0345,
+            "mean_diff": 0.0092,
             "p_two_sided_exact": 1.0,
             "significant_at_0.05": false
           }

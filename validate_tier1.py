@@ -83,9 +83,17 @@ def main() -> int:
           "env 에 dense_model 이 없으면 통과로 둔다")
 
     print("\n[데이터 일치]")
-    check("질의 수 71", len(ladder) == 71, str(len(ladder)))
-    check("ablation query_ids 가 사다리와 동일",
-          abl.get("query_ids") == [q["id"] for q in ladder])
+    # 사다리 정의를 위반한 질의는 frontier 에서만 빠진다(ladder_spec_compliant=False).
+    # ablation 은 사다리를 쓰지 않으므로 전체 표본을 그대로 쓴다. 따라서 두 실험의
+    # 질의 집합이 다를 수 있고, 검증은 각자의 집합을 기준으로 해야 한다.
+    front_ladder = [q for q in ladder if q.get("ladder_spec_compliant", True)]
+    check("사다리 질의 수 > 0", len(ladder) > 0, str(len(ladder)))
+    check("frontier 질의 수가 사다리 준수분과 일치",
+          len(((fr.get("hit_vectors") or {}).get("L0") or {}).get("BM25") or []) == len(front_ladder),
+          f"준수 {len(front_ladder)} / 전체 {len(ladder)}")
+    check("ablation query_ids 가 사다리 전체와 동일",
+          abl.get("query_ids") == [q["id"] for q in ladder],
+          f"ablation {len(abl.get('query_ids') or [])} vs 사다리 {len(ladder)}")
     check("치환 사전 존재", SUBS.exists())
 
     print("\n[BM25 교차검증 — 인코더와 무관하므로 반드시 일치]")
@@ -102,13 +110,13 @@ def main() -> int:
 
     # frontier: 등급별 BM25 는 로컬 재계산과 대조 가능
     fr_hits = fr.get("hit_vectors") or {}
-    labels = [set(q["validated_labels"]) for q in ladder]
+    labels = [set(q["validated_labels"]) for q in front_ladder]
     for lv in ("L0", "L1", "L2", "L3", "L4"):
         got = (fr_hits.get(lv) or {}).get("BM25")
         if got is None:
             check(f"frontier {lv}: BM25 벡터 존재", False)
             continue
-        qs = [q["levels"][lv]["query"] for q in ladder]
+        qs = [q["levels"][lv]["query"] for q in front_ladder]
         expect = bm25_hits(corpus, qs, labels, fr.get("prespecification", {})
                            .get("index_mode", "minimal_text"))
         n_diff = sum(1 for x, y in zip(got, expect) if x != y)
@@ -123,6 +131,10 @@ def main() -> int:
     log = abl.get("substitution_log") or {}
     abl_hits = abl.get("hit_vectors") or {}
     qids = abl.get("query_ids") or [q["id"] for q in ladder]
+    # ablation 은 사다리 전체(151)를 쓰므로 frontier 용 `labels`(준수분 119)를 그대로
+    # zip 하면 id 와 라벨이 어긋난다. 질의 id 로 직접 찾는다.
+    labels_by_id = {q["id"]: set(q["validated_labels"]) for q in ladder}
+    abl_labels = [labels_by_id.get(qid, set()) for qid in qids]
     if not log:
         check("ablation: substitution_log 존재(로컬 재계산에 필요)", False)
     else:
@@ -133,7 +145,7 @@ def main() -> int:
                     check(f"ablation {imode} L{lv}: BM25 벡터 존재", False)
                     continue
                 qs, ls = [], []
-                for qid, lab in zip(qids, labels):
+                for qid, lab in zip(qids, abl_labels):
                     node = (log.get(qid) or {}).get(lv)
                     if node is None:
                         qs = []
@@ -171,8 +183,16 @@ def main() -> int:
               all(a >= b - 1e-9 for a, b in zip(vals, vals[1:])), str(vals))
     ko = (rbl.get("BM25") and (hl.get("recall_by_level_ko") or {}).get("BM25")) or {}
     if ko:
-        check("ablation: 한국어 BM25 는 전 level 0.0000 (코퍼스가 100% 영어)",
-              all(abs(v) < 1e-9 for v in ko.values()), str(ko))
+        # 원래 이 검사는 "정확히 0.0000"을 요구했다. n=71 검증셋의 한국어 질의가
+        # 순수 한글이라 영어 코퍼스와 어휘 교집합이 실제로 공집합이었기 때문이다.
+        # TASK J 확장 질의에는 "5MW", "640x512", "3D", "CVD" 처럼 라틴·숫자 토큰이
+        # 들어 있어 교집합이 0 이 아니게 되었다(측정 결과 0.037 수준). 구조적 주장은
+        # "코퍼스가 영어라 한국어 질의는 BM25 로 거의 회수되지 않는다" 이지
+        # "정확히 0" 이 아니므로, 실제 주장에 맞춰 상한으로 검사한다.
+        KO_BM25_CEILING = 0.10
+        check(f"ablation: 한국어 BM25 가 전 level {KO_BM25_CEILING} 미만 "
+              "(코퍼스가 100% 영어 → 구조적으로 거의 회수 불가)",
+              all(v < KO_BM25_CEILING for v in ko.values()), str(ko))
     tiers = fr.get("evidence_tiers") or {}
     prim = tiers.get("hybrid_0.5") or {}
     if prim:

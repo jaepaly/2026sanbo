@@ -319,8 +319,8 @@ def test_regenerated_artifacts() -> None:
         s = json.loads(stats_path.read_text(encoding="utf-8"))
         check("stats_summary에 env_meta 기록", "env" in s and "numpy" in s["env"])
         check("stats_summary에 seed 기록", s["meta"]["seed"] == 20260626)
-        check("dataset_sizes.validated_queries == 71",
-              s["dataset_sizes"]["validated_queries"] == 71,
+        check("dataset_sizes.validated_queries == 151",
+              s["dataset_sizes"]["validated_queries"] == 151,
               str(s["dataset_sizes"]["validated_queries"]))
         check("n13 결과가 보존됨", s["dataset_sizes"]["superseded_validated_n13"] == 13)
         check("before/after 기록 존재", len(s["n13_to_n71_before_after"]) >= 1)

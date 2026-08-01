@@ -4,11 +4,11 @@
     "generated_by": "audit_label_quality.py emit",
     "seed": 20260626,
     "env": {
-      "numpy": "2.2.6",
-      "python": "3.10.5",
-      "platform": "Windows-10-10.0.26200-SP0",
-      "torch": "2.6.0+cpu",
-      "sentence_transformers": "3.4.1"
+      "numpy": "2.4.6",
+      "python": "3.11.15",
+      "platform": "Windows-10-10.0.19045-SP0",
+      "torch": "2.6.0+cu124",
+      "sentence_transformers": "5.6.1"
     },
     "corpus": "data/corpus/combined.json",
     "queries": "data/validated_queries_expanded.json",
@@ -26,19 +26,12 @@
       "broader": "상대 항목이 정답 항목을 포함하지만 더 넓다(상위 노드)"
     },
     "counts": {
-      "distinct_gold_codes": 70,
+      "distinct_gold_codes": 150,
       "gold_codes_with_equivalents": 46,
-      "gold_codes_without_equivalents": 24,
-      "total_pairs": 81,
-      "pairs_relation_equivalent": 75,
+      "gold_codes_without_equivalents": 104,
+      "total_pairs": 80,
+      "pairs_relation_equivalent": 74,
       "pairs_relation_broader": 6
-    },
-    "equivalent_label_integrity": {
-      "active_corpus_entries": 1783,
-      "total_equivalents": 81,
-      "dangling": 1,
-      "restored_this_run": 0,
-      "policy": "존재하지 않는 등가 코드는 명시적으로 표시하고 R@10_equiv에서 제외한다. 자동 대체는 하지 않는다(라벨 매핑을 발명하는 것이므로)."
     }
   },
   "mappings": [
@@ -53,10 +46,10 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.333,
-          "jaccard_full_text": 0.333,
+          "jaccard_full_text": 0.073,
           "evidence": {
             "eccn_quote": "“Composite” structures or laminates, as follows (see List of Items Controlled).",
-            "counterpart_quote": "\"Composite\" structures or laminates, as follows: a. Made from any of the following:"
+            "counterpart_quote": "\"Composite\" structures or laminates, as follows: a. Made from any of the following: 1. An organic \"matrix\" and \"fibrous or filamentary materials\" specified in 1.C.10.c. or 1.C.10.d.; or 2. Prepregs or preforms specified in 1.C.10.e.; b. Made from a metal or carbon \"matrix\", and any of the following: 1. Carbon \"fibrous or filamentary materials\" having all of the following: a. A \"specific modulus\" e"
           },
           "note": null,
           "verified_by": "human read of both source texts"
@@ -68,7 +61,7 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.333,
-          "jaccard_full_text": 0.095,
+          "jaccard_full_text": 0.07,
           "evidence": {
             "eccn_quote": "“Composite” structures or laminates, as follows (see List of Items Controlled).",
             "counterpart_quote": "\"Composite\" structures or laminates, as follows: a. Made from any of the following: 1. An organic \"matrix\" and \"fibrous or filamentary materials\" specified by 8C110.c, 8C110.dor 2. Prepregs or preforms specified by 8C110.e; b. Made from a metal or carbon \"matrix\", and any of the following: 1. Carbon \"fibrous or filamentary materials\" having all of the following: a. A \"specific modulus\" exceeding 1"
@@ -104,7 +97,7 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.591,
-          "jaccard_full_text": 0.246,
+          "jaccard_full_text": 0.061,
           "evidence": {
             "eccn_quote": "Protective and detection equipment and “components”, not “specially designed” for military use, as follows (see List of Items Controlled).",
             "counterpart_quote": "Protective and detection equipment and components, not specially designed for military use, as follows: a. Full face masks, filter canisters and decontamination equipment therefor, designed or modified for defence against any of the following, and specially designed components therefor: Note 8A104.a includes Powered Air Purifying Respirators (PAPR) that are designed or modified for defence against"
@@ -125,7 +118,7 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.267,
-          "jaccard_full_text": 0.169,
+          "jaccard_full_text": 0.114,
           "evidence": {
             "eccn_quote": "Body armor and “specially designed” “components” therefor, as follows (see List of Items Controlled).",
             "counterpart_quote": "Body armour and components therefor, as follows: a. Soft body armour not manufactured to military standards or specifications, or to their equivalents, and specially designed components therefor; b. Hard body armour plates providing ballistic protection equal to or less than level IIIA (NIJ 0101.06, July 2008), or \"equivalent standards\". N.B.1. For \"fibrous or filamentary materials\" used in the ma"
@@ -140,7 +133,7 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.276,
-          "jaccard_full_text": 0.143,
+          "jaccard_full_text": 0.116,
           "evidence": {
             "eccn_quote": "Body armor and “specially designed” “components” therefor, as follows (see List of Items Controlled).",
             "counterpart_quote": "Body armour and components therefor, as follows: a. Soft body armour not manufactured to military standards or specifications, or to their equivalents, and specially designed components therefor; b. Hard body armour plates providing ballistic protection equal to or less than level IIIA (NIJ 0101.06, July 2008), or \"equivalent standards\". N.B.1. For \"fibrous or filamentary materials\" used in the ma"
@@ -233,7 +226,7 @@
           "confidence": "medium",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.594,
-          "jaccard_full_text": 0.159,
+          "jaccard_full_text": 0.105,
           "evidence": {
             "eccn_quote": "Equipment for the production or inspection of “composite” structures or laminates controlled by 1A002 or “fibrous or filamentary materials” controlled by 1C010, as follows (see List of Items Controlled), and “specially designed” “components” and “accessories” therefor.",
             "counterpart_quote": "Equipment designed for the \"production\" of \"composite\" structures or laminates or \"fibrous or filamentary materials\", as follows, and specially designed components and accessories therefor: a. Filament winding machines, of which the motions for positioning, wrapping and winding fibres are coordinated and programmed in three or more 'primary servo positioning' axes, specially designed for the manuf"
@@ -311,10 +304,10 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.31,
-          "jaccard_full_text": 0.208,
+          "jaccard_full_text": 0.227,
           "evidence": {
             "eccn_quote": "Metal alloys, metal alloy powder and alloyed materials, as follows (see List of Items Controlled).",
-            "counterpart_quote": "Metal alloys, metal alloy powder and alloyed materials, as follows: Note 1.C.2. does not apply to metal alloys, metal alloy powder and alloyed materials, specially formulated for coating purposes. Technical Note For the purposes of 1.C.2., metal alloys are those containing a higher percentage by weight of the stated metal than of any other element. 15-01-2026 - 11 -"
+            "counterpart_quote": "Metal alloys, metal alloy powder and alloyed materials, as follows: Note 1.C.2. does not apply to metal alloys, metal alloy powder and alloyed materials, specially formulated for coating purposes. Technical Note For the purposes of 1.C.2., metal alloys are those containing a higher percentage by weight of the stated metal than of any other element."
           },
           "note": null,
           "verified_by": "human read of both source texts"
@@ -326,7 +319,7 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.375,
-          "jaccard_full_text": 0.14,
+          "jaccard_full_text": 0.048,
           "evidence": {
             "eccn_quote": "Metal alloys, metal alloy powder and alloyed materials, as follows (see List of Items Controlled).",
             "counterpart_quote": "Metal alloys, metal alloy powder and alloyed materials, as follows: (See Commodity Identification Note 1 of SCOMET list) Note 8C102 does not apply to metal alloys, metal alloy powder and alloyed materials, specially formulated for coating purposes c. The metal alloys in 8C102 are those containing a higher percentage by weight of the stated metal than of any other element. d. 'Stress-rupture life' "
@@ -347,7 +340,7 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.233,
-          "jaccard_full_text": 0.108,
+          "jaccard_full_text": 0.103,
           "evidence": {
             "eccn_quote": "“Fibrous or filamentary materials” as follows (see List of Items Controlled).",
             "counterpart_quote": "\"Fibrous or filamentary materials\" as follows: Technical Notes 1. For the purposes of calculating \"specific tensile strength\", \"specific modulus\" or specific weight of \"fibrous or filamentary materials\" in 1.C.10.a., 1.C.10.b., 1.C.10.c. or 1.C.10.e.1.b., the tensile strength and modulus should be determined by using Method A described in ISO 10618:2004 or national equivalents. 2. For the purposes"
@@ -362,7 +355,7 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.226,
-          "jaccard_full_text": 0.111,
+          "jaccard_full_text": 0.032,
           "evidence": {
             "eccn_quote": "“Fibrous or filamentary materials” as follows (see List of Items Controlled).",
             "counterpart_quote": "\"Fibrous or filamentary materials\" as follows: 1. For the purpose of calculating \"specific tensile strength\", \"specific modulus\" or specific weight of \"fibrous or filamentary materials\" in 8C110.a, 8C110.b, 8C110.c or 8C110.e.1.b, the tensile strength and modulus should be determined by using Method A described in ISO 10618 (2004). 2. Assessing the \"specific tensile strength\", \"specific modulus\" o"
@@ -398,7 +391,7 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.474,
-          "jaccard_full_text": 0.058,
+          "jaccard_full_text": 0.093,
           "evidence": {
             "eccn_quote": "Anti-friction bearings, bearing systems and “components,” as follows, (see List of Items Controlled).",
             "counterpart_quote": "1. Anti-friction bearings, bearing systems and components, as follows: a. Ball bearings and solid roller bearings, having all tolerances specified by the manufacturer in accordance with ISO 492 Tolerance Class 4 or Class 2 (or national equivalents), or better, and having both 'rings' and 'rolling elements', made from monel or beryllium; Note 8A201.a does not apply to tapered roller bearings. 1. 'R"
@@ -419,7 +412,7 @@
           "confidence": "high",
           "candidate_source": "text_jaccard_top3",
           "jaccard_minimal_text": 0.36,
-          "jaccard_full_text": 0.098,
+          "jaccard_full_text": 0.086,
           "evidence": {
             "eccn_quote": "Crucibles made of materials resistant to liquid actinide metals (see List of Items Controlled).",
             "counterpart_quote": "Crucibles made of materials resistant to liquid actinide metals, as follows: a. Crucibles having both of the following characteristics: 1. A volume of between 150 cm3 (150 ml) and 8000 cm3 (8 litres); and 2. Made of or coated with any of the following materials, or combination of the following materials, having an overall impurity level of 2% or less by weight: a. Calcium fluoride (CaF2); b. Calci"
@@ -461,7 +454,7 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.737,
-          "jaccard_full_text": 0.36,
+          "jaccard_full_text": 0.327,
           "evidence": {
             "eccn_quote": "Machine tools and any combination thereof, for removing (or cutting) metals, ceramics or “composites”, which, according to the manufacturer's technical specifications, can be equipped with electronic devices for “numerical control”; as follows (see List of Items Controlled).",
             "counterpart_quote": "Machine tools and any combination thereof, for removing (or cutting) metals, ceramics or \"composites\", which, according to the manufacturer's technical specification, can be equipped with electronic devices for \"numerical control\", as follows: Note 1 2.B.1. does not apply to special purpose machine tools limited to the manufacture of gears. For such machines, see 2.B.3. Note 2 2.B.1. does not appl"
@@ -476,7 +469,7 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.757,
-          "jaccard_full_text": 0.317,
+          "jaccard_full_text": 0.139,
           "evidence": {
             "eccn_quote": "Machine tools and any combination thereof, for removing (or cutting) metals, ceramics or “composites”, which, according to the manufacturer's technical specifications, can be equipped with electronic devices for “numerical control”; as follows (see List of Items Controlled).",
             "counterpart_quote": "1. Machine tools and any combination thereof, for removing (or cutting) metals, ceramics or \"composites\", which, according to the manufacturer's technical specification, can be equipped with electronic devices for \"numerical control\", as follows: Note 1 8B201 does not apply to special purpose machine tools limited to the manufacture of gears. For such machines, see 8B203. Note 2 8B201 does not app"
@@ -497,7 +490,7 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.317,
-          "jaccard_full_text": 0.242,
+          "jaccard_full_text": 0.142,
           "evidence": {
             "eccn_quote": "Hot “isostatic presses” having all of the characteristics described in the List of Items Controlled, and “specially designed” “components” and “accessories” therefor.",
             "counterpart_quote": "Hot 'isostatic presses' having all of the following, and specially designed components and accessories therefor: Technical Note For the purposes of 2.B.4., 'isostatic presses' pressurise a closed cavity through various media (gas, liquid, solid particles, etc.) to create equal pressure in all directions within the cavity upon a workpiece or material. a. A controlled thermal environment within the "
@@ -512,10 +505,10 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.542,
-          "jaccard_full_text": 0.269,
+          "jaccard_full_text": 0.158,
           "evidence": {
             "eccn_quote": "Hot “isostatic presses” having all of the characteristics described in the List of Items Controlled, and “specially designed” “components” and “accessories” therefor.",
-            "counterpart_quote": "Hot \"isostatic presses\" having all of the following, and specially designed components and accessories therefor: a. A controlled thermal environment within the closed cavity and a chamber cavity with an inside diameter of 406 mm or more; and b. Having any of the following: 1. A maximum working pressure exceeding 207 MPa; 2. A controlled thermal environment exceeding 1,773 K (1,500°C); or"
+            "counterpart_quote": "Hot \"isostatic presses\" having all of the following, and specially designed components and accessories therefor: a. A controlled thermal environment within the closed cavity and a chamber cavity with an inside diameter of 406 mm or more; and b. Having any of the following: 1. A maximum working pressure exceeding 207 MPa; 2. A controlled thermal environment exceeding 1,773 K (1,500°C); or 3. A faci"
           },
           "note": null,
           "verified_by": "human read of both source texts"
@@ -548,7 +541,7 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.609,
-          "jaccard_full_text": 0.101,
+          "jaccard_full_text": 0.081,
           "evidence": {
             "eccn_quote": "Dimensional inspection or measuring systems, equipment, position feedback units and “electronic assemblies”, as follows (see List of Items Controlled).",
             "counterpart_quote": "Dimensional inspection or measuring systems, equipment, position feedback units and \"electronic assemblies\", as follows: a. Computer controlled or \"numerical controlled\" Coordinate Measuring Machines (CMM), having a three dimensional (volumetric) maximum permissible error of length measurement (E) at any point within the operating range of the machine 0,MPE (i.e., within the length of axes) equal "
@@ -599,28 +592,6 @@
       "eccn_is_stub": true,
       "equivalents": [
         {
-          "code": "2.D.1",
-          "regime": "wassenaar_2025",
-          "relation": "equivalent",
-          "confidence": "high",
-          "candidate_source": "structural_code_rule+text_jaccard",
-          "jaccard_minimal_text": 0.241,
-          "jaccard_full_text": 0.14,
-          "evidence": {
-            "eccn_quote": "“Software”, other than that controlled by 2D002, as follows (See list of Items Controlled).",
-            "counterpart_quote": "\"Software\", other than that specified in 2.D.2., specially designed for the \"development\" or \"production\" of equipment as follows: a. Specified in 2.B.1.a., 2.B.1.b.1., or 2.B.1.b.2., and having a \"unidirectional positioning repeatability\" equal to or less (better) than 0.9 µm along one or more linear axis; b. Specified in2.B.1.b.3., 2.B.1.d., 2.B.1.f. or 2.B.3."
-          },
-          "note": "제외참조까지 대응한다: 2D001↔2D002, 2.D.1↔2.D.2, 8D201↔8D202.",
-          "verified_by": "human read of both source texts",
-          "absent_from_active_corpus": true,
-          "absent_note": "활성 코퍼스에 존재하지 않는 코드다. 코퍼스 파서 교정으로 코드가 병합·개칭되었을 수 있다. R@10_equiv 계산에서 제외되며, 후보를 사람이 확인해 교체할 때까지 자동 대체하지 않는다.",
-          "successor_candidates": [
-            "2.D",
-            "2.D.2",
-            "2.D.3"
-          ]
-        },
-        {
           "code": "8D201",
           "regime": "india_scomet_2024",
           "relation": "equivalent",
@@ -647,11 +618,11 @@
           "relation": "equivalent",
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
-          "jaccard_minimal_text": 0.182,
-          "jaccard_full_text": 0.07,
+          "jaccard_minimal_text": 0.174,
+          "jaccard_full_text": 0.062,
           "evidence": {
             "eccn_quote": "Electronic items as follows (see List of Items Controlled).",
-            "counterpart_quote": "Electronic items as follows: a. General purpose integrated circuits, as follows: Note Integrated circuits include the following types: integrated circuits; Technical Notes For the purposes of 3.A.1.a. Note: 1. 'Film type integrated circuit' is an array of \"circuit elements\" and metallic interconnections formed by deposition of a thick or thin film on an insulating \"substrate\". 2. 'Three dimensiona"
+            "counterpart_quote": "Electronic items as follows: a. General purpose integrated circuits, as follows: Note Integrated circuits include the following types: - \"Monolithic integrated circuits\"; - \"Hybrid integrated circuits\"; - \"Multichip integrated circuits\"; - 'Film type integrated circuits', including silicon-on-sapphire integrated circuits; - \"Optical integrated circuits\"; - 'Three dimensional integrated circuits'; "
           },
           "note": null,
           "verified_by": "human read of both source texts"
@@ -663,7 +634,7 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.182,
-          "jaccard_full_text": 0.114,
+          "jaccard_full_text": 0.008,
           "evidence": {
             "eccn_quote": "Electronic items as follows (see List of Items Controlled).",
             "counterpart_quote": "Electronic items as follows: a. General purpose integrated circuits as follows: Note Integrated circuits include the following types: - \"Monolithic integrated circuits\"; - \"Hybrid integrated circuits\"; - \"Multichip integrated circuits\"; - \"Film type integrated circuits\", including silicon-on-sapphire integrated circuits; - \"Optical integrated circuits\"; - \"Three dimensional integrated circuits\"; -"
@@ -699,10 +670,10 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.429,
-          "jaccard_full_text": 0.294,
+          "jaccard_full_text": 0.03,
           "evidence": {
             "eccn_quote": "General purpose “electronic assemblies,” modules and equipment, as follows (see List of Items Controlled).",
-            "counterpart_quote": "General purpose \"electronic assemblies\", modules and equipment, as follows: a. Recording equipment and oscilloscopes, as follows: 1. (Reserved); 2. (Reserved); 3. (Reserved); 4. (Reserved); 5. (Reserved) N.B. For waveform digitizers and transient recorders, see 8A302.h."
+            "counterpart_quote": "General purpose \"electronic assemblies\", modules and equipment, as follows: a. Recording equipment and oscilloscopes, as follows: 1. (Reserved); 2. (Reserved); 3. (Reserved); 4. (Reserved); 5. (Reserved) N.B. For waveform digitizers and transient recorders, see 8A302.h. a. 6. ‘Digital data recorders having all of the following: a. A sustained 'continuous throughput' of more than 6.4 Gbit/s to disk"
           },
           "note": null,
           "verified_by": "human read of both source texts"
@@ -735,10 +706,10 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.861,
-          "jaccard_full_text": 0.787,
+          "jaccard_full_text": 0.881,
           "evidence": {
             "eccn_quote": "Spray cooling thermal management systems employing closed loop fluid handling and reconditioning equipment in a sealed enclosure where a dielectric fluid is sprayed onto electronic “components” using “specially designed” spray nozzles that are designed to maintain electronic “components” within their operating temperature range, and “specially designed” “components” therefore.",
-            "counterpart_quote": "Spray cooling thermal management systems employing closed loop fluid handling and reconditioning equipment in a sealed enclosure where a dielectric fluid is sprayed onto electronic components using specially designed spray nozzles that are designed to maintain electronic components within their operating temperature range, and specially designed components therefor. 8B3 ELECTRONICS (TEST, INSPECTI"
+            "counterpart_quote": "Spray cooling thermal management systems employing closed loop fluid handling and reconditioning equipment in a sealed enclosure where a dielectric fluid is sprayed onto electronic components using specially designed spray nozzles that are designed to maintain electronic components within their operating temperature range, and specially designed components therefor."
           },
           "note": "따옴표 스타일만 다르고 문장이 동일하다.",
           "verified_by": "human read of both source texts"
@@ -756,7 +727,7 @@
           "confidence": "high",
           "candidate_source": "text_jaccard_top3",
           "jaccard_minimal_text": 0.283,
-          "jaccard_full_text": 0.222,
+          "jaccard_full_text": 0.17,
           "evidence": {
             "eccn_quote": "Frequency changers (a.k.a. converters or inverters) and generators, except those subject to the export licensing authority of the Nuclear Regulatory Commission (see 10 CFR part 110 ), that are usable as a variable frequency or fixed frequency motor drive and have all of the characteristics described in this ECCN (see List of Items Controlled).",
             "counterpart_quote": "Frequency changers or generators, usable as a variable frequency or fixed frequency motor drive, having all of the following characteristics: N.B.1: Frequency changers and generators specially designed or prepared for the gas centrifuge process are controlled under Prescribe Equipment (0B) N.B.2: “Software” specially designed to enhance or release the performance of frequency changers or generator"
@@ -819,7 +790,7 @@
           "confidence": "high",
           "candidate_source": "text_jaccard_top3",
           "jaccard_minimal_text": 0.4,
-          "jaccard_full_text": 0.23,
+          "jaccard_full_text": 0.157,
           "evidence": {
             "eccn_quote": "Mass spectrometers, capable of measuring ions of 230 u or greater and having a resolution of better than 2 parts in 230, and ion sources therefor, excluding items that are subject to the export licensing authority of the Nuclear Regulatory Commission (see 10 CFR part 110 ).",
             "counterpart_quote": "Mass spectrometers capable of measuring ions of 230 u or greater and having a resolution of better than 2 parts in 230, as follows, and ion sources therefor: N.B.: Mass spectrometers especially designed or prepared for analysing on-line samples of uranium hexafluoride (UF6) are controlled under Prescribed Equipment (0B Category). a. Inductively coupled plasma mass spectrometers (ICP/MS); b. Glow d"
@@ -855,7 +826,7 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.654,
-          "jaccard_full_text": 0.21,
+          "jaccard_full_text": 0.064,
           "evidence": {
             "eccn_quote": "Equipment for the manufacturing of semiconductor devices, materials, or related equipment, as follows (see List of Items Controlled) and “specially designed” “components” and “accessories” therefor.",
             "counterpart_quote": "Equipment for the manufacturing of semiconductor devices or materials, as follows and specially designed components and accessories therefor: a. Equipment designed for epitaxial growth as follows: 1. Equipment designed or modified to produce a layer of any material other than silicon with a thickness uniform to less than ± 2.5% across a distance of 75 mm or more; Note 8B301.a.1 includes atomic lay"
@@ -927,10 +898,10 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.538,
-          "jaccard_full_text": 0.5,
+          "jaccard_full_text": 0.538,
           "evidence": {
             "eccn_quote": "Materials, not specified by 3C001, consisting of a “substrate” specified by 3C005 with at least one epitaxial layer of Silicon Carbide (SiC), Gallium Nitride (GaN), Aluminum Nitride (AlN), Aluminum Gallium Nitride (AlGaN), Gallium Oxide (Ga 2 O 3 ) or diamond.",
-            "counterpart_quote": "Materials, not specified by 8C301, consisting of a \"substrate\" specified by 8C305 with at least one epitaxial layer of silicon carbide, gallium nitride, aluminium nitride or aluminium gallium nitride, gallium oxide (Ga2O3) or diamond. 8D3 ELECTRONICS (SOFTWARE)"
+            "counterpart_quote": "Materials, not specified by 8C301, consisting of a \"substrate\" specified by 8C305 with at least one epitaxial layer of silicon carbide, gallium nitride, aluminium nitride or aluminium gallium nitride, gallium oxide (Ga2O3) or diamond."
           },
           "note": "제외참조 3C001↔3.C.1↔8C301, 기판참조 3C005↔3.C.5↔8C305 까지 대응.",
           "verified_by": "human read of both source texts"
@@ -1035,10 +1006,10 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.553,
-          "jaccard_full_text": 0.7,
+          "jaccard_full_text": 0.25,
           "evidence": {
             "eccn_quote": "“ Technology ” according to the General Technology Note other than that controlled in 3E001 for the “ development ” or “ production ” of a “ microprocessor microcircuit ”, “ micro-computer microcircuit ” and microcontroller microcircuit core, having an arithmetic logic unit with an access width of 32 bits or more and any of the following features or characteristics (see List of Items Controlled).",
-            "counterpart_quote": "\"Technology\" according to the General Technology Note other than that specified by 8E301 for the \"development\" or \"production\" of a \"microprocessor microcircuit\", \"microcomputer microcircuit\" or microcontroller microcircuit core, having an arithmetic logic unit with an access width of 32 bits or more and any of the following features or characteristics:"
+            "counterpart_quote": "\"Technology\" according to the General Technology Note other than that specified by 8E301 for the \"development\" or \"production\" of a \"microprocessor microcircuit\", \"microcomputer microcircuit\" or microcontroller microcircuit core, having an arithmetic logic unit with an access width of 32 bits or more and any of the following features or characteristics: a. A 'vector processor unit' designed to per"
           },
           "note": "제외참조 3E001↔3.E.1↔8E301 까지 대응.",
           "verified_by": "human read of both source texts"
@@ -1056,7 +1027,7 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.889,
-          "jaccard_full_text": 0.586,
+          "jaccard_full_text": 0.299,
           "evidence": {
             "eccn_quote": "“Technology” “required” for the slicing, grinding and polishing of 300 mm diameter silicon wafers to achieve a 'Site Front least sQuares Range' ('SFQR') less than or equal to 20 nm at any site of 26 mm x 8 mm on the front surface of the wafer and an edge exclusion less than or equal to 2 mm.",
             "counterpart_quote": "\"Technology\" \"required\" for the slicing, grinding and polishing of 300 mm diameter silicon wafers to achieve a 'Site Front least sQuares Range' ('SFQR') less than or equal to 20 nm at any site of 26 mm x 8 mm on the front surface of the wafer and an edge exclusion less than or equal to 2 mm. Technical Note For the purposes of 3.E.4., 'SFQR' is the range of maximum deviation and minimum deviation f"
@@ -1071,7 +1042,7 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.93,
-          "jaccard_full_text": 0.295,
+          "jaccard_full_text": 0.661,
           "evidence": {
             "eccn_quote": "“Technology” “required” for the slicing, grinding and polishing of 300 mm diameter silicon wafers to achieve a 'Site Front least sQuares Range' ('SFQR') less than or equal to 20 nm at any site of 26 mm x 8 mm on the front surface of the wafer and an edge exclusion less than or equal to 2 mm.",
             "counterpart_quote": "\"Technology\" \"required\" for the slicing, grinding and polishing of 300 mm diameter silicon wafers to achieve a 'Site Front least sQuares Range' ('SFQR') less than or equal to 20 nm at any site of 26 mm x 8 mm on the front surface of the wafer and an edge exclusion less than or equal to 2 mm. For the purpose of 8E304, 'SFQR' is the range of maximum deviation and minimum deviation from front referen"
@@ -1092,7 +1063,7 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.3,
-          "jaccard_full_text": 0.074,
+          "jaccard_full_text": 0.028,
           "evidence": {
             "eccn_quote": "“Information security” systems, equipment and “components,” as follows (see List of Items Controlled).",
             "counterpart_quote": "\"Information security\" systems, equipment and components, as follows: N.B. For \"satellite navigation system\" receiving equipment containing or employing decryption, see 7.A.5. a. Designed or modified to use 'cryptography for data confidentiality' having a 'described security algorithm', as follows: 1. Items having \"information security\" as a primary function; 2. Digital communication or networking"
@@ -1107,7 +1078,7 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.273,
-          "jaccard_full_text": 0.08,
+          "jaccard_full_text": 0.026,
           "evidence": {
             "eccn_quote": "“Information security” systems, equipment and “components,” as follows (see List of Items Controlled).",
             "counterpart_quote": "\"Information security\" systems, equipment and components, as follows: N.B. For “satellite navigation system” receiving equipment containing or employing decryption see 8A705., and for related decryption \"software\" and \"technology\" see 8D705., and 8E701. a. Designed or modified to use 'cryptography for data confidentiality' having a 'described security algorithm', where that cryptographic capabilit"
@@ -1128,7 +1099,7 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.154,
-          "jaccard_full_text": 0.111,
+          "jaccard_full_text": 0.121,
           "evidence": {
             "eccn_quote": "“Software” as follows (see List of Items Controlled).",
             "counterpart_quote": "\"Software\" as follows: a. \"Software\" specially designed or modified for the \"development\", \"production\" or \"use\" of any of the following: 1. Equipment specified in 5.A.2. or \"software\" specified in 5.D.2.c.1.; 2. Equipment specified in 5.A.3. or \"software\" specified in 5.D.2.c.2.; or 3. Equipment or \"software\", as follows: a. Equipment specified in 5.A.4.a. or \"software\" specified in 5.D.2.c.3.a.;"
@@ -1143,7 +1114,7 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.167,
-          "jaccard_full_text": 0.07,
+          "jaccard_full_text": 0.063,
           "evidence": {
             "eccn_quote": "“Software” as follows (see List of Items Controlled).",
             "counterpart_quote": "\"Software\" as follows: a. \"Software\" specially designed or modified for the \"development\", \"production\" or \"use\" of any of the following: 1. Equipment specified by 8A502 or \"software\" specified by 8D502.c.1; 2. Equipment specified by 8A503 or \"software\" specified by 8D502.c.2; or 3. Equipment or \"software\", as follows: a. Equipment specified by 8A504.a. or \"software\" specified by 8D502.c.3.a.; b. "
@@ -1178,11 +1149,11 @@
           "relation": "equivalent",
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
-          "jaccard_minimal_text": 0.467,
-          "jaccard_full_text": 0.467,
+          "jaccard_minimal_text": 0.333,
+          "jaccard_full_text": 0.019,
           "evidence": {
             "eccn_quote": "Acoustic systems, equipment and “components,” as follows (see List of Items Controlled).",
-            "counterpart_quote": "Acoustic systems, equipment and components, as follows:"
+            "counterpart_quote": "Acoustic systems, equipment and components, as follows: a. Marine acoustic systems, equipment and specially designed components therefor, as follows: 1. Active (transmitting or transmitting-and-receiving) systems, equipment and specially designed components therefor, as follows: Note 8A601.a.1 does not apply to equipment as follows: a. Depth sounders operating vertically below the apparatus, not i"
           },
           "note": null,
           "verified_by": "human read of both source texts"
@@ -1215,10 +1186,10 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.515,
-          "jaccard_full_text": 0.436,
+          "jaccard_full_text": 0.132,
           "evidence": {
             "eccn_quote": "“Magnetometers”, “magnetic gradiometers”, “intrinsic magnetic gradiometers”, underwater electric field sensors, “compensation systems”, and “specially designed” “components” therefor, as follows (see List of Items Controlled).",
-            "counterpart_quote": "\"Magnetometers\", \"magnetic gradiometers\", \"intrinsic magnetic gradiometers\", underwater electric field sensors, \"compensation systems\", and specially designed components therefor, as follows: Note 8A606 does not apply to instruments specially designed for fishery applications or biomagnetic measurements for medical diagnostics."
+            "counterpart_quote": "\"Magnetometers\", \"magnetic gradiometers\", \"intrinsic magnetic gradiometers\", underwater electric field sensors, \"compensation systems\", and specially designed components therefor, as follows: Note 8A606 does not apply to instruments specially designed for fishery applications or biomagnetic measurements for medical diagnostics. a. \"Magnetometers\" and subsystems, as follows: 1. \"Magnetometers\" usin"
           },
           "note": null,
           "verified_by": "human read of both source texts"
@@ -1236,7 +1207,7 @@
           "confidence": "medium",
           "candidate_source": "text_jaccard_top3",
           "jaccard_minimal_text": 0.233,
-          "jaccard_full_text": 0.274,
+          "jaccard_full_text": 0.24,
           "evidence": {
             "eccn_quote": "Radiation hardened detectors, other than those controlled by 6A002, “specially designed” or modified for protecting against nuclear effects (e.g., Electromagnetic Pulse (EMP), X-rays, combined blast and thermal effects) and usable for “missiles,” designed or rated to withstand radiation levels which meet or exceed a total irradiation dose of 5 × 10 5 rads (silicon).",
             "counterpart_quote": "Detectors designed or modified, in protecting rocket systems, unmanned aerial vehicles and cruise missiles against nuclear effects (eg. electro-magnetic pulse (EMP), X-rays, combined blast and thermal effects). 5C01320 a. Radiation Hardened microcircuits usable in protecting rocket systems, unmanned aerial vehicles and cruise missiles against nuclear effects (e.g. electro-magnetic pulse (EMP), X-r"
@@ -1257,10 +1228,10 @@
           "confidence": "medium",
           "candidate_source": "text_jaccard_top3",
           "jaccard_minimal_text": 0.341,
-          "jaccard_full_text": 0.25,
+          "jaccard_full_text": 0.144,
           "evidence": {
             "eccn_quote": "Gravity meters (gravimeters) or gravity gradiometers, other than those controlled by 6A007, designed or modified for airborne or marine use, as follows, (see List of Items Controlled) and “specially designed” “parts” and “components” therefor.",
-            "counterpart_quote": "Gravity meters (gravimeters) and gravity gradiometers, as follows: a. Gravity meters designed or modified for ground use and having a static \"accuracy\" of less (better) than 10 µGal; Note 6.A.7.a. does not apply to ground gravity meters of the quartz element (Worden) type. b. Gravity meters designed for mobile platforms and having all of the following:"
+            "counterpart_quote": "Gravity meters (gravimeters) and gravity gradiometers, as follows: a. Gravity meters designed or modified for ground use and having a static \"accuracy\" of less (better) than 10 µGal; Note 6.A.7.a. does not apply to ground gravity meters of the quartz element (Worden) type. b. Gravity meters designed for mobile platforms and having all of the following: 1. A static \"accuracy\" of less (better) than "
           },
           "note": "Wassenaar 6.A.7 은 지상용(a.)까지 포함하는 상위 노드. eCFR 은 지상용을 6A007, 항공/해상용을 6A107 로 분리한다.",
           "verified_by": "human read of both source texts"
@@ -1293,10 +1264,10 @@
           "confidence": "high",
           "candidate_source": "text_jaccard_top3",
           "jaccard_minimal_text": 0.34,
-          "jaccard_full_text": 0.327,
+          "jaccard_full_text": 0.34,
           "evidence": {
             "eccn_quote": "Systems, other than those controlled by 6B008, “specially designed” for radar cross section measurement usable for rockets, missiles, or unmanned aerial vehicles capable of achieving a “range” equal to or greater than 300 km and their subsystems.",
-            "counterpart_quote": "Systems, specially designed for radar cross section measurement, usable for rocket systems (including ballistic missile systems, space launch vehicles and sounding rockets), unmanned airborne system and cruise missiles and their subsystems. 5A3 Technology"
+            "counterpart_quote": "Systems, specially designed for radar cross section measurement, usable for rocket systems (including ballistic missile systems, space launch vehicles and sounding rockets), unmanned airborne system and cruise missiles and their subsystems."
           },
           "note": "표제 문장이 사실상 동일: radar cross section measurement systems usable for rocket systems / UAV / cruise missiles and their subsystems.",
           "verified_by": "human read of both source texts"
@@ -1314,10 +1285,10 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.682,
-          "jaccard_full_text": 0.385,
+          "jaccard_full_text": 0.195,
           "evidence": {
             "eccn_quote": "Gyros or Angular Rate Sensors, Having any of the Following, and “Specially Designed” “Components” Therefor.",
-            "counterpart_quote": "Gyros or angular rate sensors, having any of the following and specially designed components therefor: N.B. For angular or rotational accelerometers, see 7.A.1.b. a. Specified to function at linear acceleration levels less than or equal to 100 g and having any of the following:"
+            "counterpart_quote": "Gyros or angular rate sensors, having any of the following and specially designed components therefor: N.B. For angular or rotational accelerometers, see 7.A.1.b. a. Specified to function at linear acceleration levels less than or equal to 100 g and having any of the following: 1. An angular rate range of less than 500 degrees per second and having any of the following: a. A \"bias\" \"stability\" of "
           },
           "note": null,
           "verified_by": "human read of both source texts"
@@ -1329,7 +1300,7 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.75,
-          "jaccard_full_text": 0.195,
+          "jaccard_full_text": 0.181,
           "evidence": {
             "eccn_quote": "Gyros or Angular Rate Sensors, Having any of the Following, and “Specially Designed” “Components” Therefor.",
             "counterpart_quote": "Gyros or angular rate sensors, having any of the following and specially designed components therefor: N.B. For angular or rotational accelerometers, see 8A701.b. a. Specified to function at linear acceleration levels less than or equal to 100 g and having any of the following: 1. An angular rate range of less than 500 degrees per second and having any of the following: a. A \"bias\" \"stability\" of "
@@ -1365,7 +1336,7 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.865,
-          "jaccard_full_text": 0.507,
+          "jaccard_full_text": 0.547,
           "evidence": {
             "eccn_quote": "Underwater sonar navigation systems using Doppler velocity or correlation velocity logs integrated with a heading source and having a positioning “accuracy” of equal to or less (better) than 3% of distance traveled “Circular Error Probable” (“CEP”) and “specially designed” “components” therefor.",
             "counterpart_quote": "Underwater sonar navigation systems using doppler velocity or correlation velocity logs integrated with a heading source and having a positioning \"accuracy\" of equal to or less (better) than 3% of distance travelled \"Circular Error Probable\" (\"CEP\") and specially designed components therefor. Note 8A708 does not apply to systems specially designed for installation on surface vessels or systems req"
@@ -1422,10 +1393,10 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.36,
-          "jaccard_full_text": 0.3,
+          "jaccard_full_text": 0.057,
           "evidence": {
             "eccn_quote": "Submersible vehicles and surface vessels, as follows (see List of Items Controlled).",
-            "counterpart_quote": "Submersible vehicles and surface vessels, as follows: N.B. For the status of equipment for submersible vehicles, see:  8A601 to 8E603 for sensors;  8A701 to 8E704 and for navigation equipment;  8A801, 8E802 for underwater equipment."
+            "counterpart_quote": "Submersible vehicles and surface vessels, as follows: N.B. For the status of equipment for submersible vehicles, see:  8A601 to 8E603 for sensors;  8A701 to 8E704 and for navigation equipment;  8A801, 8E802 for underwater equipment. a. Manned, tethered submersible vehicles designed to operate at depths exceeding 1,000 m; 8A801 b. Manned, untethered submersible vehicles having any of the followi"
           },
           "note": null,
           "verified_by": "human read of both source texts"
@@ -1458,7 +1429,7 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.32,
-          "jaccard_full_text": 0.11,
+          "jaccard_full_text": 0.026,
           "evidence": {
             "eccn_quote": "Marine systems, equipment, “parts” and “components,” as follows (see List of Items Controlled).",
             "counterpart_quote": "Marine systems, equipment and components, as follows: N.B. For underwater communications systems, see 8A5 part 1 Telecommunications. a. Systems, equipment and components, specially designed or modified for submersible vehicles and designed to operate at depths exceeding 1,000 m, as follows: 1. Pressure housings or pressure hulls with a maximum inside chamber diameter exceeding 1.5 m; 2. Direct cur"
@@ -1530,10 +1501,10 @@
           "confidence": "high",
           "candidate_source": "structural_code_rule+text_jaccard",
           "jaccard_minimal_text": 0.6,
-          "jaccard_full_text": 0.265,
+          "jaccard_full_text": 0.277,
           "evidence": {
             "eccn_quote": "'Syntactic foam' designed for underwater use and having all of the following (see List of Items Controlled).",
-            "counterpart_quote": "'Syntactic foam' designed for underwater use and having all of the following: a. Designed for marine depths exceeding 1,000 m; and b. A density less than 561 kg/m3. 'Syntactic foam' consists of hollow spheres of plastic or glass embedded in a resin “matrix”. N.B. See also 8A802.a.4. 8D8 MARINE (SOFTWARE)"
+            "counterpart_quote": "'Syntactic foam' designed for underwater use and having all of the following: a. Designed for marine depths exceeding 1,000 m; and b. A density less than 561 kg/m3. 'Syntactic foam' consists of hollow spheres of plastic or glass embedded in a resin “matrix”. N.B. See also 8A802.a.4."
           },
           "note": null,
           "verified_by": "human read of both source texts"

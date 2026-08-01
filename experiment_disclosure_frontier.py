@@ -77,6 +77,12 @@ SEED = 20260626
 K = 10
 
 
+# 배치 크기는 임베딩 값에 영향을 주지 않는다(같은 문장 → 같은 벡터).
+# bge-m3 는 8GB VRAM 에서 batch 32 로 OOM 이므로 SANBO_BATCH 로 낮춘다.
+_BATCH = int(os.environ.get("SANBO_BATCH", "32"))
+_GATE_BATCH = max(1, _BATCH // 2)
+
+
 def resolved_revision(model_name: str) -> str | None:
     try:
         from huggingface_hub.constants import HF_HUB_CACHE
@@ -114,7 +120,16 @@ def run() -> dict:
 
     corpus = json.loads(CORPUS_PATH.read_text(encoding="utf-8"))
     ladder = json.loads(LADDER_PATH.read_text(encoding="utf-8"))
-    entries = ladder["queries"]
+    # 사다리 정의(L3·L4 계수 민감토큰 0, 등급 간 단조 비증가)를 위반한 질의는 제외한다.
+    # 위반 질의를 고쳐서 통과시키면 측정도구(닫힌 어휘목록)에 맞춰 연구 데이터를 다시 쓰는
+    # 것이 되므로, 데이터는 그대로 두고 이 분석에서만 뺀다. 제외 사유는
+    # data/disclosure_ladder.json 의 ladder_spec_exclusions 에 전량 기록되어 있다.
+    # 검색기 비교(PAPER 4.3/4.6)는 사다리를 쓰지 않으므로 그쪽은 전체 표본을 쓴다.
+    all_entries = ladder["queries"]
+    entries = [e for e in all_entries if e.get("ladder_spec_compliant", True)]
+    n_excluded = len(all_entries) - len(entries)
+    if n_excluded:
+        print(f"[ladder] 정의 위반 {n_excluded}건 제외 → 분석 대상 {len(entries)}건", flush=True)
     langs = [e["lang"] for e in entries]
     label_sets = [set(e["validated_labels"]) for e in entries]
     codes = [c["code"] for c in corpus]
@@ -125,7 +140,7 @@ def run() -> dict:
 
     print(f"[dense] encoding {len(docs)} docs ...", flush=True)
     model = SentenceTransformer(DENSE_MODEL)
-    doc_emb = model.encode(docs, batch_size=32, normalize_embeddings=True,
+    doc_emb = model.encode(docs, batch_size=_BATCH, normalize_embeddings=True,
                            show_progress_bar=False).astype(np.float32)
 
     hits: dict[str, dict[str, list[int]]] = {}
@@ -134,7 +149,7 @@ def run() -> dict:
     for lv in LEVELS:
         qtexts = [e["levels"][lv]["query"] for e in entries]
         print(f"[{lv}] encoding {n} queries ...", flush=True)
-        q_emb = model.encode(qtexts, batch_size=32, normalize_embeddings=True,
+        q_emb = model.encode(qtexts, batch_size=_BATCH, normalize_embeddings=True,
                              show_progress_bar=False).astype(np.float32)
         per_retr = {r: [] for r in RETRIEVERS}
         bm_no_signal = 0
@@ -286,6 +301,12 @@ def run() -> dict:
         "data": {
             "ladder": str(LADDER_PATH.relative_to(ROOT)).replace("\\", "/"),
             "n_queries": n,
+            "ladder_spec_excluded": n_excluded,
+            "ladder_spec_exclusion_note": (
+                "사다리 정의 위반 질의는 제외했다(사유 전량: "
+                "data/disclosure_ladder.json → ladder_spec_exclusions). "
+                "검색기 비교(PAPER 4.3/4.6)는 사다리를 쓰지 않으므로 전체 표본을 쓴다."
+            ),
             "language_distribution": ladder["meta"]["language_distribution"],
             "corpus_size": len(corpus),
             "ladder_validation_passed": ladder["validation"]["passed"],

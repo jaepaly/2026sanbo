@@ -69,3 +69,16 @@ data/raw/
 # --- 로그 ---------------------------------------------------------------
 *.log
 nohup.out
+
+# --- 커밋하지 않는 임시/외부 산출물 -----------------------------------------
+# 33MB LLM 재순위 캐시: 재생성 가능하고 논문이 인용하지 않는다.
+output/llm_rerank_cache.json
+# 외부 에이전트(Hermes) 라운드의 v4 산출물. 코퍼스 v2 기준이 아니라 논문이 인용하지 않는다.
+output/*_v4.json
+output/fig_*_v4.png
+output/report_v4.md
+output/error_analysis.json
+# 다른 에이전트에게 넘기려고 만든 임시 묶음
+combined_for_codex.md
+hermes_improvement_prompt.md
+make_combined.py

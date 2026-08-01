@@ -835,9 +835,13 @@ def main() -> int:
 
     problems: list[str] = []
     entries: list[dict] = []
+    # 사다리 정의를 위반한 질의(제외 대상)와 그 사유. 질의를 고치지 않고 기록만 한다.
+    excluded_ids: set[str] = set()
+    excluded_reasons: dict[str, list[str]] = {}
 
     for q in queries:
         qid = q["id"]
+        problems_before = len(problems)
         texts = {"L0": q["query"], **ladders[qid]}
         levels: dict[str, dict] = {}
         prev_spans: list[dict] = []
@@ -889,12 +893,21 @@ def main() -> int:
             if hits:
                 problems.append(f"{qid}/{lv}: 통제번호 누출 {hits}")
 
+        # 이 질의가 사다리 정의를 위반했는가. 위반 사유는 이 질의에 대해 방금 쌓인
+        # problems 항목이며, frontier 분석에서 제외하되 산출물에 그대로 남긴다.
+        own = [p for p in problems[problems_before:]]
+        if own:
+            excluded_ids.add(qid)
+            excluded_reasons[qid] = own
+
         entries.append({
             "id": qid,
             "lang": q["lang"],
             "origin": q["origin"],
             "validated_labels": q["validated_labels"],
             "levels": levels,
+            "ladder_spec_compliant": not own,
+            "ladder_spec_violations": own,
         })
 
     # --- 전체 요약 --------------------------------------------------------
@@ -956,9 +969,29 @@ def main() -> int:
             "env": rc.env_meta({"seed": SEED}),
         },
         "per_level_summary": per_level,
+        "ladder_spec_exclusions": {
+            "policy": (
+                "사다리 정의(L3·L4 계수 민감토큰 0, 등급 간 단조 비증가)를 위반한 질의는 "
+                "disclosure frontier 분석에서 제외한다. 질의를 고쳐서 통과시키지 않는 이유는, "
+                "측정도구(닫힌 어휘목록)에 맞춰 연구 데이터를 다시 쓰는 것이 되기 때문이다. "
+                "검색기 비교(PAPER 4.3/4.6)는 사다리를 쓰지 않으므로 이 질의들도 그대로 쓴다."
+            ),
+            "known_cause": (
+                "어휘목록은 원본 71개 질의에서 만든 닫힌 목록이라 'rocket/로켓/propulsion' 등을 "
+                "end_use 로만 분류한다. 품목 자체가 로켓 모터인 확장 질의에서는 같은 표현이 "
+                "용도가 아니라 품목 정체이므로 L3 에서 지울 수 없고, 그 결과 위반으로 잡힌다. "
+                "빌더 docstring 이 예고한 어휘목록 일반화 한계가 실제로 발생한 사례다."
+            ),
+            "excluded_query_ids": sorted(excluded_ids),
+            "excluded_count": len(excluded_ids),
+            "reasons_by_query": {qid: sorted(rs) for qid, rs in sorted(excluded_reasons.items())},
+        },
         "validation": {
             "problems": problems,
             "passed": not problems,
+            "passed_excluding_spec_exclusions": not [
+                p for p in problems if p.split(":")[0].split("/")[0] not in excluded_ids
+            ],
             "checks": [
                 "sensitive_token_count / sensitive_field_count 등급 간 단조 비증가",
                 "L1 이상에 숫자 없음",

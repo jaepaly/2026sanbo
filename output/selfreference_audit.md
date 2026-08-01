@@ -1,4 +1,4 @@
-# 자기참조 게이트 전량 감사 (검증셋 n=71)
+# 자기참조 게이트 전량 감사 (검증셋 n=151)
 
 ## 0. 무엇이 고장나 있었나
 
@@ -10,8 +10,8 @@ tokenize는 [A-Za-z0-9가-힣]+이고 코퍼스는 100% 영어 → 한국어 질
 
 | 언어 | n | 어휘 Jaccard 평균 | 최대 | 전부 정확히 0? | 의미 cos 평균 | 중앙값 | 최대 |
 |---|---:|---:|---:|---|---:|---:|---:|
-| en | 26 | 0.0953 | 0.2364 | 아니오 | 0.2616 | 0.2720 | 0.4942 |
-| ko | 45 | 0.0000 | 0.0000 | **예** | 0.3637 | 0.3613 | 0.5639 |
+| en | 42 | 0.0929 | 0.2364 | 아니오 | 0.3069 | 0.3370 | 0.4942 |
+| ko | 109 | 0.0017 | 0.0385 | 아니오 | 0.3559 | 0.3679 | 0.5639 |
 
 정답 라벨이 복수인 질의(ext-005, ext-023 두 건)에서는 **게이트에 가장 불리한**
 라벨(가장 유사한 라벨)을 정답 텍스트로 쓴다. 기존 산출물과 비교할 수 있게 첫-라벨
@@ -19,16 +19,18 @@ tokenize는 [A-Za-z0-9가-힣]+이고 코퍼스는 100% 영어 → 한국어 질
 
 | 언어 | 어휘 Jaccard 평균 (최유사 라벨) | 어휘 Jaccard 평균 (첫 라벨, 기존 정의) | 최대(최유사) | 최대(첫 라벨) |
 |---|---:|---:|---:|---:|
-| en | 0.0953 | 0.0941 | 0.2364 | 0.2364 |
-| ko | 0.0000 | 0.0000 | 0.0000 | 0.0000 |
+| en | 0.0929 | 0.0921 | 0.2364 | 0.2364 |
+| ko | 0.0017 | 0.0017 | 0.0385 | 0.0385 |
 
-> **경고 (ko)**: 어휘 Jaccard가 45개 전부 정확히 0 — 이 언어에서 어휘 게이트는 아무것도 검사하지 않는다(코퍼스가 100% 영어이므로 교집합이 원리상 공집합).
+> **경고 (ko)**: 어휘 Jaccard가 100/109개(91.7%) 정확히 0이고 최대값도 0.0385(임계 0.3)라 이 언어에서 어휘 게이트는 사실상 아무것도 검사하지 않는다. 0이 아닌 값은 질의에 섞인 숫자·라틴 약어 토큰에서 나온 것이며 의미 수준 자기참조와 무관하다.
 
 ## 2. 슬라이스(origin)별 분포
 
 | origin | n | 어휘 Jaccard 평균 | 의미 cos 평균 | 최소 | 최대 | 코퍼스 대비 z 평균 |
 |---|---:|---:|---:|---:|---:|---:|
-| slice_seungwoo | 29 | 0.0510 | 0.4157 | 0.1589 | 0.5639 | +2.96 |
+| slice_j_seungwoo | 40 | 0.0360 | 0.3699 | 0.2077 | 0.4394 | +2.36 |
+| slice_j_yechan | 40 | 0.0042 | 0.3431 | 0.1346 | 0.4339 | +2.37 |
+| slice_seungwoo | 29 | 0.0510 | 0.4157 | 0.1589 | 0.5639 | +2.95 |
 | slice_yechan | 29 | 0.0193 | 0.2935 | 0.1253 | 0.4584 | +1.71 |
 | validated_base | 13 | 0.0339 | 0.1999 | 0.0132 | 0.3436 | +0.57 |
 
@@ -42,7 +44,7 @@ tokenize는 [A-Za-z0-9가-힣]+이고 코퍼스는 100% 영어 → 한국어 질
 |---|---:|---:|---:|---:|---:|---:|---:|
 | POS-A 사람 번역쌍(ko↔en) | 5 | 0.8384 | 0.0197 | 0.8226 | 0.8230 | 0.8307 | 0.8697 |
 | POS-B 정답의 한국어 대역 ↔ 정답 원문 | 57 | 0.5515 | 0.0767 | 0.3615 | 0.4425 | 0.5579 | 0.7080 |
-| NEG 무관쌍(질의↔비정답 항목) | 1420 | 0.1598 | 0.0909 | -0.1422 | 0.0375 | 0.1667 | 0.4590 |
+| NEG 무관쌍(질의↔비정답 항목) | 3020 | 0.1632 | 0.0880 | -0.1119 | 0.0458 | 0.1660 | 0.4990 |
 
 → **tau_semantic = 0.44** (민감도용 중앙값 컷 = 0.55)
 
@@ -50,8 +52,8 @@ tokenize는 [A-Za-z0-9가-힣]+이고 코퍼스는 100% 영어 → 한국어 질
 
 | 컷 | 임계값 | 의미 게이트 초과 | 어휘 게이트 초과 | 의미만 잡아낸 건수 |
 |---|---:|---:|---:|---:|
-| 주 분석(보수적, POS-B p10) | 0.44 | 14/71 | 0/71 | 14 |
-| 민감도(POS-B 중앙값) | 0.55 | 2/71 | 0/71 | 2 |
+| 주 분석(보수적, POS-B p10) | 0.44 | 14/151 | 0/151 | 14 |
+| 민감도(POS-B 중앙값) | 0.55 | 2/151 | 0/151 | 2 |
 
 ### 주 분석에서 임계 초과한 질의
 
@@ -77,7 +79,7 @@ tokenize는 [A-Za-z0-9가-힣]+이고 코퍼스는 100% 영어 → 한국어 질
 직역 여부를 육안으로 확인하기 위한 것이다. 어휘 Jaccard 열이 0인데 cos이 높은 행이
 바로 기존 게이트가 볼 수 없었던 '번역된 자기참조'다.
 
-**1. g-seungwoo-010** (ko, slice_seungwoo, 정답 `ECCN-3D005`) — cos **0.5639**, 어휘 Jaccard 0.0000, 코퍼스 대비 z +4.46
+**1. g-seungwoo-010** (ko, slice_seungwoo, 정답 `ECCN-3D005`) — cos **0.5639**, 어휘 Jaccard 0.0000, 코퍼스 대비 z +4.48
 
 - 질의: 전자기 펄스나 정전기 충격이 발생해도 마이크로컴퓨터가 1밀리초 안에 정상 동작을 회복하게 만드는 소프트웨어를 해외 방산업체에 제공하려 합니다. 통제 여부를 알고 싶습니다.
 - 정답 원문(minimal_text): ECCN-3D005 “Software” “specially designed” to restore normal operation of a microcomputer, “microprocessor microcircuit” or “microcomputer microcircuit” within 1 ms after an Electromagnetic Pulse (EMP) or Electrostatic Discharge (ESD) disruption, without loss of continua
@@ -87,12 +89,12 @@ tokenize는 [A-Za-z0-9가-힣]+이고 코퍼스는 100% 영어 → 한국어 질
 - 질의: 로켓이나 무인기의 레이더 반사 면적을 측정하기 위해 특별히 만든 시스템을 외국 항공 회사에 공급하려 합니다. 사거리가 긴 비행체용이라 통제 여부가 궁금합니다.
 - 정답 원문(minimal_text): ECCN-6B108 Systems, other than those controlled by 6B008, “specially designed” for radar cross section measurement usable for rockets, missiles, or unmanned aerial vehicles capable of achieving a “range” equal to or greater than 300 km and their subsystems.
 
-**3. g-seungwoo-013** (ko, slice_seungwoo, 정답 `ECCN-3E004`) — cos **0.5199**, 어휘 Jaccard 0.0000, 코퍼스 대비 z +4.22
+**3. g-seungwoo-013** (ko, slice_seungwoo, 정답 `ECCN-3E004`) — cos **0.5199**, 어휘 Jaccard 0.0000, 코퍼스 대비 z +4.25
 
 - 질의: 300밀리미터 실리콘 웨이퍼를 매우 평탄하게 절삭하고 연마하는 데 필요한 공정 기술을 외국 파운드리에 이전하려 합니다. 통제 대상인지 확인 부탁드립니다.
 - 정답 원문(minimal_text): ECCN-3E004 “Technology” “required” for the slicing, grinding and polishing of 300 mm diameter silicon wafers to achieve a 'Site Front least sQuares Range' ('SFQR') less than or equal to 20 nm at any site of 26 mm x 8 mm on the front surface of the wafer and an edge exclu
 
-**4. g-seungwoo-024** (ko, slice_seungwoo, 정답 `ECCN-6D201`) — cos **0.5195**, 어휘 Jaccard 0.0000, 코퍼스 대비 z +3.52
+**4. g-seungwoo-024** (ko, slice_seungwoo, 정답 `ECCN-6D201`) — cos **0.5195**, 어휘 Jaccard 0.0000, 코퍼스 대비 z +3.53
 
 - 질의: 고속 카메라와 영상 장치의 성능을 끌어올리거나 제한을 풀어주는 소프트웨어를 해외 연구기관에 제공하려 합니다. 통제 여부를 확인하고 싶습니다.
 - 정답 원문(minimal_text): ECCN-6D201 “Software” “specially designed” to enhance or release the performance characteristics of high-speed cameras and imaging devices, and components therefor, to meet or exceed the level of the performance characteristics described in ECCN 6A203.
@@ -112,7 +114,7 @@ tokenize는 [A-Za-z0-9가-힣]+이고 코퍼스는 100% 영어 → 한국어 질
 - 질의: 사거리 300킬로미터 이상 무인 비행체에 쓰도록 설계된 원격 측정 및 원격 제어 장비를 외국 항공우주 기관에 보내려 합니다. 분류 확인이 필요합니다.
 - 정답 원문(minimal_text): ECCN-5A101 Telemetering and telecontrol equipment, including ground equipment, designed or modified for unmanned aerial vehicle (including cruise missiles, target drones, and reconnaissance drones) or rocket systems (including ballistic missiles, space launch vehicles, a
 
-**8. g-seungwoo-015** (ko, slice_seungwoo, 정답 `ECCN-4D993`) — cos **0.4944**, 어휘 Jaccard 0.0000, 코퍼스 대비 z +3.68
+**8. g-seungwoo-015** (ko, slice_seungwoo, 정답 `ECCN-4D993`) — cos **0.4944**, 어휘 Jaccard 0.0000, 코퍼스 대비 z +3.69
 
 - 질의: 실시간 처리 장비를 위해 소스 코드를 자동으로 생성해 주는 운영체제 소프트웨어를 해외 업체에 납품할 예정입니다. 통제 분류를 알고 싶습니다.
 - 정답 원문(minimal_text): ECCN-4D993 “Program” proof and validation “software,” “software” allowing the automatic generation of “source codes,” and operating system “software” that are “specially designed” for “real-time processing” equipment (see List of Items Controlled).
@@ -122,7 +124,7 @@ tokenize는 [A-Za-z0-9가-힣]+이고 코퍼스는 100% 영어 → 한국어 질
 - 질의: Our device determines orientation by automatically tracking stars or satellites, used for navigation. A foreign aerospace firm requested a sample. Which control code?
 - 정답 원문(minimal_text): ECCN-7A104 Gyro-astro compasses and other devices, other than those controlled by 7A004, which derive position or orientation by means of automatically tracking celestial bodies or satellites and “specially designed” “parts” and “components” therefor.
 
-**10. g-seungwoo-022** (ko, slice_seungwoo, 정답 `ECCN-6A991`) — cos **0.4698**, 어휘 Jaccard 0.0000, 코퍼스 대비 z +3.53
+**10. g-seungwoo-022** (ko, slice_seungwoo, 정답 `ECCN-6A991`) — cos **0.4698**, 어휘 Jaccard 0.0000, 코퍼스 대비 z +3.51
 
 - 질의: 물속 물체를 탐지하고 위치를 파악하는 해양 음향 장비를 동남아 조선소에 납품할 예정입니다. 분류 검토가 필요합니다.
 - 정답 원문(minimal_text): ECCN-6A991 Marine or terrestrial acoustic equipment, n.e.s., capable of detecting or locating underwater objects or features or positioning surface vessels or underwater vehicles;
@@ -132,7 +134,7 @@ tokenize는 [A-Za-z0-9가-힣]+이고 코퍼스는 100% 영어 → 한국어 질
 - 질의: 보안검색 장비 업체가 원거리에서 의복 안 물체를 확인하는 밀리미터파 스캐너를 공항 운영사에 판매하려 합니다. 감시 장비 성격이 있어 후보 항목을 확인합니다.
 - 정답 원문(minimal_text): ECCN-2A984 Concealed object detection equipment operating in the frequency range from 30 GHz to 3000 GHz and having a spatial resolution of 0.1 milliradian up to and including 1 milliradian at a standoff distance of 100 meters;
 
-**12. g-seungwoo-030** (en, slice_seungwoo, 정답 `ECCN-3D202`) — cos **0.4495**, 어휘 Jaccard 0.2105, 코퍼스 대비 z +4.53
+**12. g-seungwoo-030** (en, slice_seungwoo, 정답 `ECCN-3D202`) — cos **0.4495**, 어휘 Jaccard 0.2105, 코퍼스 대비 z +4.51
 
 - 질의: Our software boosts the performance of frequency converters and generators to reach a specified high level. A buyer overseas requested it. Which export classification fits?
 - 정답 원문(minimal_text): ECCN-3D202 “Software” “specially designed” to enhance or release the performance characteristics of frequency changers or generators to meet or exceed the level of the performance characteristics described in ECCN 3A225.
@@ -142,15 +144,15 @@ tokenize는 [A-Za-z0-9가-힣]+이고 코퍼스는 100% 영어 → 한국어 질
 - 질의: 완성 단계의 반도체 소자를 검사하고 시험하기 위해 특별히 만든 장비를 말레이시아 공장에 공급하려 합니다. 분류 확인이 필요합니다.
 - 정답 원문(minimal_text): ECCN-3B002 Test or inspection equipment “specially designed” for testing or inspecting finished or unfinished semiconductor devices as follows (see List of Items Controlled) and “specially designed” “components” and “accessories” therefor.
 
-**14. g-seungwoo-020** (en, slice_seungwoo, 정답 `ECCN-6A102`) — cos **0.4450**, 어휘 Jaccard 0.1509, 코퍼스 대비 z +3.28
+**14. g-seungwoo-020** (en, slice_seungwoo, 정답 `ECCN-6A102`) — cos **0.4450**, 어휘 Jaccard 0.1509, 코퍼스 대비 z +3.27
 
 - 질의: Our product is a sensor hardened against nuclear radiation effects, usable on missile platforms, rated for very high total dose. A foreign client asked about it. Which ECCN?
 - 정답 원문(minimal_text): ECCN-6A102 Radiation hardened detectors, other than those controlled by 6A002, “specially designed” or modified for protecting against nuclear effects (e.g., Electromagnetic Pulse (EMP), X-rays, combined blast and thermal effects) and usable for “missiles,” designed or r
 
-**15. g-seungwoo-002** (ko, slice_seungwoo, 정답 `ECCN-3A225`) — cos **0.4384**, 어휘 Jaccard 0.0000, 코퍼스 대비 z +3.34
+**15. j-seungwoo-024** (ko, slice_j_seungwoo, 정답 `ECCN-9A111`) — cos **0.4394**, 어휘 Jaccard 0.0000, 코퍼스 대비 z +3.00
 
-- 질의: 모터 구동용으로 쓰이는 가변 주파수 변환 장치를 인도 제조사에 공급할 예정입니다. 원자력 규제 대상은 아닌데 일반 수출 통제에 걸리는지 궁금합니다.
-- 정답 원문(minimal_text): ECCN-3A225 Frequency changers (a.k.a. converters or inverters) and generators, except those subject to the export licensing authority of the Nuclear Regulatory Commission (see 10 CFR part 110 ), that are usable as a variable frequency or fixed frequency motor drive and h
+- 질의: 무인기와 로켓에 쓰는 펄스 제트 엔진을 해외 연구기관에 제공하려 합니다. 장거리 비행이 가능한 사양인데 통제 품목인지 궁금합니다.
+- 정답 원문(minimal_text): ECCN-9A111 Pulse jet engines, usable in rockets, missiles, or unmanned aerial vehicles capable of achieving a “range” equal to or greater than 300 km, and “specially designed” “parts” and “components” therefor.
 
 ## 6. 한계
 

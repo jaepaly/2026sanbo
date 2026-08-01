@@ -131,9 +131,12 @@ def run_model(model_key: str, corpus: list[dict], queries: list[dict]) -> dict:
     for imode in INDEX_MODES:
         docs = [rc.index_text(e, imode) for e in corpus]
         index = rc.BM25(docs)
-        doc_emb = model.encode(docs, batch_size=32, normalize_embeddings=True,
+        # 배치 크기는 임베딩 값에 영향을 주지 않는다(같은 문장 → 같은 벡터).
+        # bge-m3 는 8GB VRAM 에서 batch 32 로 OOM 이 나므로 환경변수로 낮춘다.
+        _bs = int(os.environ.get("SANBO_BATCH", "32"))
+        doc_emb = model.encode(docs, batch_size=_bs, normalize_embeddings=True,
                                show_progress_bar=False).astype(np.float32)
-        q_emb = model.encode(qtexts, batch_size=32, normalize_embeddings=True,
+        q_emb = model.encode(qtexts, batch_size=_bs, normalize_embeddings=True,
                              show_progress_bar=False).astype(np.float32)
 
         per_alpha = {alpha_name(a): [] for a in ALPHAS}

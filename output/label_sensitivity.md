@@ -14,76 +14,76 @@
 
 | 변형 | 설명 | 제거 | n | 영어 | 한국어 |
 |---|---|---:|---:|---:|---:|
-| `V0_baseline` | 전체 71개 (기준) | 0 | 71 | 26 | 45 |
-| `V1_no_stub_gold` | 정답이 전부 표제 스텁인 질의 제거 (D1) | 42 | 29 | 11 | 18 |
-| `V2_no_label_defect` | 부정확 2차 라벨·규제체계 모순 제거 (D3/D4) | 3 | 68 | 24 | 44 |
-| `V3_unique_gold_code` | 정답 코드 재사용 질의 제거 (D5) | 3 | 68 | 25 | 43 |
-| `V4_strict` | V1 ∩ V2 ∩ V3 (가장 보수적) | 42 | 29 | 11 | 18 |
+| `V0_baseline` | 전체 질의 (기준) | 0 | 151 | 42 | 109 |
+| `V1_no_stub_gold` | 정답이 전부 표제 스텁인 질의 제거 (D1) | 42 | 109 | 27 | 82 |
+| `V2_no_label_defect` | 부정확 2차 라벨·규제체계 모순 제거 (D3/D4) | 3 | 148 | 40 | 108 |
+| `V3_unique_gold_code` | 정답 코드 재사용 질의 제거 (D5) | 3 | 148 | 41 | 107 |
+| `V4_strict` | V1 ∩ V2 ∩ V3 (가장 보수적) | 42 | 109 | 27 | 82 |
 
 ## dense − BM25 (주 결론): 모든 변형에서 유의한가
 
 | 변형 | 모델 | BM25 | dense | 평균차 | 승/패 | exact p | 유의 |
 |---|---|---:|---:|---:|---:|---:|---|
-| `V0_baseline` | MiniLM | 0.1549 | 0.5493 | +0.3944 | 29/1 | 5.77e-08 | **예** |
-| `V0_baseline` | bge-m3 | 0.1549 | 0.5634 | +0.4085 | 30/1 | 2.98e-08 | **예** |
-| `V0_baseline` | e5-base | 0.1549 | 0.4648 | +0.3099 | 23/1 | 2.98e-06 | **예** |
-| `V1_no_stub_gold` | MiniLM | 0.2759 | 0.6897 | +0.4138 | 13/1 | 1.83e-03 | **예** |
-| `V1_no_stub_gold` | bge-m3 | 0.2759 | 0.7241 | +0.4483 | 14/1 | 9.77e-04 | **예** |
-| `V1_no_stub_gold` | e5-base | 0.2759 | 0.6897 | +0.4138 | 13/1 | 1.83e-03 | **예** |
-| `V2_no_label_defect` | MiniLM | 0.1618 | 0.5735 | +0.4118 | 29/1 | 5.77e-08 | **예** |
-| `V2_no_label_defect` | bge-m3 | 0.1618 | 0.5882 | +0.4265 | 30/1 | 2.98e-08 | **예** |
-| `V2_no_label_defect` | e5-base | 0.1618 | 0.4853 | +0.3235 | 23/1 | 2.98e-06 | **예** |
-| `V3_unique_gold_code` | MiniLM | 0.1618 | 0.5735 | +0.4118 | 29/1 | 5.77e-08 | **예** |
-| `V3_unique_gold_code` | bge-m3 | 0.1618 | 0.5735 | +0.4118 | 29/1 | 5.77e-08 | **예** |
-| `V3_unique_gold_code` | e5-base | 0.1618 | 0.4853 | +0.3235 | 23/1 | 2.98e-06 | **예** |
-| `V4_strict` | MiniLM | 0.2759 | 0.6897 | +0.4138 | 13/1 | 1.83e-03 | **예** |
-| `V4_strict` | bge-m3 | 0.2759 | 0.7241 | +0.4483 | 14/1 | 9.77e-04 | **예** |
-| `V4_strict` | e5-base | 0.2759 | 0.6897 | +0.4138 | 13/1 | 1.83e-03 | **예** |
+| `V0_baseline` | MiniLM | 0.1523 | 0.4503 | +0.2980 | 53/8 | 2.99e-09 | **예** |
+| `V0_baseline` | bge-m3 | 0.1523 | 0.5695 | +0.4172 | 65/2 | 3.09e-17 | **예** |
+| `V0_baseline` | e5-base | 0.1523 | 0.4768 | +0.3245 | 54/5 | 1.91e-11 | **예** |
+| `V1_no_stub_gold` | MiniLM | 0.1835 | 0.4495 | +0.2661 | 37/8 | 1.54e-05 | **예** |
+| `V1_no_stub_gold` | bge-m3 | 0.1835 | 0.6147 | +0.4312 | 49/2 | 1.18e-12 | **예** |
+| `V1_no_stub_gold` | e5-base | 0.1835 | 0.5413 | +0.3578 | 44/5 | 7.60e-09 | **예** |
+| `V2_no_label_defect` | MiniLM | 0.1554 | 0.4595 | +0.3041 | 53/8 | 2.99e-09 | **예** |
+| `V2_no_label_defect` | bge-m3 | 0.1554 | 0.5811 | +0.4257 | 65/2 | 3.09e-17 | **예** |
+| `V2_no_label_defect` | e5-base | 0.1554 | 0.4865 | +0.3311 | 54/5 | 1.91e-11 | **예** |
+| `V3_unique_gold_code` | MiniLM | 0.1554 | 0.4595 | +0.3041 | 53/8 | 2.99e-09 | **예** |
+| `V3_unique_gold_code` | bge-m3 | 0.1554 | 0.5743 | +0.4189 | 64/2 | 6.00e-17 | **예** |
+| `V3_unique_gold_code` | e5-base | 0.1554 | 0.4865 | +0.3311 | 54/5 | 1.91e-11 | **예** |
+| `V4_strict` | MiniLM | 0.1835 | 0.4495 | +0.2661 | 37/8 | 1.54e-05 | **예** |
+| `V4_strict` | bge-m3 | 0.1835 | 0.6147 | +0.4312 | 49/2 | 1.18e-12 | **예** |
+| `V4_strict` | e5-base | 0.1835 | 0.5413 | +0.3578 | 44/5 | 7.60e-09 | **예** |
 
 ## hybrid − dense: 어느 변형에서도 유의하지 않은가
 
 | 변형 | 모델 | 평균차 | exact p | 유의 |
 |---|---|---:|---:|---|
-| `V0_baseline` | MiniLM | +0.0282 | 0.625 | 아니오 |
-| `V0_baseline` | bge-m3 | +0.0000 | 1 | 아니오 |
-| `V0_baseline` | e5-base | +0.0282 | 0.625 | 아니오 |
-| `V1_no_stub_gold` | MiniLM | +0.0345 | 1 | 아니오 |
-| `V1_no_stub_gold` | bge-m3 | +0.0345 | 1 | 아니오 |
-| `V1_no_stub_gold` | e5-base | +0.0345 | 1 | 아니오 |
-| `V2_no_label_defect` | MiniLM | +0.0294 | 0.625 | 아니오 |
-| `V2_no_label_defect` | bge-m3 | +0.0000 | 1 | 아니오 |
-| `V2_no_label_defect` | e5-base | +0.0294 | 0.625 | 아니오 |
-| `V3_unique_gold_code` | MiniLM | +0.0294 | 0.625 | 아니오 |
-| `V3_unique_gold_code` | bge-m3 | +0.0147 | 1 | 아니오 |
-| `V3_unique_gold_code` | e5-base | +0.0294 | 0.625 | 아니오 |
-| `V4_strict` | MiniLM | +0.0345 | 1 | 아니오 |
-| `V4_strict` | bge-m3 | +0.0345 | 1 | 아니오 |
-| `V4_strict` | e5-base | +0.0345 | 1 | 아니오 |
+| `V0_baseline` | MiniLM | +0.0596 | 0.0117 | 예 |
+| `V0_baseline` | bge-m3 | -0.0199 | 0.453 | 아니오 |
+| `V0_baseline` | e5-base | +0.0132 | 0.774 | 아니오 |
+| `V1_no_stub_gold` | MiniLM | +0.0734 | 0.00781 | 예 |
+| `V1_no_stub_gold` | bge-m3 | -0.0183 | 0.688 | 아니오 |
+| `V1_no_stub_gold` | e5-base | +0.0092 | 1 | 아니오 |
+| `V2_no_label_defect` | MiniLM | +0.0608 | 0.0117 | 예 |
+| `V2_no_label_defect` | bge-m3 | -0.0203 | 0.453 | 아니오 |
+| `V2_no_label_defect` | e5-base | +0.0135 | 0.774 | 아니오 |
+| `V3_unique_gold_code` | MiniLM | +0.0608 | 0.0117 | 예 |
+| `V3_unique_gold_code` | bge-m3 | -0.0135 | 0.688 | 아니오 |
+| `V3_unique_gold_code` | e5-base | +0.0135 | 0.774 | 아니오 |
+| `V4_strict` | MiniLM | +0.0734 | 0.00781 | 예 |
+| `V4_strict` | bge-m3 | -0.0183 | 0.688 | 아니오 |
+| `V4_strict` | e5-base | +0.0092 | 1 | 아니오 |
 
 ## 한국어 (구조적 실패의 라벨 비의존성)
 
 | 변형 | 모델 | BM25 한국어 | dense 한국어 |
 |---|---|---:|---:|
-| `V0_baseline` | MiniLM | 0.0000 | 0.6000 |
-| `V0_baseline` | bge-m3 | 0.0000 | 0.6222 |
-| `V0_baseline` | e5-base | 0.0000 | 0.4889 |
-| `V1_no_stub_gold` | MiniLM | 0.0000 | 0.7222 |
-| `V1_no_stub_gold` | bge-m3 | 0.0000 | 0.7778 |
-| `V1_no_stub_gold` | e5-base | 0.0000 | 0.7222 |
-| `V2_no_label_defect` | MiniLM | 0.0000 | 0.6136 |
-| `V2_no_label_defect` | bge-m3 | 0.0000 | 0.6364 |
-| `V2_no_label_defect` | e5-base | 0.0000 | 0.5000 |
-| `V3_unique_gold_code` | MiniLM | 0.0000 | 0.6279 |
-| `V3_unique_gold_code` | bge-m3 | 0.0000 | 0.6512 |
-| `V3_unique_gold_code` | e5-base | 0.0000 | 0.5116 |
-| `V4_strict` | MiniLM | 0.0000 | 0.7222 |
-| `V4_strict` | bge-m3 | 0.0000 | 0.7778 |
-| `V4_strict` | e5-base | 0.0000 | 0.7222 |
+| `V0_baseline` | MiniLM | 0.0275 | 0.4771 |
+| `V0_baseline` | bge-m3 | 0.0275 | 0.5780 |
+| `V0_baseline` | e5-base | 0.0275 | 0.4679 |
+| `V1_no_stub_gold` | MiniLM | 0.0366 | 0.4634 |
+| `V1_no_stub_gold` | bge-m3 | 0.0366 | 0.5976 |
+| `V1_no_stub_gold` | e5-base | 0.0366 | 0.5122 |
+| `V2_no_label_defect` | MiniLM | 0.0278 | 0.4815 |
+| `V2_no_label_defect` | bge-m3 | 0.0278 | 0.5833 |
+| `V2_no_label_defect` | e5-base | 0.0278 | 0.4722 |
+| `V3_unique_gold_code` | MiniLM | 0.0280 | 0.4860 |
+| `V3_unique_gold_code` | bge-m3 | 0.0280 | 0.5888 |
+| `V3_unique_gold_code` | e5-base | 0.0280 | 0.4766 |
+| `V4_strict` | MiniLM | 0.0366 | 0.4634 |
+| `V4_strict` | bge-m3 | 0.0366 | 0.5976 |
+| `V4_strict` | e5-base | 0.0366 | 0.5122 |
 
 ## 결론
 
 - dense−BM25가 **모든 변형 × 모든 모델에서 유의**한가: **예**
-- hybrid−dense가 **어느 변형에서도 유의하지 않은가**: **예**
+- hybrid−dense가 **어느 변형에서도 유의하지 않은가**: **아니오**
 - 즉 라벨 결함(표제 스텁·부정확 2차 라벨·규제체계 모순·코드 재사용)이 있는 질의를
   모두 제거해도 논문의 두 결론이 뒤집히지 않는다. 라벨 결함이 결론을 만들어낸 것이
   아니다.
