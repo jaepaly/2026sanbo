@@ -209,9 +209,15 @@ eCFR 637건 중 **351건(55.1%)**이 `(see List of Items Controlled)` 형태의 
    → run_tier1.py ×3 → validate_tier1.py ×3 → report_tier1_crossmodel.py
 
 ④ 치환 사전(data/hypernym_substitutions.json) 변경 시
-   experiment_symmetric_ablation.py → run_tier1.py ×3 → report_tier1_crossmodel.py
+   experiment_symmetric_ablation.py → run_tier1.py ×3 → validate_tier1.py ×3
+   → report_tier1_crossmodel.py
+   (사전은 ablation 에만 쓰이지만 Tier-1 번들이 ablation 을 포함하므로 3종 전부 재실행)
 
-⑤ 항상 마지막
+⑤ 민감토큰 계량기(build_disclosure_ladder.py 의 GRADE_TERMS/ATTRIBUTE_TERMS) 변경 시
+   build_disclosure_ladder.py → audit_ladder_selfreference.py
+   → experiment_disclosure_frontier.py → run_tier1.py ×3 → report_tier1_crossmodel.py
+
+⑥ 항상 마지막
    make_figures.py → experiment_stats.py → verify_claims.py
    → for f in tests/test_*.py; do python "$f"; done
 ```
@@ -230,7 +236,7 @@ eCFR 637건 중 **351건(55.1%)**이 `(see List of Items Controlled)` 형태의 
 - **CRLF가 출처 해시를 깨뜨린다**: `core.autocrlf=true`인 Windows 클론은 체크아웃 때 텍스트 원본을 CRLF로 바꿔 `fetch_sources.py verify`의 SHA-256을 전부 어긋나게 만든다(원본은 그대로인데). `.gitattributes`가 해당 경로의 변환을 끄고 있으니 **지우지 말 것**.
 - **사다리 정의 위반 18건은 버그가 아니라 결과**다: 고쳐서 통과시키지 않고 제외하고 세었다. `ladder_spec_compliant=false`인 질의를 사다리 분석에 되돌려 넣지 말 것(검색기 비교에는 그대로 쓴다).
 - **민감토큰 계량기 경계를 함부로 옮기지 말 것**: `GRADE_TERMS`(계수) vs `ATTRIBUTE_TERMS`(function, 비계수)의 분류가 노출 축 전체를 좌우한다. `tests/test_disclosure_ladder.py::test_detector_boundary`가 대표 사례로 고정하고 있다. 옮겨야 한다면 **정의문에서 근거를 대고**, 정정 전후 frontier를 함께 보고할 것(`output/disclosure_frontier_strict_detector.json`이 수정 전 참조본).
-- **치환 사전은 원본 71개만 덮는다**: level 1·2에서 71/151, level 3에서 121/151에만 압력이 걸린다. 이 커버리지는 `verify_claims.py`가 고정하고 있으며 PAPER 4.6이 공개한다. 사전을 늘려 커버리지를 올리는 것은 '측정도구를 결과가 좋아지는 방향으로 손보는' 일이므로 하려면 그 사실을 논문에 함께 적어야 한다.
+- **치환 사전 커버리지는 151/151이다**(2026-08-01 확대 완료). `verify_claims.py`와 `tests/test_selfreference.py`가 전량 커버리지를 고정한다. 규칙을 지워 커버리지가 떨어지면 실패한다. 확대 전 산출물은 `output/symmetric_ablation_partial_coverage.json`에 있고, 확대는 dense 우위 폭을 +0.2450 → +0.2119로 **줄였다**(연구자에게 불리한 방향) — 이 대조가 PAPER 4.6 표에 있다.
 
 ---
 
@@ -253,7 +259,7 @@ eCFR 637건 중 **351건(55.1%)**이 `(see List of Items Controlled)` 형태의 
 3. ~~대칭 ablation·사다리의 다모델 확장~~ — **완료**(PAPER 4.8, `output/tier1_crossmodel.md`). n=151에서 최대 압력 유의성 3/3, 운용 권고 모델 비의존
 4. **L1 등가 입증 — 이 코퍼스로는 불가로 확정**. 필요 n≈556 vs 상한 328. 지금 논문이 말할 수 있는 것은 "손실 징후 없음"까지다. 추진하려면 라벨 공간을 eCFR 밖으로 넓히는 설계 변경이 선행돼야 한다
 5. ~~사다리 정의 위반 32건~~ — **계량기 경계 정정으로 18건까지 축소**(사다리 119 → 133). 남은 18건은 고칠 대상이 아니라 **보고할 결과**다(용도 정의형 품목군의 환원 불가능한 바닥). 더 줄이려면 그 품목군을 위한 별도 노출 축을 설계해야 한다
-6. **치환 사전 커버리지 확대** — level 1·2가 71/151만 덮는다. 확대하려면 그 사실과 확대 전후 수치를 함께 보고할 것
+6. ~~치환 사전 커버리지 확대~~ — **완료**(71/151 → 151/151, 규칙 170 → 330개). 확대 전후를 PAPER 4.6에 병기했다
 7. **실제 기업 질의 확보** — 현장 대표성(현재 전부 역생성 합성)
 8. ~~전문가 라벨 검수~~ — **범위 밖으로 확정**. 대신 PAPER 4.7의 라벨 강건성 분석으로 대체함(라벨 결함 질의를 모두 제거해도 결론 유지)
 9. **제출 형식 확정(팀장만 가능)** — 대회 마감일과 제출 포맷(hwp/docx/pdf·분량 제한)이 아직 미확인이다. `PAPER.md`는 마크다운뿐이라 변환·재편집 시간이 필요하다

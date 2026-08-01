@@ -326,7 +326,7 @@ def build_checks() -> list[Check]:
                    "level3에서 e5-base도 유의하다 (n=151에서 역전)", True,
                    lambda: dig(cross, "conclusion",
                                "ablation_level3_significant_by_model", "e5-base")))
-    for m, val in [("MiniLM", 0.2450), ("bge-m3", 0.3576), ("e5-base", 0.1589)]:
+    for m, val in [("MiniLM", 0.2119), ("bge-m3", 0.2980), ("e5-base", 0.1325)]:
         C.append(Check(f"cross.abl.l3.{m}", "PAPER 4.8", f"level3 dense−BM25 ({m})", val,
                        lambda mm=m: dig(cross, "ablation", mm, "dense_vs_bm25", "3",
                                         "dense_minus_bm25")))
@@ -407,22 +407,22 @@ def build_checks() -> list[Check]:
     C.append(Check("abl.dense_vs_bm25.L0", "PAPER 4.6", "압력 level0 dense−BM25 평균차", 0.3642,
                    lambda: dig(abl, "headline", "dense_advantage_over_bm25_by_level", "0")))
     C.append(Check("abl.dense_vs_bm25.L3", "PAPER 4.6",
-                   "압력 level3 dense−BM25 평균차 (유의 유지)", 0.2450,
+                   "압력 level3 dense−BM25 평균차 (유의 유지)", 0.2119,
                    lambda: dig(abl, "headline", "dense_advantage_over_bm25_by_level", "3")))
-    for retr, l0, l3 in [("BM25", 0.1523, 0.0927), ("dense", 0.5166, 0.3377),
-                         ("hybrid_0.5", 0.5497, 0.3642)]:
+    for retr, l0, l3 in [("BM25", 0.1523, 0.0199), ("dense", 0.5166, 0.2318),
+                         ("hybrid_0.5", 0.5497, 0.2252)]:
         C.append(Check(f"abl.{retr}.L0", "PAPER 4.6", f"압력 level0 {retr} R@10", l0,
                        lambda r=retr: dig(abl, "headline", "recall_by_level", r, "0")))
         C.append(Check(f"abl.{retr}.L3", "PAPER 4.6", f"압력 level3 {retr} R@10", l3,
                        lambda r=retr: dig(abl, "headline", "recall_by_level", r, "3")))
     C.append(Check("abl.ko.bm25.L3", "PAPER 4.6",
-                   "압력 level3 BM25 한국어 R@10 (전 level 동일)", 0.0367,
+                   "압력 level3 BM25 한국어 R@10", 0.0092,
                    lambda: dig(abl, "headline", "recall_by_level_ko", "BM25", "3")))
-    C.append(Check("abl.ko.dense.L3", "PAPER 4.6", "압력 level3 dense 한국어 R@10", 0.3853,
+    C.append(Check("abl.ko.dense.L3", "PAPER 4.6", "압력 level3 dense 한국어 R@10", 0.2752,
                    lambda: dig(abl, "headline", "recall_by_level_ko", "dense", "3")))
     # 치환 커버리지: 사전이 원본 71개만 덮으므로 압력이 표본 전체에 걸리지 않는다.
     # 논문 4.6 이 이 수치를 그대로 인용하며, 조용히 떨어지면 검증이 실패해야 한다.
-    for lv, changed in [("1", 71), ("2", 71), ("3", 121)]:
+    for lv, changed in [("1", 151), ("2", 151), ("3", 151)]:
         C.append(Check(f"abl.coverage.L{lv}", "PAPER 4.6",
                        f"level{lv} 치환이 적용된 질의 수", changed,
                        lambda l=lv: dig(abl, "substitution_coverage", l, "queries_changed"),
@@ -430,7 +430,7 @@ def build_checks() -> list[Check]:
     C.append(Check("abl.gate_cos.L0", "PAPER 4.6", "압력 level0 게이트 cos 평균", 0.3420,
                    lambda: dig(abl, "manipulation_diagnostics", "per_level", "0",
                                "mean_gate_cos"), tol=1e-3))
-    C.append(Check("abl.gate_cos.L3", "PAPER 4.6", "압력 level3 게이트 cos 평균", 0.3189,
+    C.append(Check("abl.gate_cos.L3", "PAPER 4.6", "압력 level3 게이트 cos 평균", 0.3035,
                    lambda: dig(abl, "manipulation_diagnostics", "per_level", "3",
                                "mean_gate_cos"), tol=1e-3))
 

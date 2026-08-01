@@ -1,6 +1,6 @@
 {
   "meta": {
-    "purpose": "검증셋(n=71) 질의에 자기참조 압력을 가하기 위한 결정론적 상위어 치환 사전. experiment_symmetric_ablation.py가 이 파일만 읽어 조작을 수행한다.",
+    "purpose": "검증셋 질의에 자기참조 압력을 가하기 위한 결정론적 상위어 치환 사전. experiment_symmetric_ablation.py가 이 파일만 읽어 조작을 수행한다.",
     "why": "experiment_paraphrase_gap.py의 변별어 제거 ablation은 합성셋 + BM25에만 적용되었다. 즉 자기비판 도구가 경쟁 상대에게만 적용되었다. 이 사전은 같은 압력을 검증셋 x (BM25/dense/hybrid)에 대칭으로 가하기 위한 것이다.",
     "design": {
       "tier": "치환 강도 단계. level N에서는 tier <= N 인 규칙만 적용한다. 따라서 적용 규칙 집합은 level에 대해 중첩(nested)되며 단조증가한다.",
@@ -11,7 +11,13 @@
     },
     "authorship_caveat": "치환어는 질의 원문과 정답 원문을 함께 보고 사람(에이전트)이 작성한 판단이며 자동 생성이 아니다. 편향 방향을 명시한다: (1) 사용자의 실제 정보 요구(무엇을 수출하려는가)는 보존하고, (2) 정답 항목의 표현을 되받아 쓰는 어구만 제거하려 했다. 치환 후에도 정답 라벨은 변경하지 않았다. 치환된 질의가 여전히 동일 정답을 가리키는지에 대한 전문가 확인은 **확인 필요** 상태다.",
     "labels_unchanged": true,
-    "created_for": "M4 대칭 ablation"
+    "created_for": "M4 대칭 ablation",
+    "coverage_history": {
+      "initial": "원본 71개 질의만 tier1/2 규칙을 가졌다. TASK J 확장 80건은 전역 tier3 규칙에만 걸려 level 1·2 에서 압력을 전혀 받지 못했다(커버리지 71/151).",
+      "extended_2026_08_01": "확장 80건에 tier1(정답 지목 명사구)·tier2(한정 수식어) 규칙 160개를 같은 기준으로 추가해 커버리지를 151/151 로 올렸다.",
+      "why_not_earlier": "사전이 원본 71개를 보고 작성된 닫힌 목록이었기 때문이다. 확대 전 산출물을 함께 보존해 확대가 결론을 만들지 않았음을 대조할 수 있게 했다.",
+      "guard": "추가 규칙 전량이 '치환어가 정답 원문 토큰을 새로 들여오지 않는다'는 기존 검사를 통과한다(tests/test_selfreference.py)."
+    }
   },
   "rules": [
     {
@@ -1687,6 +1693,1606 @@
       "phrase": "devices",
       "hypernym": "units",
       "reason": "전역 일반화."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-001"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "안테나 보호용 덮개",
+      "hypernym": "전파 투과 외피",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-001"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "미사일에 들어가는",
+      "hypernym": "비행 장치에 들어가는",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-002"
+      ],
+      "tier": 1,
+      "lang": "en",
+      "phrase": "a compact unit that bounces radio and light pulses off the terrain below",
+      "hypernym": "a small module that reads the surface underneath",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-002"
+      ],
+      "tier": 2,
+      "lang": "en",
+      "phrase": "height above the ground",
+      "hypernym": "vertical separation from that surface",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-003"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "공기흡입식 추진기관",
+      "hypernym": "대기 이용 동력장치",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-003"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "초음속과 극초음속 영역을 아우르는 겸용 형태",
+      "hypernym": "넓은 속도 구간을 아우르는 복합 형태",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-004"
+      ],
+      "tier": 1,
+      "lang": "en",
+      "phrase": "a self-contained motor that burns a cast solid fuel block",
+      "hypernym": "a sealed thrust unit using one moulded charge",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-004"
+      ],
+      "tier": 2,
+      "lang": "en",
+      "phrase": "total impulse near one million newton-seconds",
+      "hypernym": "very large accumulated push",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-005"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "시편을 뜨겁게 달군 상태에서 큰 소리와 흔들림을 동시에 가하는",
+      "hypernym": "시료에 열과 자극을 함께 주는",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-005"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "환경 신뢰성 시험",
+      "hypernym": "환경 내구 확인",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-006"
+      ],
+      "tier": 1,
+      "lang": "en",
+      "phrase": "pre-impregnated high-strength fiber sheets",
+      "hypernym": "layered reinforcement mats",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-006"
+      ],
+      "tier": 2,
+      "lang": "en",
+      "phrase": "metal-coated fiber blanks",
+      "hypernym": "surface-treated strand blanks",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-007"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "풍동 설비",
+      "hypernym": "기류 발생 설비",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-007"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "음속을 넘는 기류를 만드는",
+      "hypernym": "빠른 흐름을 만드는",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-008"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "유도 장치 세트",
+      "hypernym": "경로 제어 묶음",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-008"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "장거리에서도 명중 정밀도가 높은",
+      "hypernym": "먼 거리에서도 오차가 작은",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-009"
+      ],
+      "tier": 1,
+      "lang": "en",
+      "phrase": "a production tool used to fabricate electronic components and their parts on a line",
+      "hypernym": "a line tool that makes circuit hardware and its pieces",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-009"
+      ],
+      "tier": 2,
+      "lang": "en",
+      "phrase": "a general manufacturing setup",
+      "hypernym": "a common factory arrangement",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-010"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "특수 연산 장비",
+      "hypernym": "혼합형 계산 장비",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-010"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "복잡한 비행체 거동을 실시간으로 모의 계산하는",
+      "hypernym": "복잡한 움직임을 즉시 모사하는",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-011"
+      ],
+      "tier": 1,
+      "lang": "en",
+      "phrase": "ruggedized computing units",
+      "hypernym": "hardened processing boxes",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-011"
+      ],
+      "tier": 2,
+      "lang": "en",
+      "phrase": "built specifically for a defense platform",
+      "hypernym": "tailored for a protected programme",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-012"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "통신 장비 한 세트",
+      "hypernym": "연락용 품목 한 벌",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-012"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "일반 상용이 아니라 특정 용도에 맞춰 만든",
+      "hypernym": "범용이 아니라 지정 조건에 맞춰 만든",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-013"
+      ],
+      "tier": 1,
+      "lang": "en",
+      "phrase": "sonar-type acoustic gear and a radar unit",
+      "hypernym": "underwater listening gear and a beam-scanning box",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-013"
+      ],
+      "tier": 2,
+      "lang": "en",
+      "phrase": "built for a naval defense program abroad",
+      "hypernym": "made for a protected overseas programme",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-014"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "항법·방향탐지 장비와 관성항법 장치",
+      "hypernym": "위치 판단 품목과 자체 기준 장치",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-014"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "별도 통제에 안 걸리는 일반 항전 장비",
+      "hypernym": "목록에 따로 없는 일반 기내 품목",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-015"
+      ],
+      "tier": 1,
+      "lang": "en",
+      "phrase": "test and calibration rigs",
+      "hypernym": "checking and trimming benches",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-015"
+      ],
+      "tier": 2,
+      "lang": "en",
+      "phrase": "inertial navigation units",
+      "hypernym": "self-referencing position boxes",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-016"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "전용 생산 설비",
+      "hypernym": "맞춤 제작 설비",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-016"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "고정밀 유도 장치를 양산하기 위한",
+      "hypernym": "정확한 경로 제어 품목을 대량 만들기 위한",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-017"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "로켓 엔진 계통 전체",
+      "hypernym": "추력 발생 계통 전체",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-017"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "액체 추진제를 쓰는 방식",
+      "hypernym": "흐르는 연료를 쓰는 방식",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-018"
+      ],
+      "tier": 1,
+      "lang": "en",
+      "phrase": "engine-section parts of a launch vehicle",
+      "hypernym": "thrust-section pieces of a lift stage",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-018"
+      ],
+      "tier": 2,
+      "lang": "en",
+      "phrase": "meant for the liquid-fuel side",
+      "hypernym": "intended for the flowing-fuel side",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-019"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "경량 구조 패널과 브래킷류",
+      "hypernym": "가벼운 골격판과 받침류",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-019"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "발사체 기체에 들어가는",
+      "hypernym": "상승 기체에 들어가는",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-020"
+      ],
+      "tier": 1,
+      "lang": "en",
+      "phrase": "a small turboprop engine system",
+      "hypernym": "a compact shaft-driven propeller powerplant",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-020"
+      ],
+      "tier": 2,
+      "lang": "en",
+      "phrase": "rated above ten kilowatts",
+      "hypernym": "above modest levels",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-021"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "액체 추진제를 담는 전용 탱크",
+      "hypernym": "흐르는 연료를 담는 맞춤 용기",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-021"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "미사일용",
+      "hypernym": "비행 장치용",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-022"
+      ],
+      "tier": 1,
+      "lang": "en",
+      "phrase": "a solid-fuel motor",
+      "hypernym": "a cast-charge thrust unit",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-022"
+      ],
+      "tier": 2,
+      "lang": "en",
+      "phrase": "a large flying vehicle",
+      "hypernym": "a big airborne craft",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-023"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "혼합형 로켓 모터",
+      "hypernym": "두 상태 연료를 쓰는 추력기",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-023"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "고체와 액체를 함께 쓰는",
+      "hypernym": "굳은 연료와 흐르는 연료를 함께 쓰는",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-024"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "펄스 제트 엔진",
+      "hypernym": "간헐 분사식 동력장치",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-024"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "무인기와 로켓에 쓰는",
+      "hypernym": "사람이 타지 않는 비행 장치에 쓰는",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-025"
+      ],
+      "tier": 1,
+      "lang": "en",
+      "phrase": "wheeled equipment for moving, handling and launching large rockets",
+      "hypernym": "ground carriage gear for shifting and releasing big boosters",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-025"
+      ],
+      "tier": 2,
+      "lang": "en",
+      "phrase": "going to a defense customer abroad",
+      "hypernym": "going to a protected buyer abroad",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-026"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "재진입체",
+      "hypernym": "대기 복귀 기체",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-026"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "대기권에 다시 진입할 때의 열과 하중을 견디는",
+      "hypernym": "복귀 시의 열과 힘을 견디는",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-027"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "단 분리 장치",
+      "hypernym": "구간 분리 기구",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-027"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "다단 로켓에서 각 단을 분리하는",
+      "hypernym": "여러 구간으로 된 기체에서 각 구간을 떼어내는",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-028"
+      ],
+      "tier": 1,
+      "lang": "en",
+      "phrase": "a control device that regulates combustion inside a propulsion engine",
+      "hypernym": "a unit that meters burning inside a thrust motor",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-028"
+      ],
+      "tier": 2,
+      "lang": "en",
+      "phrase": "a long-range unmanned vehicle",
+      "hypernym": "a far-reaching crewless craft",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-029"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "개별 단 하나를 통째로",
+      "hypernym": "구간 하나를 통째로",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-029"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "다단 발사체",
+      "hypernym": "여러 구간으로 된 상승 기체",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-030"
+      ],
+      "tier": 1,
+      "lang": "en",
+      "phrase": "a small sealing part that sits inside jet-engine turbines",
+      "hypernym": "a small closure piece inside rotating powerplants",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-030"
+      ],
+      "tier": 2,
+      "lang": "en",
+      "phrase": "tooling used to make and check",
+      "hypernym": "fixtures used to build and verify",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-031"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "특수 공정용 지그·금형 세트",
+      "hypernym": "특정 공정용 고정구·성형틀 묶음",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-031"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "터빈 부품을 서로 붙이는 접합 공정",
+      "hypernym": "회전 부품끼리 이어붙이는 공정",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-032"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "로켓 모터를 뜯지 않고 안쪽 상태를 확인하는",
+      "hypernym": "추력기를 열지 않고 내부 상태를 확인하는",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-032"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "검사 장비",
+      "hypernym": "상태 확인 품목",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-033"
+      ],
+      "tier": 1,
+      "lang": "en",
+      "phrase": "sensors that measure friction along a surface",
+      "hypernym": "elements that gauge drag along a boundary",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-033"
+      ],
+      "tier": 2,
+      "lang": "en",
+      "phrase": "in a very hot high-speed flow",
+      "hypernym": "in a strongly heated fast stream",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-034"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "공기 마찰열과 하중을 지상에서 재현하는 시험 설비",
+      "hypernym": "마찰에 의한 발열과 힘을 지상에서 재현하는 설비",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-034"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "고속 비행 시 발생하는",
+      "hypernym": "빠른 이동 시 발생하는",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-035"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "양산용 생산 장비",
+      "hypernym": "대량 제작용 품목",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-035"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "특정 비행체 부품과 하위 조립품",
+      "hypernym": "특정 기체 구성물과 하위 조립물",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-036"
+      ],
+      "tier": 1,
+      "lang": "en",
+      "phrase": "reconstructs chip layout data by aligning layers from electron-microscope images",
+      "hypernym": "rebuilds wafer pattern records with matching planes from beam-scan pictures",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-036"
+      ],
+      "tier": 2,
+      "lang": "en",
+      "phrase": "rebuilding the design files",
+      "hypernym": "regenerating the drawing files",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-037"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "비행체가 어디를 지나갔는지 되짚는",
+      "hypernym": "기체가 지나간 경로를 되짚는",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-037"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "비행 뒤 남은 기록을 가지고",
+      "hypernym": "운항 뒤 남은 기록을 가지고",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-038"
+      ],
+      "tier": 1,
+      "lang": "en",
+      "phrase": "a precision guidance package",
+      "hypernym": "an accurate steering assembly",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-038"
+      ],
+      "tier": 2,
+      "lang": "en",
+      "phrase": "how it integrates into a flying vehicle",
+      "hypernym": "how it fits into an airborne craft",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-039"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "통합 제어 소프트웨어(FADEC)",
+      "hypernym": "통합 제어 프로그램",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-039"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "항공 엔진을 전자적으로 완전 제어하는",
+      "hypernym": "동력장치를 전자적으로 전면 제어하는",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-040"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "소스코드",
+      "hypernym": "원시 코드",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-seungwoo-040"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "관성항법 장비를 작동·정비하는 데 쓰는",
+      "hypernym": "자체 기준 위치 품목을 다루고 정비하는 데 쓰는",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-001"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "이동식 원자로용 보조 추진 장치",
+      "hypernym": "이동형 열원용 보조 구동 장치",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-001"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "원전 해양 플랫폼에 들어가는",
+      "hypernym": "해상 구조물에 들어가는",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-002"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "교체 방아쇠 모듈과 탄창 연장 튜브",
+      "hypernym": "교체 격발 단위품과 탄약함 연장관",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-002"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "스포츠용 산탄총의",
+      "hypernym": "경기용 장총의",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-003"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "전기충격봉과 저치명성 발사체",
+      "hypernym": "전기 자극봉과 저위해 투사체",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-003"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "인명 피해를 줄이는 장비",
+      "hypernym": "위해를 줄이는 품목",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-004"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "손가락 압박 구속구와 뾰족한 진압봉",
+      "hypernym": "손가락 조임 구속구와 돌기형 제압봉",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-004"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "인권 민감 장비",
+      "hypernym": "취급 주의 품목",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-005"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "제어 로직과 시험 자동화 소프트웨어",
+      "hypernym": "제어 논리와 시험 자동화 프로그램",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-005"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "해양 원자로 추진 보조장치",
+      "hypernym": "해상 열원 구동 보조장치",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-006"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "진단 프로그램과 조립 공정 관리 소프트웨어",
+      "hypernym": "점검 프로그램과 조립 공정 관리 도구",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-006"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "총기 부품 정비용",
+      "hypernym": "화기 구성물 정비용",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-007"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "전자식 영상 감지부",
+      "hypernym": "전자식 영상 수집부",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-007"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "야간 감시 장비에 들어가는",
+      "hypernym": "어두운 환경 관측 품목에 들어가는",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-008"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "설치, 수리, 오버홀 매뉴얼과 생산 공정 교육 자료",
+      "hypernym": "설치·수리·전면정비 안내서와 제작 공정 교육 자료",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-008"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "야간 조준 장치",
+      "hypernym": "어두운 환경 조준 품목",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-009"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "앞단 열보호용 경량 복합재 캡",
+      "hypernym": "선단 열보호용 가벼운 복합재 덮개",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-009"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "고온 재진입 조건을 버티도록 만든",
+      "hypernym": "복귀 시 가혹 조건을 버티도록 만든",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-010"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "백금 코팅 촉매 시편",
+      "hypernym": "귀금속 도포 반응 촉진 시편",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-010"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "수소 동위원소 교환 효율",
+      "hypernym": "가벼운 원소 교환 효율",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-011"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "감손 우라늄 차폐 블록",
+      "hypernym": "고밀도 금속 차폐 블록",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-011"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "방사선 차폐가 들어간 산업용 X선 장비",
+      "hypernym": "차폐가 들어간 산업용 투과 검사 품목",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-012"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "최루 분말 카트리지와 연막 캔",
+      "hypernym": "자극성 분말 통과 연막 통",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-012"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "군중 안전 훈련용",
+      "hypernym": "다중 대응 훈련용",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-013"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "가스 헤드",
+      "hypernym": "기체 분사구",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-013"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "탄소계 막을 입히는 고온 장비용",
+      "hypernym": "탄소계 막을 입히는 열간 공정용",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-014"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "유체 에너지 밀과 교체 로터",
+      "hypernym": "유체 방식 분쇄기와 교체 회전자",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-014"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "추진제 원료를 미세 분쇄하는",
+      "hypernym": "연료 원료를 잘게 부수는",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-015"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "원자 조각을 한쪽으로 모으는 장비",
+      "hypernym": "입자를 한쪽으로 모으는 품목",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-015"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "강한 입자 공급부",
+      "hypernym": "출력이 큰 입자 공급부",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-016"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "레이더·적외선 저감 코팅 시료",
+      "hypernym": "탐지 신호 저감 도포 시료",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-016"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "드론 외피에 바르는",
+      "hypernym": "무인 기체 외피에 바르는",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-017"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "재침탄 탄소-탄소 소재 판재",
+      "hypernym": "재처리 탄소계 소재 판재",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-017"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "소형 발사체 열차폐 부품용",
+      "hypernym": "소형 상승 기체 열보호 구성물용",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-018"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "보론-10 농축 분말",
+      "hypernym": "특정 경원소 농축 분말",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-018"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "원자력 계측기 부품에 쓰는",
+      "hypernym": "방사선 계측 구성물에 쓰는",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-019"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "베릴륨 합금 봉재",
+      "hypernym": "경금속 합금 봉재",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-019"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "항공우주 열관리 부품용",
+      "hypernym": "비행 분야 열관리 구성물용",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-020"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "특정 경량 금속 동위원소 농축 물질",
+      "hypernym": "특정 가벼운 금속의 농축 물질",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-020"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "중성자 계측용 세라믹 부품",
+      "hypernym": "입자 계측용 세라믹 구성물",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-021"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "특수 금속 튜브",
+      "hypernym": "특정 금속 관재",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-021"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "부식성 화학공정용",
+      "hypernym": "화학 처리 공정용",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-022"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "방사성 기체 밀봉 캡슐",
+      "hypernym": "특정 기체 밀봉 캡슐",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-022"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "자체 발광 안전 표지에 넣는",
+      "hypernym": "스스로 빛나는 표지에 넣는",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-023"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "고에너지 결정 분말",
+      "hypernym": "반응성 높은 결정 분말",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-023"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "충격파 실험에 쓰는",
+      "hypernym": "급격 압력 실험에 쓰는",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-024"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "아라미드 섬유 롤",
+      "hypernym": "고분자 섬유 롤",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-024"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "복합재 압력용기 보강용",
+      "hypernym": "복합 구조 용기 보강용",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-025"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "질산암모늄 기반 비료 블렌드",
+      "hypernym": "특정 질소염 기반 비료 혼합물",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-025"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "광산 폭파 보조제로 쓰일 수 있는",
+      "hypernym": "발파 보조제로 쓰일 수 있는",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-026"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "형상 최적화 소프트웨어",
+      "hypernym": "형상 최적화 프로그램",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-026"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "레이더 반사와 열 신호를 낮추는",
+      "hypernym": "탐지 반사와 열 신호를 낮추는",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-027"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "대형 압력 오븐의 운전 레시피와 환경 제어 절차",
+      "hypernym": "대형 가압 가열로의 운전 조건과 내부 환경 제어 절차",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-027"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "항공부품 공장에서 쓰는",
+      "hypernym": "비행 구성물 공장에서 쓰는",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-028"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "열분해 증착 공정 패키지",
+      "hypernym": "고온 분해 성막 공정 묶음",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-028"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "가스 전구체 조성비와 유량 스케줄",
+      "hypernym": "기체 원료 조성비와 유량 계획",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-029"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "폭발물 흔적 탐지 장비",
+      "hypernym": "위험물 흔적 탐지 품목",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-029"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "공항 보안검색용",
+      "hypernym": "시설 출입 검색용",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-030"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "맞물림 면을 최종 정밀 가공하는 자동 장비",
+      "hypernym": "맞닿는 면을 마무리 가공하는 자동 품목",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-030"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "차량 동력전달 부품의",
+      "hypernym": "차량 동력 전달 구성물의",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-031"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "CVD 전기로",
+      "hypernym": "기체 반응 가열로",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-031"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "탄소-탄소 복합재 밀도 향상을 위한",
+      "hypernym": "탄소계 복합재를 조밀하게 만들기 위한",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-032"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "치밀화·열분해 처리하는 공정 제어 장비",
+      "hypernym": "조밀화·고온 분해 처리하는 공정 제어 품목",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-032"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "로켓 노즐 목 부품과 재진입체 앞부분",
+      "hypernym": "추력기 분사구 목 구성물과 복귀 기체 선단",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-033"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "원심분리기",
+      "hypernym": "회전 분리 품목",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-033"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "회전 중 전원과 신호를 넘기는 비접촉 인터페이스",
+      "hypernym": "회전 중 전력과 신호를 넘기는 무접점 연결부",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-034"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "3축 동시 윤곽제어 머시닝센터",
+      "hypernym": "세 방향 동시 경로제어 가공 품목",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-034"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "세라믹 터빈 부품을 가공하는",
+      "hypernym": "세라믹 회전 구성물을 깎는",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-035"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "북미산 향목 원목과 변재가 남은 거친 제재목",
+      "hypernym": "특정 침엽수 원목과 겉층이 남은 거친 판재",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-035"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "목재 수출업체가",
+      "hypernym": "임산물 수출업체가",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-036"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "로봇 팔이 센서 피드백을 실시간으로 받아 작업 프로그램을 스스로 수정합니다",
+      "hypernym": "다관절 기계팔이 소자 신호를 즉시 받아 작업 순서를 스스로 고칩니다",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-036"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "공장 자동화용",
+      "hypernym": "생산 자동화용",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-037"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "수치제어 소프트웨어",
+      "hypernym": "수치 지령 프로그램",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-037"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "5개 축을 동시에 조정해 곡면 절삭 경로를 만듭니다",
+      "hypernym": "다섯 방향을 동시에 조정해 굽은 면 가공 경로를 만듭니다",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-038"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "보정 절삭 경로로 변환하는 장비 운용 소프트웨어",
+      "hypernym": "보정 가공 경로로 바꾸는 품목 운용 프로그램",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-038"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "광학 렌즈 금형을 측정한 뒤",
+      "hypernym": "광학 성형틀을 측정한 뒤",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-039"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "선박 추진기를 개발하는 소프트웨어 모듈",
+      "hypernym": "선박 추진 장치를 개발하는 프로그램 단위품",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-039"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "수중 소음 저감용 프로펠러 재가공",
+      "hypernym": "물속 소음 저감용 회전날개 재가공",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-040"
+      ],
+      "tier": 1,
+      "lang": "ko",
+      "phrase": "복합재 구조물 생산 기술 문서와 선체 부착 장비 개발 노하우",
+      "hypernym": "복합 구조물 제작 기술 문서와 선체 부착 품목 개발 지식",
+      "reason": "정답 항목을 지목하는 핵심 명사구를 상위어로 치환."
+    },
+    {
+      "query_ids": [
+        "j-yechan-040"
+      ],
+      "tier": 2,
+      "lang": "ko",
+      "phrase": "수중 장비용",
+      "hypernym": "물속 운용 품목용",
+      "reason": "정답 항목의 한정 수식어를 상위어로 치환."
     }
   ]
 }

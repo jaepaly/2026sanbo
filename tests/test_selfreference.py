@@ -178,21 +178,23 @@ def test_substitution_ladder() -> None:
           all(totals[i] <= totals[i + 1] for i in range(len(totals) - 1)), f"{totals}")
     check("질의별 적용 규칙 수도 단조 비감소", per_query_monotone, f"{offenders[:3]}")
     check("level 0에서는 아무것도 치환되지 않는다", totals[0] == 0, f"{totals[0]}")
-    # 치환 사전은 원본 71개 질의를 보고 만든 것이라 TASK J 확장 질의(80건)에는
-    # tier1/2 질의별 규칙이 없다. 이는 사전의 한계이지 버그가 아니므로 '전량 치환'을
-    # 요구하지 않고, 대신 **커버리지를 명시적으로 세어 고정**한다 — 커버리지가 조용히
-    # 더 떨어지면 실패한다(PAPER 4.6 이 이 수치를 인용한다).
-    cov1 = sum(1 for q in queries
-               if ex.substitute(q["query"], q["id"], q["lang"], rules, 1)["n_applied"] >= 1)
-    cov3 = sum(1 for q in queries
-               if ex.substitute(q["query"], q["id"], q["lang"], rules, 3)["n_applied"] >= 1)
-    check("level 1 치환 커버리지 71건 (원본 질의 전량)", cov1 == 71, f"{cov1}/{len(queries)}")
-    check("level 3 치환 커버리지 121건 이상 (전역 규칙까지 적용)",
-          cov3 >= 121, f"{cov3}/{len(queries)}")
-    uncovered = [q["id"] for q in queries
-                 if ex.substitute(q["query"], q["id"], q["lang"], rules, 3)["n_applied"] < 1]
-    check("미커버 질의가 전부 확장분(TASK G/J)이다 — 원본 71개는 빠짐없이 압력을 받는다",
-          all(not q.startswith("ext-") for q in uncovered), str(uncovered[:5]))
+    # 커버리지: 사전 초판은 원본 71개만 덮어 level 1·2 에서 71/151, level 3 에서
+    # 121/151 만 압력을 받았다. 확장 80건에 tier1/2 규칙을 추가해 전량으로 올렸다.
+    # 커버리지가 조용히 떨어지면 실패해야 한다 — PAPER 4.6 이 이 수치를 인용한다.
+    cov = {lv: sum(1 for q in queries
+                   if ex.substitute(q["query"], q["id"], q["lang"], rules, lv)["n_applied"] >= 1)
+           for lv in (1, 2, 3)}
+    for lv in (1, 2, 3):
+        check(f"level {lv} 치환 커버리지 전량({len(queries)}건)",
+              cov[lv] == len(queries), f"{cov[lv]}/{len(queries)}")
+    cov3 = cov[3]
+
+    # 질의별 규칙(tier1/2)이 모든 질의에 존재하는지 — 전역 tier3 만으로 채운 것이
+    # 아님을 확인한다. 전역 규칙만 걸린 질의는 '압력을 받았다'고 보기 약하다.
+    per_query = {qid for r in rules if r["query_ids"] for qid in r["query_ids"]}
+    missing = [q["id"] for q in queries if q["id"] not in per_query]
+    check("모든 질의가 질의별 tier1/2 규칙을 갖는다 (전역 규칙 의존 아님)",
+          not missing, f"{len(missing)}건 {missing[:5]}")
 
     # 결정론: 같은 입력 → 같은 출력
     a = [ex.substitute(q["query"], q["id"], q["lang"], rules, 3)["text"] for q in queries]
