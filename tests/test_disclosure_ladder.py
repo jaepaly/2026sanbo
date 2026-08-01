@@ -274,6 +274,61 @@ def test_detector() -> None:
           m["token_count"] == len(rc.tokenize("300밀리미터 실리콘 웨이퍼를 외국 파운드리에 이전하려 합니다.")))
 
 
+def test_slice_ladder_source() -> None:
+    """슬라이스 파일에 실린 사다리를 빌더가 읽는가 (TASK J 통합 경로).
+
+    원본 71개의 L1~L4 는 build_disclosure_ladder.py 안 LADDER dict 에 하드코딩되어
+    있다. TASK J 이후의 확장 질의는 슬라이스 JSON 의 `ladder` 필드로 들어오는데,
+    (a) 병합 스크립트가 그 필드를 떨어뜨리고 (b) 빌더가 하드코딩만 보던 탓에 새 질의의
+    사다리가 파이프라인에 도달하지 못했다. 두 구멍을 다시 열지 않도록 고정한다.
+    """
+    import importlib.util
+
+    root = LADDER_PATH.parent.parent
+    spec = importlib.util.spec_from_file_location(
+        "bdl", root / "build_disclosure_ladder.py")
+    bdl = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(bdl)
+
+    # (a) 슬라이스에 실린 온전한 사다리는 인식되어야 한다
+    good = {"id": "slice-x", "query": "A",
+            "ladder": {"L0": "A", "L1": "b", "L2": "c", "L3": "d", "L4": "e"}}
+    got = bdl.ladder_for(good)
+    if got != {"L1": "b", "L2": "c", "L3": "d", "L4": "e"}:
+        FAILURES.append(f"슬라이스 ladder 미인식: {got}")
+
+    # (b) 결함 있는 사다리는 거부되어야 한다 (조용히 통과하면 안 된다)
+    for name, q in [
+        ("L4 누락", {"id": "x", "query": "A",
+                    "ladder": {"L0": "A", "L1": "b", "L2": "c", "L3": "d"}}),
+        ("L0≠query", {"id": "y", "query": "A",
+                      "ladder": {"L0": "B", "L1": "b", "L2": "c", "L3": "d", "L4": "e"}}),
+        ("ladder 없음", {"id": "z", "query": "A"}),
+    ]:
+        if bdl.ladder_for(q) is not None:
+            FAILURES.append(f"결함 사다리를 거부하지 않음: {name}")
+
+    # (c) 원본 71개는 하드코딩이 우선이어야 한다 (슬라이스가 덮어쓰지 못하게)
+    if bdl.LADDER:
+        qid = next(iter(bdl.LADDER))
+        spoof = {"id": qid, "query": "A",
+                 "ladder": {"L0": "A", "L1": "!", "L2": "!", "L3": "!", "L4": "!"}}
+        if bdl.ladder_for(spoof) != bdl.LADDER[qid]:
+            FAILURES.append("하드코딩 LADDER 가 슬라이스에 의해 덮어쓰였다")
+
+    # (d) 병합 스크립트가 ladder 를 보존하는가
+    spec2 = importlib.util.spec_from_file_location(
+        "bev", root / "build_expanded_validated.py")
+    bev = importlib.util.module_from_spec(spec2)
+    spec2.loader.exec_module(bev)
+    merged = bev.merge_queries()
+    j = [q for q in merged if str(q.get("origin", "")).startswith("slice_j_")]
+    if j and not all(q.get("ladder") for q in j):
+        n = sum(1 for q in j if not q.get("ladder"))
+        FAILURES.append(f"병합이 TASK J 사다리를 떨어뜨렸다: {n}/{len(j)}건")
+    print(f"  slice ladder source: 슬라이스 질의 {len(j)}건, 사다리 보존 확인")
+
+
 def main() -> int:
     if not LADDER_PATH.exists():
         print(f"FAIL {LADDER_PATH} 없음 — 먼저 python build_disclosure_ladder.py 실행")
@@ -286,6 +341,7 @@ def main() -> int:
     test_no_leak(payload)
     test_level_definitions(payload)
     test_detector()
+    test_slice_ladder_source()
     print()
     if FAILURES:
         print(f"{len(FAILURES)} FAILURE(S)")

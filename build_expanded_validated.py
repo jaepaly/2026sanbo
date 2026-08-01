@@ -79,10 +79,17 @@ def merge_queries() -> list[dict]:
             dup = [c for c in q["validated_labels"] if c in seen_codes]
             if dup:  # automatic dedup across slices / base
                 continue
-            merged.append({
+            entry = {
                 "id": q["id"], "lang": q["lang"], "query": q["query"],
                 "validated_labels": q["validated_labels"], "origin": f"slice_{name}",
-            })
+            }
+            # TASK J 슬라이스는 질의당 L0~L4 재작성을 함께 싣는다. 병합에서 떨어뜨리면
+            # build_disclosure_ladder.py 가 그 질의의 사다리를 찾지 못한다(원본 71개는
+            # 스크립트 안 LADDER dict 에 하드코딩되어 있어 이 구멍이 드러나지 않았다).
+            for optional in ("ladder", "context"):
+                if q.get(optional):
+                    entry[optional] = q[optional]
+            merged.append(entry)
             seen_codes.update(q["validated_labels"])
     return merged
 

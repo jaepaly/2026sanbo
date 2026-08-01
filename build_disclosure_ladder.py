@@ -798,14 +798,39 @@ def leak_hits(text: str, labels: list[str]) -> list[str]:
     return hits
 
 
+def ladder_for(q: dict) -> dict | None:
+    """질의의 L1~L4 재작성을 찾는다.
+
+    원본 71개는 이 스크립트의 `LADDER` dict 에 하드코딩되어 있다(감사 추적 목적:
+    재작성문이 코드 리뷰 대상에 남는다). TASK J 이후의 확장 질의는 슬라이스 파일에
+    `ladder` 필드로 실려 오고 병합셋까지 그대로 전달되므로, 그 경우 소스에서 읽는다.
+
+    둘 다 있으면 하드코딩을 우선한다(원본 71개의 재작성을 슬라이스가 덮어쓰지 못하게).
+    """
+    if q["id"] in LADDER:
+        return LADDER[q["id"]]
+    lad = q.get("ladder")
+    if not lad:
+        return None
+    missing = [lv for lv in LEVELS if not lad.get(lv)]
+    if missing:
+        return None
+    if lad["L0"].strip() != q["query"].strip():
+        return None
+    return {lv: lad[lv] for lv in LEVELS if lv != "L0"}
+
+
 def main() -> int:
     src = json.loads(SRC_PATH.read_text(encoding="utf-8"))
     queries = src["queries"]
 
-    missing = [q["id"] for q in queries if q["id"] not in LADDER]
+    ladders = {q["id"]: ladder_for(q) for q in queries}
+    missing = [qid for qid, lad in ladders.items() if lad is None]
     extra = [k for k in LADDER if k not in {q["id"] for q in queries}]
     if missing or extra:
         print(f"FAIL 재작성 누락 {len(missing)}건 {missing[:5]} / 잉여 {extra}")
+        print("      (하드코딩 LADDER 에도 없고 소스 질의의 ladder 필드도 없거나 "
+              "L0~L4 가 불완전하거나 L0 가 query 와 다릅니다)")
         return 1
 
     problems: list[str] = []
@@ -813,7 +838,7 @@ def main() -> int:
 
     for q in queries:
         qid = q["id"]
-        texts = {"L0": q["query"], **LADDER[qid]}
+        texts = {"L0": q["query"], **ladders[qid]}
         levels: dict[str, dict] = {}
         prev_spans: list[dict] = []
         for lv in LEVELS:
