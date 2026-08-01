@@ -1,0 +1,724 @@
+{
+ "queries": [
+  {
+   "id": "j-seungwoo-001",
+   "lang": "ko",
+   "query": "미사일에 들어가는 안테나 보호용 덮개를 중동 방산업체에 납품하려 합니다. 극한 환경에서도 견디도록 특별히 만든 부품인데 통제 대상인지 확인하고 싶습니다.",
+   "context": "중동 방산업체 납품 / 미사일 안테나 보호 덮개",
+   "validated_labels": [
+    "ECCN-6A103"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "핵폭발 효과(EMP·X선·폭풍압·열)를 견디는 미사일용 레이돔",
+   "ladder": {
+    "L0": "미사일에 들어가는 안테나 보호용 덮개를 중동 방산업체에 납품하려 합니다. 극한 환경에서도 견디도록 특별히 만든 부품인데 통제 대상인지 확인하고 싶습니다.",
+    "L1": "미사일에 들어가는 안테나 보호용 덮개를 중동 방산업체에 납품하려 합니다. 극한 환경에서 견디는 부품인데 통제 대상인지 확인하고 싶습니다.",
+    "L2": "안테나 보호용 덮개를 중동 방산업체에 납품하려 합니다. 극한 환경에서 견디는 부품인데 통제 대상인지 확인하고 싶습니다.",
+    "L3": "강한 충격과 급격한 가열, 방사선 환경을 견디면서 안쪽 안테나를 감싸 보호하는 덮개입니다.",
+    "L4": "안테나 보호 덮개"
+   }
+  },
+  {
+   "id": "j-seungwoo-002",
+   "lang": "en",
+   "query": "We build a compact unit that bounces radio and light pulses off the terrain below a fast-moving flying body to read its height above the ground in real time, accurate to within a few meters even at very low level. It is fitted into a guided ordnance platform and we are shipping it to an overseas defense integrator. What export category does this fall under?",
+   "context": "overseas defense integrator / height-finding sensor on guided platform",
+   "validated_labels": [
+    "ECCN-7A106"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "radar or laser radar altimeter designed/modified for missiles",
+   "ladder": {
+    "L0": "We build a compact unit that bounces radio and light pulses off the terrain below a fast-moving flying body to read its height above the ground in real time, accurate to within a few meters even at very low level. It is fitted into a guided ordnance platform and we are shipping it to an overseas defense integrator. What export category does this fall under?",
+    "L1": "We build a compact unit that bounces radio and light pulses off the terrain below a fast-moving flying body to read its height above the ground in real time. It is fitted into a guided ordnance platform and we are shipping it to an overseas defense integrator. What export category does this fall under?",
+    "L2": "We build a compact unit that bounces radio and light pulses off the terrain below a fast-moving flying body to read its height above the ground in real time. It is fitted into a guided ordnance platform and we are shipping it to an overseas defense integrator.",
+    "L3": "A unit that bounces radio and light pulses off the terrain beneath a moving airborne body and times the echo to work out how high above the ground it is.",
+    "L4": "airborne height-finding sensor"
+   }
+  },
+  {
+   "id": "j-seungwoo-003",
+   "lang": "ko",
+   "query": "고속 비행체용 공기흡입식 추진기관을 개발 중입니다. 별도 압축기 없이 비행 속도로 유입되는 공기를 압축해 연소시키는 방식이고, 초음속과 극초음속 영역을 아우르는 겸용 형태로 설계했습니다. 마하 5 이상에서 추력을 내며, 동남아 항공우주 연구기관과 공동 개발 중입니다. 이 엔진과 전용 부품이 통제 품목인지 알고 싶습니다.",
+   "context": "동남아 항공우주 연구기관 공동개발 / 공기흡입식 초고속 엔진",
+   "validated_labels": [
+    "ECCN-9A011"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "램제트·스크램제트·복합사이클 엔진과 전용 부품",
+   "ladder": {
+    "L0": "고속 비행체용 공기흡입식 추진기관을 개발 중입니다. 별도 압축기 없이 비행 속도로 유입되는 공기를 압축해 연소시키는 방식이고, 초음속과 극초음속 영역을 아우르는 겸용 형태로 설계했습니다. 마하 5 이상에서 추력을 내며, 동남아 항공우주 연구기관과 공동 개발 중입니다. 이 엔진과 전용 부품이 통제 품목인지 알고 싶습니다.",
+    "L1": "고속 비행체용 공기흡입식 추진기관을 개발 중입니다. 별도 압축기 없이 비행 속도로 유입되는 공기를 압축해 연소시키는 방식이고, 초음속과 극초음속 영역을 아우르는 겸용 형태로 설계했습니다. 동남아 항공우주 연구기관과 공동 개발 중입니다. 이 엔진과 전용 부품이 통제 품목인지 알고 싶습니다.",
+    "L2": "고속 비행체용 공기흡입식 추진기관을 개발 중입니다. 별도 압축기 없이 비행 속도로 유입되는 공기를 압축해 연소시키는 방식이고, 초음속과 극초음속 영역을 아우르는 겸용 형태로 설계했습니다. 동남아 항공우주 연구기관과 공동 개발 중입니다.",
+    "L3": "별도의 회전 압축기 없이 비행 속도로 밀려드는 공기를 압축·연소시켜 추력을 얻고, 초음속부터 극초음속 구간까지 작동하는 공기흡입식 엔진입니다.",
+    "L4": "공기흡입식 초고속 추진기관"
+   }
+  },
+  {
+   "id": "j-seungwoo-004",
+   "lang": "en",
+   "query": "We make a self-contained motor that burns a cast solid fuel block, delivering a total impulse near one million newton-seconds, for a customer building large launch vehicles abroad. Which export classification applies?",
+   "context": "customer building large launch vehicles abroad / cast-fuel motor",
+   "validated_labels": [
+    "ECCN-9A107"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "solid propellant rocket motor, range >=300km, total impulse 8.41e5-1.1e6 Ns",
+   "ladder": {
+    "L0": "We make a self-contained motor that burns a cast solid fuel block, delivering a total impulse near one million newton-seconds, for a customer building large launch vehicles abroad. Which export classification applies?",
+    "L1": "We make a self-contained motor that burns a cast solid fuel block, for a customer building large launch vehicles abroad. Which export classification applies?",
+    "L2": "We make a self-contained motor that burns a cast fuel block, for a customer building large flying vehicles abroad. Which export classification applies?",
+    "L3": "A self-contained unit that burns a cast block of solid chemical fuel to produce sustained thrust.",
+    "L4": "solid-fuel rocket motor"
+   }
+  },
+  {
+   "id": "j-seungwoo-005",
+   "lang": "ko",
+   "query": "국내 우주부품 업체에 공급할 환경 신뢰성 시험 장비를 준비 중입니다. 시편을 뜨겁게 달군 상태에서 큰 소리와 흔들림을 동시에 가하는 설비인데, 통제 품목인지 확인하고 싶습니다.",
+   "context": "국내 우주부품 업체 공급 / 환경 신뢰성 시험 장비",
+   "validated_labels": [
+    "ECCN-9B006"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "음압 160dB+·4kW+·1273K+ 음향 진동 시험장비와 석영 가열기",
+   "ladder": {
+    "L0": "국내 우주부품 업체에 공급할 환경 신뢰성 시험 장비를 준비 중입니다. 시편을 뜨겁게 달군 상태에서 큰 소리와 흔들림을 동시에 가하는 설비인데, 통제 품목인지 확인하고 싶습니다.",
+    "L1": "국내 우주부품 업체에 공급할 환경 신뢰성 시험 장비를 준비 중입니다. 시편을 달군 상태에서 소리와 흔들림을 가하는 설비인데, 통제 품목인지 확인하고 싶습니다.",
+    "L2": "환경 신뢰성 시험 장비를 준비 중입니다. 시편을 달군 상태에서 소리와 흔들림을 가하는 설비인데, 통제 품목인지 확인하고 싶습니다.",
+    "L3": "가열한 시편에 큰 음압과 진동을 동시에 가해 견디는 정도를 확인하는 장비입니다.",
+    "L4": "고온 음향 진동 시험설비"
+   }
+  },
+  {
+   "id": "j-seungwoo-006",
+   "lang": "en",
+   "query": "We supply pre-impregnated high-strength fiber sheets, plus metal-coated fiber blanks, used to build lightweight composite parts for an overseas launch-vehicle maker. The fibers are an unusually high grade. Does this need an export license?",
+   "context": "overseas launch-vehicle maker / pre-impregnated high-grade fiber",
+   "validated_labels": [
+    "ECCN-9C110"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "resin impregnated fiber prepregs / metal coated preforms, high specific strength & modulus",
+   "ladder": {
+    "L0": "We supply pre-impregnated high-strength fiber sheets, plus metal-coated fiber blanks, used to build lightweight composite parts for an overseas launch-vehicle maker. The fibers are an unusually high grade. Does this need an export license?",
+    "L1": "We supply pre-impregnated fiber sheets, plus metal-coated fiber blanks, used to build lightweight composite parts for an overseas launch-vehicle maker. Does this need an export license?",
+    "L2": "We supply pre-impregnated fiber sheets, plus coated fiber blanks, used to build lightweight parts for an overseas maker. Does this need an export license?",
+    "L3": "Sheets of reinforcing fiber pre-soaked in a curing polymer, plus coated fiber blanks, used to lay up strong lightweight parts.",
+    "L4": "pre-impregnated reinforcing fiber"
+   }
+  },
+  {
+   "id": "j-seungwoo-007",
+   "lang": "ko",
+   "query": "고속 비행체 시험용 풍동 설비를 국내 연구기관과 함께 구축하려 합니다. 음속을 넘는 기류를 만드는 사양인데 통제 대상인지 확인하고 싶습니다.",
+   "context": "국내 연구기관 공동 / 고속 풍동 시험설비",
+   "validated_labels": [
+    "ECCN-9B105"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "마하 0.9+ 공력 시험설비, 장거리 로켓·미사일·무인기용",
+   "ladder": {
+    "L0": "고속 비행체 시험용 풍동 설비를 국내 연구기관과 함께 구축하려 합니다. 음속을 넘는 기류를 만드는 사양인데 통제 대상인지 확인하고 싶습니다.",
+    "L1": "고속 비행체 시험용 풍동 설비를 국내 연구기관과 함께 구축하려 합니다. 빠른 기류를 만드는 사양인데 통제 대상인지 확인하고 싶습니다.",
+    "L2": "비행체 시험용 풍동 설비를 국내 연구기관과 함께 구축하려 합니다. 빠른 기류를 만드는 사양인데 통제 대상인지 확인하고 싶습니다.",
+    "L3": "빠른 기류를 흘려 모형 주위에 작용하는 공기의 힘과 흐름을 측정하는 시험 설비입니다.",
+    "L4": "고속 풍동 시험설비"
+   }
+  },
+  {
+   "id": "j-seungwoo-008",
+   "lang": "ko",
+   "query": "비행체를 목표까지 유도하는 유도 장치 세트를 해외 방산 고객에 수출하려 합니다. 장거리에서도 명중 정밀도가 높은 사양인데 통제 분류를 확인하고 싶습니다.",
+   "context": "해외 방산 고객 수출 / 고정밀 유도 장치 세트",
+   "validated_labels": [
+    "ECCN-7A117"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "시스템 정확도 3.33% 이하(300km에서 CEP 10km 이하) 유도 세트",
+   "ladder": {
+    "L0": "비행체를 목표까지 유도하는 유도 장치 세트를 해외 방산 고객에 수출하려 합니다. 장거리에서도 명중 정밀도가 높은 사양인데 통제 분류를 확인하고 싶습니다.",
+    "L1": "비행체를 목표까지 유도하는 유도 장치 세트를 해외 방산 고객에 수출하려 합니다. 명중 정밀도가 높은 사양인데 통제 분류를 확인하고 싶습니다.",
+    "L2": "비행체를 목표까지 유도하는 장치 세트를 해외 방산 고객에 수출하려 합니다. 정밀도가 높은 사양인데 통제 분류를 확인하고 싶습니다.",
+    "L3": "비행하는 물체가 스스로 위치를 계산해 목표 지점까지 경로를 수정하며 도달하도록 이끄는 장치 묶음입니다.",
+    "L4": "비행체 유도 장치 세트"
+   }
+  },
+  {
+   "id": "j-seungwoo-009",
+   "lang": "en",
+   "query": "We're exporting a production tool used to fabricate electronic components and their parts on a line. It's a general manufacturing setup for a foreign electronics plant. Which export classification should we check?",
+   "context": "해외 전자부품 공장 / 전자부품 제조 장비",
+   "validated_labels": [
+    "ECCN-3B991"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "전자부품·재료 제조용 장비",
+   "ladder": {
+    "L0": "We're exporting a production tool used to fabricate electronic components and their parts on a line. It's a general manufacturing setup for a foreign electronics plant. Which export classification should we check?",
+    "L1": "We're exporting a production tool used to fabricate electronic components and their parts. It's a general manufacturing setup for a foreign electronics plant. Which export classification should we check?",
+    "L2": "We're exporting a production tool used to fabricate electronic components. It goes to a foreign plant. Which export classification should we check?",
+    "L3": "Equipment used on a line to manufacture electronic components and their parts.",
+    "L4": "electronic parts production equipment"
+   }
+  },
+  {
+   "id": "j-seungwoo-010",
+   "lang": "ko",
+   "query": "복잡한 비행체 거동을 실시간으로 모의 계산하는 특수 연산 장비를 해외 방산 연구소에 납품하려 합니다. 통제 대상인지 확인이 필요합니다.",
+   "context": "해외 방산 연구소 / 비행체 모의 연산 장비",
+   "validated_labels": [
+    "ECCN-4A102"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "미사일 모델링·시뮬레이션용 하이브리드 컴퓨터",
+   "ladder": {
+    "L0": "복잡한 비행체 거동을 실시간으로 모의 계산하는 특수 연산 장비를 해외 방산 연구소에 납품하려 합니다. 통제 대상인지 확인이 필요합니다.",
+    "L1": "복잡한 비행체 거동을 실시간으로 모의 계산하는 특수 연산 장비를 해외 방산 연구소에 납품하려 합니다. 통제 대상인지 알고 싶습니다.",
+    "L2": "복잡한 비행체 거동을 모의 계산하는 연산 장비를 해외 연구소에 납품하려 합니다. 통제 대상인지 알고 싶습니다.",
+    "L3": "아날로그와 디지털 방식을 결합해 비행체의 움직임을 실시간으로 모의 계산하는 연산 장치입니다.",
+    "L4": "비행체 모의 연산 장비"
+   }
+  },
+  {
+   "id": "j-seungwoo-011",
+   "lang": "en",
+   "query": "We supply ruggedized computing units built specifically for a defense platform, headed to an allied military program overseas. Do these need an export license?",
+   "context": "allied military program overseas / defense computers",
+   "validated_labels": [
+    "ECCN-4A611"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "군용 특수설계 컴퓨터",
+   "ladder": {
+    "L0": "We supply ruggedized computing units built specifically for a defense platform, headed to an allied military program overseas. Do these need an export license?",
+    "L1": "We supply ruggedized computing units built for a defense platform, headed to an allied military program overseas. Do these need an export license?",
+    "L2": "We supply computing units built for a defense platform, headed to a military program overseas. Do these need an export license?",
+    "L3": "Computers and their parts built specifically for use in a military system.",
+    "L4": "military-purpose computers"
+   }
+  },
+  {
+   "id": "j-seungwoo-012",
+   "lang": "ko",
+   "query": "국방 사업에 쓸 통신 장비 한 세트를 해외 파트너와 거래하려 합니다. 일반 상용이 아니라 특정 용도에 맞춰 만든 제품인데, 수출 통제에 걸리는지 확인하고 싶습니다.",
+   "context": "해외 국방 사업 / 군용 통신 장비",
+   "validated_labels": [
+    "ECCN-5A611"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "군용 특수설계 통신 장비",
+   "ladder": {
+    "L0": "국방 사업에 쓸 통신 장비 한 세트를 해외 파트너와 거래하려 합니다. 일반 상용이 아니라 특정 용도에 맞춰 만든 제품인데, 수출 통제에 걸리는지 확인하고 싶습니다.",
+    "L1": "국방 사업에 쓸 통신 장비 한 세트를 해외 파트너와 거래하려 합니다. 특정 용도에 맞춰 만든 제품인데, 수출 통제에 걸리는지 확인하고 싶습니다.",
+    "L2": "통신 장비 한 세트를 해외 파트너와 거래하려 합니다. 특정 용도에 맞춰 만든 제품인데, 수출 통제에 걸리는지 확인하고 싶습니다.",
+    "L3": "특정 군사 용도에 맞춰 별도로 설계한 통신 장비와 부속품입니다.",
+    "L4": "군용 통신 장비"
+   }
+  },
+  {
+   "id": "j-seungwoo-013",
+   "lang": "en",
+   "query": "We're shipping sonar-type acoustic gear and a radar unit built for a naval defense program abroad. What controls apply?",
+   "context": "naval defense program abroad / acoustic and radar",
+   "validated_labels": [
+    "ECCN-6A611"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "군용 음향·레이더 시스템",
+   "ladder": {
+    "L0": "We're shipping sonar-type acoustic gear and a radar unit built for a naval defense program abroad. What controls apply?",
+    "L1": "We're shipping acoustic gear and a radar unit built for a naval defense program abroad. What controls apply?",
+    "L2": "We're shipping acoustic gear and a detection unit built for a defense program abroad. What controls apply?",
+    "L3": "Acoustic sensing systems and radar built specifically for a military application.",
+    "L4": "military acoustic and radar systems"
+   }
+  },
+  {
+   "id": "j-seungwoo-014",
+   "lang": "ko",
+   "query": "항공기용 항법·방향탐지 장비와 관성항법 장치를 해외 항공사에 공급하려 합니다. 별도 통제에 안 걸리는 일반 항전 장비인데 그래도 확인이 필요할까요?",
+   "context": "해외 항공사 / 항공 항법 장비",
+   "validated_labels": [
+    "ECCN-7A994"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "항법·방향탐지·관성항법 항전 장비",
+   "ladder": {
+    "L0": "항공기용 항법·방향탐지 장비와 관성항법 장치를 해외 항공사에 공급하려 합니다. 별도 통제에 안 걸리는 일반 항전 장비인데 그래도 확인이 필요할까요?",
+    "L1": "항공기용 항법·방향탐지 장비와 관성항법 장치를 해외 항공사에 공급하려 합니다. 일반 항전 장비인데 그래도 확인이 필요할까요?",
+    "L2": "항공기용 항법·방향탐지 장비를 해외 항공사에 공급하려 합니다. 확인이 필요할까요?",
+    "L3": "항공기의 위치와 방향을 스스로 파악하게 해주는 항법·방향탐지·관성항법 장비입니다.",
+    "L4": "항공 항법 장비"
+   }
+  },
+  {
+   "id": "j-seungwoo-015",
+   "lang": "en",
+   "query": "We make test and calibration rigs used to build and tune inertial navigation units for a foreign aerospace maker. Which classification applies?",
+   "context": "foreign aerospace maker / nav build & tune rigs",
+   "validated_labels": [
+    "ECCN-7B101"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "관성항법용 생산·시험·교정 장비",
+   "ladder": {
+    "L0": "We make test and calibration rigs used to build and tune inertial navigation units for a foreign aerospace maker. Which classification applies?",
+    "L1": "We make test and calibration rigs used to build navigation units for a foreign aerospace maker. Which classification applies?",
+    "L2": "We make test and calibration rigs used to build navigation units for a foreign maker. Which classification applies?",
+    "L3": "Production, test, calibration and alignment equipment used together with inertial navigation gear.",
+    "L4": "navigation test-calibration equipment"
+   }
+  },
+  {
+   "id": "j-seungwoo-016",
+   "lang": "ko",
+   "query": "고정밀 유도 장치를 양산하기 위한 전용 생산 설비를 해외 방산 협력사와 구축하려 합니다. 통제 대상인지 확인하고 싶습니다.",
+   "context": "해외 방산 협력사 / 유도장치 생산 설비",
+   "validated_labels": [
+    "ECCN-7B103"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "유도 장치 전용 생산 설비",
+   "ladder": {
+    "L0": "고정밀 유도 장치를 양산하기 위한 전용 생산 설비를 해외 방산 협력사와 구축하려 합니다. 통제 대상인지 확인하고 싶습니다.",
+    "L1": "유도 장치를 양산하기 위한 전용 생산 설비를 해외 방산 협력사와 구축하려 합니다. 통제 대상인지 알고 싶습니다.",
+    "L2": "유도 장치를 양산하는 생산 설비를 해외 협력사와 구축하려 합니다. 통제 대상인지 알고 싶습니다.",
+    "L3": "유도 장치를 대량 생산하기 위해 특별히 갖춘 생산 설비입니다.",
+    "L4": "유도장치 생산 설비"
+   }
+  },
+  {
+   "id": "j-seungwoo-017",
+   "lang": "ko",
+   "query": "국내 발사체 기업과 함께 로켓 엔진 계통 전체를 공급하는 건을 진행 중입니다. 액체 추진제를 쓰는 방식인데 통제 품목인지 확인이 필요합니다.",
+   "context": "국내 발사체 기업 / 액체 로켓 추진 시스템",
+   "validated_labels": [
+    "ECCN-9A005"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "액체 로켓 추진 시스템",
+   "ladder": {
+    "L0": "국내 발사체 기업과 함께 로켓 엔진 계통 전체를 공급하는 건을 진행 중입니다. 액체 추진제를 쓰는 방식인데 통제 품목인지 확인이 필요합니다.",
+    "L1": "국내 발사체 기업과 함께 로켓 엔진 계통 전체를 공급하는 건을 진행 중입니다. 통제 품목인지 확인이 필요합니다.",
+    "L2": "발사체 기업과 함께 로켓 엔진 계통을 공급하는 건을 진행 중입니다. 통제 품목인지 확인이 필요합니다.",
+    "L3": "액체 상태의 추진제를 연소시켜 추력을 만드는 로켓 추진 계통 전체입니다.",
+    "L4": "액체 로켓 추진 시스템"
+   }
+  },
+  {
+   "id": "j-seungwoo-018",
+   "lang": "en",
+   "query": "We have an order for some engine-section parts of a launch vehicle, meant for the liquid-fuel side, from a developer overseas. Which export category should we look at?",
+   "context": "launch-vehicle developer abroad / propulsion components",
+   "validated_labels": [
+    "ECCN-9A006"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "액체 로켓 추진용 전용 부품",
+   "ladder": {
+    "L0": "We have an order for some engine-section parts of a launch vehicle, meant for the liquid-fuel side, from a developer overseas. Which export category should we look at?",
+    "L1": "We have an order for some engine-section parts of a launch vehicle from a developer overseas. Which export category should we look at?",
+    "L2": "We have an order for some engine-section parts of a launch vehicle from a customer overseas. Which export category should we look at?",
+    "L3": "Systems and parts built specifically for the liquid-fuel propulsion section of a rocket.",
+    "L4": "liquid rocket propulsion components"
+   }
+  },
+  {
+   "id": "j-seungwoo-019",
+   "lang": "ko",
+   "query": "해외 우주기업과 부품 공급 계약을 논의 중입니다. 발사체 기체에 들어가는 경량 구조 패널과 브래킷류를 맞춤 제작해 납품하는 건인데, 수출 통제에 걸리는지 확인하고 싶습니다.",
+   "context": "해외 우주기업 / 발사체·위성 구조물",
+   "validated_labels": [
+    "ECCN-9A010"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "발사체·우주선용 부품·구조물",
+   "ladder": {
+    "L0": "해외 우주기업과 부품 공급 계약을 논의 중입니다. 발사체 기체에 들어가는 경량 구조 패널과 브래킷류를 맞춤 제작해 납품하는 건인데, 수출 통제에 걸리는지 확인하고 싶습니다.",
+    "L1": "해외 우주기업과 부품 공급 계약을 논의 중입니다. 발사체 기체에 들어가는 구조 패널과 브래킷류를 맞춤 제작해 납품하는 건인데, 수출 통제에 걸리는지 확인하고 싶습니다.",
+    "L2": "우주기업과 부품 공급 계약을 논의 중입니다. 발사체에 들어가는 구조 패널과 브래킷류를 납품하는 건인데, 수출 통제에 걸리는지 확인하고 싶습니다.",
+    "L3": "발사체와 그 추진 계통, 우주선에 쓰이도록 특별히 만든 부품과 구조물입니다.",
+    "L4": "발사체·위성 구조물"
+   }
+  },
+  {
+   "id": "j-seungwoo-020",
+   "lang": "en",
+   "query": "We're exporting a small turboprop engine system rated above ten kilowatts to an overseas drone maker. Which export classification applies?",
+   "context": "overseas drone maker / small turboprop",
+   "validated_labels": [
+    "ECCN-9A102"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "10kW 초과 터보프롭 엔진 시스템",
+   "ladder": {
+    "L0": "We're exporting a small turboprop engine system rated above ten kilowatts to an overseas drone maker. Which export classification applies?",
+    "L1": "We're exporting a small turboprop engine system to an overseas drone maker. Which export classification applies?",
+    "L2": "We're exporting a small propeller engine system to an overseas maker. Which export classification applies?",
+    "L3": "A turboprop engine assembly and its dedicated parts, delivering more than a modest power output.",
+    "L4": "turboprop engine system"
+   }
+  },
+  {
+   "id": "j-seungwoo-021",
+   "lang": "ko",
+   "query": "미사일용 액체 추진제를 담는 전용 탱크를 해외 방산 고객에 수출하려 합니다. 통제 분류를 확인하고 싶습니다.",
+   "context": "해외 방산 고객 / 액체 추진제 탱크",
+   "validated_labels": [
+    "ECCN-9A103"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "미사일용 액체 추진제 저장 탱크",
+   "ladder": {
+    "L0": "미사일용 액체 추진제를 담는 전용 탱크를 해외 방산 고객에 수출하려 합니다. 통제 분류를 확인하고 싶습니다.",
+    "L1": "미사일용 액체 추진제를 담는 전용 탱크를 해외 방산 고객에 수출하려 합니다. 통제 분류를 알고 싶습니다.",
+    "L2": "액체 추진제를 담는 전용 탱크를 해외 고객에 수출하려 합니다. 통제 분류를 알고 싶습니다.",
+    "L3": "특정 액체 추진제를 저장하도록 특별히 설계한 탱크입니다.",
+    "L4": "액체 추진제 탱크"
+   }
+  },
+  {
+   "id": "j-seungwoo-022",
+   "lang": "en",
+   "query": "We're supplying a batch of parts that go into a solid-fuel motor for a large flying vehicle, for a customer overseas. Which export classification should we check?",
+   "context": "customer abroad / long-range solid propulsion parts",
+   "validated_labels": [
+    "ECCN-9A108"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "장거리 로켓용 고체 추진 부품",
+   "ladder": {
+    "L0": "We're supplying a batch of parts that go into a solid-fuel motor for a large flying vehicle, for a customer overseas. Which export classification should we check?",
+    "L1": "We're supplying a batch of parts that go into a solid-fuel motor for a flying vehicle, for a customer overseas. Which export classification should we check?",
+    "L2": "We're supplying a batch of parts that go into a motor for a large flying vehicle, for a customer overseas. Which export classification should we check?",
+    "L3": "Parts and components that go into a solid-fuel motor for a vehicle that flies a long way.",
+    "L4": "solid rocket propulsion parts"
+   }
+  },
+  {
+   "id": "j-seungwoo-023",
+   "lang": "ko",
+   "query": "고체와 액체를 함께 쓰는 혼합형 로켓 모터를 국내 발사체 스타트업에 공급하려 합니다. 장거리 비행이 가능한 급인데 통제 대상인지 확인하고 싶습니다.",
+   "context": "국내 발사체 스타트업 / 하이브리드 로켓 모터",
+   "validated_labels": [
+    "ECCN-9A109"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "장거리 하이브리드 로켓 모터",
+   "ladder": {
+    "L0": "고체와 액체를 함께 쓰는 혼합형 로켓 모터를 국내 발사체 스타트업에 공급하려 합니다. 장거리 비행이 가능한 급인데 통제 대상인지 확인하고 싶습니다.",
+    "L1": "고체와 액체를 함께 쓰는 혼합형 로켓 모터를 국내 발사체 스타트업에 공급하려 합니다. 통제 대상인지 알고 싶습니다.",
+    "L2": "혼합형 로켓 모터를 국내 스타트업에 공급하려 합니다. 통제 대상인지 알고 싶습니다.",
+    "L3": "고체 연료와 액체 산화제를 함께 사용해 추력을 내는 혼합형 로켓 모터입니다.",
+    "L4": "하이브리드 로켓 모터"
+   }
+  },
+  {
+   "id": "j-seungwoo-024",
+   "lang": "ko",
+   "query": "무인기와 로켓에 쓰는 펄스 제트 엔진을 해외 연구기관에 제공하려 합니다. 장거리 비행이 가능한 사양인데 통제 품목인지 궁금합니다.",
+   "context": "해외 연구기관 / 펄스 제트 엔진",
+   "validated_labels": [
+    "ECCN-9A111"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "장거리 무인기용 펄스 제트 엔진",
+   "ladder": {
+    "L0": "무인기와 로켓에 쓰는 펄스 제트 엔진을 해외 연구기관에 제공하려 합니다. 장거리 비행이 가능한 사양인데 통제 품목인지 궁금합니다.",
+    "L1": "무인기와 로켓에 쓰는 펄스 제트 엔진을 해외 연구기관에 제공하려 합니다. 통제 품목인지 궁금합니다.",
+    "L2": "무인기에 쓰는 제트 엔진을 해외 연구기관에 제공하려 합니다. 통제 품목인지 궁금합니다.",
+    "L3": "간헐적인 폭발 연소를 반복해 추력을 얻는 방식의 제트 엔진입니다.",
+    "L4": "펄스 제트 엔진"
+   }
+  },
+  {
+   "id": "j-seungwoo-025",
+   "lang": "en",
+   "query": "We build wheeled equipment for moving, handling and launching large rockets, going to a defense customer abroad. What controls should we check?",
+   "context": "defense customer abroad / launch handling gear",
+   "validated_labels": [
+    "ECCN-9A115"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "로켓 운반·취급·발사 장치",
+   "ladder": {
+    "L0": "We build wheeled equipment for moving, handling and launching large rockets, going to a defense customer abroad. What controls should we check?",
+    "L1": "We build wheeled equipment for moving and launching large rockets, going to a defense customer abroad. What controls should we check?",
+    "L2": "We build equipment for moving and launching large rockets, going to a customer abroad. What controls should we check?",
+    "L3": "Vehicles and apparatus designed to transport, handle and launch rockets.",
+    "L4": "rocket launch handling apparatus"
+   }
+  },
+  {
+   "id": "j-seungwoo-026",
+   "lang": "ko",
+   "query": "대기권에 다시 진입할 때의 열과 하중을 견디는 재진입체를 해외 방산 사업에 납품하려 합니다. 통제 대상인지 확인하고 싶습니다.",
+   "context": "해외 방산 사업 / 재진입 비행체",
+   "validated_labels": [
+    "ECCN-9A116"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "미사일용 재진입체",
+   "ladder": {
+    "L0": "대기권에 다시 진입할 때의 열과 하중을 견디는 재진입체를 해외 방산 사업에 납품하려 합니다. 통제 대상인지 확인하고 싶습니다.",
+    "L1": "대기권에 다시 진입할 때의 열과 하중을 견디는 재진입체를 해외 방산 사업에 납품하려 합니다. 통제 대상인지 알고 싶습니다.",
+    "L2": "대기권 재진입 시 열과 하중을 견디는 구조체를 해외 사업에 납품하려 합니다. 통제 대상인지 알고 싶습니다.",
+    "L3": "빠른 속도로 대기권에 다시 들어올 때의 극심한 가열과 하중을 견디도록 만든 비행체입니다.",
+    "L4": "재진입 비행체"
+   }
+  },
+  {
+   "id": "j-seungwoo-027",
+   "lang": "ko",
+   "query": "다단 로켓에서 각 단을 분리하는 단 분리 장치를 국내 발사체 기업에 공급하려 합니다. 통제 대상인지 확인이 필요합니다.",
+   "context": "국내 발사체 기업 / 단 분리 장치",
+   "validated_labels": [
+    "ECCN-9A117"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "미사일 단 분리·연결 장치",
+   "ladder": {
+    "L0": "다단 로켓에서 각 단을 분리하는 단 분리 장치를 국내 발사체 기업에 공급하려 합니다. 통제 대상인지 확인이 필요합니다.",
+    "L1": "다단 로켓에서 각 단을 분리하는 단 분리 장치를 국내 발사체 기업에 공급하려 합니다. 통제 대상인지 알고 싶습니다.",
+    "L2": "로켓의 각 단을 분리하는 장치를 국내 기업에 공급하려 합니다. 통제 대상인지 알고 싶습니다.",
+    "L3": "여러 단으로 된 비행체에서 단과 단을 순차적으로 떼어내는 분리·연결 장치입니다.",
+    "L4": "단 분리 장치"
+   }
+  },
+  {
+   "id": "j-seungwoo-028",
+   "lang": "en",
+   "query": "We supply a control device that regulates combustion inside a propulsion engine for a long-range unmanned vehicle, headed to a customer abroad. Which classification applies?",
+   "context": "customer abroad / combustion control device",
+   "validated_labels": [
+    "ECCN-9A118"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "엔진 연소 조절 장치",
+   "ladder": {
+    "L0": "We supply a control device that regulates combustion inside a propulsion engine for a long-range unmanned vehicle, headed to a customer abroad. Which classification applies?",
+    "L1": "We supply a control device that regulates combustion inside a propulsion engine for an unmanned vehicle, headed to a customer abroad. Which classification applies?",
+    "L2": "We supply a device that regulates combustion inside a propulsion engine for an unmanned vehicle, headed to a customer abroad. Which classification applies?",
+    "L3": "A device that regulates the combustion process inside a propulsion engine.",
+    "L4": "combustion regulation device"
+   }
+  },
+  {
+   "id": "j-seungwoo-029",
+   "lang": "ko",
+   "query": "다단 발사체의 개별 단 하나를 통째로 제작해 해외 우주기업에 공급하려 합니다. 장거리 비행이 가능한 급인데 통제 대상인지 확인하고 싶습니다.",
+   "context": "해외 우주기업 / 로켓 단 구성품",
+   "validated_labels": [
+    "ECCN-9A119"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "장거리 발사체 개별 단",
+   "ladder": {
+    "L0": "다단 발사체의 개별 단 하나를 통째로 제작해 해외 우주기업에 공급하려 합니다. 장거리 비행이 가능한 급인데 통제 대상인지 확인하고 싶습니다.",
+    "L1": "다단 발사체의 개별 단 하나를 통째로 제작해 해외 우주기업에 공급하려 합니다. 통제 대상인지 알고 싶습니다.",
+    "L2": "발사체의 개별 단 하나를 제작해 해외 기업에 공급하려 합니다. 통제 대상인지 알고 싶습니다.",
+    "L3": "여러 단으로 구성된 비행체에서 독립적으로 작동하는 단 하나를 통째로 이루는 구성품입니다.",
+    "L4": "로켓 단 구성품"
+   }
+  },
+  {
+   "id": "j-seungwoo-030",
+   "lang": "en",
+   "query": "We build tooling used to make and check a small sealing part that sits inside jet-engine turbines, for an engine manufacturer abroad. Which classification applies?",
+   "context": "engine maker abroad / brush seal production-test rigs",
+   "validated_labels": [
+    "ECCN-9B003"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "가스터빈 브러시 실 생산·시험 장비",
+   "ladder": {
+    "L0": "We build tooling used to make and check a small sealing part that sits inside jet-engine turbines, for an engine manufacturer abroad. Which classification applies?",
+    "L1": "We build tooling used to make and check a sealing part that sits inside jet-engine turbines, for an engine manufacturer abroad. Which classification applies?",
+    "L2": "We build tooling used to make and check a sealing part for jet engines, for a manufacturer abroad. Which classification applies?",
+    "L3": "Equipment for producing and testing the brush-type seals used inside fast, hot-running gas turbines.",
+    "L4": "gas turbine seal production equipment"
+   }
+  },
+  {
+   "id": "j-seungwoo-031",
+   "lang": "ko",
+   "query": "항공엔진 제조사에 납품할 특수 공정용 지그·금형 세트를 준비 중입니다. 터빈 부품을 서로 붙이는 접합 공정에 쓰는 도구인데 통제 대상인지 확인하고 싶습니다.",
+   "context": "해외 엔진 제조사 / 터빈 날개 접합 공구",
+   "validated_labels": [
+    "ECCN-9B004"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "초합금·타이타늄 날개-디스크 접합 공구·금형",
+   "ladder": {
+    "L0": "항공엔진 제조사에 납품할 특수 공정용 지그·금형 세트를 준비 중입니다. 터빈 부품을 서로 붙이는 접합 공정에 쓰는 도구인데 통제 대상인지 확인하고 싶습니다.",
+    "L1": "항공엔진 제조사에 납품할 특수 공정용 지그·금형 세트를 준비 중입니다. 부품을 붙이는 접합 공정에 쓰는 도구인데 통제 대상인지 확인하고 싶습니다.",
+    "L2": "항공엔진 제조사에 납품할 공정용 지그·금형 세트를 준비 중입니다. 부품을 붙이는 접합 공정에 쓰는 도구인데 통제 대상인지 확인하고 싶습니다.",
+    "L3": "터빈 날개를 녹이지 않고 고체 상태로 디스크에 붙이는 공정에 쓰는 공구·금형·고정구입니다.",
+    "L4": "터빈 날개 접합 공구"
+   }
+  },
+  {
+   "id": "j-seungwoo-032",
+   "lang": "ko",
+   "query": "국내 방산 업체에 납품할 검사 장비를 준비 중입니다. 로켓 모터를 뜯지 않고 안쪽 상태를 확인하는 방식인데 통제 대상인지 확인이 필요합니다.",
+   "context": "국내 방산 업체 / 로켓모터 비파괴 검사장비",
+   "validated_labels": [
+    "ECCN-9B007"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "로켓 모터 무결성 NDT 검사 장비",
+   "ladder": {
+    "L0": "국내 방산 업체에 납품할 검사 장비를 준비 중입니다. 로켓 모터를 뜯지 않고 안쪽 상태를 확인하는 방식인데 통제 대상인지 확인이 필요합니다.",
+    "L1": "국내 방산 업체에 납품할 검사 장비를 준비 중입니다. 제품을 뜯지 않고 안쪽 상태를 확인하는 방식인데 통제 대상인지 확인이 필요합니다.",
+    "L2": "국내 방산 업체에 납품할 검사 장비를 준비 중입니다. 뜯지 않고 안쪽 상태를 확인하는 방식인데 통제 대상인지 확인이 필요합니다.",
+    "L3": "로켓 모터를 뜯지 않고 내부 결함이나 이상을 찾아내는 비파괴 검사 장비입니다.",
+    "L4": "로켓모터 비파괴 검사장비"
+   }
+  },
+  {
+   "id": "j-seungwoo-033",
+   "lang": "en",
+   "query": "We supply sensors that measure friction along a surface in a very hot high-speed flow, for a foreign aerospace test lab. Which export classification applies?",
+   "context": "foreign aerospace test lab / high-heat friction sensor",
+   "validated_labels": [
+    "ECCN-9B008"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "고온 고속 유동 벽면 마찰 측정 센서",
+   "ladder": {
+    "L0": "We supply sensors that measure friction along a surface in a very hot high-speed flow, for a foreign aerospace test lab. Which export classification applies?",
+    "L1": "We supply sensors that measure friction along a surface in a high-speed flow, for a foreign aerospace test lab. Which export classification applies?",
+    "L2": "We supply sensors that measure surface friction in a high-speed flow, for a foreign test lab. Which export classification applies?",
+    "L3": "Sensors that directly measure the drag along a wall surface inside a very hot, fast gas flow.",
+    "L4": "wall friction measurement sensor"
+   }
+  },
+  {
+   "id": "j-seungwoo-034",
+   "lang": "ko",
+   "query": "고속 비행 시 발생하는 공기 마찰열과 하중을 지상에서 재현하는 시험 설비를 국내 연구기관과 구축하려 합니다. 대전력이 필요한 대형 설비인데 통제 대상인지 확인하고 싶습니다.",
+   "context": "국내 연구기관 / 공력가열 시험설비",
+   "validated_labels": [
+    "ECCN-9B104"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "대전력 공력가열 시험 설비",
+   "ladder": {
+    "L0": "고속 비행 시 발생하는 공기 마찰열과 하중을 지상에서 재현하는 시험 설비를 국내 연구기관과 구축하려 합니다. 대전력이 필요한 대형 설비인데 통제 대상인지 확인하고 싶습니다.",
+    "L1": "고속 비행 시 발생하는 공기 마찰열과 하중을 지상에서 재현하는 시험 설비를 국내 연구기관과 구축하려 합니다. 통제 대상인지 알고 싶습니다.",
+    "L2": "고속 비행 조건을 지상에서 재현하는 시험 설비를 국내 연구기관과 구축하려 합니다. 통제 대상인지 알고 싶습니다.",
+    "L3": "매우 빠른 비행에서 생기는 공기의 가열과 힘을 지상에서 재현해 시험하는 설비입니다.",
+    "L4": "공력가열 시험설비"
+   }
+  },
+  {
+   "id": "j-seungwoo-035",
+   "lang": "ko",
+   "query": "해외 방산 협력사에 공급할 양산용 생산 장비를 준비 중입니다. 특정 비행체 부품과 하위 조립품을 대량 생산하는 설비인데 통제 대상인지 확인이 필요합니다.",
+   "context": "해외 방산 협력사 / 미사일 부품 생산장비",
+   "validated_labels": [
+    "ECCN-9B115"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "특정 미사일 하위 시스템 양산 장비",
+   "ladder": {
+    "L0": "해외 방산 협력사에 공급할 양산용 생산 장비를 준비 중입니다. 특정 비행체 부품과 하위 조립품을 대량 생산하는 설비인데 통제 대상인지 확인이 필요합니다.",
+    "L1": "해외 방산 협력사에 공급할 양산용 생산 장비를 준비 중입니다. 부품과 하위 조립품을 대량 생산하는 설비인데 통제 대상인지 확인이 필요합니다.",
+    "L2": "해외 협력사에 공급할 양산용 생산 장비를 준비 중입니다. 부품과 하위 조립품을 대량 생산하는 설비인데 통제 대상인지 확인이 필요합니다.",
+    "L3": "특정 비행체 하위 시스템과 부품을 대량 생산하기 위해 특별히 만든 생산 장비입니다.",
+    "L4": "미사일 부품 생산장비"
+   }
+  },
+  {
+   "id": "j-seungwoo-036",
+   "lang": "en",
+   "query": "We license software that reconstructs chip layout data by aligning layers from electron-microscope images and rebuilding the design files. It goes to an overseas semiconductor lab. Does this need an export license?",
+   "context": "overseas semiconductor lab / chip layout extraction SW",
+   "validated_labels": [
+    "ECCN-3D907"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "SEM 영상에서 GDSII 레이아웃 추출 소프트웨어",
+   "ladder": {
+    "L0": "We license software that reconstructs chip layout data by aligning layers from electron-microscope images and rebuilding the design files. It goes to an overseas semiconductor lab. Does this need an export license?",
+    "L1": "We license software that reconstructs chip layout data by aligning layers from electron-microscope images. It goes to an overseas semiconductor lab. Does this need an export license?",
+    "L2": "We license software that reconstructs chip layout data from microscope images. It goes to an overseas lab. Does this need an export license?",
+    "L3": "Software that reads electron-microscope images of a chip, aligns its layers, and rebuilds the layout and circuit design files.",
+    "L4": "chip layout extraction software"
+   }
+  },
+  {
+   "id": "j-seungwoo-037",
+   "lang": "ko",
+   "query": "해외 방산 연구소에 제공할 분석 소프트웨어를 준비 중입니다. 비행 뒤 남은 기록을 가지고 비행체가 어디를 지나갔는지 되짚는 프로그램인데 통제 대상인지 확인하고 싶습니다.",
+   "context": "해외 방산 연구소 / 비행 경로 복원 소프트웨어",
+   "validated_labels": [
+    "ECCN-6D103"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "비행후 데이터로 비행체 위치 복원 SW",
+   "ladder": {
+    "L0": "해외 방산 연구소에 제공할 분석 소프트웨어를 준비 중입니다. 비행 뒤 남은 기록을 가지고 비행체가 어디를 지나갔는지 되짚는 프로그램인데 통제 대상인지 확인하고 싶습니다.",
+    "L1": "해외 방산 연구소에 제공할 분석 소프트웨어를 준비 중입니다. 남은 기록을 가지고 비행체가 어디를 지나갔는지 되짚는 프로그램인데 통제 대상인지 확인하고 싶습니다.",
+    "L2": "해외 연구소에 제공할 분석 소프트웨어를 준비 중입니다. 기록을 가지고 비행체가 어디를 지나갔는지 되짚는 프로그램인데 통제 대상인지 확인하고 싶습니다.",
+    "L3": "비행이 끝난 뒤 남은 기록을 처리해 비행체가 전체 경로에서 어디에 있었는지 알아내는 소프트웨어입니다.",
+    "L4": "비행 경로 복원 소프트웨어"
+   }
+  },
+  {
+   "id": "j-seungwoo-038",
+   "lang": "en",
+   "query": "We provide simulation software that models how a precision guidance package behaves and how it integrates into a flying vehicle. It's headed to a defense contractor abroad. Which classification applies?",
+   "context": "defense contractor abroad / guidance simulation SW",
+   "validated_labels": [
+    "ECCN-7D103"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "유도 장치 모델링·통합 시뮬레이션 SW",
+   "ladder": {
+    "L0": "We provide simulation software that models how a precision guidance package behaves and how it integrates into a flying vehicle. It's headed to a defense contractor abroad. Which classification applies?",
+    "L1": "We provide simulation software that models how a precision guidance package behaves in a flying vehicle. It's headed to a defense contractor abroad. Which classification applies?",
+    "L2": "We provide simulation software that models how a guidance package behaves in a flying vehicle. It's headed to a contractor abroad. Which classification applies?",
+    "L3": "Software that models and simulates the behavior of a precision guidance package and how it fits into a flying vehicle.",
+    "L4": "guidance simulation software"
+   }
+  },
+  {
+   "id": "j-seungwoo-039",
+   "lang": "ko",
+   "query": "항공 엔진을 전자적으로 완전 제어하는 통합 제어 소프트웨어(FADEC)를 해외 엔진 제조사에 제공하려 합니다. 통제 대상인지 확인하고 싶습니다.",
+   "context": "해외 엔진 제조사 / 엔진 통합제어 소프트웨어",
+   "validated_labels": [
+    "ECCN-9D003"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "FADEC 엔진 통합제어 소프트웨어",
+   "ladder": {
+    "L0": "항공 엔진을 전자적으로 완전 제어하는 통합 제어 소프트웨어(FADEC)를 해외 엔진 제조사에 제공하려 합니다. 통제 대상인지 확인하고 싶습니다.",
+    "L1": "항공 엔진을 전자적으로 완전 제어하는 통합 제어 소프트웨어(FADEC)를 해외 엔진 제조사에 제공하려 합니다. 통제 대상인지 알고 싶습니다.",
+    "L2": "항공 엔진을 전자적으로 제어하는 통합 제어 소프트웨어를 해외 제조사에 제공하려 합니다. 통제 대상인지 알고 싶습니다.",
+    "L3": "항공 엔진의 연료와 작동을 전자적으로 통합 제어하는 소프트웨어입니다.",
+    "L4": "엔진 통합제어 소프트웨어"
+   }
+  },
+  {
+   "id": "j-seungwoo-040",
+   "lang": "ko",
+   "query": "관성항법 장비를 작동·정비하는 데 쓰는 소스코드를 해외 협력사에 넘기려 합니다. 통제 대상인지 확인이 필요합니다.",
+   "context": "해외 협력사 / 관성항법 소스코드",
+   "validated_labels": [
+    "ECCN-7D002"
+   ],
+   "label_confidence": "high",
+   "label_basis_corpus_text": "관성항법 장비 작동·정비용 소스코드",
+   "ladder": {
+    "L0": "관성항법 장비를 작동·정비하는 데 쓰는 소스코드를 해외 협력사에 넘기려 합니다. 통제 대상인지 확인이 필요합니다.",
+    "L1": "관성항법 장비를 작동·정비하는 데 쓰는 소스코드를 해외 협력사에 넘기려 합니다. 통제 대상인지 알고 싶습니다.",
+    "L2": "항법 장비를 작동·정비하는 소스코드를 해외 협력사에 넘기려 합니다. 통제 대상인지 알고 싶습니다.",
+    "L3": "관성항법 장비와 자세·방위 기준 장치를 작동시키고 유지보수하는 데 쓰는 소스코드입니다.",
+    "L4": "관성항법 소스코드"
+   }
+  }
+ ]
+}
