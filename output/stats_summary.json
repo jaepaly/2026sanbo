@@ -1136,7 +1136,9 @@
   "ranking_determinism_audit": {
     "source_script": "experiment_paraphrase_gap.py",
     "change": "np.argsort(-scores) -> retrieval_core.rank_indices (내림차순 + 인덱스 오름차순 동점처리) + 전점수 0 질의를 검색 실패로 처리",
-    "headline_claim1_unchanged": {
+    "corpus_basis": "corpus v1 (1,797건) — 이 감사를 실행한 시점의 코퍼스",
+    "not_current_values_note": "아래 4개 값은 v1 시점 기록이다. 현행 값은 output/paraphrase_gap.json 을 볼 것.",
+    "headline_claim1_unchanged_at_v1": {
       "synthetic_full_text_recall@10_N0": 0.9968,
       "synthetic_minimal_text_recall@10_N0": 0.9792,
       "synthetic_minimal_text_recall@10_N5": 0.7596,
@@ -1352,6 +1354,24 @@
     ],
     "max_abs_delta": 0.016,
     "reading": "입력을 대칭으로 맞춘 뒤에도 합성셋에서는 모든 어휘격차 수준에서 BM25(α=1.0)가 dense(α=0.0)를 크게 앞선다. 즉 이 격차는 전처리 비대칭이 만든 것이 아니라 **합성 질의가 정답 문서 본문에서 파생됐다는 자기참조 구조**가 만든 것이다. 따라서 이 셋은 검색기 비교에 부적합하며, 검색기 비교는 검증셋으로 해야 한다 — 거기서는 부호가 뒤집혀 dense 성분이 BM25를 크게 앞선다(§2)."
+  },
+  "paraphrase_gap_recall": {
+    "full_text": {
+      "0": 0.992,
+      "1": 0.9856,
+      "2": 0.9824,
+      "3": 0.9663,
+      "5": 0.9183,
+      "10": 0.742
+    },
+    "minimal_text": {
+      "0": 0.984,
+      "1": 0.9712,
+      "2": 0.9343,
+      "3": 0.899,
+      "5": 0.7756,
+      "10": 0.4535
+    }
   },
   "n13_to_current_before_after": [
     {

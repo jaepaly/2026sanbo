@@ -342,7 +342,12 @@ def test_regenerated_artifacts() -> None:
               "검증셋 평가 표본: 13개" not in text)
         check("statistics.md에 '경향으로 보고' 문구가 헤드라인에 없다",
               "hybrid 우위는 경향으로 보고하고" not in text)
-        check("statistics.md에 n=71 표기", "n=71" in text)
+        # 예전에는 "n=71" 문자열을 요구했다. 표본이 바뀌면 이 검사가 문서를 낡은 값에
+        # 묶어 두므로, 현재 표본 크기를 산출물에서 읽어 대조한다.
+        _n = json.loads((ROOT / "output" / "stats_summary.json")
+                        .read_text(encoding="utf-8"))["dataset_sizes"]["validated_queries"]
+        check(f"statistics.md가 현재 표본(n={_n})을 표기한다",
+              f"n={_n}" in text or f"n = {_n}" in text)
         check("statistics.md에 이산 경계 인공물 절 존재", "이산 경계 인공물" in text)
     else:
         check("docs/statistics.md 존재", False)

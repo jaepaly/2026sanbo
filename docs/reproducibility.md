@@ -65,7 +65,7 @@ python -m pip install -r requirements.txt
 > 고정 파일을 CUDA 스택으로 올릴지, 아니면 CPU 스택으로 되돌려 전량 재실행할지는
 > 팀 결정 사항이다. 결정 전까지 이 표가 유일한 정직한 기록이다.
 
-#### 산출물별 환경 (`output/*.json`의 `meta.env` / `env_meta`, 40개 스캔, 실측 2026-08-11)
+#### 산출물별 환경 (`output/**/*.json`의 `meta.env` / `env`, 43개 스캔, 실측 2026-08-11)
 
 | 스택 | 개수 | 해당 산출물 |
 |---|---:|---|
@@ -327,8 +327,14 @@ python run_tier1.py && python report_tier1_crossmodel.py
 - 소요시간: **확인 필요.** 3모델 전량 실행은 임베딩 인코딩이 지배적이다
   (코퍼스 1,783건 × 3모델). 코드 변경 검증은 반드시 `SANBO_MODELS=MiniLM`
   단일 모델 스모크 경로를 먼저 쓸 것.
-- 관련 환경변수 (실측, 소스 grep): `SANBO_MODELS`(`experiment_validated_suite.py`),
-  `SANBO_MODEL_KEY`(`experiment_symmetric_ablation.py`, `experiment_disclosure_frontier.py`),
+- 관련 환경변수 (실측, 소스 grep 2026-08-11):
+  `SANBO_BATCH`(`experiment_validated_suite.py`, `experiment_symmetric_ablation.py`,
+  `experiment_disclosure_frontier.py` — dense 인코딩 배치 크기. 8GB GPU에서 bge-m3가
+  OOM 나면 낮춘다. 배치 크기는 임베딩 값을 바꾸지 않는다),
+  `SANBO_MODELS`(`experiment_validated_suite.py`, `experiment_symmetric_ablation.py`,
+  `experiment_disclosure_frontier.py`),
+  `SANBO_MODEL_KEY`(`experiment_symmetric_ablation.py`, `experiment_disclosure_frontier.py`,
+  `run_tier1.py`),
   `SANBO_ABLATION_MODEL`(`experiment_symmetric_ablation.py`, 하위호환),
   `SANBO_PAGE_CACHE`(`build_corpus.py`)
 
@@ -412,10 +418,22 @@ fixture로 파싱을 검증하므로 **오프라인에서 결정론적으로** �
 ### 7.3 시드
 
 - 통계 부트스트랩·순열 검정은 스크립트별로 명시적 seed를 쓴다.
+  주 산출물의 seed는 `20260626`, 부트스트랩 반복은 `20000`이다
+  (`validated_suite.json`·`symmetric_ablation.json`의 `meta`, 실측).
 - 임베딩 robustness에서는 **모델별로 seed를 분리**해야 한다. 세 모델이 같은
   리샘플 행렬을 공유하면 모델별 CI가 독립적으로 얻어진 것처럼 보인다.
+  `experiment_embedding_robustness.py`는 이를 `default_rng(SEED + i)`로 구현하고
+  모델별 `bootstrap_seed`를 JSON에 기록하게 돼 있다(소스 118·148행, 실측).
 - 이번에 추가한 취득 스크립트는 무작위성을 쓰지 않지만, 감사 일관성을 위해
-  산출물에 `seed`와 `randomness_used: "none"`을 함께 기록한다.
+  산출물에 `seed`와 `randomness_used: "none"`을 함께 기록한다
+  (실측: `source_manifest.json`·`ecfr_fetch_manifest.json` 모두 `seed: 20260730`).
+
+> **`output/embedding_robustness.json`은 seed 분리 이전 산출물이다.** 실측(2026-08-11)
+> 이 파일에는 `bootstrap_seed`·`seed_base`가 **0건**이고 `env` 기록도 없으며,
+> `meta.n`이 **71**(en 26 / ko 45)이다. 즉 위 seed 분리 규칙을 코드에 넣기 전,
+> 질의셋이 n=71이던 시절의 결과다. 현재 검증셋은 **n=151**(en 42 / ko 109)이다.
+> 이 파일과 그로부터 만든 `output/fig_embedding_robustness.png`는 **재실행이 필요하다**
+> → 확인 필요. 이 문서·논문의 n=151 수치와 같은 표에 나란히 놓지 말 것.
 
 ### 7.4 모델 revision
 
@@ -443,15 +461,21 @@ dense/hybrid 수치가 바뀔 수 있다.
 `retrieval_core.env_meta()`(462행)와 seed를 담는 것이 규칙이고, 취득 스크립트 산출물
 (`output/source_manifest.json`, `output/ecfr_fetch_manifest.json`)도 이를 따른다.
 
-그러나 **"모든 산출물"은 사실이 아니다.** `output/**/*.json` 40개를 스캔한 결과(실측 2026-08-11):
+그러나 **"모든 산출물"은 사실이 아니다.** `output/**/*.json` **43개**를 스캔한 결과
+(실측 2026-08-11, 판정식: 최상위 또는 `meta` 아래에 비어 있지 않은 `env` 키가 있는가):
 
 | 항목 | 개수 |
 |---|---:|
-| 환경(`env`/`env_meta`) 기록 있음 | **27 / 40** |
-| seed 기록 있음 | **29 / 40** |
-| 환경 기록 전혀 없음 | **13 / 40** |
+| 환경(`meta.env` / `env`) 기록 있음 | **25 / 43** |
+| seed 기록 있음 | **32 / 43** |
+| 환경·seed 둘 다 없음 | **11 / 43** |
 
-환경이 빠진 13개는 §0.1 하단 표의 마지막 행에 열거했다. 이 중
+환경이 빠진 18개: `alpha_sweep_v4`, `crosslingual_eval`, `ecfr_fetch_manifest`,
+`embedding_robustness`, `error_analysis`, `experiment_logs_v4`,
+`exposure_frontier_validated`, `external_eval`, `external_label_audit`,
+`label_sensitivity`, `llm_rerank_cache`, `routing_summary`, `source_manifest`,
+`tier1/tier1_{MiniLM,bge-m3,e5-base}`, `tier1_crossmodel`, `validated_eval`.
+(분모가 40에서 43으로 는 것은 `output/tier1/` 3개가 스캔 대상에 들어왔기 때문이다.) 이 중
 `label_sensitivity.json`, `tier1_crossmodel.json`, `validated_eval.json`,
 `external_eval.json`은 현재 문서가 인용하는 계열이므로 **환경 기록 추가가 필요하다**
 → 담당자 확인 필요. 또한 `env_meta()`에 **device(CPU/CUDA) 항목이 없다**(§4).
@@ -466,7 +490,7 @@ dense/hybrid 수치가 바뀔 수 있다.
 | 1.1 eCFR 재파싱 | **조건부.** `--xml` 로 저장해 둔 원문 XML이 있어야 한다. 그런데 `data/raw/`는 `.gitignore` 대상이고 현재 작업 트리에 그 XML이 **없다**. 저장소만 받은 사람은 이 단계에서 최소 한 번 온라인 취득이 필요하다. |
 | 2. 코퍼스 구축 | 가능 (PDF가 로컬에 있으면). 실측 확인: v1/v2 파서 모두 로컬 PDF에서 항목 수가 재현된다(§2). |
 | 3~5. 질의·실험·그림 | 임베딩 모델이 HF 캐시에 이미 있으면 가능. 없으면 dense/hybrid 불가. `resolved_revision()`은 캐시된 sha를 읽으므로 오프라인에서도 기록된다. |
-| 6. 테스트 | 가능. 새 테스트는 네트워크를 쓰지 않는다. 2026-08-11 오프라인 실행 전부 통과(실측). |
+| 6. 테스트 | 가능. 새 테스트는 네트워크를 쓰지 않는다. 2026-08-11 오프라인 실행에서 §6 목록의 앞 5개 통과(실측), 나머지 3개는 미실행. |
 
 ---
 
@@ -499,9 +523,16 @@ dense/hybrid 수치가 바뀔 수 있다.
    |---|---:|
    | `list of items controlled` 포함 | **351** |
    | `see list of items controlled` 포함 | 349 |
-   | `(see list of items controlled).`로 **끝남** | **315** |
+   | `(see list of items controlled)` + 마침표(선택)로 **끝남** | **315** |
 
    이전 판의 "351건 … 그중 315건은 문장 끝"은 위 표의 첫 행과 셋째 행에 해당하며 재현된다.
+   셋째 행의 판정식은 **마침표를 선택**으로 둔다(대소문자 무시, 꼬리 공백 제거). 마침표를
+   필수로 하면 310, `contols` 오타 변형까지 넣어도 315로 같다. 재현:
+
+   ```bash
+   python -c "import json,re;e=json.load(open('data/corpus/ecfr_supp1.json',encoding='utf-8'))['entries'];p=re.compile(r'\(see list of items controlled\)\.?\s*$',re.I);print(sum(1 for x in e if p.search(x.get('text') or '')))"
+   ```
+
    `fetch_ecfr.py --text-field full`로 다시 만들면 **638건 중 본문 없는 항목이 47건**으로
    줄고 텍스트 총량이 **814,807자**가 된다(표제만 담는 `--text-field heading` 모드로는
    117,539자). 638건·814,807자는 현재 `data/corpus/ecfr_supp1_full.json`(4.37 MB)에서

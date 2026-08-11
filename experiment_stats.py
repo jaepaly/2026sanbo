@@ -69,15 +69,23 @@ PRIMARY_RETRIEVER = "hybrid_0.5"
 # `experiment_paraphrase_gap.py`를 정정 전/후로 각각 실행해 **실측**한 차이다.
 # 값이 조용히 바뀌지 않도록 before/after를 코드에 박아 산출물에 함께 싣는다.
 #
-# 요지: 논문 주장 1의 헤드라인 R@10 (합성 full_text 0.9968 / minimal_text 0.9792 /
-# 고-IDF 5개 제거 0.7596 / 10개 제거 0.4407)은 **전부 불변**이다. 바뀐 것은 동점이
-# 흔한 R@1·R@5와, full_text N=5의 R@10 한 칸(질의 1개분)뿐이다.
+# 요지: 랭킹 정정으로 헤드라인 R@10 은 바뀌지 않았고, 동점이 흔한 R@1·R@5 와
+# full_text N=5 의 R@10 한 칸만 움직였다.
+#
+# **주의 — 아래 수치는 코퍼스 v1(1,797건) 시점의 실측 기록이다.** 정정 전/후를 같은
+# 조건에서 비교한 값이라 감사 기록으로서는 그대로 두지만, **현행 합성셋 값이 아니다**
+# (코퍼스 v2 재실행 후 값은 output/paraphrase_gap.json 이 갖고 있으며 §7 가드레일은
+# 그쪽을 읽는다). 예전에는 이 라벨이 없어 §6 이 v1 값을, §4·§7 이 v2 값을 말하면서
+# 같은 문서가 서로 다른 답을 냈다.
 # --------------------------------------------------------------------------
 RANKING_DETERMINISM_AUDIT = {
     "source_script": "experiment_paraphrase_gap.py",
     "change": "np.argsort(-scores) -> retrieval_core.rank_indices "
               "(내림차순 + 인덱스 오름차순 동점처리) + 전점수 0 질의를 검색 실패로 처리",
-    "headline_claim1_unchanged": {
+    "corpus_basis": "corpus v1 (1,797건) — 이 감사를 실행한 시점의 코퍼스",
+    "not_current_values_note": ("아래 4개 값은 v1 시점 기록이다. 현행 값은 "
+                                "output/paraphrase_gap.json 을 볼 것."),
+    "headline_claim1_unchanged_at_v1": {
         "synthetic_full_text_recall@10_N0": 0.9968,
         "synthetic_minimal_text_recall@10_N0": 0.9792,
         "synthetic_minimal_text_recall@10_N5": 0.7596,
@@ -477,6 +485,15 @@ def build_summary() -> dict[str, Any]:
     )
 
     _n_now = meta["n"]
+    # §7 가드레일이 읽을 합성셋 R@10 실측값. 리터럴로 박지 않는다.
+    paraphrase_gap_recall = {}
+    if paraphrase:
+        for mode in ("full_text", "minimal_text"):
+            rows = (paraphrase.get("results", {}).get(mode) or {}).get("summary") or []
+            paraphrase_gap_recall[mode] = {
+                str(r["n_removed_high_idf_shared_terms"]): r["recall@10"] for r in rows
+            }
+
     dataset_sizes = {
         "synthetic_test_queries": n_synthetic,
         "paraphrase_gap_queries": n_paraphrase,
@@ -532,6 +549,7 @@ def build_summary() -> dict[str, Any]:
         "comparisons": comparisons,
         "ranking_determinism_audit": RANKING_DETERMINISM_AUDIT,
         "input_symmetry_audit": INPUT_SYMMETRY_AUDIT,
+        "paraphrase_gap_recall": paraphrase_gap_recall,
         "n13_to_current_before_after": before_after,
         "small_sample_bootstrap_artifact": {
             "cases": artifacts,
@@ -551,6 +569,19 @@ def fmt_ci(ci: list[float]) -> str:
 
 
 def markdown(summary: dict[str, Any]) -> str:
+    # 현행 표본의 hybrid−BM25 승리 수. 예전에는 30(=n=71 값)이 박혀 있었다.
+    _wins_now = next(
+        (c["mcnemar"]["wins"] for c in summary.get("comparisons", [])
+         if c.get("label") == "validated71_hybrid_vs_bm25[overall]"), None)
+    _wins_now = _wins_now if isinstance(_wins_now, int) else "확인 필요"
+
+    # 합성셋 값은 산출물에서 읽는다. 예전에는 v1 시점 리터럴이 박혀 있어, 바로 위 §4가
+    # v2 값을 말하는데 §7이 v1 값을 말하는 자기모순이 있었다.
+    def _syn(mode: str, n_removed: int) -> str:
+        rows = (summary.get("paraphrase_gap_recall") or {}).get(mode) or {}
+        v = rows.get(str(n_removed))
+        return f"{v:.4f}" if isinstance(v, (int, float)) else "확인 필요"
+
     m = summary["meta"]
     ds = summary["dataset_sizes"]
     by_label = {c["label"]: c for c in summary["comparisons"]}
@@ -652,7 +683,7 @@ def markdown(summary: dict[str, Any]) -> str:
     # --- 3. before/after
     if summary["n13_to_current_before_after"]:
         L += [
-            "## 3. n=13 → n=71 before / after (조용한 덮어쓰기 방지)",
+            f"## 3. n=13 → n={summary['dataset_sizes']['validated_queries']} before / after (조용한 덮어쓰기 방지)",
             "",
             "| 비교 | 표본 | 처리 R@10 | 기준 R@10 | 평균차 | bootstrap 95% CI | 승/패/무 | exact p |",
             "|---|---:|---:|---:|---:|---|---:|---:|",
@@ -756,8 +787,9 @@ def markdown(summary: dict[str, Any]) -> str:
                  f"{row['p_no_win_at_that_w']:.4f} | {row['p_no_win_at_w_plus_1']:.4f} |")
     L += [
         "",
-        "> 표본을 13개에서 71개로 늘린 것 자체가 문제를 푼 게 아니다. **승리 질의가 3개에서",
-        "> 30개로 늘어난 것**이 풀었다. 표본만 늘리고 승리가 3개에 머물렀다면 CI 하한은",
+        (f"> 표본을 13개에서 {summary['dataset_sizes']['validated_queries']}개로 늘린 것 자체가 "
+         f"문제를 푼 게 아니다. **승리 질의가 3개에서 {_wins_now}개로"),
+        "> 늘어난 것**이 풀었다. 표본만 늘리고 승리가 3개에 머물렀다면 CI 하한은",
         "> 여전히 0이었을 것이다.",
         "",
     ]
@@ -775,8 +807,12 @@ def markdown(summary: dict[str, Any]) -> str:
         "| 수치 | 값 |",
         "|---|---:|",
     ]
-    for k, v in rda["headline_claim1_unchanged"].items():
-        L.append(f"| `{k}` | {v:.4f} (불변) |")
+    for k, v in rda["headline_claim1_unchanged_at_v1"].items():
+        L.append(f"| `{k}` | {v:.4f} (정정 전후 불변) |")
+    L += ["",
+          "> ⚠ 위 4개 값은 **코퍼스 v1(1,797건) 시점**의 기록이다. 랭킹 정정이 헤드라인을 "
+          "바꾸지 않았다는 것이 이 표의 논지이며, **현행 합성셋 값이 아니다.** "
+          "현행 값은 아래 §7 가드레일과 `output/paraphrase_gap.md`에 있다."]
     L += [
         "",
         "바뀐 칸은 다음이 전부다(동점이 흔한 R@1·R@5에 집중).",
@@ -810,9 +846,10 @@ def markdown(summary: dict[str, Any]) -> str:
     L += [
         "## 7. 해석 가드레일",
         "",
-        "- 합성셋 R@10(full_text 0.9968 / minimal_text 0.9792)은 **자기참조 재검색** 조건의",
-        "  값이므로 단독 헤드라인으로 쓰지 않는다. 고-IDF 공유토큰 5개 제거 시 0.7596,",
-        "  10개 제거 시 0.4407로 붕괴한다(`output/paraphrase_gap.md`).",
+        (f"- 합성셋 R@10(full_text {_syn('full_text', 0)} / minimal_text {_syn('minimal_text', 0)})은 "
+         "**자기참조 재검색** 조건의"),
+        (f"  값이므로 단독 헤드라인으로 쓰지 않는다. 고-IDF 공유토큰 5개 제거 시 {_syn('minimal_text', 5)}, "
+         f"10개 제거 시 {_syn('minimal_text', 10)}로 붕괴한다(`output/paraphrase_gap.md`)."),
         f"- 검증셋의 한국어 BM25 R@10은 {summary['validated_recall_at_10']['rates']['BM25']['ko']['rate']:.4f}"
         "이다. 어휘 교집합이 0인 질의는 top-10을 만들 수",
         "  없으며, 이를 '코퍼스 앞머리 10행'으로 채워 집계하면 안 된다.",

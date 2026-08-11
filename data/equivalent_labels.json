@@ -1559,8 +1559,9 @@
     {
       "eccn": "ECCN-8D999",
       "candidate": "9.D.5",
-      "jaccard_minimal_text": 0.4,
-      "reason": "후보 문서 '9.D.5' 자체가 코퍼스 파싱 잔해('Software specially designed or modified for the operation of items specified in' 에서 끊김)다. 등가 판단 불가."
+      "jaccard_minimal_text": 0.286,
+      "jaccard_minimal_text_at_v1": 0.4,
+      "reason": "8D999 는 석유·가스 산업용 무인잠수정 운용 소프트웨어, 9.D.5 는 우주발사체(9.A.4.e) 운용 소프트웨어다. 품목 영역이 다르며, 유사도는 'Software specially designed for the operation of' 상용구에서 나온다. (초판 사유였던 '9.D.5 파싱 잔해'는 코퍼스 v2 파서 교정으로 해소됐다.)"
     },
     {
       "eccn": "ECCN-2B350",

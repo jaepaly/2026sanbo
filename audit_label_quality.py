@@ -268,9 +268,19 @@ REJECTED_CANDIDATES: list[dict] = [
     {"eccn": "ECCN-8A620", "candidate": "8.A.1 / 8A801", "jaccard_minimal_text": 0.208,
      "reason": "8A620 은 600 시리즈(군용) 잠수정, 8.A.1 은 민군겸용 잠수정(=ECCN 8A001). "
                "규제체계 계층이 다르다."},
-    {"eccn": "ECCN-8D999", "candidate": "9.D.5", "jaccard_minimal_text": 0.400,
-     "reason": "후보 문서 '9.D.5' 자체가 코퍼스 파싱 잔해('Software specially designed or "
-               "modified for the operation of items specified in' 에서 끊김)다. 등가 판단 불가."},
+    # 기각 사유 갱신(코퍼스 v2). 초판 사유는 "9.D.5 가 파싱 잔해라 판단 불가"였으나,
+    # v2 파서 교정으로 9.D.5 는 '…items specified in 9.A.4.e.' 로 온전히 파싱된다.
+    # 즉 초판 사유는 더 이상 성립하지 않는다. 그러나 기각 결론 자체는 유지된다 —
+    # 8D999 는 석유·가스용 무인잠수정 소프트웨어이고 9.D.5 는 우주발사체(9.A.4.e)용
+    # 소프트웨어라 품목 영역이 다르다. 높아 보이던 유사도는 "Software specially
+    # designed for the operation of" 라는 소프트웨어 상용구에서 온 것이다.
+    # jaccard 값도 v2 기준으로 정정한다(0.400 -> 0.286, minimal_text).
+    {"eccn": "ECCN-8D999", "candidate": "9.D.5", "jaccard_minimal_text": 0.286,
+     "jaccard_minimal_text_at_v1": 0.400,
+     "reason": "8D999 는 석유·가스 산업용 무인잠수정 운용 소프트웨어, 9.D.5 는 "
+               "우주발사체(9.A.4.e) 운용 소프트웨어다. 품목 영역이 다르며, 유사도는 "
+               "'Software specially designed for the operation of' 상용구에서 나온다. "
+               "(초판 사유였던 '9.D.5 파싱 잔해'는 코퍼스 v2 파서 교정으로 해소됐다.)"},
     {"eccn": "ECCN-2B350", "candidate": "(없음)", "jaccard_minimal_text": 0.258,
      "reason": "화학무기 관련 제조설비(Australia Group)에 대응하는 항목이 이 코퍼스의 "
                "Wassenaar/SCOMET 발췌분에 없다."},
