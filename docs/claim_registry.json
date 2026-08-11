@@ -888,16 +888,16 @@
     {
       "id": "labelsens.holm.dense_vs_bm25",
       "where": "PAPER 4.7",
-      "desc": "라벨민감도 15개 조합 중 dense−BM25 Holm 유의 개수",
-      "paper": 15,
-      "artifact": 15,
+      "desc": "라벨민감도 전 조합 중 dense−BM25 Holm 유의 개수",
+      "paper": 21,
+      "artifact": 21,
       "status": "OK",
       "note": ""
     },
     {
       "id": "labelsens.holm.hybrid_vs_dense",
       "where": "PAPER 4.7",
-      "desc": "라벨민감도 15개 조합 중 hybrid−dense Holm 유의 개수 (0)",
+      "desc": "라벨민감도 전 조합 중 hybrid−dense Holm 유의 개수 (0)",
       "paper": 0,
       "artifact": 0,
       "status": "OK",
@@ -906,9 +906,9 @@
     {
       "id": "labelsens.holm.hybrid_raw",
       "where": "PAPER 4.7",
-      "desc": "hybrid−dense 보정 전 유의 조합 수 (MiniLM 5건)",
-      "paper": 5,
-      "artifact": 5,
+      "desc": "hybrid−dense 보정 전 유의 조합 수 (MiniLM 7건)",
+      "paper": 7,
+      "artifact": 7,
       "status": "OK",
       "note": ""
     },

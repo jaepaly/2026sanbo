@@ -50,6 +50,7 @@ OUT = ROOT / "output"
 DATA = ROOT / "data"
 
 SUITE = OUT / "validated_suite.json"
+SELFREF = OUT / "selfreference_audit.json"
 QUERIES = DATA / "validated_queries_expanded.json"
 CORPUS = DATA / "corpus" / "combined.json"
 JSON_PATH = OUT / "label_sensitivity.json"
@@ -88,12 +89,25 @@ def build_variants(query_ids, queries, corpus):
             else:
                 seen.add(code)
 
+    # V5: 의미 게이트(LaBSE, tau=0.44)가 자기참조 의심으로 표시한 질의를 제거한 조건.
+    # 이 질의들은 표시만 하고 분석에서 빼지 않았기 때문에 "표시해 놓고 그대로 썼다"는
+    # 반론이 가능하다. 빼고도 결론이 유지되는지를 같은 마스킹 방식으로 확인한다.
+    semantic_ids = set()
+    if SELFREF.exists():
+        sr = json.loads(SELFREF.read_text(encoding="utf-8"))
+        semantic_ids = {f["id"] for f in
+                        sr.get("verdict_primary", {}).get("semantic_failures", [])}
+
     return {
         "V0_baseline": (set(), "전체 질의 (기준)"),
         "V1_no_stub_gold": (stub_ids, "정답이 전부 표제 스텁인 질의 제거 (D1)"),
         "V2_no_label_defect": (defect_ids, "부정확 2차 라벨·규제체계 모순 제거 (D3/D4)"),
         "V3_unique_gold_code": (dup_ids, "정답 코드 재사용 질의 제거 (D5)"),
         "V4_strict": (stub_ids | defect_ids | dup_ids, "V1 ∩ V2 ∩ V3 (가장 보수적)"),
+        "V5_no_semantic_flag": (semantic_ids,
+                                "의미 게이트(LaBSE τ=0.44) 초과 질의 제거 (자기참조 의심)"),
+        "V6_strict_plus_semantic": (stub_ids | defect_ids | dup_ids | semantic_ids,
+                                    "V4 + 의미 게이트 초과 제거 (최대 보수)"),
     }
 
 
@@ -154,11 +168,12 @@ def main() -> None:
     # 이전 판은 보정을 계산하지 않아 그 문장을 산출물로 확인할 수 없었다.
     # 가족을 명시해 계산하고 결과를 기록한다.
     def holm_family(key: str) -> dict:
+        # 가족 크기는 변형 수 x 모델 수로 자동 계산된다(변형을 추가하면 따라 늘어난다).
         raw = {f"{v}|{m}": results[v]["models"][m][key]["p_two_sided_exact"]
                for v in results for m in models}
         adj = rc.holm(raw)
         return {
-            "family": "5 변형 x 3 모델 = 15개 조합",
+            "family": f"{len(results)} 변형 x {len(models)} 모델 = {len(results) * len(models)}개 조합",
             "family_size": len(raw),
             "per_combination": adj,
             "n_significant_after_holm": sum(1 for a in adj.values()
@@ -180,15 +195,16 @@ def main() -> None:
                    "정확히 재계산한다(모델 재실행 없음, 근사 아님)."),
         "index_mode": INDEX_MODE,
         "models": models,
-        "holm_across_15_combinations": holm_blocks,
+        "holm_across_all_combinations": holm_blocks,
         "conclusion": {
             "dense_beats_bm25_in_every_variant_and_model": conclusion_holds,
             # 보정 전 기준. 보정 후 기준은 아래 *_after_holm 을 쓴다.
             "hybrid_never_significantly_beats_dense_uncorrected": hybrid_never_wins,
             "hybrid_never_significantly_beats_dense_after_holm":
                 holm_blocks["hybrid_vs_dense"]["n_significant_after_holm"] == 0,
-            "dense_beats_bm25_after_holm_in_all_15":
-                holm_blocks["dense_vs_bm25"]["n_significant_after_holm"] == 15,
+            "dense_beats_bm25_after_holm_in_all":
+                (holm_blocks["dense_vs_bm25"]["n_significant_after_holm"]
+                 == holm_blocks["dense_vs_bm25"]["family_size"]),
         },
         "variants": results,
     }

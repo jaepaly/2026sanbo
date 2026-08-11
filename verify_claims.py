@@ -401,16 +401,16 @@ def build_checks() -> list[Check]:
     # 4.7 의 "15개 조합 중 Holm 보정 후 유의한 것은 하나도 없다" 를 산출물로 고정한다.
     lab = load(OUT / "label_sensitivity.json")
     C.append(Check("labelsens.holm.dense_vs_bm25", "PAPER 4.7",
-                   "라벨민감도 15개 조합 중 dense−BM25 Holm 유의 개수", 15,
-                   lambda: dig(lab, "holm_across_15_combinations", "dense_vs_bm25",
+                   "라벨민감도 전 조합 중 dense−BM25 Holm 유의 개수", 21,
+                   lambda: dig(lab, "holm_across_all_combinations", "dense_vs_bm25",
                                "n_significant_after_holm"), tol=0))
     C.append(Check("labelsens.holm.hybrid_vs_dense", "PAPER 4.7",
-                   "라벨민감도 15개 조합 중 hybrid−dense Holm 유의 개수 (0)", 0,
-                   lambda: dig(lab, "holm_across_15_combinations", "hybrid_vs_dense",
+                   "라벨민감도 전 조합 중 hybrid−dense Holm 유의 개수 (0)", 0,
+                   lambda: dig(lab, "holm_across_all_combinations", "hybrid_vs_dense",
                                "n_significant_after_holm"), tol=0))
     C.append(Check("labelsens.holm.hybrid_raw", "PAPER 4.7",
-                   "hybrid−dense 보정 전 유의 조합 수 (MiniLM 5건)", 5,
-                   lambda: dig(lab, "holm_across_15_combinations", "hybrid_vs_dense",
+                   "hybrid−dense 보정 전 유의 조합 수 (MiniLM 7건)", 7,
+                   lambda: dig(lab, "holm_across_all_combinations", "hybrid_vs_dense",
                                "n_significant_before_holm"), tol=0))
 
     C.append(Check("ladder.bm25.L0.ko", "PAPER 4.5",
