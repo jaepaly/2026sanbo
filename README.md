@@ -9,7 +9,7 @@
 | 논문 초안 | [`PAPER.md`](PAPER.md) |
 | 이어받기(다른 기기·세션) | [`docs/HANDOFF.md`](docs/HANDOFF.md) |
 | 팀 작업 절차(아카이브) | [`docs/TEAM_WORKFLOW.md`](docs/TEAM_WORKFLOW.md) |
-| 검증 상태 | `python verify_claims.py` → **OK=112 / MISMATCH=0**, 테스트 8개 파일 전부 통과 |
+| 검증 상태 | `python verify_claims.py` → **OK=128 / MISMATCH=0**, 테스트 8개 파일 전부 통과 |
 
 논문의 **모든 수치는 저장소의 결정론적 스크립트가 만든 `output/*.json`에서 직접 인용**하며, `verify_claims.py`가 논문과 산출물을 자동 대조합니다. 손으로 고친 수치는 즉시 불일치로 잡힙니다.
 
@@ -198,7 +198,7 @@ pip install -r requirements.txt
 python verify_claims.py
 ```
 
-기대: `OK=112 / MISMATCH=0`. 하나라도 불일치면 논문과 근거가 어긋난 것이니 그것부터 해결합니다(산출물이 낡았으면 재실행, 논문이 낡았으면 논문 수정).
+기대: `OK=128 / MISMATCH=0`. 하나라도 불일치면 논문과 근거가 어긋난 것이니 그것부터 해결합니다(산출물이 낡았으면 재실행, 논문이 낡았으면 논문 수정).
 
 전체 테스트:
 
@@ -232,7 +232,7 @@ python experiment_disclosure_frontier.py
 
 | 도구 | 무엇을 막는가 |
 |---|---|
-| `verify_claims.py` | 논문 수치 ↔ 산출물 불일치 (112개 청구 등록) |
+| `verify_claims.py` | 논문 수치 ↔ 산출물 불일치 (128개 청구 등록) |
 | `validate_shard.py` / `validate_tier1.py` | 팀원 제출물 위변조·환경 불일치. **BM25는 인코더를 쓰지 않으므로 적중 벡터가 바이트 단위로 같아야 한다**는 성질로 상대 기기를 신뢰하지 않고 검증 |
 | `validate_query_slice.py` | 정답 코드 누출, 어휘·의미 자기참조(LaBSE τ=0.44) |
 | `tests/test_disclosure_ladder.py` | 계량기 경계가 조용히 바뀌는 것, 사다리 제외 회계 누락 |

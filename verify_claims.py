@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -541,7 +542,27 @@ def main() -> int:
                                         ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"\nwrote {REGISTRY_PATH.relative_to(ROOT)}")
 
-    return 1 if (counts.get("MISMATCH") or counts.get("ERROR")) else 0
+    # 문서가 광고하는 청구 수가 실제와 맞는지 스스로 대조한다.
+    # 레지스트리를 늘려 놓고 README/HANDOFF 를 안 고치는 일이 실제로 있었다
+    # (112 -> 128 로 늘린 뒤 5곳이 112 로 남았다). 등록된 청구는 아니지만
+    # 같은 종류의 낡음이므로 여기서 잡는다.
+    stale_docs = []
+    for rel in ("README.md", "docs/HANDOFF.md"):
+        path = ROOT / rel
+        if not path.exists():
+            continue
+        wrong = sorted({m for m in re.findall(r"OK\s*=\s*(\d+)",
+                                              path.read_text(encoding="utf-8"))
+                        if int(m) != counts["OK"]})
+        if wrong:
+            stale_docs.append(f"{rel}: OK={', '.join(wrong)} (실제 {counts['OK']})")
+    if stale_docs:
+        print()
+        print("[문서의 청구 수가 낡았다]")
+        for line in stale_docs:
+            print("   ", line)
+
+    return 1 if (counts.get("MISMATCH") or counts.get("ERROR") or stale_docs) else 0
 
 
 if __name__ == "__main__":

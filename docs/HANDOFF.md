@@ -7,7 +7,7 @@
 
 ## 0. 30초 요약
 
-산업보안논문경진대회 제출용 연구. **논문 초안은 `PAPER.md`에 완성돼 있고, 그 안의 모든 수치는 `python verify_claims.py`가 산출물과 자동 대조한다(현재 OK=112 / MISMATCH=0).**
+산업보안논문경진대회 제출용 연구. **논문 초안은 `PAPER.md`에 완성돼 있고, 그 안의 모든 수치는 `python verify_claims.py`가 산출물과 자동 대조한다(현재 OK=128 / MISMATCH=0).**
 
 논문의 세 축:
 1. **최소화 대상은 반환량이 아니라 질의다.** 반환 텍스트는 공개문서이고 색인에 안 들어가 랭킹을 안 바꾸므로 축소 비용이 구조적으로 0이다(노출량 77.4%↓, R@10 변화 0.0000).
@@ -44,7 +44,7 @@ pip install -r requirements.txt
 python verify_claims.py
 ```
 
-**기대: `OK=112` / `MISMATCH=0` / exit 0.** 하나라도 MISMATCH면 논문과 근거가 어긋난 것이니 **먼저 그것부터 해결**한다(산출물이 낡았으면 재실행, 논문이 낡았으면 논문 수정).
+**기대: `OK=128` / `MISMATCH=0` / exit 0.** 하나라도 MISMATCH면 논문과 근거가 어긋난 것이니 **먼저 그것부터 해결**한다(산출물이 낡았으면 재실행, 논문이 낡았으면 논문 수정).
 
 ```bash
 for f in tests/test_*.py; do python "$f" >/dev/null && echo "PASS $f" || echo "FAIL $f"; done
