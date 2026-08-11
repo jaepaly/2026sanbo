@@ -5,13 +5,18 @@ Single source of truth for the pieces that the audit found were duplicated,
 divergent, or subtly wrong across the experiment scripts:
 
 1. **Deterministic ranking.** `np.argsort(-scores)` returns the sort
-   implementation's tie order. When a query's score vector is all zeros (which
-   happens for 44 of the 45 Korean queries against the 100%-English corpus,
-   because BM25 has no in-vocabulary overlap at all) the "ranking" was really
-   just corpus array order, so `top10` was corpus rows 0-9 and a gold label
-   sitting in row 4 counted as a hit. `rank_indices` breaks ties by ascending
-   corpus index so results are reproducible across numpy versions, and
-   `retrieve` treats a no-signal query as an empty result set instead.
+   implementation's tie order. When a query's score vector is all zeros the
+   "ranking" was really just corpus array order, so `top10` was corpus rows 0-9
+   and a gold label sitting in row 4 counted as a hit. On the current n=151
+   validated set (109 Korean / 42 English) against the 100%-English corpus v2
+   (1,783 entries) that is **95 of the 109 Korean queries** when the index is
+   `full_text`, and 96 of 109 when it is `minimal_text` or `minimal_no_code`,
+   because BM25 has no in-vocabulary overlap at all; the 14 Korean queries that
+   do score only match on stray Latin/digit tokens ("3d", "fadec", "12"). The
+   n=71 round measured this as 44 of 45 Korean queries. `rank_indices` breaks
+   ties by ascending corpus index so results are reproducible across numpy
+   versions, and `retrieve` treats a no-signal query as an empty result set
+   instead.
 
 2. **Index text vs returned text.** `build_doc_text` was used simultaneously as
    the BM25/dense index input *and* as the definition of how much information
@@ -30,8 +35,13 @@ divergent, or subtly wrong across the experiment scripts:
    Clopper-Pearson intervals for absolute rates, and Holm correction.
 
 Nothing here changes the BM25 scoring math -- `BM25` is byte-equivalent to the
-original implementation so the synthetic-set results (the paper's most robust
-claim) reproduce unchanged.
+original implementation, so the synthetic-set results reproduce unchanged
+(`full_text` R@10 0.9920, `minimal_text` 0.9840 over 624 test queries). An
+earlier version of this docstring called those "the paper's most robust claim";
+PAPER 4.1 no longer supports that -- the synthetic queries are near-duplicates
+of their own gold documents and are explicitly not used as a headline. The
+headline now comes from the n=151 validated set: R@10 0.5099 (MiniLM, index
+`minimal_text`, hybrid alpha=0.5), 0.5497 when the index is `full_text`.
 """
 
 from __future__ import annotations
@@ -254,7 +264,9 @@ def paired_bootstrap_ci(
 def sig(x: float, digits: int = 6) -> float:
     """Round to significant figures, not decimal places.
 
-    p-values here reach 1e-9; `round(p, 10)` would silently flatten them.
+    p-values here reach 1.84e-186 (`output/stats_summary.json`, the
+    `synthetic_route_only_vs_full_text` McNemar); `round(p, 10)` would silently
+    flatten anything below 1e-10 to 0.0.
     """
     if x == 0 or not math.isfinite(x):
         return float(x)

@@ -25,6 +25,7 @@
       "equivalent": "같은 통제 항목을 같은 범위로 기술",
       "broader": "상대 항목이 정답 항목을 포함하지만 더 넓다(상위 노드)"
     },
+    "counts_basis": "data/validated_queries_expanded.json (v1 라벨셋)",
     "counts": {
       "distinct_gold_codes": 150,
       "gold_codes_with_equivalents": 46,

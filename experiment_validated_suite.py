@@ -1,15 +1,24 @@
 #!/usr/bin/env python3
-"""Consolidated, pre-registered evaluation of the validated query set (n=71).
+"""Consolidated, pre-registered evaluation of the validated query set (n=151).
+
+Query set: `data/validated_queries_expanded.json`, 151 queries (42 English /
+109 Korean). Corpus: `data/corpus/combined.json`, corpus v2 = 1,783 entries
+(eCFR 637 + India SCOMET 578 + Wassenaar 568), 100% English.
 
 Supersedes the overlapping logic in `evaluate_validated_queries.py`,
 `build_expanded_validated.py`, `experiment_embedding_robustness.py` and
 `experiment_exposure_frontier_validated.py`, all four of which reimplemented the
 same pipeline with slightly different bugs. Closes these audit findings:
 
-C1  Ranking was `np.argsort(-scores)`. For 44 of the 45 Korean queries BM25
-    scores are identically zero (no in-vocabulary overlap with a 100%-English
-    corpus), so "top-10" was corpus rows 0-9 and a gold label in row 4 scored as
-    a hit. Ranking is now deterministic and a no-signal query retrieves nothing.
+C1  Ranking was `np.argsort(-scores)`. For most Korean queries BM25 scores are
+    identically zero (no in-vocabulary overlap with a 100%-English corpus), so
+    "top-10" was corpus rows 0-9 and a gold label in row 4 scored as a hit. At
+    n=151 the no-signal count is 95 of the 109 Korean queries at
+    index=full_text and 96 of 109 at minimal_text / minimal_no_code; no English
+    query is ever no-signal. (The n=71 edition reported 44 of 45 Korean.) The
+    live counts are re-derived every run into
+    `diagnostics[index_mode].bm25_no_signal_queries`. Ranking is now
+    deterministic and a no-signal query retrieves nothing.
 
 M1  `hybrid vs dense` was never tested at n=71 -- every reported comparison was
     against BM25 -- while the paper claims hybrid retrieval is what is needed.
@@ -17,9 +26,13 @@ M1  `hybrid vs dense` was never tested at n=71 -- every reported comparison was
     degenerate identity (when BM25 is all-zero, any alpha<1 ranks exactly like
     dense) is measured rather than assumed.
 
-M2  "29 wins 0 losses" aggregated over both languages; 26 of those wins are
-    Korean queries where BM25 returned nothing at all. Subgroup contrasts with
-    exact McNemar are now first-class output.
+M2  The n=71 edition's headline "29 wins 0 losses" aggregated over both
+    languages; 26 of those wins were Korean queries where BM25 returned nothing
+    at all. At n=151 the same hybrid-vs-BM25 contrast (MiniLM) is 61 wins /
+    1 loss at index=full_text, 57 of the wins Korean, and 54 / 0 at
+    minimal_text, 51 of them Korean -- the aggregation problem is unchanged in
+    kind, only larger. Subgroup contrasts with exact McNemar are now
+    first-class output.
 
 M3  Equivalence was declared whenever a CI happened to contain zero, which is
     accepting the null. A margin delta is pre-specified below, TOST is run, and
@@ -34,7 +47,8 @@ PRE-SPECIFICATION (fixed before running; do not tune to the result)
         Rationale: the tool is a pre-screening aid whose output is a candidate
         list for a human reviewer. If cutting disclosure raises the miss rate at
         top-10 by 5 percentage points or more, the reduced disclosure is not
-        acceptable. 0.03 and 0.10 are reported as sensitivity only.
+        acceptable. The remaining margins in SENSITIVITY_DELTAS below
+        (0.03, 0.075, 0.10, 0.15) are reported as sensitivity only.
     Primary alpha for hybrid    0.5   (fixed in TASK E before this set existed)
     Bootstrap                   20,000 iterations, seed 20260626
     Multiplicity                Holm within each declared family
@@ -425,10 +439,13 @@ def render_md(out: dict) -> str:
                          f"[{c['diff_95_ci'][0]:.4f}, {c['diff_95_ci'][1]:.4f}] | "
                          f"{c['wins']}/{c['losses']}/{c['ties']} | "
                          f"{c['p_two_sided_exact']:.3g} | {h['p_adjusted']:.3g} |")
-    L += ["", "> `hybrid_vs_dense`는 기존 산출물에 한 번도 없던 비교다. 한국어에서 BM25 점수가",
-          "> 항등 0이면 α<1의 랭킹은 dense와 수학적으로 동일하므로 승/패가 0/0으로 나오는 것이",
-          "> 정상이다 — 즉 '하이브리드가 필요하다'가 아니라 'dense 성분이 필요하다'가 데이터가",
-          "> 지지하는 진술이다.", ""]
+    L += ["", "> `hybrid_vs_dense`는 기존 산출물에 한 번도 없던 비교다. BM25 점수가 항등 0인",
+          "> 무신호 질의에서는 α<1의 랭킹이 dense와 수학적으로 동일하므로 그 질의들에서는",
+          "> 승/패가 생길 수 없다(1절의 무신호 질의 수 = hybrid top-10 = dense top-10 건수).",
+          "> n=71 판에서는 한국어 무신호가 45개 중 44개여서 한국어 승/패가 0/0으로 나왔으나,",
+          "> n=151에서는 신호가 있는 한국어 질의가 남아 있어(109개 중 13~14개) 한국어에서도",
+          "> 소수의 승/패가 나올 수 있다 — 다만 결론은 그대로다. 즉 '하이브리드가 필요하다'가",
+          "> 아니라 'dense 성분이 필요하다'가 데이터가 지지하는 진술이다.", ""]
 
     L += ["## 4. 노출량@10 — 색인 모드 × 반환 모드", "",
           "| 색인 모드 | " + " | ".join(f"반환={r}" for r in m["return_modes"]) + " | 정정 전 정의 |",

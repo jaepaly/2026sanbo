@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""대칭 자기참조 ablation — 검증셋(n=71) × BM25/dense/hybrid (M4).
+"""대칭 자기참조 ablation — 검증셋(n=151, 영어 42 / 한국어 109) × BM25/dense/hybrid (M4).
 
 ## 왜 이 실험이 필요한가
 
@@ -9,8 +9,9 @@ R@10이 어떻게 무너지는가"를 측정했다. 문제는 그 압력이
   - `data/queries.json` (합성셋) 에만,
   - BM25 에만
 
-적용되었다는 점이다. 즉 자기비판 도구를 경쟁 상대에게만 적용했다. 검증셋(n=71)의
-의미적·번역적 자기참조가 dense 검색기를 과대평가하는지는 한 번도 검증되지 않았다.
+적용되었다는 점이다. 즉 자기비판 도구를 경쟁 상대에게만 적용했다. 검증셋(현재 n=151,
+이 실험이 처음 설계된 판에서는 n=71)의 의미적·번역적 자기참조가 dense 검색기를
+과대평가하는지는 한 번도 검증되지 않았다.
 
 이 스크립트는 같은 압력을 **검증셋 × (BM25, dense, hybrid)** 에 대칭으로 가한다.
 
@@ -20,6 +21,11 @@ R@10이 어떻게 무너지는가"를 측정했다. 문제는 그 압력이
 치환은 전적으로 `data/hypernym_substitutions.json` 에서 읽어오며 코드에 하드코딩된
 치환어는 없다. 치환 강도 N=0,1,2,3 (level N = tier <= N 인 규칙 적용). 적용 규칙 집합은
 level에 대해 중첩되므로 압력은 단조증가한다.
+
+사전은 현재 규칙 330개이며 level 1·2·3 에서 151/151 질의를 모두 변경한다
+(적용 규칙 수 level0 0 / level1 154 / level2 304 / level3 409). 확장 이전 판에서는
+원본 71개 질의에만 tier1·2 규칙이 있어 level 1·2 커버리지가 71/151 에 그쳤고,
+그때의 산출물은 `output/symmetric_ablation_partial_coverage.json` 에 보존되어 있다.
 
 고-IDF 토큰 삭제(기존 방식)와 달리 상위어 치환은 문장을 사람이 실제로 쓸 만한 형태로
 남긴다. 이것이 중요한 이유: 토큰을 그냥 지우면 dense 임베딩에는 "망가진 문장"이 들어가
@@ -213,8 +219,8 @@ def manipulation_diagnostics(corpus: list[dict], queries: list[dict],
                              level_texts: dict[int, list[str]]) -> dict:
     """정답 원문 대비 어휘 Jaccard와 LaBSE cos이 level에 따라 실제로 줄었는지.
 
-    코퍼스 전체를 LaBSE로 인코딩하지 않는다 — 필요한 것은 각 질의의 정답
-    원문(<=71개)뿐이다.
+    코퍼스 전체(1,783건)를 LaBSE로 인코딩하지 않는다 — 필요한 것은 각 질의의 정답
+    원문(질의 수 상한, 현재 n=151 → 중복 제거 후 148개)뿐이다.
     """
     from sentence_transformers import SentenceTransformer
     from selfreference_gate import jaccard

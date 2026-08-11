@@ -153,7 +153,9 @@ def main() -> None:
           f"{sum(abl_l3_sig.values())}/{len(models)} "
           f"({', '.join(m for m in models if abl_l3_sig[m])} 유의; "
           f"{', '.join(m for m in models if not abl_l3_sig[m]) or '없음'} 비유의).",
-          "- 즉 **우위의 방향은 보존되지만, 최대 압력에서의 유의성은 모델에 의존한다.**", "",
+          ("- 즉 **우위의 방향과 최대 압력에서의 유의성이 모두 일반화된다.**"
+           if all(abl_l3_sig.values())
+           else "- 즉 **우위의 방향은 보존되지만, 최대 압력에서의 유의성은 모델에 의존한다.**"), "",
           "## 2. Disclosure frontier (4.5) — 운용 권고", "",
           "| 모델 | 권고 | 등가 입증 | 검정력 부족 | 손실 징후 | 교란 |",
           "|---|---|---|---|---|---|"]
@@ -172,21 +174,36 @@ def main() -> None:
                  f"{v['L2']['mean_diff']:+.4f} | "
                  f"{'예' if v['L2']['equivalent_at_0.05'] else '아니오'} |")
     rec_by_model = ", ".join(f"{m}={fro[m]['recommended_level']}" for m in models)
+    recs = {fro[m]["recommended_level"] for m in models}
+    model_dep = len(recs) > 1
+    n_eq = sum(1 for m in models if fro[m]["vs_L0"]["L1"]["equivalent_at_0.05"])
     L += ["",
-          f"- 권고가 모델에 따라 갈린다: {rec_by_model}.",
-          f"- **모델 불문 보수적 권고는 `{conservative}`다.** bge-m3에서 L1은 등가 입증에 실패하고"
-          " (TOST p_max 0.402) L2는 점추정 −0.0704로 사전지정 마진 δ=0.05를 넘어 손실 징후로"
-          " 분류되기 때문이다.",
+          (f"- 권고가 모델에 따라 갈린다: {rec_by_model}."
+           if model_dep else
+           f"- **권고가 세 모델에서 일치한다: {rec_by_model}.**"),
+          (f"- **모델 불문 보수적 권고는 `{conservative}`다.**"
+           + ("" if model_dep else " 모델 의존성은 관측되지 않는다.")),
+          (f"- 다만 L1 등가가 입증된 모델은 {n_eq}/{len(models)}이다."
+           if n_eq else
+           "- **다만 어느 모델에서도 L1 등가는 입증되지 않았다.** 권고는 "
+           "\"등가 입증\"이 아니라 \"손실 징후 없음\"에 근거한다."),
           "- L3는 세 모델 모두에서 자기참조 교란으로 배제된다(판정 일치).", "",
           "## 3. 한계 6에 대한 답", "",
           "| 항목 | 일반화되는가 |",
           "|---|---|",
           "| ablation: dense 우위의 방향 | 예 (세 모델 모두 level0·level3에서 양수) |",
-          f"| ablation: 최대 압력에서의 유의성 | **부분적** ({sum(abl_l3_sig.values())}/{len(models)}) |",
+          (f"| ablation: 최대 압력에서의 유의성 | "
+           f"{'**예**' if all(abl_l3_sig.values()) else '**부분적**'} "
+           f"({sum(abl_l3_sig.values())}/{len(models)}) |"),
           "| frontier: L3 교란 판정 | 예 (세 모델 일치) |",
-          "| frontier: 운용 권고 등급 | **아니오 — 모델 의존적** |", "",
-          "따라서 논문은 운용 권고를 L2가 아니라 **가장 보수적인 등급으로 낮추고**, 모델 의존성을",
-          "명시해야 한다. 이것이 단일 인코더 결과를 그대로 권고로 옮겼을 때의 위험이다.", ""]
+          (f"| frontier: 운용 권고 등급 | "
+           f"{'**아니오 — 모델 의존적**' if model_dep else f'**예 — 모델 독립적 ({conservative} 수렴)**'} |"),
+          (f"| frontier: L1 등가 입증 | {n_eq}/{len(models)} 통과 |"), "",
+          ("따라서 논문은 운용 권고를 **가장 보수적인 등급으로 낮추고** 모델 의존성을 명시해야 한다. "
+           "이것이 단일 인코더 결과를 그대로 권고로 옮겼을 때의 위험이다."
+           if model_dep else
+           f"세 인코더가 모두 `{conservative}`로 수렴하므로 운용 권고에 모델 의존성은 없다. "
+           "다만 등가가 입증된 등급은 없으므로 권고의 근거는 \"손실 징후 없음\"까지다."), ""]
     MD_PATH.write_text("\n".join(L), encoding="utf-8")
 
     print(json.dumps(out["conclusion"], ensure_ascii=False, indent=2))

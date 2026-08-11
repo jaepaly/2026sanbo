@@ -1,23 +1,30 @@
 #!/usr/bin/env python3
 """정답셋(ground-truth) 오염 감사 및 등가 라벨 교정 — M8.
 
-검증셋 n=71의 라벨 품질에는 서로 독립적인 여섯 가지 결함이 있다. 이 스크립트는
+검증셋의 라벨 품질에는 서로 독립적인 여섯 가지 결함이 있다. 이 스크립트는
 그 여섯 가지를 **실측으로 재현**하고, 교정된 라벨 공간(등가 라벨 허용)에서
-R@10 을 다시 계산한다.
+R@10 을 다시 계산한다. 현재 대상은 `data/validated_queries_expanded.json` 의
+n=151(ko 109 / en 42)이다. 여섯 결함은 n=71 판에서 처음 확인됐고 n=151 확장
+뒤에도 전부 재현된다. 다만 비율은 확장으로 희석됐으므로 아래 각 항목의
+실측치를 그대로 쓸 것.
 
 감사 항목
 ---------
 D1  eCFR 표제 스텁
     eCFR 항목 상당수가 "... as follows (see List of Items Controlled)." 라는
     표제만 갖고 있고 실제 기술 파라미터(직경·주파수·정확도 등)는 코퍼스에
-    존재하지 않는다. 예: ext-015 는 "oscilloscope ... over 1 GHz" 를 묻지만
+    존재하지 않는다. 코퍼스 v2 실측 351/637 = 55.1%, 정답 코드 기준 41/150 =
+    27.3%, 정답이 전부 스텁인 질의 42/151 = 27.8%. (n=71 판에서는 정답 코드의
+    과반 58.6% 가 스텁이었다. TASK G/J 확장이 비스텁 항목을 우선 고르면서
+    희석됐을 뿐 결함 자체는 그대로다.)
+    예: ext-015 는 "oscilloscope ... over 1 GHz" 를 묻지만
     정답 문서 ECCN-3A002 본문에는 oscilloscope 도 GHz 도 없다. 이런 질의는
     원리상 어떤 검색기로도 어휘적으로 맞출 수 없다.
 
 D2  타 규제체계 쌍둥이
-    코퍼스는 eCFR(637) + Wassenaar(585) + SCOMET(575) 이지만 채점은 eCFR
-    exact code 일치다. Wassenaar/SCOMET 쌍둥이 문서는 원문이 사실상 같은데도
-    전부 miss 로 집계된다.
+    코퍼스 v2 는 eCFR(637) + SCOMET(578) + Wassenaar(568) = 1,783 이지만 채점은
+    eCFR exact code 일치다. Wassenaar/SCOMET 쌍둥이 문서는 원문이 사실상
+    같은데도 전부 miss 로 집계된다.
 
 D3  부정확한 2차 라벨
     hit 판정이 any-label 적중이므로, 질의와 무관한 2차 라벨이 붙어 있으면
@@ -28,10 +35,12 @@ D4  질의-라벨 규제체계 모순
 
 D5  코드 재사용
     '1질의 1항목' 원칙 위반. 같은 ECCN 이 두 질의의 정답으로 쓰였다.
+    n=151 실측 3건: ECCN-1C002(ext-006/ext-016), ECCN-3B001(ext-002/ext-029),
+    ECCN-6A001(ext-007/ext-028).
 
 D6  도달 불가 라벨 공간
     정답이 eCFR full code 로만 정의되어 코퍼스의 non-eCFR 항목은 원리상
-    정답이 될 수 없다.
+    정답이 될 수 없다. 코퍼스 v2 기준 1,146/1,783 = 64.3% 가 도달 불가다.
 
 교정
 ----
@@ -49,8 +58,12 @@ D6  도달 불가 라벨 공간
     python audit_label_quality.py all          # 위 전부 (recall 포함)
 
 `recall` 은 SANBO 스모크 수준이다: 단일 인코더(MiniLM), index_mode=full_text,
-alpha=0.5 — `experiment_validated_suite.py` 의 primary 설정과 동일하므로
-before 값이 그 스크립트의 hybrid_0.5/full_text 값과 일치해야 한다.
+alpha=0.5 — `experiment_validated_suite.py` 의 primary 모델·primary alpha 와
+같으므로 before 값이 그 스크립트의 hybrid_0.5/full_text 칸과 일치해야 한다
+(n=151 실측 R@10 = 0.5497, 83/151).
+
+주의: 논문 헤드라인 primary 는 index=minimal_text 쪽(R@10 = 0.5099, 77/151)이다.
+이 스모크가 쓰는 full_text 칸과는 서로 다른 칸이므로 두 값을 섞지 말 것.
 """
 
 from __future__ import annotations
@@ -80,7 +93,10 @@ SLICE_PATHS = [
 
 SEED = 20260626
 PRIMARY_MODEL = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
-PRIMARY_ALPHA = 0.5          # validated_suite.py 의 primary alpha
+PRIMARY_ALPHA = 0.5          # experiment_validated_suite.py 의 primary alpha
+# 스모크 비교 대상 칸. 헤드라인 primary 는 index=minimal_text 이고, 여기서
+# full_text 를 쓰는 이유는 before 값을 그 스크립트의 full_text 칸과 맞춰
+# '라벨 정의만 바뀌었다'를 보이기 위해서다.
 PRIMARY_INDEX_MODE = "full_text"
 TOP_K = 10
 
@@ -225,6 +241,10 @@ VERIFIED_EXTRA: dict[str, list[dict]] = {
 
 # 기계 후보로 올라왔지만 원문을 읽고 **등가가 아니라고 판단해 제외**한 것들.
 # 감사 추적용으로 이유를 남긴다.
+# 주의: 아래 jaccard_minimal_text 값은 코퍼스 v1(1,797건) 시점에 기록한 것이며
+# 코퍼스 v2(1,783건)에서 재측정하면 전부 조금씩 낮게 나온다(예: 0A977 0.391 ->
+# 4.A.5 0.321 / 8A405 0.346, 5D991 0.484 -> 8D501 0.441). 제외 판단 자체는 원문
+# 대조로 내린 것이라 그대로 유효하므로, 수치는 기록으로 두고 갱신하지 않는다.
 REJECTED_CANDIDATES: list[dict] = [
     {"eccn": "ECCN-0A977", "candidate": "4.A.5 / 8A405", "jaccard_minimal_text": 0.391,
      "reason": "water cannon(폭동진압) vs intrusion software. 'systems, equipment and "
@@ -455,6 +475,12 @@ def audit_cross_regime_twins(corpus: list[dict], queries: list[dict]) -> dict:
     임계값과 '몇 번째 라벨까지 보는지'가 결과를 바꾸므로 둘 다 보고한다.
     first_label_only 는 `validate_query_slice.py` 가 갖고 있던 버그(첫 라벨만
     검사)를 그대로 재현한 값이다.
+
+    반환 dict 의 "note" 에 박혀 있는 29/48/30/49 는 n=71 판 실측이며 지금은
+    맞지 않는다. n=151 실측은 minimal_text 기준 first_label_only 가 J>=0.40
+    59건 / J>=0.30 85건, all_labels 가 60건 / 86건이고, full_text 기준은
+    first_label_only 30건 / 53건, all_labels 31건 / 54건이다. all_labels 와
+    first_label_only 의 차이는 각 임계값에서 1건으로 줄었다.
     """
     by_code = {e["code"]: e for e in corpus}
     non_ecfr = [e for e in corpus if e.get("source") != "ecfr_part774"]
@@ -781,6 +807,11 @@ def build_equivalent_labels(corpus: list[dict], queries: list[dict]) -> dict:
                 "equivalent": "같은 통제 항목을 같은 범위로 기술",
                 "broader": "상대 항목이 정답 항목을 포함하지만 더 넓다(상위 노드)",
             },
+            # 이 counts 는 v1 라벨셋(data/validated_queries_expanded.json)에서 센 값이다.
+            # v2 는 부정확 2차 라벨 2건을 제거하므로 distinct_gold_codes 가 달라진다.
+            # 어느 라벨셋에서 센 값인지 명시하지 않으면 v2 를 기준으로 읽는 사람이
+            # 재현에 실패한다.
+            "counts_basis": "data/validated_queries_expanded.json (v1 라벨셋)",
             "counts": {
                 "distinct_gold_codes": len(gold),
                 "gold_codes_with_equivalents": len(mappings),
@@ -820,7 +851,7 @@ def equiv_index(equiv_doc: dict, *, allow_broader: bool,
 
 
 def build_queries_v2(corpus: list[dict], queries: list[dict], equiv_doc: dict) -> dict:
-    """기존 71개를 유지하면서 라벨 품질 필드를 붙인 v2 를 만든다."""
+    """질의 집합 전체(현재 151개)를 그대로 유지하면서 라벨 품질 필드를 붙인 v2 를 만든다."""
     by_code = {e["code"]: e for e in corpus}
     src: dict[str, dict] = {}
     for p in SLICE_PATHS:
@@ -863,7 +894,10 @@ def build_queries_v2(corpus: list[dict], queries: list[dict], equiv_doc: dict) -
             "id": qid,
             "lang": q["lang"],
             "query": q["query"],
-            # v1 병합 과정에서 사라져 스키마 검증이 71건 전부 실패하던 필드를 복원한다.
+            # v1 병합 과정에서 사라져 스키마 검증을 전부 실패시키던 필드를 복원한다
+            # (n=71 판에서는 71건 전부 실패했다). SLICE_PATHS 가 덮는 TASK G 단계
+            # 71건에서만 context 가 채워지고, 이후 TASK J 슬라이스에서는 선택
+            # 필드라 비어 있다 — 현재 151건 중 71건에 context 가 있다.
             "context": src.get(qid, {}).get("context", ""),
             "validated_labels": kept,
             "primary_label": kept[0] if kept else None,
@@ -942,7 +976,12 @@ def top10_indices(corpus: list[dict], queries: list[dict], *,
                   alpha: float = PRIMARY_ALPHA,
                   model_name: str = PRIMARY_MODEL,
                   k: int = TOP_K) -> tuple[list[list[int]], dict]:
-    """validated_suite 의 primary 설정과 동일한 파이프라인으로 top-k 를 구한다."""
+    """`experiment_validated_suite.py` 와 같은 파이프라인으로 top-k 를 구한다.
+
+    모델과 alpha 는 그 스크립트의 primary 값(MiniLM, 0.5)과 같다. index_mode 는
+    기본이 full_text 로, 헤드라인 primary 인 minimal_text 가 아니라 before 값을
+    맞춰 볼 full_text 칸을 가리킨다.
+    """
     from sentence_transformers import SentenceTransformer
 
     model = SentenceTransformer(model_name)
@@ -1028,6 +1067,10 @@ def recall_at10_equiv(corpus: list[dict], queries_v1: list[dict],
         sub = [hits[i] for i in keep]
         sub_ko = [hits[i] for i in keep if langs[i] == "ko"]
         sub_en = [hits[i] for i in keep if langs[i] == "en"]
+        # "all_71*" 은 n=71 판에서 굳은 레거시 키 이름이다. 실제로는 '제외분까지
+        # 포함한 전체 질의' 를 뜻하며 현재 n=151 이다(대비되는 evaluable_* 는
+        # excluded_from_metrics 를 뺀 부분집합). 키를 바꾸면 기존 결과 JSON 과
+        # 대조가 끊기므로 이름은 그대로 두고 뜻만 여기 적어 둔다.
         out[name] = {
             "all_71": rc.rate_with_ci(hits),
             "all_71_ko": rc.rate_with_ci(ko),

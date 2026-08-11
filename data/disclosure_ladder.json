@@ -110,8 +110,11 @@
     }
   },
   "per_level_summary": {
+    "_basis": "전체 질의 151건 (사다리 정의 위반 18건 포함). 논문이 인용하는 값이 아니다 — per_level_summary_spec_compliant 를 보라.",
+    "_n": 151,
     "L0": {
       "definition": "원문 그대로(기존 검증셋 질의)",
+      "n": 151,
       "mean_sensitive_token_count": 5.126,
       "mean_sensitive_field_count": 3.742,
       "mean_token_count": 22.649,
@@ -131,6 +134,7 @@
     },
     "L1": {
       "definition": "L0 − 정량 사양치: 수치·단위·정밀도·공차·성능 등급 표현 전부 삭제",
+      "n": 151,
       "mean_sensitive_token_count": 4.589,
       "mean_sensitive_field_count": 3.384,
       "mean_token_count": 21.093,
@@ -150,6 +154,7 @@
     },
     "L2": {
       "definition": "L1 − 고유명칭(제품·모델·공정·상표·특정 재료/기술명) + 규제 조문 인용 문구 삭제",
+      "n": 151,
       "mean_sensitive_token_count": 4.053,
       "mean_sensitive_field_count": 3.046,
       "mean_token_count": 20.411,
@@ -169,6 +174,7 @@
     },
     "L3": {
       "definition": "L2 − 최종사용자·목적지·용도·자사 정체성·거래 형태 삭제 → 기능·물리적 원리만",
+      "n": 151,
       "mean_sensitive_token_count": 0.073,
       "mean_sensitive_field_count": 0.066,
       "mean_token_count": 12.934,
@@ -182,6 +188,7 @@
     },
     "L4": {
       "definition": "카테고리 키워드만(2~5 단어)",
+      "n": 151,
       "mean_sensitive_token_count": 0.119,
       "mean_sensitive_field_count": 0.099,
       "mean_token_count": 3.338,
@@ -192,6 +199,94 @@
         "product_identifier": 1
       },
       "distinct_queries": 151,
+      "identical_to_previous_level": 0
+    }
+  },
+  "per_level_summary_spec_compliant": {
+    "_basis": "사다리 정의를 지키는 133건만. **PAPER 3.5/4.5 와 output/disclosure_frontier.json 이 인용하는 기준.**",
+    "_n": 133,
+    "L0": {
+      "definition": "원문 그대로(기존 검증셋 질의)",
+      "n": 133,
+      "mean_sensitive_token_count": 5.353,
+      "mean_sensitive_field_count": 3.872,
+      "mean_token_count": 22.421,
+      "mean_char_count": 108.65,
+      "queries_with_zero_sensitive_tokens": 0,
+      "field_frequency": {
+        "destination": 104,
+        "end_use": 73,
+        "end_user": 99,
+        "product_identifier": 28,
+        "quantitative_spec": 55,
+        "supplier_identity": 56,
+        "transaction_intent": 100
+      },
+      "distinct_queries": 133,
+      "identical_to_previous_level": null
+    },
+    "L1": {
+      "definition": "L0 − 정량 사양치: 수치·단위·정밀도·공차·성능 등급 표현 전부 삭제",
+      "n": 133,
+      "mean_sensitive_token_count": 4.774,
+      "mean_sensitive_field_count": 3.474,
+      "mean_token_count": 21.075,
+      "mean_char_count": 102.47,
+      "queries_with_zero_sensitive_tokens": 0,
+      "field_frequency": {
+        "destination": 104,
+        "end_use": 73,
+        "end_user": 99,
+        "product_identifier": 28,
+        "quantitative_spec": 2,
+        "supplier_identity": 56,
+        "transaction_intent": 100
+      },
+      "distinct_queries": 133,
+      "identical_to_previous_level": 39
+    },
+    "L2": {
+      "definition": "L1 − 고유명칭(제품·모델·공정·상표·특정 재료/기술명) + 규제 조문 인용 문구 삭제",
+      "n": 133,
+      "mean_sensitive_token_count": 4.188,
+      "mean_sensitive_field_count": 3.113,
+      "mean_token_count": 20.571,
+      "mean_char_count": 100.05,
+      "queries_with_zero_sensitive_tokens": 2,
+      "field_frequency": {
+        "destination": 104,
+        "end_use": 55,
+        "end_user": 98,
+        "product_identifier": 1,
+        "quantitative_spec": 2,
+        "supplier_identity": 55,
+        "transaction_intent": 99
+      },
+      "distinct_queries": 133,
+      "identical_to_previous_level": 40
+    },
+    "L3": {
+      "definition": "L2 − 최종사용자·목적지·용도·자사 정체성·거래 형태 삭제 → 기능·물리적 원리만",
+      "n": 133,
+      "mean_sensitive_token_count": 0.0,
+      "mean_sensitive_field_count": 0.0,
+      "mean_token_count": 13.023,
+      "mean_char_count": 62.99,
+      "queries_with_zero_sensitive_tokens": 133,
+      "field_frequency": {},
+      "distinct_queries": 133,
+      "identical_to_previous_level": 0
+    },
+    "L4": {
+      "definition": "카테고리 키워드만(2~5 단어)",
+      "n": 133,
+      "mean_sensitive_token_count": 0.0,
+      "mean_sensitive_field_count": 0.0,
+      "mean_token_count": 3.323,
+      "mean_char_count": 15.32,
+      "queries_with_zero_sensitive_tokens": 133,
+      "field_frequency": {},
+      "distinct_queries": 133,
       "identical_to_previous_level": 0
     }
   },

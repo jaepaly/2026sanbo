@@ -37,6 +37,10 @@
     "ladder_spec_excluded": 18,
     "ladder_spec_exclusion_note": "사다리 정의 위반 질의는 제외했다(사유 전량: data/disclosure_ladder.json → ladder_spec_exclusions). 검색기 비교(PAPER 4.3/4.6)는 사다리를 쓰지 않으므로 전체 표본을 쓴다.",
     "language_distribution": {
+      "ko": 99,
+      "en": 34
+    },
+    "language_distribution_all_queries": {
       "ko": 109,
       "en": 42
     },
@@ -51,13 +55,13 @@
       "mean_query_token_count": 22.421,
       "mean_query_char_count": 108.65,
       "field_frequency": {
-        "destination": 119,
-        "end_use": 83,
-        "end_user": 108,
-        "product_identifier": 29,
-        "quantitative_spec": 57,
-        "supplier_identity": 64,
-        "transaction_intent": 105
+        "destination": 104,
+        "end_use": 73,
+        "end_user": 99,
+        "product_identifier": 28,
+        "quantitative_spec": 55,
+        "supplier_identity": 56,
+        "transaction_intent": 100
       }
     },
     "L1": {
@@ -67,13 +71,13 @@
       "mean_query_token_count": 21.075,
       "mean_query_char_count": 102.47,
       "field_frequency": {
-        "destination": 119,
-        "end_use": 83,
-        "end_user": 108,
-        "product_identifier": 29,
-        "quantitative_spec": 3,
-        "supplier_identity": 64,
-        "transaction_intent": 105
+        "destination": 104,
+        "end_use": 73,
+        "end_user": 99,
+        "product_identifier": 28,
+        "quantitative_spec": 2,
+        "supplier_identity": 56,
+        "transaction_intent": 100
       }
     },
     "L2": {
@@ -83,13 +87,13 @@
       "mean_query_token_count": 20.571,
       "mean_query_char_count": 100.05,
       "field_frequency": {
-        "destination": 118,
-        "end_use": 63,
-        "end_user": 108,
-        "product_identifier": 2,
-        "quantitative_spec": 3,
-        "supplier_identity": 62,
-        "transaction_intent": 104
+        "destination": 104,
+        "end_use": 55,
+        "end_user": 98,
+        "product_identifier": 1,
+        "quantitative_spec": 2,
+        "supplier_identity": 55,
+        "transaction_intent": 99
       }
     },
     "L3": {
@@ -98,9 +102,7 @@
       "mean_sensitive_field_count": 0.0,
       "mean_query_token_count": 13.023,
       "mean_query_char_count": 62.99,
-      "field_frequency": {
-        "end_use": 10
-      }
+      "field_frequency": {}
     },
     "L4": {
       "definition": "카테고리 키워드만(2~5 단어)",
@@ -108,10 +110,7 @@
       "mean_sensitive_field_count": 0.0,
       "mean_query_token_count": 3.323,
       "mean_query_char_count": 15.32,
-      "field_frequency": {
-        "end_use": 14,
-        "product_identifier": 1
-      }
+      "field_frequency": {}
     }
   },
   "recall@10": {

@@ -4,8 +4,10 @@
 동기 (docs/threat_model.md)
     기존 노출 실험은 인바운드(공개 통제목록 반환량)를 측정했다. 그것은 기업
     영업비밀과 무관하고, 랭킹을 바꾸지 않으므로 비용 없이 줄일 수 있다
-    (색인=full_text/반환=minimal_text에서 노출량 4043→1820, 55.0% 감소인데
-    R@10은 0.6056 불변). 실제 트레이드오프는 **아웃바운드 = 질의 본문**에서 발생한다.
+    (현행 n=151: 색인=full_text/반환=minimal_text에서 노출량@10 7,886.2→1,780.8자,
+    77.4% 감소인데 R@10은 0.5497 불변 — output/exposure_decomposition.json.
+    n=71 판에서는 4043→1820, 55.0% 감소에 R@10 0.6056 불변이었다).
+    실제 트레이드오프는 **아웃바운드 = 질의 본문**에서 발생한다.
     이 스크립트는 L0~L4 등급 사다리(data/disclosure_ladder.json)로 그 트레이드오프를
     측정하고 굴절점(어느 등급에서 R@10이 유의하게 하락하는가)을 찾는다.
 
@@ -16,7 +18,7 @@
     1차 지표             R@10 (전체 / en / ko), Clopper-Pearson 95% CI
     등가성 마진          delta = 0.05  (사전 트리아지 도구의 top-10 누락률이 5%p
                          이상 늘면 그 축소는 수용 불가)
-    민감도 마진          0.03 / 0.10
+    민감도 마진          0.03 / 0.05 / 0.10 (SENSITIVITY_DELTAS. 0.05는 1차 마진과 같은 값)
     bootstrap            20,000회, seed 20260626
     다중비교             Holm — 두 가족: (a) 각 등급 vs L0, (b) 인접 등급 간
     굴절점 정의          vs-L0 가족에서 Holm 보정 p<0.05 이고 평균차<0 인 최소 등급
@@ -32,6 +34,7 @@ from __future__ import annotations
 import json
 import os
 import sys
+from collections import Counter
 from pathlib import Path
 
 import numpy as np
@@ -93,6 +96,20 @@ def resolved_revision(model_name: str) -> str | None:
     except Exception:
         pass
     return None
+
+
+def _field_freq(entries: list[dict], level: str) -> dict:
+    """등급별 민감 필드 출현 빈도. **호출자가 넘긴 집합에서만** 센다.
+
+    스칼라 평균과 반드시 같은 집합이어야 한다. 이전 판은 data/disclosure_ladder.json
+    의 per_level_summary(전체 151건)를 그대로 복사해 와서, 같은 exposure_axis 블록
+    안에 n=133 기준 평균과 n=151 기준 빈도가 섞여 있었다.
+    """
+    c: Counter = Counter()
+    for e in entries:
+        for cat in e["levels"][level]["counted_sensitive_fields"]:
+            c[cat] += 1
+    return dict(sorted(c.items()))
 
 
 def subgroup(vec: list[int], langs: list[str], lang: str | None) -> list[int]:
@@ -198,7 +215,10 @@ def run() -> dict:
             "mean_sensitive_field_count": round(float(np.mean(fc)), 3),
             "mean_query_token_count": round(float(np.mean(tk)), 3),
             "mean_query_char_count": round(float(np.mean(ch)), 2),
-            "field_frequency": ladder["per_level_summary"][lv]["field_frequency"],
+            # 스칼라 평균은 준수 부분집합(entries)에서 계산되므로 field_frequency 도
+            # 같은 집합에서 세어야 한다. 예전에는 ladder 의 per_level_summary(전체 151건)
+            # 를 그대로 베껴 와서 한 블록 안에 두 기준이 섞여 있었다.
+            "field_frequency": _field_freq(entries, lv),
         }
 
     # ------------------------------------------------------------- R@10
@@ -307,7 +327,10 @@ def run() -> dict:
                 "data/disclosure_ladder.json → ladder_spec_exclusions). "
                 "검색기 비교(PAPER 4.3/4.6)는 사다리를 쓰지 않으므로 전체 표본을 쓴다."
             ),
-            "language_distribution": ladder["meta"]["language_distribution"],
+            # n_queries 와 같은 집합이어야 한다. 예전에는 ladder meta 의 전체(151) 분포를
+            # 실어 합이 n_queries 와 맞지 않았다.
+            "language_distribution": dict(Counter(e["lang"] for e in entries)),
+            "language_distribution_all_queries": ladder["meta"]["language_distribution"],
             "corpus_size": len(corpus),
             "ladder_validation_passed": ladder["validation"]["passed"],
         },
@@ -415,6 +438,9 @@ def evidence_tiers(p: dict, retriever: str) -> dict:
 
 
 def markdown(p: dict) -> str:
+    # 언어별 분모는 데이터에서 뽑는다(예전에는 n=26/n=45 가 문자열에 박혀 있었다).
+    _ld = p["data"]["language_distribution"]
+    n_en, n_ko = _ld.get("en", 0), _ld.get("ko", 0)
     ex = p["exposure_axis"]
     L = LEVELS
     lines = [
@@ -465,7 +491,7 @@ def markdown(p: dict) -> str:
     for r in RETRIEVERS:
         lines += [
             f"### {r}", "",
-            "| 등급 | 평균 민감토큰 | R@10 | 95% CI | R@10 (en, n=26) | R@10 (ko, n=45) |",
+            f"| 등급 | 평균 민감토큰 | R@10 | 95% CI | R@10 (en, n={n_en}) | R@10 (ko, n={n_ko}) |",
             "|---|---:|---:|---|---:|---:|",
         ]
         for lv in L:
@@ -591,27 +617,42 @@ def markdown(p: dict) -> str:
     ]
     if tiers["confounded_by_selfreference"]:
         blocked = tiers["confounded_by_selfreference"][0]
+        # "R@10이 L0과 동일"은 초판에서 우연히 참이었을 뿐이다. 실제 관계를 데이터에서 읽는다.
+        _r0 = p["recall@10"][prim]["L0"]["overall"]["rate"]
+        _rb = p["recall@10"][prim][blocked]["overall"]["rate"]
+        _prev = LEVELS[LEVELS.index(blocked) - 1]
+        _rp = p["recall@10"][prim][_prev]["overall"]["rate"]
+        _rel = ("L0과 같고" if abs(_rb - _r0) < 1e-9
+                else f"L0({_r0:.4f})보다 낮지만 직전 등급 {_prev}({_rp:.4f})보다 높고")
         lines.append(
-            f"- **{blocked} 이하로는 권고하지 않는다.** {blocked}에서 민감정보를 더 지우면 "
-            f"R@10은 유지되지만(L0과 동일), 그 유지가 자기참조 증가로 설명되므로 "
+            f"- **{blocked} 이하로는 권고하지 않는다.** {blocked}의 R@10은 {_rb:.4f}로 "
+            f"{_rel}, 그 상대적 유지가 자기참조 증가로 설명되므로 "
             f"\"{blocked}까지 지워도 안전하다\"고 말할 수 없다. 이 판정은 초판 자동 생성문의 "
             "결론을 뒤집은 것이다."
         )
     if tiers["evidence_of_loss"]:
         worst = tiers["evidence_of_loss"][0]
         d = p["contrasts_vs_L0"][prim][f"{worst}_vs_L0"]
+        holm = p["holm_vs_L0"][prim][f"{worst}_vs_L0"]
+        sig = holm["significant_at_0.05"]
+        tail = (f"Holm 보정 후에도 유의하다(p={holm['p_adjusted']:.3g})."
+                if sig else
+                f"Holm 보정 후 유의하지는 않지만(p={holm['p_adjusted']:.3g}) 이는 "
+                f"n={p['data']['n_queries']}의 검정력 한계이지 무해의 근거가 아니다.")
         lines.append(
-            f"- 반면 **{worst}(카테고리 키워드 2~5단어)에서는 점추정 하락이 "
-            f"{abs(d['mean_diff']):.4f}(={abs(d['mean_diff']) * 100:.1f}%p)로 사전지정 마진 δ={PRIMARY_DELTA}를 "
-            f"넘는다.** Holm 보정 후 유의하지는 않지만(p={p['holm_vs_L0'][prim][f'{worst}_vs_L0']['p_adjusted']:.3g}) "
-            f"이는 n={p['data']['n_queries']}의 검정력 한계이지 무해의 근거가 아니다. "
-            f"기능 서술까지 지우는 것은 권고하지 않는다."
+            f"- 반면 **{worst}({p['exposure_axis'][worst]['definition']})에서는 점추정 하락이 "
+            f"{abs(d['mean_diff']):.4f}(={abs(d['mean_diff']) * 100:.1f}%p)로 사전지정 마진 "
+            f"δ={PRIMARY_DELTA}를 넘는다.** {tail} "
+            f"손실 징후가 있는 등급(={', '.join(tiers['evidence_of_loss'])})은 권고하지 않는다."
         )
     lines += [
-        f"- B등급 판정에는 검정력이 부족하다. δ={PRIMARY_DELTA}에서 등가를 입증하려면 "
-        f"표의 '필요 n' 열에 따라 수백~수천 개의 질의가 필요하다. n={p['data']['n_queries']}에서 "
-        f"확정 가능한 것은 A등급(L1)뿐이며, L2·L3은 \"손실 징후가 없다\"까지만 말할 수 있다. "
-        "**확인 필요.**",
+        (f"- B등급 판정에는 검정력이 부족하다. δ={PRIMARY_DELTA}에서 등가를 입증하려면 "
+         f"표의 '필요 n' 열에 따라 수백~수천 개의 질의가 필요하다. n={p['data']['n_queries']}에서 "
+         + (f"등가가 입증된 등급은 {', '.join(tiers['proven_equivalent'])}뿐이다."
+            if tiers["proven_equivalent"]
+            else "**등가가 입증된 등급은 하나도 없다.** 권고 등급조차 "
+                 "\"손실 징후가 없다\"까지만 말할 수 있다.")
+         + " **확인 필요.**"),
         "",
         "## 6. 진단",
         "",

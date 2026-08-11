@@ -165,12 +165,33 @@ def main() -> None:
             "n_negatives": N_NEG, "seed": SEED,
         },
         "env": rc.env_meta({"seed": SEED}),
+        # 이 감사는 **전체 질의**를 본다. 사다리 정의 위반 여부와 무관하게 재작성
+        # 전반이 정답 쪽으로 표류했는지를 물어야 하기 때문이다. frontier(n=133)와
+        # 기준이 다르므로 명시한다 — 예전에는 라벨이 없어 두 n 이 섞여 보였다.
+        "basis": {
+            "n": len(per_query),
+            "subset": "전체 질의(사다리 정의 위반 포함)",
+            "why": ("표류 판정은 사다리 정의 준수 여부와 무관하게 재작성 전반을 봐야 한다. "
+                    "회수율 비교(frontier)는 정의를 지키는 부분집합만 쓰므로 n 이 다르다."),
+            "frontier_basis_n": recall.get("data", {}).get("n_queries"),
+        },
         "per_level": per_level,
         "vs_L0": contrasts,
         "vs_L0_holm": holm,
         "adjacent": adjacent,
         "verdict": verdict,
-        "recall_reference": recall,
+        # frontier 산출물을 통째로 복사하지 않고 경로와 기준만 남긴다. 예전에는 전체를
+        # 임베드해서, frontier 가 갱신돼도 여기 박힌 사본은 옛 판(n=119)으로 남았다.
+        "recall_reference": {
+            "path": "output/disclosure_frontier.json",
+            "n_queries": recall.get("data", {}).get("n_queries"),
+            "ladder_spec_excluded": recall.get("data", {}).get("ladder_spec_excluded"),
+            "hybrid_recall_at_10": {
+                lv: recall["recall@10"]["hybrid_0.5"][lv]["overall"]["rate"]
+                for lv in recall.get("recall@10", {}).get("hybrid_0.5", {})
+            },
+            "note": "전체 사본 대신 참조만 둔다. 값이 필요하면 위 경로를 읽을 것.",
+        },
         "per_query": per_query,
     }
     JSON_PATH.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")

@@ -251,7 +251,8 @@ def build_checks() -> list[Check]:
                    lambda: suite_rate("full_text", "hybrid_0.5")))
     C.append(Check("front.nocode.hybrid", "PAPER 4.4", "색인 minimal_no_code hybrid R@10",
                    0.4901, lambda: suite_rate("minimal_no_code", "hybrid_0.5")))
-    # 반환 측 축소: 논문 헤드라인은 '색인 고정 + 반환만 축소' 81.4%, 비용 정확히 0
+    # 반환 측 축소: 논문 헤드라인은 '색인 고정 + 반환만 축소' 77.4%, 비용 정확히 0
+    # (노출량@10 7,886.2 → 1,780.8자, R@10 0.5497 불변. n=71 판에서는 81.4%였다)
     C.append(Check("front.return_only.cut_pct", "PAPER 4.4/초록/결론",
                    "반환만 축소 시 노출 감소율 (77.4%)", 77.4,
                    lambda: dig(decomp, "best_operating_point",
@@ -363,6 +364,54 @@ def build_checks() -> list[Check]:
                     ("L3", 0.4586), ("L4", 0.3835)]:
         C.append(Check(f"ladder.hybrid.{lv}", "PAPER 4.5", f"사다리 {lv} hybrid R@10", val,
                        lambda l=lv: ladder_rate(l)))
+    # 4.5 표는 3개 열 x 5등급 = 15칸인데 예전에는 hybrid 열만 등록돼 있었다. 그래서
+    # dense L0(0.4586, 실제 0.4662)과 BM25 L2/L3/L4 오기가 MISMATCH 없이 통과했다.
+    # 표 전체를 등록해 같은 종류의 오기가 다시 통과하지 못하게 한다.
+    for lv, val in [("L0", 0.4662), ("L1", 0.4361), ("L2", 0.3759),
+                    ("L3", 0.4436), ("L4", 0.3759)]:
+        C.append(Check(f"ladder.dense.{lv}", "PAPER 4.5", f"사다리 {lv} dense R@10", val,
+                       lambda l=lv: ladder_rate(l, "dense")))
+    for lv, val in [("L0", 0.1429), ("L1", 0.1278), ("L2", 0.0977),
+                    ("L3", 0.1203), ("L4", 0.1353)]:
+        C.append(Check(f"ladder.bm25.{lv}", "PAPER 4.5", f"사다리 {lv} BM25 R@10", val,
+                       lambda l=lv: ladder_rate(l, "BM25")))
+
+    # 구조 불변식 — 값이 아니라 '두 수치가 같은 집합 위에 있는가'를 검사한다.
+    # 이런 검사가 없어서 frontier 의 language_distribution 이 n_queries 와 다른 집합
+    # (151건 분포)을 싣고도 아무 경고 없이 지나갔다.
+    C.append(Check("ladder.langdist_sums_to_n", "구조 불변식",
+                   "frontier 언어분포 합 == n_queries", True,
+                   lambda: sum(dig(ladder, "data", "language_distribution").values())
+                   == dig(ladder, "data", "n_queries")))
+    C.append(Check("ladder.basis_matches_file", "구조 불변식",
+                   "frontier 노출축 == 사다리 파일의 준수기준 요약", True,
+                   lambda: all(
+                       abs(dig(ladder, "exposure_axis", lv, "mean_sensitive_token_count")
+                           - dig(load(DATA / "disclosure_ladder.json"),
+                                 "per_level_summary_spec_compliant", lv,
+                                 "mean_sensitive_token_count")) < 1e-9
+                       for lv in ("L0", "L1", "L2", "L3", "L4"))))
+    C.append(Check("ladder.file_declares_both_bases", "구조 불변식",
+                   "사다리 파일이 두 기준을 모두 이름 붙여 내보내는가", True,
+                   lambda: (lambda d: d.get("per_level_summary", {}).get("_n") == 151
+                            and d.get("per_level_summary_spec_compliant", {}).get("_n") == 133
+                            )(load(DATA / "disclosure_ladder.json"))))
+
+    # 4.7 의 "15개 조합 중 Holm 보정 후 유의한 것은 하나도 없다" 를 산출물로 고정한다.
+    lab = load(OUT / "label_sensitivity.json")
+    C.append(Check("labelsens.holm.dense_vs_bm25", "PAPER 4.7",
+                   "라벨민감도 15개 조합 중 dense−BM25 Holm 유의 개수", 15,
+                   lambda: dig(lab, "holm_across_15_combinations", "dense_vs_bm25",
+                               "n_significant_after_holm"), tol=0))
+    C.append(Check("labelsens.holm.hybrid_vs_dense", "PAPER 4.7",
+                   "라벨민감도 15개 조합 중 hybrid−dense Holm 유의 개수 (0)", 0,
+                   lambda: dig(lab, "holm_across_15_combinations", "hybrid_vs_dense",
+                               "n_significant_after_holm"), tol=0))
+    C.append(Check("labelsens.holm.hybrid_raw", "PAPER 4.7",
+                   "hybrid−dense 보정 전 유의 조합 수 (MiniLM 5건)", 5,
+                   lambda: dig(lab, "holm_across_15_combinations", "hybrid_vs_dense",
+                               "n_significant_before_holm"), tol=0))
+
     C.append(Check("ladder.bm25.L0.ko", "PAPER 4.5",
                    "사다리 BM25 한국어 R@10 (바닥 수준)", 0.0303,
                    lambda: ladder_rate("L0", "BM25", "ko")))
@@ -420,7 +469,8 @@ def build_checks() -> list[Check]:
                    lambda: dig(abl, "headline", "recall_by_level_ko", "BM25", "3")))
     C.append(Check("abl.ko.dense.L3", "PAPER 4.6", "압력 level3 dense 한국어 R@10", 0.2752,
                    lambda: dig(abl, "headline", "recall_by_level_ko", "dense", "3")))
-    # 치환 커버리지: 사전이 원본 71개만 덮으므로 압력이 표본 전체에 걸리지 않는다.
+    # 치환 커버리지: 사전이 151개 질의를 전부 덮으므로 압력이 표본 전체에 걸린다
+    # (n=71 판에서는 원본 71개만 덮어 나머지 80개에는 압력이 걸리지 않았다).
     # 논문 4.6 이 이 수치를 그대로 인용하며, 조용히 떨어지면 검증이 실패해야 한다.
     for lv, changed in [("1", 151), ("2", 151), ("3", 151)]:
         C.append(Check(f"abl.coverage.L{lv}", "PAPER 4.6",

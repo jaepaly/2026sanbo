@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""검증셋(n=71) 기준 통계 재집계 — 실제 per-query hit 벡터만 사용한다.
+"""검증셋(현행 n=151) 기준 통계 재집계 — 실제 per-query hit 벡터만 사용한다.
 
 정정 내역 (감사 항목 M9 / M14-A):
 
@@ -11,14 +11,14 @@ A. **가짜 hit 벡터 재구성 제거.**
    - 짝지음 정보(같은 질의에서 A는 맞고 B는 틀렸다)가 전부 버려졌고,
    - 차이의 CI가 실제보다 넓게(또는 방향이 뒤바뀌게) 나왔다.
    이제 `run_experiments.py`(합성셋)와 `experiment_validated_suite.py`
-   (검증셋 n=71)가 `hit_vectors`를 JSON에 저장하므로 재구성이 불필요하다.
+   (검증셋)가 `hit_vectors`를 JSON에 저장하므로 재구성이 불필요하다.
    `bootstrap_diff_ci` / `infer_hits` / `bootstrap_mean_ci`는 삭제했다.
    per-query 벡터가 없는 산출물은 **추정하지 않고** 절대율 + Clopper-Pearson
    구간만 보고하고 `paired_test_unavailable` 이유를 남긴다.
 
 B. **stale 산출물 정정.**
    헤드라인 표본은 n=13(`output/validated_eval.json`)이 아니라
-   n=71(`output/validated_suite*.json`)이다. n=13 결과는 삭제하지 않고
+   현행 검증셋(`output/validated_suite*.json`, n=151)이다. n=13 결과는 삭제하지 않고
    `docs/statistics_n13_superseded.md`로 보존한다.
 
 C. **소표본 bootstrap 이산 경계 인공물 정량화.**
@@ -57,7 +57,7 @@ SUPERSEDED_MD = DOCS_DIR / "statistics_n13_superseded.md"
 BOOTSTRAP_ITERATIONS = 20000
 SEED = 20260626
 
-# n=71 검증셋의 primary 조건 (experiment_validated_suite.py의 사전지정과 동일)
+# 검증셋의 primary 조건 (experiment_validated_suite.py의 사전지정과 동일)
 PRIMARY_INDEX_MODE = "minimal_text"
 PRIMARY_RETRIEVER = "hybrid_0.5"
 
@@ -143,7 +143,7 @@ INPUT_SYMMETRY_AUDIT = {
     "reading": "입력을 대칭으로 맞춘 뒤에도 합성셋에서는 모든 어휘격차 수준에서 BM25(α=1.0)가 "
                "dense(α=0.0)를 크게 앞선다. 즉 이 격차는 전처리 비대칭이 만든 것이 아니라 "
                "**합성 질의가 정답 문서 본문에서 파생됐다는 자기참조 구조**가 만든 것이다. "
-               "따라서 이 셋은 검색기 비교에 부적합하며, 검색기 비교는 검증셋(n=71)으로 해야 "
+               "따라서 이 셋은 검색기 비교에 부적합하며, 검색기 비교는 검증셋으로 해야 "
                "한다 — 거기서는 부호가 뒤집혀 dense 성분이 BM25를 크게 앞선다(§2).",
 }
 
@@ -367,7 +367,7 @@ def build_summary() -> dict[str, Any]:
                     "hit_vectors 미저장 — experiment_external_retriever.py 재실행 필요",
                 ))
 
-    # ---------------------------------------------------- 5. 검증셋 n=71 (헤드라인)
+    # ---------------------------------------------------- 5. 검증셋 (헤드라인)
     meta = validated["meta"]
     langs = validated["langs"]
     primary_model = meta["primary_model"]
@@ -395,7 +395,7 @@ def build_summary() -> dict[str, Any]:
             validated_family[label] = comp["mcnemar"]["p_two_sided_exact"]
     validated_holm = rc.holm(validated_family)
 
-    # 절대율 표 (n=71)
+    # 절대율 표
     validated_rates = {}
     for retr, vec in hits71.items():
         validated_rates[retr] = {
@@ -404,7 +404,7 @@ def build_summary() -> dict[str, Any]:
             "ko": rc.rate_with_ci(subgroup(vec, "ko")),
         }
 
-    # ---------------------------------------------------- 6. n=13 → n=71 before/after
+    # ---------------------------------------------------- 6. n=13 → 현행 before/after
     before_after: list[dict[str, Any]] = []
     if n13:
         n13_n = int(n13["meta"]["evaluated_count"])
@@ -454,7 +454,8 @@ def build_summary() -> dict[str, Any]:
     # P(재표본에 승리 0개) = ((n-w)/n)^n ≈ exp(-w) 이므로 **표본 크기 n이 아니라
     # 승리 개수 w가 결정한다**. exp(-3)=0.0498 > 0.025 > 0.0183 = exp(-4).
     threshold_table = []
-    for n in (13, 20, 30, 50, 71):
+    # 현행 검증셋 크기를 표에 포함시킨다(예전에는 71에서 끝나 낡아 보였다).
+    for n in sorted({13, 20, 30, 50, 71, meta['n']}):
         max_w = 0
         for w in range(1, n + 1):
             if ((n - w) / n) ** n > 0.025:
@@ -472,9 +473,10 @@ def build_summary() -> dict[str, Any]:
         "**표본 크기 n이 아니라 승리 개수 w가 결정한다**. exp(-3)=0.0498 > 0.025 > "
         "0.0183=exp(-4) 이므로, 0패인 상황에서 승리가 3개 이하이면 n이 얼마든 "
         "percentile bootstrap의 하한이 0이 되고, 4개 이상이면 하한이 0을 벗어난다. "
-        "n=13은 승리가 3개뿐이라 걸렸고, n=71은 승리가 30개라 걸리지 않는다."
+        "n=13은 승리가 3개뿐이라 걸렸고, 현행 검증셋은 승리가 그보다 훨씬 많아 걸리지 않는다."
     )
 
+    _n_now = meta["n"]
     dataset_sizes = {
         "synthetic_test_queries": n_synthetic,
         "paraphrase_gap_queries": n_paraphrase,
@@ -488,7 +490,7 @@ def build_summary() -> dict[str, Any]:
 
     return {
         "meta": {
-            "task": "검증셋 n=71 기준 통계 재집계 (M9/M14-A 정정판)",
+            "task": f"검증셋 n={_n_now} 기준 통계 재집계 (M9/M14-A 정정판)",
             "created_from_existing_json_only": True,
             "bootstrap_iterations": BOOTSTRAP_ITERATIONS,
             "seed": SEED,
@@ -509,7 +511,7 @@ def build_summary() -> dict[str, Any]:
                 "삭제: infer_hits() — 반올림된 aggregate rate에서 per-query 벡터를 합성했다.",
                 "삭제: bootstrap_diff_ci() — paired 설계에 unpaired 이항 시뮬레이션을 적용했다.",
                 "삭제: bootstrap_mean_ci() — 합성 벡터의 이항 재표본. 절대율은 Clopper-Pearson으로 대체.",
-                "헤드라인 표본을 n=13에서 n=71로 교체. n=13은 docs/statistics_n13_superseded.md에 보존.",
+                f"헤드라인 표본을 n=13에서 n={_n_now}로 교체. n=13은 docs/statistics_n13_superseded.md에 보존.",
                 "소표본 이진 짝지음의 primary 검정을 exact McNemar / Clopper-Pearson으로 변경.",
                 "per-query 벡터가 없는 산출물은 추정하지 않고 paired_test_unavailable로 표시.",
             ],
@@ -530,7 +532,7 @@ def build_summary() -> dict[str, Any]:
         "comparisons": comparisons,
         "ranking_determinism_audit": RANKING_DETERMINISM_AUDIT,
         "input_symmetry_audit": INPUT_SYMMETRY_AUDIT,
-        "n13_to_n71_before_after": before_after,
+        "n13_to_current_before_after": before_after,
         "small_sample_bootstrap_artifact": {
             "cases": artifacts,
             "threshold_table": threshold_table,
@@ -601,10 +603,19 @@ def markdown(summary: dict[str, Any]) -> str:
             f"| {retr} | {r['overall']['rate']:.4f} | {fmt_ci(r['overall']['ci95'])} | "
             f"{r['en']['rate']:.4f} | {r['ko']['rate']:.4f} |"
         )
+    # 이 문장은 예전에 값이 문자열에 박혀 있었다(0.0000 / 45개 중 44개). 표본이 커지면서
+    # 실제 값이 0.0275 로 바뀌었는데도 문장은 그대로여서 같은 절의 표와 모순됐다.
+    # 이제 표와 같은 출처에서 뽑아 쓴다.
+    _ko = summary["validated_recall_at_10"]["rates"]["BM25"]["ko"]["rate"]
+    _ns = (summary["validated_recall_at_10"].get("bm25_no_signal_queries")
+           or summary["validated_recall_at_10"].get("diagnostics", {}).get("bm25_no_signal_queries"))
+    _nstxt = f"(무신호 질의 {_ns}건) " if _ns else ""
     L += [
         "",
-        "> 한국어 BM25 R@10은 **0.0000**이다. 이전 산출물의 0.0222는 BM25 점수 벡터가 전부",
-        f"> 0인 질의(45개 중 44개)에 코퍼스 앞머리 10행을 결과로 집계한 데서 나온 값이다.",
+        f"> 한국어 BM25 R@10은 **{_ko:.4f}**이다 {_nstxt}— 코퍼스가 100% 영어라 대부분의 한국어",
+        "> 질의는 BM25 점수 벡터가 전부 0이다. 이런 질의는 top-10을 만들 수 없으므로 검색 실패로",
+        "> 집계한다. 이전 산출물의 0.0222는 전부 0인 벡터를 정렬해 코퍼스 앞머리 10행을 결과로",
+        "> 집계한 데서 나온 오류였다.",
         "",
     ]
 
@@ -639,14 +650,14 @@ def markdown(summary: dict[str, Any]) -> str:
     ]
 
     # --- 3. before/after
-    if summary["n13_to_n71_before_after"]:
+    if summary["n13_to_current_before_after"]:
         L += [
             "## 3. n=13 → n=71 before / after (조용한 덮어쓰기 방지)",
             "",
             "| 비교 | 표본 | 처리 R@10 | 기준 R@10 | 평균차 | bootstrap 95% CI | 승/패/무 | exact p |",
             "|---|---:|---:|---:|---:|---|---:|---:|",
         ]
-        for row in summary["n13_to_n71_before_after"]:
+        for row in summary["n13_to_current_before_after"]:
             for tag in ("before", "after"):
                 d = row[tag]
                 w, l, t = d["wins_losses_ties"]
@@ -802,7 +813,8 @@ def markdown(summary: dict[str, Any]) -> str:
         "- 합성셋 R@10(full_text 0.9968 / minimal_text 0.9792)은 **자기참조 재검색** 조건의",
         "  값이므로 단독 헤드라인으로 쓰지 않는다. 고-IDF 공유토큰 5개 제거 시 0.7596,",
         "  10개 제거 시 0.4407로 붕괴한다(`output/paraphrase_gap.md`).",
-        "- 검증셋의 한국어 BM25 R@10은 0.0000이다. 어휘 교집합이 0인 질의는 top-10을 만들 수",
+        f"- 검증셋의 한국어 BM25 R@10은 {summary['validated_recall_at_10']['rates']['BM25']['ko']['rate']:.4f}"
+        "이다. 어휘 교집합이 0인 질의는 top-10을 만들 수",
         "  없으며, 이를 '코퍼스 앞머리 10행'으로 채워 집계하면 안 된다.",
         "- 외부 모사 질의의 후보 라벨은 연구자 예비 추정값이며 법적 판정이 아니다.",
         "- `route_only`는 고유 색인문서가 소수인 퇴화 조건이므로 소수 4자리 수치에 해석을",
@@ -872,7 +884,7 @@ def superseded_markdown(summary: dict[str, Any]) -> str:
           f"n={ds['validated_queries']} 평균차 | n={ds['validated_queries']} bootstrap CI | "
           f"n={ds['validated_queries']} exact p |",
           "|---|---:|---|---:|---:|---|---:|"]
-    for row in summary["n13_to_n71_before_after"]:
+    for row in summary["n13_to_current_before_after"]:
         b, a = row["before"], row["after"]
         L.append(
             f"| `{row['comparison']}` | {b['mean_diff']:+.4f} | {fmt_ci(b['bootstrap_95_ci'])} | "

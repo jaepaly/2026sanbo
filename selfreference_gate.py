@@ -7,15 +7,21 @@
 
     jaccard(tokenize(query), tokenize(minimal_text(answer))) < 0.30
 
-`tokenize`는 `[A-Za-z0-9가-힣]+`이고 코퍼스는 100% 영어다. 그래서 한국어 질의는
-**원리상** 정답 문서와 교집합이 0이다. 실측(검증셋 n=71):
+`tokenize`는 `[A-Za-z0-9가-힣]+`이고 코퍼스는 100% 영어다(v2 1,783개 항목 전부에
+한글이 없음을 확인). 그래서 한국어 질의의 **한글** 토큰은 원리상 정답 문서와 교집합이
+0이고, 0이 아닌 Jaccard는 질의에 섞인 숫자·라틴 약어에서만 나온다. 실측:
 
-    | 질의 언어 | n  | 평균 Jaccard | 최대   |
-    | 한국어    | 45 | 0.0000       | 0.0000 |
-    | 영어      | 26 | 0.0941       | 0.2364 |
+    | 질의 언어 | n (현재 / n=71판) | 평균 Jaccard (현재 / n=71판) | 최대 (현재 / n=71판) |
+    | 한국어    | 109 / 45          | 0.0017 / 0.0000              | 0.0385 / 0.0000      |
+    | 영어      |  42 / 26          | 0.0929 / 0.0941              | 0.2364 / 0.2364      |
 
-즉 게이트는 전체의 63%에서 아무것도 검사하지 않았고, 영어에서도 한 번도 발동하지
-않았다(최대 0.2364 < 0.30). 그런데 실제 질의 상당수는 정답 원문의 절 단위 번역이다.
+현재 = 검증셋 n=151(ko 109 / en 42), 최유사 라벨 기준. n=71 판에서는 한국어 45개가
+**전부 정확히 0**이었고, 지금도 109개 중 100개(91.7%)가 정확히 0이다 — 확장 질의에
+숫자·라틴 약어가 섞이면서 나머지 9개만 0을 벗어났다.
+
+즉 게이트는 한국어 질의에서 사실상 아무것도 검사하지 않는다(n=71 판에서는 전체의
+63%인 45개, 현재는 72%인 109개). 영어에서도 두 판 모두 한 번도 발동하지 않았다
+(최대 0.2364 < 0.30). 그런데 실제 질의 상당수는 정답 원문의 절 단위 번역이다.
 어휘 게이트는 번역된 자기참조를 구조적으로 볼 수 없다.
 
 ## 이 모듈의 설계
@@ -33,9 +39,9 @@
 2. **어휘와 의미를 둘 다 보고**한다. 어휘 Jaccard는 계속 계산하되, 한국어에서
    구조적으로 0이라는 경고를 명시적으로 출력한다.
 
-3. **임계값을 데이터에 맞추지 않는다.** 71개 질의의 cos 분포를 보고 컷을 정하면
-   원하는 결과를 만들 수 있다. 그래서 임계값은 **71개 질의와 무관한 대조군**으로
-   보정한다(`calibrate`):
+3. **임계값을 데이터에 맞추지 않는다.** 검증셋 151개 질의의 cos 분포를 보고 컷을
+   정하면 원하는 결과를 만들 수 있다. 그래서 임계값은 **검증셋 질의와 무관한
+   대조군**으로 보정한다(`calibrate`):
 
    - POS-A (사람이 만든 번역쌍): `data/crosslingual_translations.json`의 ko 질의 ↔ 사람이
      번역한 en 문장. n=5. "같은 내용의 두 언어 표현"의 cos.
@@ -95,7 +101,7 @@ GATE_MODEL_ALTERNATIVE = "sentence-transformers/distiluse-base-multilingual-case
 # 어휘 게이트는 원래 값을 유지한다(비교 가능성). 의미 게이트가 실질 게이트다.
 MAX_JACCARD = 0.30
 
-# 임계값 보정 규칙 — 데이터(71개)가 아니라 대조군에서 유도한다.
+# 임계값 보정 규칙 — 데이터(검증셋 151개)가 아니라 대조군에서 유도한다.
 CALIBRATION_PERCENTILE = 10.0        # POS-B 분포의 10퍼센타일
 CALIBRATION_SENSITIVITY_PERCENTILE = 50.0   # 민감도용(중앙값)
 NEG_SAMPLES_PER_QUERY = 20
@@ -127,7 +133,8 @@ def encode(texts: list[str], model=None) -> np.ndarray:
     ).astype(np.float32)
 
 
-# 1797개 코퍼스를 LaBSE로 두 번(보정 + 채점) 인코딩하면 CPU에서 수십 분이 든다.
+# 1,783개 코퍼스(v2 = eCFR 637 + SCOMET 578 + Wassenaar 568)를 LaBSE로 두 번
+# (보정 + 채점) 인코딩하면 CPU에서 수십 분이 든다.
 # 결과에 영향이 없는 순수 캐시.
 _DOC_EMB_CACHE: dict[tuple[int, str], np.ndarray] = {}
 
@@ -223,7 +230,7 @@ def _percentile_floor(values: list[float], pct: float) -> float:
 
 
 def calibrate(corpus: list[dict], queries: list[dict], model=None) -> dict:
-    """71개 질의의 cos 값을 보지 않고 임계값을 정한다.
+    """검증셋 151개 질의의 cos 값을 보지 않고 임계값을 정한다.
 
     POS-A: 사람이 만든 ko↔en 번역쌍(n=5)
     POS-B: 정답 항목의 한국어 근거문 ↔ 정답 minimal_text(영어)
@@ -352,8 +359,10 @@ def score_queries(corpus: list[dict], queries: list[dict], model=None) -> list[d
             })
             continue
         # 여러 라벨이면 가장 유사한 쪽(=게이트에 가장 불리한 쪽)을 취한다.
-        # 71개 중 2개(ext-005, ext-023)만 복수 라벨이지만, 이 선택 때문에 영어
-        # 어휘 Jaccard 평균이 첫-라벨 기준 0.0941 대신 0.0953 으로 나온다.
+        # 검증셋 151개 중 2개(ext-005, ext-023)만 복수 라벨이고 둘 다 영어다.
+        # 이 선택 때문에 영어 어휘 Jaccard 평균이 첫-라벨 기준 0.0921 대신
+        # 0.0929 로 나온다(차이는 ext-005 한 건에서만 발생: 0.0370 -> 0.0698).
+        # n=71 판에서는 같은 두 건 때문에 0.0941 -> 0.0953 이었다.
         # 두 정의를 모두 기록해 수치가 조용히 바뀌지 않게 한다.
         idxs = [code_to_idx[c] for c in gold]
         sims = [float(doc_emb[i] @ q_emb[qi]) for i in idxs]
@@ -421,7 +430,12 @@ def evaluate(rows: list[dict], tau_semantic: float,
 
 def gate_one(query_text: str, answer_entry: dict, tau_semantic: float,
              max_jaccard: float = MAX_JACCARD, model=None) -> dict:
-    """단일 질의용 API — validate_query_slice.py의 gate 3이 이것을 호출한다."""
+    """단일 질의용 API — validate_query_slice.py의 gate 3과 같은 판정을 1건 단위로 준다.
+
+    주의: validate_query_slice.py는 인코더 호출을 슬라이스 전체로 묶어야 해서 이
+    함수를 직접 호출하지 않고 gate 3a(어휘)/3b(의미)를 같은 정의로 인라인 계산한다.
+    현재 이 함수의 호출자는 저장소 안에 없다(단건 점검·디버깅용 진입점).
+    """
     ans_text = rc.index_text(answer_entry, "minimal_text")
     lex = lexical_overlap(query_text, ans_text)
     emb = encode([query_text, ans_text], model or load_gate_model())
@@ -440,7 +454,7 @@ def gate_one(query_text: str, answer_entry: dict, tau_semantic: float,
 def cached_tau(corpus: list[dict], queries: list[dict], model=None) -> float:
     """감사 산출물이 있으면 그 임계값을 재사용, 없으면 보정한다.
 
-    slice 검증기가 매번 1797개 코퍼스를 재인코딩하지 않게 하기 위한 경로.
+    slice 검증기가 매번 1,783개 코퍼스를 재인코딩하지 않게 하기 위한 경로.
     """
     if AUDIT_JSON.exists():
         try:
@@ -454,7 +468,7 @@ def cached_tau(corpus: list[dict], queries: list[dict], model=None) -> float:
 
 
 # --------------------------------------------------------------------------
-# 71개 전량 감사 산출물
+# 검증셋 151개 전량 감사 산출물
 # --------------------------------------------------------------------------
 
 OUT_DIR = ROOT / "output"

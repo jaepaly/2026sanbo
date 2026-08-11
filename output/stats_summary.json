@@ -1,6 +1,6 @@
 {
   "meta": {
-    "task": "검증셋 n=71 기준 통계 재집계 (M9/M14-A 정정판)",
+    "task": "검증셋 n=151 기준 통계 재집계 (M9/M14-A 정정판)",
     "created_from_existing_json_only": true,
     "bootstrap_iterations": 20000,
     "seed": 20260626,
@@ -21,7 +21,7 @@
       "삭제: infer_hits() — 반올림된 aggregate rate에서 per-query 벡터를 합성했다.",
       "삭제: bootstrap_diff_ci() — paired 설계에 unpaired 이항 시뮬레이션을 적용했다.",
       "삭제: bootstrap_mean_ci() — 합성 벡터의 이항 재표본. 절대율은 Clopper-Pearson으로 대체.",
-      "헤드라인 표본을 n=13에서 n=71로 교체. n=13은 docs/statistics_n13_superseded.md에 보존.",
+      "헤드라인 표본을 n=13에서 n=151로 교체. n=13은 docs/statistics_n13_superseded.md에 보존.",
       "소표본 이진 짝지음의 primary 검정을 exact McNemar / Clopper-Pearson으로 변경.",
       "per-query 벡터가 없는 산출물은 추정하지 않고 paired_test_unavailable로 표시."
     ],
@@ -1351,9 +1351,9 @@
       }
     ],
     "max_abs_delta": 0.016,
-    "reading": "입력을 대칭으로 맞춘 뒤에도 합성셋에서는 모든 어휘격차 수준에서 BM25(α=1.0)가 dense(α=0.0)를 크게 앞선다. 즉 이 격차는 전처리 비대칭이 만든 것이 아니라 **합성 질의가 정답 문서 본문에서 파생됐다는 자기참조 구조**가 만든 것이다. 따라서 이 셋은 검색기 비교에 부적합하며, 검색기 비교는 검증셋(n=71)으로 해야 한다 — 거기서는 부호가 뒤집혀 dense 성분이 BM25를 크게 앞선다(§2)."
+    "reading": "입력을 대칭으로 맞춘 뒤에도 합성셋에서는 모든 어휘격차 수준에서 BM25(α=1.0)가 dense(α=0.0)를 크게 앞선다. 즉 이 격차는 전처리 비대칭이 만든 것이 아니라 **합성 질의가 정답 문서 본문에서 파생됐다는 자기참조 구조**가 만든 것이다. 따라서 이 셋은 검색기 비교에 부적합하며, 검색기 비교는 검증셋으로 해야 한다 — 거기서는 부호가 뒤집혀 dense 성분이 BM25를 크게 앞선다(§2)."
   },
-  "n13_to_n71_before_after": [
+  "n13_to_current_before_after": [
     {
       "comparison": "hybrid_vs_bm25",
       "before": {
@@ -1525,8 +1525,15 @@
         "p_no_win_at_that_w": 0.0466434,
         "p_no_win_at_w_plus_1": 0.0162918,
         "note": "n=71, 0패일 때 승리 수가 3개 이하이면 percentile bootstrap 2.5분위수가 구조적으로 0"
+      },
+      {
+        "n": 151,
+        "max_wins_with_structurally_zero_lower_bound": 3,
+        "p_no_win_at_that_w": 0.0483059,
+        "p_no_win_at_w_plus_1": 0.017354,
+        "note": "n=151, 0패일 때 승리 수가 3개 이하이면 percentile bootstrap 2.5분위수가 구조적으로 0"
       }
     ],
-    "rule": "P(재표본에 승리 질의가 0개) = ((n-w)/n)^n ≈ exp(-w) 이므로 이 인공물은 **표본 크기 n이 아니라 승리 개수 w가 결정한다**. exp(-3)=0.0498 > 0.025 > 0.0183=exp(-4) 이므로, 0패인 상황에서 승리가 3개 이하이면 n이 얼마든 percentile bootstrap의 하한이 0이 되고, 4개 이상이면 하한이 0을 벗어난다. n=13은 승리가 3개뿐이라 걸렸고, n=71은 승리가 30개라 걸리지 않는다."
+    "rule": "P(재표본에 승리 질의가 0개) = ((n-w)/n)^n ≈ exp(-w) 이므로 이 인공물은 **표본 크기 n이 아니라 승리 개수 w가 결정한다**. exp(-3)=0.0498 > 0.025 > 0.0183=exp(-4) 이므로, 0패인 상황에서 승리가 3개 이하이면 n이 얼마든 percentile bootstrap의 하한이 0이 되고, 4개 이상이면 하한이 0을 벗어난다. n=13은 승리가 3개뿐이라 걸렸고, 현행 검증셋은 승리가 그보다 훨씬 많아 걸리지 않는다."
   }
 }

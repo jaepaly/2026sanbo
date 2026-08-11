@@ -323,7 +323,7 @@ def test_regenerated_artifacts() -> None:
               s["dataset_sizes"]["validated_queries"] == 151,
               str(s["dataset_sizes"]["validated_queries"]))
         check("n13 결과가 보존됨", s["dataset_sizes"]["superseded_validated_n13"] == 13)
-        check("before/after 기록 존재", len(s["n13_to_n71_before_after"]) >= 1)
+        check("before/after 기록 존재", len(s["n13_to_current_before_after"]) >= 1)
         check("결정론적 랭킹 감사 기록 존재", "ranking_determinism_audit" in s)
         paired = [c for c in s["comparisons"]
                   if c["method"].startswith("paired_per_query")]

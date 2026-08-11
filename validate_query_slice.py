@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""TASK G helper — validate a teammate's expanded query slice before merge.
+"""TASK G/J helper — validate a teammate's expanded query slice before merge.
 
-Each TASK G query is built FROM a known eCFR corpus entry (reverse generation),
+Each TASK G/J query is built FROM a known eCFR corpus entry (reverse generation),
 so its ground-truth label is certain by construction. This checker enforces the
 mechanical gates that keep the expanded set clean and comparable to the existing
 validated set, so the team lead can verify a slice with ONE command instead of
@@ -19,13 +19,21 @@ Gates per query:
                          (b) 의미: cos(query, answer minimal_text) < tau_semantic,
                              평가용 3모델과 겹치지 않는 제3의 다국어 인코더로 측정
                              (selfreference_gate.py).
-                         (a)만 있던 기존 게이트는 구조적으로 공허했다: `tokenize` 가
-                         [A-Za-z0-9가-힣]+ 이고 코퍼스는 100% 영어이므로 한국어 질의의
-                         교집합은 원리상 공집합이다. 검증셋 45개 한국어 질의 전부가
-                         정확히 0.0000 이었고(영어 26개는 평균 0.0941, 최대 0.2364)
-                         게이트는 전체의 63%에서 아무것도 검사하지 않았으며 한 번도
-                         발동하지 않았다. 어휘 값은 계속 보고하되, 구조적으로 공허한
-                         언어에는 경고를 출력한다.
+                         (a)만 있던 기존 게이트는 구조적으로 공허하다: `tokenize` 가
+                         [A-Za-z0-9가-힣]+ 이고 코퍼스는 100% 영어(한글 0자)이므로
+                         한국어 질의의 한글 토큰은 원리상 교집합이 공집합이다.
+                         현재 병합셋(n=151, data/validated_queries_expanded.json)
+                         실측: 한국어 109개 중 100개(91.7%)가 정확히 0.0000,
+                         평균 0.0017, 최대 0.0385. 0이 아닌 9개도 한국어 질의에
+                         섞인 숫자·라틴 약어(예: "1", "10", fadec, cvd)에서만 나온
+                         값이라 의미 수준 자기참조와 무관하다. 영어 42개는 평균
+                         0.0921, 최대 0.2364. 즉 게이트는 전체 151개 중 104개(69%)
+                         에서 아무것도 검사하지 않고, 임계 0.30 은 지금까지 어느
+                         언어에서도 한 번도 발동한 적이 없다(전체 최대 0.2364).
+                         (n=71 판에서는 한국어 45개 전부가 정확히 0.0000, 영어 26개
+                         평균 0.0941 · 최대 0.2364, 공허 비율은 전체의 63% 였다.)
+                         어휘 값은 계속 보고하되, 구조적으로 공허한 언어에는
+                         경고를 출력한다.
   4. schema            : required fields present, lang in {ko, en}, no duplicate
                          labels inside one query.
 
@@ -43,8 +51,10 @@ M8 수정 이력
 ------------
 * 모든 라벨 검사: gate 2 가 첫 라벨에서 멈추던 것을 전 라벨로 확장했고, gate 1 은
   유효 라벨 전부를 `ans_entries` 로 모은다(`ans_entry` 는 하위호환 별칭).
-* `context` 를 필수에서 권고로 낮췄다. 필수였던 탓에 병합셋
+* `context` 를 필수에서 권고로 낮췄다. 필수였던 탓에 n=71 판 병합셋
   data/validated_queries_expanded.json 의 71건 전부가 gate 4 에서 실패했다.
+  현재 n=151 판에서는 슬라이스 유래 138건에 context 가 있고, validated_base
+  유래 13건(ext-*)만 권고 경고로 남는다.
 * `excluded_from_metrics` 질의는 빈 validated_labels 를 허용한다.
 * 슬라이스 레벨에 정답 코드 재사용 검사와 표제 스텁 경고를 추가했다.
 """
@@ -71,10 +81,13 @@ MIN_QUERIES = 25
 MIN_KO_RATIO = 0.40
 
 # `context` 는 리뷰용 메모이지 채점에 쓰이는 필드가 아니다. 필수 목록에 있었던
-# 탓에 병합셋 data/validated_queries_expanded.json 의 71건 전부가 gate 4 에서
-# 실패했다(병합 스크립트가 context 를 옮기지 않았다). 이제는 경고로 낮추고,
+# 탓에 n=71 판 병합셋 data/validated_queries_expanded.json 의 71건 전부가 gate 4
+# 에서 실패했다(병합 스크립트가 context 를 옮기지 않았다). 이제는 경고로 낮추고,
 # 실제 채점에 필요한 필드만 실패 조건으로 둔다.
-# data/validated_queries_expanded_v2.json 은 context 를 복원해 두었다.
+# 현재 상태(n=151): data/validated_queries_expanded.json 은 슬라이스 유래 138건에
+# context 가 있고 validated_base 유래 13건(ext-*)에는 없다.
+# data/validated_queries_expanded_v2.json 은 원래 71건의 context 를 복원했지만,
+# 나중에 추가된 TASK J 80건에는 context 가 없다(권고 경고 80건).
 REQUIRED_FIELDS = ["id", "lang", "query", "validated_labels"]
 RECOMMENDED_FIELDS = ["context"]
 

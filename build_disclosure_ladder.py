@@ -5,8 +5,11 @@
     기존 실험은 노출량을 "시스템이 되돌려 주는 공개 통제목록의 문자 수"로 정의했다.
     Wassenaar/eCFR/SCOMET은 전부 공개문서이므로 그것을 덜 반환하는 것은 기업
     영업비밀 보호와 무관하다. 보호자산이 실제로 신뢰경계를 넘는 지점은 **질의 본문**
-    (아웃바운드)이다. 이 스크립트는 검증셋 71개 질의를 L0(원문)~L4(카테고리 키워드)
-    5단계로 재작성하고, 각 등급에 남아 있는 민감 필드를 카테고리 단위로 계량한다.
+    (아웃바운드)이다. 이 스크립트는 검증셋 151개 질의(ko 109 / en 42)를 L0(원문)~
+    L4(카테고리 키워드) 5단계로 재작성하고, 각 등급에 남아 있는 민감 필드를 카테고리
+    단위로 계량한다. 재작성문의 출처는 두 갈래다 — 원본 71개는 이 파일의 LADDER 에
+    하드코딩되어 있고, TASK J 이후 확장된 80개는 소스 질의의 `ladder` 필드에서 읽는다
+    (초판은 하드코딩 71개뿐이었다).
 
 측정 단위
     문자 수가 아니라 **사전 정의 카테고리**와 그 카테고리에 귀속된 토큰 수를 센다.
@@ -21,9 +24,19 @@
           (MANUAL_REMOVALS). 재작성은 사람 판단이 필요하고 자동화 대상이 아니다.
 
 사전(lexicon)의 성격
-    개방형 정규식(수치)과 **닫힌 어휘목록**의 조합이다. 어휘목록은 71개 L0 질의에
-    실제로 등장한 민감 표현을 열거해 만들었으므로 감사 가능하고, 다른 코퍼스로
-    일반화하려면 목록을 확장해야 한다(한계로 명시).
+    개방형 정규식(수치)과 **닫힌 어휘목록**의 조합이다. 어휘목록은 **원본 71개** L0
+    질의에 실제로 등장한 민감 표현을 열거해 만들었으므로 감사 가능하고, 다른 코퍼스로
+    일반화하려면 목록을 확장해야 한다(한계로 명시). 질의셋이 151개로 늘어난 뒤에도
+    목록은 넓히지 않았다. 그래서 확장 80개 중 일부는 'rocket/로켓/propulsion' 같은
+    표현이 품목 정체인데도 end_use 로만 잡히며, 이것이 아래 사다리 정의 위반 18건의
+    알려진 원인이다(위반 18건은 전부 확장분에서 나오고 원본 71개에는 없다).
+
+검증 결과 (현행)
+    151개 중 18개가 사다리 정의(L3·L4 계수 민감토큰 0, 등급 간 단조 비증가)를 위반해
+    frontier 분석에서 제외되고 133개가 남는다. 따라서 validation.passed 는 False,
+    validation.passed_excluding_spec_exclusions 는 True 이며, problems 가 비지 않으므로
+    이 스크립트는 종료코드 1 로 끝난다. 산출물은 그 판정 전에 이미 기록되므로 종료코드
+    1 이어도 data/disclosure_ladder.json 은 정상적으로 갱신된다.
 
 출력: data/disclosure_ladder.json
 실행: python build_disclosure_ladder.py
@@ -144,7 +157,11 @@ NUM_UNIT_RE = re.compile(
 # 정의를 읽고 "수치를 지우라"는 뜻으로 이해했기 때문이다. 두 주석자가 일치하고
 # 검출기만 어긋나면 어긋난 쪽은 검출기다. 이 오분류는 L3·L4 에서 '기능만 남기라'는
 # 지시를 따른 질의를 정의 위반으로 만들었고(13건), L2 에서 고유명칭을 일반어로
-# 바꾸자 민감토큰이 오히려 늘어나는 가짜 비단조도 만들었다(2건).
+# 바꾸자 민감토큰이 오히려 늘어나는 가짜 비단조도 만들었다(5건).
+# ('2건'이라고 적혀 있던 자리다. 현행 n=151 에서 수정 전/후를 다시 돌려 보면 L1→L2
+#  민감토큰 증가는 7건 → 2건으로, 즉 5건이 이 수정으로 사라진다. 남은 2건
+#  (j-seungwoo-018 / j-yechan-038)은 속성어와 무관한 실제 비단조다. 13건 쪽은 같은
+#  방식으로 재현된다.)
 #
 # 주의: 이 수정은 표본 전체의 노출 축(민감토큰 수)을 낮춘다. 수정 전후 frontier 를
 # 모두 산출해 비교한다(PAPER 4.5 민감도).
@@ -316,7 +333,10 @@ def measure(text: str) -> dict:
 
 # --------------------------------------------------------------------------
 # 4. 사람이 재작성한 L1~L4 (L0은 원본 JSON에서 그대로 읽는다)
-#    - 언어는 원문과 동일하게 유지(ko 45 / en 26)
+#    - 이 dict 에 있는 것은 **원본 71개분(ko 45 / en 26)**뿐이다. 확장 80개
+#      (ko 64 / en 16)의 재작성은 소스 질의의 `ladder` 필드에 실려 온다 → ladder_for().
+#      합계 151개(ko 109 / en 42).
+#    - 언어는 원문과 동일하게 유지
 #    - L1~L3은 상담형 문장, L4는 2~5 단어 키워드
 #    - 통제목록 원문 문언을 새로 베껴 넣지 않는다(자기참조 악화 금지)
 # --------------------------------------------------------------------------
@@ -826,8 +846,9 @@ def ladder_for(q: dict) -> dict | None:
     """질의의 L1~L4 재작성을 찾는다.
 
     원본 71개는 이 스크립트의 `LADDER` dict 에 하드코딩되어 있다(감사 추적 목적:
-    재작성문이 코드 리뷰 대상에 남는다). TASK J 이후의 확장 질의는 슬라이스 파일에
-    `ladder` 필드로 실려 오고 병합셋까지 그대로 전달되므로, 그 경우 소스에서 읽는다.
+    재작성문이 코드 리뷰 대상에 남는다). TASK J 이후의 확장 질의 80개는 슬라이스
+    파일에 `ladder` 필드로 실려 오고 병합셋까지 그대로 전달되므로, 그 경우 소스에서
+    읽는다. 71 + 80 으로 현행 검증셋 151개가 모두 사다리를 갖는다.
 
     둘 다 있으면 하드코딩을 우선한다(원본 71개의 재작성을 슬라이스가 덮어쓰지 못하게).
     """
@@ -935,31 +956,54 @@ def main() -> int:
         })
 
     # --- 전체 요약 --------------------------------------------------------
+    #
+    # 두 기준을 **모두** 내보내고 각각에 n 을 붙인다.
+    #
+    #   per_level_summary                 : 전체 질의(정의 위반 포함)
+    #   per_level_summary_spec_compliant  : 사다리 정의를 지키는 질의만
+    #
+    # 논문(PAPER 3.5/4.5)과 frontier 산출물이 인용하는 것은 **준수 부분집합**이다.
+    # 예전에는 준수 기준 값이 이 파일에 아예 없어서, 파일을 연 사람은 L3 평균
+    # 민감토큰이 0.073 인 것을 보고 "논문의 0.00 은 거짓"이라고 읽게 되어 있었다.
+    # 둘 다 이름과 n 을 달아 내보내면 그 오독이 구조적으로 불가능해진다.
     lang_counts = dict(Counter(e["lang"] for e in entries))
-    per_level = {}
-    for lv in LEVELS:
-        st = [e["levels"][lv]["sensitive_token_count"] for e in entries]
-        fc = [e["levels"][lv]["sensitive_field_count"] for e in entries]
-        tk = [e["levels"][lv]["token_count"] for e in entries]
-        ch = [e["levels"][lv]["char_count"] for e in entries]
-        field_freq = Counter()
-        for e in entries:
-            field_freq.update(e["levels"][lv]["counted_sensitive_fields"])
-        per_level[lv] = {
-            "definition": LEVEL_DEFS[lv],
-            "mean_sensitive_token_count": round(sum(st) / len(st), 3),
-            "mean_sensitive_field_count": round(sum(fc) / len(fc), 3),
-            "mean_token_count": round(sum(tk) / len(tk), 3),
-            "mean_char_count": round(sum(ch) / len(ch), 2),
-            "queries_with_zero_sensitive_tokens": sum(1 for x in st if x == 0),
-            "field_frequency": dict(sorted(field_freq.items())),
-            "distinct_queries": len({e["levels"][lv]["query"] for e in entries}),
-            "identical_to_previous_level": (
-                None if lv == "L0" else
-                sum(1 for e in entries
-                    if e["levels"][lv]["query"] == e["levels"][LEVELS[LEVELS.index(lv) - 1]]["query"])
-            ),
-        }
+    compliant = [e for e in entries if e["ladder_spec_compliant"]]
+
+    def summarize(rows: list[dict], basis: str) -> dict:
+        out = {"_basis": basis, "_n": len(rows)}
+        for lv in LEVELS:
+            st = [e["levels"][lv]["sensitive_token_count"] for e in rows]
+            fc = [e["levels"][lv]["sensitive_field_count"] for e in rows]
+            tk = [e["levels"][lv]["token_count"] for e in rows]
+            ch = [e["levels"][lv]["char_count"] for e in rows]
+            field_freq = Counter()
+            for e in rows:
+                field_freq.update(e["levels"][lv]["counted_sensitive_fields"])
+            out[lv] = {
+                "definition": LEVEL_DEFS[lv],
+                "n": len(rows),
+                "mean_sensitive_token_count": round(sum(st) / len(st), 3),
+                "mean_sensitive_field_count": round(sum(fc) / len(fc), 3),
+                "mean_token_count": round(sum(tk) / len(tk), 3),
+                "mean_char_count": round(sum(ch) / len(ch), 2),
+                "queries_with_zero_sensitive_tokens": sum(1 for x in st if x == 0),
+                "field_frequency": dict(sorted(field_freq.items())),
+                "distinct_queries": len({e["levels"][lv]["query"] for e in rows}),
+                "identical_to_previous_level": (
+                    None if lv == "L0" else
+                    sum(1 for e in rows
+                        if e["levels"][lv]["query"]
+                        == e["levels"][LEVELS[LEVELS.index(lv) - 1]]["query"])
+                ),
+            }
+        return out
+
+    per_level = summarize(
+        entries, f"전체 질의 {len(entries)}건 (사다리 정의 위반 {len(entries) - len(compliant)}건 포함). "
+                 "논문이 인용하는 값이 아니다 — per_level_summary_spec_compliant 를 보라.")
+    per_level_compliant = summarize(
+        compliant, f"사다리 정의를 지키는 {len(compliant)}건만. "
+                   "**PAPER 3.5/4.5 와 output/disclosure_frontier.json 이 인용하는 기준.**")
 
     payload = {
         "meta": {
@@ -993,6 +1037,7 @@ def main() -> int:
             "env": rc.env_meta({"seed": SEED}),
         },
         "per_level_summary": per_level,
+        "per_level_summary_spec_compliant": per_level_compliant,
         "ladder_spec_exclusions": {
             "policy": (
                 "사다리 정의(L3·L4 계수 민감토큰 0, 등급 간 단조 비증가)를 위반한 질의는 "

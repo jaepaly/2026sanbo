@@ -1,11 +1,17 @@
 #!/usr/bin/env python3
-"""논문용 figure 생성 — 검증셋 n=71 기준으로 재작성.
+"""논문용 figure 생성 — 검증셋 n=151(영어 42 / 한국어 109) 기준.
+
+이 파일은 n=71 판에서 재작성되었고, 이후 n=151 재실행 산출물
+(`data/validated_queries_expanded.json`, `output/validated_suite.json`)에 맞춰 문서를
+갱신했다. n·n_en·n_ko·모델 목록은 모두 산출물 meta에서 읽으므로 코드에 고정값은 없다.
 
 정정 내역 (감사 항목 M9-B / M14-D5):
 
 1. **stale 데이터 소스 교체.**
    - `fig_validated_retriever`는 `output/validated_eval.json`(n=13, hybrid R@10
-     0.2308)을 읽고 있었다. 논문 헤드라인은 n=71의 0.578이다. 이제
+     0.2308)을 읽고 있었다. 논문 헤드라인은 현재 n=151의 **0.5099**이다
+     (MiniLM, 색인=minimal_text, hybrid α=0.5). 같은 조건에서 색인=full_text면
+     0.5497이다. n=71 판에서는 이 헤드라인이 0.578이었다. 이제
      `output/validated_suite.json`(없으면 `..._smoke.json`)을 읽는다.
    - `fig_exposure_recall`은 `output/experiment_logs.json`, 즉 **자기참조 합성셋**을
      읽고 있었다. 논문은 "합성셋이 아니라 검증셋으로 입증"이라고 주장한다. 이제
@@ -100,7 +106,12 @@ def load_json(name: str) -> dict | None:
 
 
 def validated_source() -> tuple[dict, str, bool]:
-    """검증셋 통합 산출물. 본실행 파일이 없으면 smoke로 대체하고 그림에 표시한다."""
+    """검증셋 통합 산출물. 본실행 파일이 없으면 smoke로 대체하고 그림에 표시한다.
+
+    본실행 `validated_suite.json`은 n=151 / dense 3모델(bge-m3, e5-base, MiniLM)이고,
+    폴백 `validated_suite_smoke.json`은 n=71 / MiniLM 단일 모델이다. 폴백으로 그린
+    그림의 수치는 논문 헤드라인(n=151)과 다르다.
+    """
     data = load_json("validated_suite.json")
     if data is not None:
         return data, "output/validated_suite.json", False
@@ -141,7 +152,7 @@ def subgroup(vec: list[int], langs: list[str], lang: str | None) -> list[int]:
 
 
 # --------------------------------------------------------------------------
-# (a) 검증셋 검색기 비교 — n=71
+# (a) 검증셋 검색기 비교 — n=151 (영어 42 / 한국어 109; n=71 판에서 확장)
 # --------------------------------------------------------------------------
 
 

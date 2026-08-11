@@ -769,6 +769,150 @@
       "note": ""
     },
     {
+      "id": "ladder.dense.L0",
+      "where": "PAPER 4.5",
+      "desc": "사다리 L0 dense R@10",
+      "paper": 0.4662,
+      "artifact": 0.4662,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "ladder.dense.L1",
+      "where": "PAPER 4.5",
+      "desc": "사다리 L1 dense R@10",
+      "paper": 0.4361,
+      "artifact": 0.4361,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "ladder.dense.L2",
+      "where": "PAPER 4.5",
+      "desc": "사다리 L2 dense R@10",
+      "paper": 0.3759,
+      "artifact": 0.3759,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "ladder.dense.L3",
+      "where": "PAPER 4.5",
+      "desc": "사다리 L3 dense R@10",
+      "paper": 0.4436,
+      "artifact": 0.4436,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "ladder.dense.L4",
+      "where": "PAPER 4.5",
+      "desc": "사다리 L4 dense R@10",
+      "paper": 0.3759,
+      "artifact": 0.3759,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "ladder.bm25.L0",
+      "where": "PAPER 4.5",
+      "desc": "사다리 L0 BM25 R@10",
+      "paper": 0.1429,
+      "artifact": 0.1429,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "ladder.bm25.L1",
+      "where": "PAPER 4.5",
+      "desc": "사다리 L1 BM25 R@10",
+      "paper": 0.1278,
+      "artifact": 0.1278,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "ladder.bm25.L2",
+      "where": "PAPER 4.5",
+      "desc": "사다리 L2 BM25 R@10",
+      "paper": 0.0977,
+      "artifact": 0.0977,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "ladder.bm25.L3",
+      "where": "PAPER 4.5",
+      "desc": "사다리 L3 BM25 R@10",
+      "paper": 0.1203,
+      "artifact": 0.1203,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "ladder.bm25.L4",
+      "where": "PAPER 4.5",
+      "desc": "사다리 L4 BM25 R@10",
+      "paper": 0.1353,
+      "artifact": 0.1353,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "ladder.langdist_sums_to_n",
+      "where": "구조 불변식",
+      "desc": "frontier 언어분포 합 == n_queries",
+      "paper": true,
+      "artifact": true,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "ladder.basis_matches_file",
+      "where": "구조 불변식",
+      "desc": "frontier 노출축 == 사다리 파일의 준수기준 요약",
+      "paper": true,
+      "artifact": true,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "ladder.file_declares_both_bases",
+      "where": "구조 불변식",
+      "desc": "사다리 파일이 두 기준을 모두 이름 붙여 내보내는가",
+      "paper": true,
+      "artifact": true,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "labelsens.holm.dense_vs_bm25",
+      "where": "PAPER 4.7",
+      "desc": "라벨민감도 15개 조합 중 dense−BM25 Holm 유의 개수",
+      "paper": 15,
+      "artifact": 15,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "labelsens.holm.hybrid_vs_dense",
+      "where": "PAPER 4.7",
+      "desc": "라벨민감도 15개 조합 중 hybrid−dense Holm 유의 개수 (0)",
+      "paper": 0,
+      "artifact": 0,
+      "status": "OK",
+      "note": ""
+    },
+    {
+      "id": "labelsens.holm.hybrid_raw",
+      "where": "PAPER 4.7",
+      "desc": "hybrid−dense 보정 전 유의 조합 수 (MiniLM 5건)",
+      "paper": 5,
+      "artifact": 5,
+      "status": "OK",
+      "note": ""
+    },
+    {
       "id": "ladder.bm25.L0.ko",
       "where": "PAPER 4.5",
       "desc": "사다리 BM25 한국어 R@10 (바닥 수준)",
@@ -1026,7 +1170,7 @@
     }
   ],
   "counts": {
-    "OK": 112,
+    "OK": 128,
     "MISMATCH": 0,
     "SKIP": 0,
     "ERROR": 0,
