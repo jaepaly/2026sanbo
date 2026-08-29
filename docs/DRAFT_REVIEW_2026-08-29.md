@@ -3,6 +3,11 @@
 대상: `논문 경진대회_수정본.pdf` (28쪽, 인쇄 9–34쪽)
 검토자: **codex** (codex exec), **gemini** (gemini-2.5-flash), **claude** (산출물 전수 대조 + 페이지 렌더링 육안 검토)
 
+> **후속:** 이 문서는 `output/` 산출물을 대조할 수 있다는 전제로 쓰였다.
+> 심사위원은 그럴 수 없다 — 논문에 깃허브 링크도 없다.
+> **인쇄된 28쪽만으로 판단했을 때의 재검토는 [DRAFT_REVIEW_2026-08-29_JUDGE.md](DRAFT_REVIEW_2026-08-29_JUDGE.md) 를 보라.**
+> 그쪽이 우선한다.
+
 > gemini는 `gemini-3.1-pro-preview`·`gemini-3-pro-preview` 무료 티어 쿼터가 0이라 실행되지 않아
 > `gemini-2.5-flash`로 돌렸다. 세 모델 중 가장 얕으니 gemini 단독 지적은 가중치를 낮게 보라.
 
